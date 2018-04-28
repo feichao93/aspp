@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "outDir": "./build/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noStrictGenericChecks": true,
+    "target": "es2017",
+    "jsx": "react"
+  },
+  "exclude": ["node_modules"]
+}
