@@ -1,16 +1,6 @@
 import React from 'react'
-import { AnnotatedDoc, Annotation } from './interfaces'
-import { Map } from 'immutable'
-
-const defaultStyleMap: Map<string, React.CSSProperties> = Map({
-  role: {
-    background: '#5ea7ae',
-    border: '1px solid #256bd2',
-  },
-  item: {
-    background: '#8bc34a',
-  },
-})
+import { List } from 'immutable'
+import { AnnotatedDoc, Annotation } from './types'
 
 interface SpanInfo {
   startOffset: number
@@ -18,12 +8,13 @@ interface SpanInfo {
   annotation: Annotation
 }
 
-function partition(block: string, annotations: Annotation[]) {
+// TODO 需要考虑多个 tag 重叠的情况
+function partition(block: string, annotations: List<Annotation>) {
   const result: SpanInfo[] = []
   let i = 0
   let annotationIndex = 0
-  while (i < block.length && annotationIndex < annotations.length) {
-    const annotation = annotations[annotationIndex]
+  while (i < block.length && annotationIndex < annotations.size) {
+    const annotation = annotations.get(annotationIndex)
     const range = annotation.range
     if (i < range.startOffset) {
       result.push({ startOffset: i, endOffset: range.startOffset, annotation: null })
@@ -48,17 +39,16 @@ function partition(block: string, annotations: Annotation[]) {
   return result
 }
 
-function genStyle(styleMap: Map<string, React.CSSProperties>, annotation: Annotation) {
+function genClassName(annotation: Annotation) {
   if (annotation == null) {
-    return undefined
+    return
   } else {
-    return styleMap.get(annotation.tag)
+    return ['annotation', annotation.tag].join(' ')
   }
 }
 
 interface AnnotationEditorProps {
   doc: AnnotatedDoc
-  styleMap?: Map<string, React.CSSProperties>
 }
 
 export default class AnnotationEditor extends React.Component<AnnotationEditorProps> {
@@ -69,7 +59,6 @@ export default class AnnotationEditor extends React.Component<AnnotationEditorPr
         author,
         annotationSet,
       },
-      styleMap = defaultStyleMap,
     } = this.props
 
     return (
@@ -78,14 +67,16 @@ export default class AnnotationEditor extends React.Component<AnnotationEditorPr
           <div key={blockIndex} data-block data-blockindex={blockIndex}>
             {partition(
               block,
-              Array.from(annotationSet).filter(
-                annotation => annotation.range.blockIndex === blockIndex,
-              ),
+              annotationSet
+                .filter(annotation => annotation.range.blockIndex === blockIndex)
+                .sortBy(annotation => annotation.range.startOffset)
+                .toList(),
             ).map(({ annotation, startOffset, endOffset }, index) => (
               <span
                 key={index}
-                style={genStyle(styleMap, annotation)}
+                className={genClassName(annotation)}
                 data-annotationid={annotation ? annotation.id : undefined}
+                data-offset={startOffset}
               >
                 {block.substring(startOffset, endOffset)}
               </span>

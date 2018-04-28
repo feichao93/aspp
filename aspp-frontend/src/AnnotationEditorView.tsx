@@ -1,7 +1,7 @@
 import React from 'react'
 import AnnotationEditor from './AnnotationEditor'
 import AnnotateButton from './AnnotateButton'
-import { AnnotatedDoc, Annotation } from './interfaces'
+import { AnnotatedDoc, Annotation } from './types'
 import { preventDefault } from './utils'
 
 export interface AnnotationEditorViewProps {

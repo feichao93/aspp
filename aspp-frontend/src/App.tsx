@@ -1,8 +1,9 @@
 import { hot } from 'react-hot-loader'
 import React from 'react'
 import AnnotationEditorView from './AnnotationEditorView'
+import { Annotation } from './types'
 import * as testData from './testData'
-import { Annotation } from './interfaces'
+import { setCurrentRange } from './SelectionUtils'
 
 @hot(module)
 export default class App extends React.Component {
@@ -11,7 +12,12 @@ export default class App extends React.Component {
   }
 
   annotate = (annotation: Annotation) => {
-    console.log(annotation)
+    const { annotatedDoc } = this.state
+    const afterAnnotation = annotatedDoc.set(
+      'annotationSet',
+      annotatedDoc.annotationSet.add(annotation),
+    )
+    this.setState({ annotatedDoc: afterAnnotation }, () => setCurrentRange(annotation.range))
   }
 
   render() {
