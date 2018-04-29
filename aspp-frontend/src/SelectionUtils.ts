@@ -1,11 +1,11 @@
 import AnnotationRange from './types/AnnotationRange'
 
-export function getCurrentRange(): AnnotationRange | null {
-  const sel = window.getSelection()
+function getCurrentRange(): AnnotationRange | null {
+  const sel = document.getSelection()
   if (!sel.isCollapsed) {
     const range = sel.getRangeAt(0)
-    const startSpan = range.startContainer.parentElement
-    const endSpan = range.endContainer.parentElement
+    const startSpan = sel.anchorNode.parentElement
+    const endSpan = sel.focusNode.parentElement
     if (
       startSpan.dataset &&
       startSpan.dataset.offset != null &&
@@ -30,12 +30,22 @@ function getOffset(element: Element) {
   return Number((element as HTMLSpanElement).dataset.offset)
 }
 
-export function setCurrentRange(annotationRange: AnnotationRange) {
+let ignoreCount = 0
+
+function setCurrentRange(annotationRange: AnnotationRange) {
+  console.log(annotationRange.toString())
   const block = document.querySelector(`*[data-blockindex="${annotationRange.blockIndex}"]`)
   const spans = block.children
-  const selection = window.getSelection()
-  selection.removeAllRanges()
-  selection.addRange(annotationRangeToNativeRange(annotationRange))
+  const selection = document.getSelection()
+  const startSpan = find(annotationRange.startOffset)
+  const endSpan = find(annotationRange.endOffset)
+  ignoreCount++
+  selection.setBaseAndExtent(
+    startSpan.firstChild,
+    annotationRange.startOffset - getOffset(startSpan),
+    endSpan.firstChild,
+    annotationRange.endOffset - getOffset(endSpan),
+  )
 
   // region function-definition
   function find(targetOffset: number) {
@@ -52,17 +62,23 @@ export function setCurrentRange(annotationRange: AnnotationRange) {
     }
     return spans.item(low)
   }
-
-  function annotationRangeToNativeRange(annotationRange: AnnotationRange) {
-    const nativeRange = new Range()
-    const startSpan = find(annotationRange.startOffset)
-    const endSpan = find(annotationRange.endOffset)
-    nativeRange.setStart(startSpan.firstChild, annotationRange.startOffset - getOffset(startSpan))
-    nativeRange.setEnd(endSpan.firstChild, annotationRange.endOffset - getOffset(endSpan))
-    return nativeRange
-  }
   // endregion
 }
+
+// TODO 目前这样的写法只支持同时存在一个 listener
+function on(listener: () => void) {
+  const cb = () => {
+    if (ignoreCount > 0) {
+      ignoreCount--
+    } else {
+      listener()
+    }
+  }
+  document.addEventListener('selectionchange', cb)
+  return () => document.removeEventListener('selectionchange', cb)
+}
+
+export default { getCurrentRange, setCurrentRange, on }
 
 if (process.env.NODE_ENV === 'development') {
   const injectToolsToGlobal = function(global: any) {

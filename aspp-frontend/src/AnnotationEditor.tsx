@@ -19,13 +19,15 @@ function partition(block: string, annotations: List<Annotation>) {
     if (i < range.startOffset) {
       result.push({ startOffset: i, endOffset: range.startOffset, annotation: null })
       i = range.startOffset
-    } else {
+    } else if (i === range.startOffset) {
       result.push({
         startOffset: range.startOffset,
         endOffset: range.endOffset,
         annotation,
       })
       i = range.endOffset
+      annotationIndex++
+    } else {
       annotationIndex++
     }
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Annotation } from './types'
 import { getNextId, preventDefault } from './utils'
-import { getCurrentRange } from './SelectionUtils'
+import SelectionUtils from './SelectionUtils'
 
 interface AnnotateButtonProps {
   label: string
@@ -12,7 +12,7 @@ interface AnnotateButtonProps {
 export default class AnnotateButton extends React.Component<AnnotateButtonProps> {
   annotate = () => {
     const { annotate, tag } = this.props
-    const annotationRange = getCurrentRange()
+    const annotationRange = SelectionUtils.getCurrentRange()
     if (annotationRange) {
       annotate(
         new Annotation({
