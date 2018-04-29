@@ -3,7 +3,6 @@ import AnnotationRange from './types/AnnotationRange'
 function getCurrentRange(): AnnotationRange | null {
   const sel = document.getSelection()
   if (!sel.isCollapsed) {
-    const range = sel.getRangeAt(0)
     const startSpan = sel.anchorNode.parentElement
     const endSpan = sel.focusNode.parentElement
     if (
@@ -17,8 +16,8 @@ function getCurrentRange(): AnnotationRange | null {
         const blockIndex = Number(block.dataset.blockindex)
         return new AnnotationRange({
           blockIndex,
-          startOffset: Number(startSpan.dataset.offset) + range.startOffset,
-          endOffset: Number(endSpan.dataset.offset) + range.endOffset,
+          startOffset: Number(startSpan.dataset.offset) + sel.anchorOffset,
+          endOffset: Number(endSpan.dataset.offset) + sel.focusOffset,
         })
       }
     }
@@ -30,16 +29,21 @@ function getOffset(element: Element) {
   return Number((element as HTMLSpanElement).dataset.offset)
 }
 
-let ignoreCount = 0
+let ignoreNextEvent = false
+function ignoreSelectionChangeUntilNextMicroTask() {
+  ignoreNextEvent = true
+  Promise.resolve().then(() => {
+    ignoreNextEvent = false
+  })
+}
 
 function setCurrentRange(annotationRange: AnnotationRange) {
-  console.log(annotationRange.toString())
+  ignoreSelectionChangeUntilNextMicroTask()
   const block = document.querySelector(`*[data-blockindex="${annotationRange.blockIndex}"]`)
   const spans = block.children
   const selection = document.getSelection()
   const startSpan = find(annotationRange.startOffset)
   const endSpan = find(annotationRange.endOffset)
-  ignoreCount++
   selection.setBaseAndExtent(
     startSpan.firstChild,
     annotationRange.startOffset - getOffset(startSpan),
@@ -65,15 +69,9 @@ function setCurrentRange(annotationRange: AnnotationRange) {
   // endregion
 }
 
-// TODO 目前这样的写法只支持同时存在一个 listener
 function on(listener: () => void) {
-  const cb = () => {
-    if (ignoreCount > 0) {
-      ignoreCount--
-    } else {
-      listener()
-    }
-  }
+  const cb = () => !ignoreNextEvent && listener()
+
   document.addEventListener('selectionchange', cb)
   return () => document.removeEventListener('selectionchange', cb)
 }

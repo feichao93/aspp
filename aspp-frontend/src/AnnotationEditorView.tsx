@@ -14,20 +14,13 @@ export interface AnnotationEditorViewProps {
 }
 
 export interface AnnotationEditorViewState {
-  doc: AnnotatedDoc
+  selectedText: string
 }
 
-export default class AnnotationEditorView extends React.Component<AnnotationEditorViewProps> {
-  static getDerivedStateFromProps(
-    nextProps: AnnotationEditorViewProps,
-    prevState: AnnotationEditorViewState,
-  ) {
-    if (prevState.doc == null) {
-      return { doc: nextProps.annotatedDoc }
-    }
-    return null
-  }
-
+export default class AnnotationEditorView extends React.Component<
+  AnnotationEditorViewProps,
+  AnnotationEditorViewState
+> {
   off: () => void
 
   componentDidMount() {
@@ -39,7 +32,7 @@ export default class AnnotationEditorView extends React.Component<AnnotationEdit
   }
 
   state = {
-    doc: null as AnnotatedDoc,
+    selectedText: '',
   }
 
   onSelectionChange = () => {
@@ -48,12 +41,9 @@ export default class AnnotationEditorView extends React.Component<AnnotationEdit
     if (range) {
       const block = annotatedDoc.plainDoc.blocks.get(range.blockIndex)
       const selectedText = range.getSelectedText(block)
-
-      this.setState({ doc: DecorationUtils.highlightMatch(annotatedDoc, selectedText) }, () =>
-        SelectionUtils.setCurrentRange(range),
-      )
+      this.setState({ selectedText }, () => SelectionUtils.setCurrentRange(range))
     } else {
-      this.setState({ doc: annotatedDoc })
+      this.setState({ selectedText: '' })
     }
   }
 
@@ -70,7 +60,11 @@ export default class AnnotationEditorView extends React.Component<AnnotationEdit
 
   render() {
     const { annotatedDoc, add } = this.props
-    const { doc } = this.state
+    const { selectedText } = this.state
+    const doc =
+      selectedText.length > 0
+        ? DecorationUtils.highlightMatch(annotatedDoc, selectedText)
+        : annotatedDoc
 
     return (
       <div>
