@@ -1,0 +1,37 @@
+::selection {
+  background #ff6033aa
+}
+
+html {
+  font-size 12px
+  font-family Consolas, "Microsoft Yahei", sans-serif
+}
+
+.app {
+  width 100vw
+  height 100vh
+}
+
+.app-content {
+  height 100%
+  display grid
+  grid-template-areas "menubar menubar menubar" "left middle right" "status-bar status-bar status-bar"
+  grid-template-rows 0fr auto 0fr
+  grid-template-columns 0fr auto 0fr
+
+  .navigator {
+    grid-area left
+  }
+
+  .view {
+    grid-area middle
+  }
+
+  .panel {
+    grid-area right
+  }
+
+  .status-bar {
+    grid-area status-bar
+  }
+}

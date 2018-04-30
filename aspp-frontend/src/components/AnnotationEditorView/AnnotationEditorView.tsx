@@ -1,11 +1,12 @@
 import React from 'react'
 import { Set } from 'immutable'
-import AnnotationEditor from './AnnotationEditor'
-import AnnotateButton from './AnnotateButton'
-import { AnnotatedDoc, Annotation } from './types'
-import { preventDefault } from './utils'
-import SelectionUtils from './SelectionUtils'
-import DecorationUtils from './DecorationUtils'
+import AnnotationEditor from '../../AnnotationEditor'
+import AnnotateButton from '../../AnnotateButton'
+import { AnnotatedDoc, Annotation } from '../../types/index'
+import { preventDefault } from '../../utils'
+import SelectionUtils from '../../SelectionUtils'
+import DecorationUtils from '../../DecorationUtils'
+import './AnnotationEditorView.styl'
 
 export interface AnnotationEditorViewProps {
   annotatedDoc: AnnotatedDoc
@@ -67,7 +68,7 @@ export default class AnnotationEditorView extends React.Component<
         : annotatedDoc
 
     return (
-      <div>
+      <div className="view annotation-editor-view">
         <div className="annotation-button-group" style={{ marginBottom: 16 }}>
           <AnnotateButton label="角色" tag="role" annotate={one => add(Set.of(one))} />
           <AnnotateButton label="道具" tag="item" annotate={one => add(Set.of(one))} />
