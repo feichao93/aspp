@@ -2,30 +2,36 @@
   font-size 16px
 }
 
-.editor-wrapper {
+.button-group {
+  display flex
+  align-items center
+  > h3 {
+    margin 0 8px
+  }
+}
+
+.editor {
   font-family consolas, 'Microsoft Yahei', sans-serif
   padding 16px
   width 600px
   border 1px solid #ccc
   line-height 1.5
   white-space pre-wrap
-  letter-spacing 0.1em
-}
+  letter-spacing 0.15em
 
-.annotation.role {
-  background #9bb5dacc
-  outline 2px solid #256bd2cc
-  cursor pointer
-
-  &:hover {
-    background #5ea7ae
+  ::selection {
+    background #ffdcd4
   }
-}
 
-.annotation.item {
-  background #8bc34a
-}
-
-.annotation.highlight {
-  outline 2px dashed #999
+  .slot {
+    &.selection {
+      box-shadow: rgba(158, 158, 158, 0.33) 1px 1px 3px 1.5px
+      background #FFEB3B
+      cursor pointer
+    }
+    &.highlight {
+      outline 1.5px solid #f7957e
+      outline-offset 0.5px
+    }
+  }
 }

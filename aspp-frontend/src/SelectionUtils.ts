@@ -39,9 +39,13 @@ function ignoreSelectionChangeUntilNextMicroTask() {
 
 function setCurrentRange(annotationRange: AnnotationRange) {
   ignoreSelectionChangeUntilNextMicroTask()
+  const selection = document.getSelection()
+  if (annotationRange == null) {
+    selection.removeAllRanges()
+    return
+  }
   const block = document.querySelector(`*[data-blockindex="${annotationRange.blockIndex}"]`)
   const spans = block.children
-  const selection = document.getSelection()
   const startSpan = find(annotationRange.startOffset)
   const endSpan = find(annotationRange.endOffset)
   selection.setBaseAndExtent(
@@ -76,7 +80,12 @@ function on(listener: () => void) {
   return () => document.removeEventListener('selectionchange', cb)
 }
 
-export default { getCurrentRange, setCurrentRange, on }
+function keepRange(callback: (cont: () => void) => void) {
+  const range = getCurrentRange()
+  callback(() => setCurrentRange(range))
+}
+
+export default { getCurrentRange, setCurrentRange, on, keepRange }
 
 if (process.env.NODE_ENV === 'development') {
   const injectToolsToGlobal = function(global: any) {

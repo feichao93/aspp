@@ -17,20 +17,24 @@ export default class App extends React.Component {
 
   add = (setToAdd: Set<Annotation>) => {
     const { annotatedDoc } = this.state
-    const range = SelectionUtils.getCurrentRange()
-    this.setState(
-      { annotatedDoc: annotatedDoc.update('annotationSet', set => set.union(setToAdd)) },
-      () => SelectionUtils.setCurrentRange(range),
-    )
+    const updatedDoc = annotatedDoc.update('annotationSet', set => set.union(setToAdd))
+    SelectionUtils.keepRange(cont => this.setState({ annotatedDoc: updatedDoc }, cont))
+  }
+
+  addOne = (annotation: Annotation) => {
+    this.add(Set.of(annotation))
   }
 
   remove = (setToRemove: Set<Annotation>) => {
     const { annotatedDoc } = this.state
-    const range = SelectionUtils.getCurrentRange()
-    this.setState(
-      { annotatedDoc: annotatedDoc.update('annotationSet', set => set.subtract(setToRemove)) },
-      () => SelectionUtils.setCurrentRange(range),
-    )
+    const updatedDoc = annotatedDoc.update('annotationSet', set => set.subtract(setToRemove))
+    SelectionUtils.keepRange(cont => {
+      this.setState({ annotatedDoc: updatedDoc }, cont)
+    })
+  }
+
+  removeOne = (annotation: Annotation) => {
+    this.remove(Set.of(annotation))
   }
 
   render() {
@@ -57,13 +61,19 @@ export default class App extends React.Component {
             </div>
           </div>
           <div className="view">
-            <AnnotationEditorView annotatedDoc={annotatedDoc} add={this.add} remove={this.remove} />
+            <AnnotationEditorView
+              doc={annotatedDoc}
+              add={this.add}
+              remove={this.remove}
+              addOne={this.addOne}
+              removeOne={this.removeOne}
+            />
           </div>
           <div className="panel">
             <div
               style={{
                 background: '#ff9577',
-                width: 300,
+                width: 100,
                 height: '100%',
                 fontSize: '32px',
                 display: 'flex',
