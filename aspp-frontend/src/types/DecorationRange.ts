@@ -1,15 +1,15 @@
-import { Set, Record } from 'immutable'
+import { Record, Set } from 'immutable'
 import Annotation from './Annotation'
 
-const AnnotationRangeRecord = Record({
+const DecorationRangeRecord = Record({
   blockIndex: 0,
   startOffset: 0,
   endOffset: 0,
 })
 
-export default class AnnotationRange extends AnnotationRangeRecord {
+export default class DecorationRange extends DecorationRangeRecord {
   static fromJS(object: any) {
-    return new AnnotationRange(object)
+    return new DecorationRange(object)
   }
 
   intersect(annotationSet: Set<Annotation>): Set<Annotation> {
@@ -34,7 +34,7 @@ export default class AnnotationRange extends AnnotationRangeRecord {
     }
   }
 
-  getSelectedText(block: string) {
+  getText(block: string) {
     const normalized = this.normalize()
     return block.substring(normalized.startOffset, normalized.endOffset)
   }

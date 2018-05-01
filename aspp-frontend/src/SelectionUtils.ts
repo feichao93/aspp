@@ -1,6 +1,6 @@
-import AnnotationRange from './types/AnnotationRange'
+import DecorationRange from './types/DecorationRange'
 
-function getCurrentRange(): AnnotationRange | null {
+function getCurrentRange(): DecorationRange | null {
   const sel = document.getSelection()
   if (!sel.isCollapsed) {
     const startSpan = sel.anchorNode.parentElement
@@ -14,7 +14,7 @@ function getCurrentRange(): AnnotationRange | null {
       const block = startSpan.parentElement
       if (block === endSpan.parentElement) {
         const blockIndex = Number(block.dataset.blockindex)
-        return new AnnotationRange({
+        return new DecorationRange({
           blockIndex,
           startOffset: Number(startSpan.dataset.offset) + sel.anchorOffset,
           endOffset: Number(endSpan.dataset.offset) + sel.focusOffset,
@@ -37,7 +37,7 @@ function ignoreSelectionChangeUntilNextMicroTask() {
   })
 }
 
-function setCurrentRange(annotationRange: AnnotationRange) {
+function setCurrentRange(annotationRange: DecorationRange) {
   ignoreSelectionChangeUntilNextMicroTask()
   const selection = document.getSelection()
   if (annotationRange == null) {
@@ -90,7 +90,7 @@ export default { getCurrentRange, setCurrentRange, on, keepRange }
 if (process.env.NODE_ENV === 'development') {
   const injectToolsToGlobal = function(global: any) {
     global.setRange = (blockIndex: number, startOffset: number, endOffset: number) => {
-      setCurrentRange(new AnnotationRange({ startOffset, endOffset, blockIndex }))
+      setCurrentRange(new DecorationRange({ startOffset, endOffset, blockIndex }))
     }
     global.getRange = () => {
       const range = getCurrentRange()

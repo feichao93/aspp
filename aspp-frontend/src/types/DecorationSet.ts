@@ -1,37 +1,29 @@
 import { Record, Set } from 'immutable'
-import { Annotation } from './index'
 import AnnotatedDoc from './AnnotatedDoc'
+import DecorationRange from './DecorationRange'
+import Annotation from './Annotation'
 
 interface AnnotationDecoration {
-  type: 'annotation'
-  blockIndex: number
-  startOffset: number
-  endOffset: number
-  annotation: Annotation
+  readonly type: 'annotation'
+  readonly range: DecorationRange
+  readonly annotation: Annotation
 }
 
 interface Text {
-  type: 'text'
-  blockIndex: number
-  startOffset: number
-  endOffset: number
-  text: string
+  readonly type: 'text'
+  readonly range: DecorationRange
 }
 
 interface Hint {
-  type: 'hint'
-  blockIndex: number
-  startOffset: number
-  endOffset: number
-  hint: string
+  readonly type: 'hint'
+  readonly range: DecorationRange
+  readonly hint: string
 }
 
 interface Slot {
-  type: 'slot'
-  slotType: string
-  blockIndex: number
-  startOffset: number
-  endOffset: number
+  readonly type: 'slot'
+  readonly slotType: string
+  readonly range: DecorationRange
 }
 
 // TODO add Diagnostics
@@ -46,13 +38,7 @@ export default class DecorationSet extends DecorationSetRecord {
     return new DecorationSet({
       decSet: doc.annotationSet.map(
         annotation =>
-          ({
-            type: 'annotation',
-            annotation,
-            blockIndex: annotation.range.blockIndex,
-            startOffset: annotation.range.startOffset,
-            endOffset: annotation.range.endOffset,
-          } as AnnotationDecoration),
+          ({ type: 'annotation', annotation, range: annotation.range } as AnnotationDecoration),
       ),
     })
   }
@@ -73,10 +59,10 @@ export default class DecorationSet extends DecorationSetRecord {
         break
       }
       const occupied = this.decSet.some(
-        dec =>
-          dec.blockIndex === blockIndex &&
-          dec.startOffset < nextIndex + text.length &&
-          dec.endOffset > nextIndex,
+        ({ range }) =>
+          range.blockIndex === blockIndex &&
+          range.startOffset < nextIndex + text.length &&
+          range.endOffset > nextIndex,
       )
       if (!occupied) {
         indexArray.push(nextIndex)
@@ -91,9 +77,11 @@ export default class DecorationSet extends DecorationSetRecord {
             ({
               type: 'slot',
               slotType: 'highlight',
-              startOffset: i,
-              endOffset: i + text.length,
-              blockIndex,
+              range: new DecorationRange({
+                blockIndex,
+                startOffset: i,
+                endOffset: i + text.length,
+              }),
             } as Slot),
         ),
       ),
@@ -102,8 +90,8 @@ export default class DecorationSet extends DecorationSetRecord {
 
   completeTexts(block: string, blockIndex: number) {
     const list = this.decSet
-      .filter(dec => dec.blockIndex === blockIndex)
-      .sortBy(dec => dec.startOffset)
+      .filter(dec => dec.range.blockIndex === blockIndex)
+      .sortBy(dec => dec.range.startOffset)
       .toList()
 
     const result: Decoration[] = []
@@ -112,19 +100,20 @@ export default class DecorationSet extends DecorationSetRecord {
     let decorationIndex = 0
     while (i < block.length && decorationIndex < list.size) {
       const decoration = list.get(decorationIndex)
-      if (i < decoration.startOffset) {
-        const endOffset = decoration.startOffset
+      if (i < decoration.range.startOffset) {
+        const endOffset = decoration.range.startOffset
         result.push({
           type: 'text',
-          blockIndex,
-          startOffset: i,
-          endOffset,
-          text: block.substring(i, endOffset),
+          range: new DecorationRange({
+            blockIndex,
+            startOffset: i,
+            endOffset,
+          }),
         })
         i = endOffset
-      } else if (i === decoration.startOffset) {
+      } else if (i === decoration.range.startOffset) {
         result.push(decoration)
-        i = decoration.endOffset
+        i = decoration.range.endOffset
         decorationIndex++
       } else {
         // TODO handle composite decorations
@@ -135,10 +124,11 @@ export default class DecorationSet extends DecorationSetRecord {
     if (i < block.length) {
       result.push({
         type: 'text',
-        blockIndex,
-        startOffset: i,
-        endOffset: block.length,
-        text: block.substring(i),
+        range: new DecorationRange({
+          blockIndex,
+          startOffset: i,
+          endOffset: block.length,
+        }),
       })
     }
 

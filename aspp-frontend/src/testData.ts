@@ -1,5 +1,6 @@
-import { AnnotatedDoc, PlainDoc } from './types'
 import { getNextId } from './utils'
+import PlainDoc from './types/PlainDoc'
+import AnnotatedDoc from './types/AnnotatedDoc'
 
 export const plainDoc: PlainDoc = PlainDoc.fromJS({
   id: 'test-doc',

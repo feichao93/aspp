@@ -2,12 +2,12 @@ import { hot } from 'react-hot-loader'
 import { Set } from 'immutable'
 import React from 'react'
 import AnnotationEditorView from '../AnnotationEditorView/AnnotationEditorView'
-import { Annotation } from '../../types/index'
 import * as testData from '../../testData'
 import SelectionUtils from '../../SelectionUtils'
 import './App.styl'
 import Menubar from '../Menubar/Menubar'
 import StatusBar from '../StatusBar/StatusBar'
+import Annotation from '../../types/Annotation'
 
 @hot(module)
 export default class App extends React.Component {

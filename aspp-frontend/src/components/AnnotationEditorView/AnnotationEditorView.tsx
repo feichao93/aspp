@@ -1,12 +1,12 @@
 import React from 'react'
 import { List, Set } from 'immutable'
-import { AnnotatedDoc, Annotation } from '../../types/index'
 import { getNextId, preventDefault } from '../../utils'
 import SelectionUtils from '../../SelectionUtils'
 import './AnnotationEditorView.styl'
 import './annotations.styl'
 import DecorationSet, { Decoration } from '../../types/DecorationSet'
-import AnnotationRange from '../../types/AnnotationRange'
+import AnnotatedDoc from '../../types/AnnotatedDoc'
+import Annotation from '../../types/Annotation'
 
 export interface AnnotationEditorViewProps {
   doc: AnnotatedDoc
@@ -23,15 +23,12 @@ export interface AnnotationEditorViewState {
 
 class Span extends React.Component<{ decoration: Decoration; block: string }> {
   render() {
-    const { block, decoration } = this.props
+    const { decoration, children } = this.props
+    const { range } = decoration
     if (decoration.type === 'text') {
       return (
-        <span
-          className="text"
-          // data-annotationid={annotation ? annotation.id : undefined}
-          data-offset={decoration.startOffset}
-        >
-          {decoration.text}
+        <span className="text" data-offset={range.startOffset}>
+          {children}
         </span>
       )
     } else if (decoration.type === 'annotation') {
@@ -40,24 +37,21 @@ class Span extends React.Component<{ decoration: Decoration; block: string }> {
         <span
           className={['annotation', annotation.tag].join(' ')}
           data-annotationid={annotation ? annotation.id : undefined}
-          data-offset={decoration.startOffset}
+          data-offset={range.startOffset}
         >
-          {block.substring(decoration.startOffset, decoration.endOffset)}
+          {children}
         </span>
       )
     } else if (decoration.type === 'hint') {
       return (
-        <span className="hint" data-offset={decoration.startOffset}>
-          {block.substring(decoration.startOffset, decoration.endOffset)}
+        <span className="hint" data-offset={range.startOffset}>
+          {children}
         </span>
       )
     } else if (decoration.type === 'slot') {
       return (
-        <span
-          className={['slot', decoration.slotType].join(' ')}
-          data-offset={decoration.startOffset}
-        >
-          {block.substring(decoration.startOffset, decoration.endOffset)}
+        <span className={['slot', decoration.slotType].join(' ')} data-offset={range.startOffset}>
+          {children}
         </span>
       )
     } else {
@@ -110,7 +104,7 @@ export default class AnnotationEditorView extends React.Component<
     const range = SelectionUtils.getCurrentRange()
     if (range) {
       const block = doc.plainDoc.blocks.get(range.blockIndex)
-      const selectedText = range.getSelectedText(block)
+      const selectedText = range.getText(block)
       SelectionUtils.keepRange(cont => this.setState({ selectedText }, cont))
     } else {
       this.setState({ selectedText: '' })
@@ -143,7 +137,7 @@ export default class AnnotationEditorView extends React.Component<
           slot =>
             new Annotation({
               tag,
-              range: new AnnotationRange(slot),
+              range: slot.range,
               confidence: 1,
               id: getNextId('annotation'),
             }),
@@ -240,7 +234,9 @@ export default class AnnotationEditorView extends React.Component<
                 .highlightMatch(block, blockIndex, selectedText)
                 .completeTexts(block, blockIndex)
                 .map((decoration, index) => (
-                  <Span key={index} block={block} decoration={decoration} />
+                  <Span key={index} block={block} decoration={decoration}>
+                    {decoration.range.getText(block)}
+                  </Span>
                 ))}
             </div>
           ))}
