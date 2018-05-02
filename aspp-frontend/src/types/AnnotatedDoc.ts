@@ -1,6 +1,6 @@
 import { Record, Set } from 'immutable'
-import PlainDoc from './PlainDoc'
 import Annotation from './Annotation'
+import PlainDoc from './PlainDoc'
 
 const AnnotatedDocRecord = Record({
   id: '',

@@ -1,10 +1,10 @@
-import React from 'react'
 import classNames from 'classnames'
-import './PanelContainer.styl'
-import AnnotationDetailPanel from './AnnotationDetailPanel'
-import TagsPanel from './TagsPanel'
+import React from 'react'
 import AlgorithmsPanel from './AlgorithmsPanel'
+import AnnotationDetailPanel from './AnnotationDetailPanel'
 import HistoryPanel from './HistoryPanel'
+import './PanelContainer.styl'
+import TagsPanel from './TagsPanel'
 
 function ChooserItem({
   activePanel,

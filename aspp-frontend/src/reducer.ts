@@ -1,13 +1,15 @@
 import { Set } from 'immutable'
 import { combineReducers } from 'redux'
+import Action from './actions'
 import * as testData from './testData'
 import AnnotatedDoc from './types/AnnotatedDoc'
+import DecorationRange from './types/DecorationRange'
 import { Decoration } from './types/DecorationSet'
-import Action from './actions'
 
 export interface State {
   doc: AnnotatedDoc
   sel: Set<Decoration>
+  range: DecorationRange
 }
 
 export function docReducer(state = testData.annotatedDoc, action: Action) {
@@ -28,7 +30,16 @@ export function selReducer(state = Set<Decoration>(), action: Action) {
   }
 }
 
+export function rangeReducer(state: DecorationRange = null, action: Action) {
+  if (action.type === 'SET_RANGE') {
+    return action.range
+  } else {
+    return state
+  }
+}
+
 export default combineReducers({
   doc: docReducer,
   sel: selReducer,
+  range: rangeReducer,
 })

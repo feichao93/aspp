@@ -1,7 +1,7 @@
 import React from 'react'
 import Annotation from '../../types/Annotation'
-import { getNextId } from '../../utils'
 import DecorationRange from '../../types/DecorationRange'
+import { getNextId } from '../../utils/common'
 import './AnnotationDetailPanel.styl'
 
 // TODO

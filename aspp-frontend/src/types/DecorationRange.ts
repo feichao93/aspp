@@ -1,4 +1,5 @@
 import { Record, Set } from 'immutable'
+import AnnotatedDoc from './AnnotatedDoc'
 import Annotation from './Annotation'
 
 const DecorationRangeRecord = Record({
@@ -12,13 +13,25 @@ export default class DecorationRange extends DecorationRangeRecord {
     return new DecorationRange(object)
   }
 
+  static getText(doc: AnnotatedDoc, range: DecorationRange) {
+    if (range == null) {
+      return ''
+    } else {
+      const normalized = range.normalize()
+      return doc.plainDoc.blocks
+        .get(normalized.blockIndex)
+        .substring(normalized.startOffset, normalized.endOffset)
+    }
+  }
+
   intersect(annotationSet: Set<Annotation>): Set<Annotation> {
+    const normalized = this.normalize()
     return annotationSet.filter(annotation => {
       const { blockIndex, startOffset, endOffset } = annotation.range
       return (
-        blockIndex === this.blockIndex &&
-        startOffset < this.endOffset &&
-        endOffset > this.startOffset
+        blockIndex === normalized.blockIndex &&
+        startOffset < normalized.endOffset &&
+        endOffset > normalized.startOffset
       )
     })
   }
@@ -32,10 +45,5 @@ export default class DecorationRange extends DecorationRangeRecord {
     } else {
       return this
     }
-  }
-
-  getText(block: string) {
-    const normalized = this.normalize()
-    return block.substring(normalized.startOffset, normalized.endOffset)
   }
 }

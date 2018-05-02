@@ -1,4 +1,4 @@
-import DecorationRange from './types/DecorationRange'
+import DecorationRange from '../types/DecorationRange'
 
 function getCurrentRange(): DecorationRange | null {
   const sel = document.getSelection()
@@ -29,22 +29,7 @@ function getOffset(element: Element) {
   return Number((element as HTMLSpanElement).dataset.offset)
 }
 
-let ignoreNextEvent = false
-function ignoreSelectionChangeUntilNextMicroTask() {
-  ignoreNextEvent = true
-  Promise.resolve().then(() => {
-    ignoreNextEvent = false
-  })
-}
-
-function scheduleSetCurrentRange(annotationRange: DecorationRange) {
-  Promise.resolve(0).then(() => {
-    setCurrentRange(annotationRange)
-  })
-}
-
 function setCurrentRange(annotationRange: DecorationRange) {
-  ignoreSelectionChangeUntilNextMicroTask()
   const selection = document.getSelection()
   if (annotationRange == null) {
     selection.removeAllRanges()
@@ -79,19 +64,8 @@ function setCurrentRange(annotationRange: DecorationRange) {
   // endregion
 }
 
-function on(listener: () => void) {
-  const cb = () => !ignoreNextEvent && listener()
-
-  document.addEventListener('selectionchange', cb)
-  return () => document.removeEventListener('selectionchange', cb)
-}
-
-function keepRange(callback: (cont: () => void) => void) {
-  const range = getCurrentRange()
-  callback(() => setCurrentRange(range))
-}
-
-export default { getCurrentRange, setCurrentRange, on, keepRange, scheduleSetCurrentRange }
+const SelectionUtils = { getCurrentRange, setCurrentRange }
+export default SelectionUtils
 
 if (process.env.NODE_ENV === 'development') {
   const injectToolsToGlobal = function(global: any) {

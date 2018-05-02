@@ -1,5 +1,5 @@
-import { Decoration } from '../../types/DecorationSet'
 import React from 'react'
+import { Decoration } from '../../types/DecorationSet'
 
 interface SpanProps {
   decoration: Decoration

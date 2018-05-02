@@ -1,59 +1,55 @@
+import { is, List, Set } from 'immutable'
 import React from 'react'
 import { connect } from 'react-redux'
-import { List, Set } from 'immutable'
-import { getNextId, identity, preventDefault } from '../../utils'
-import SelectionUtils from '../../SelectionUtils'
-import './AnnotationEditorView.styl'
-import './annotations.styl'
-import DecorationSet, { Decoration } from '../../types/DecorationSet'
+import {
+  addAnnotationSet,
+  addOneAnnotation,
+  removeAnnotationSet,
+  removeOneAnnotation,
+  setRange,
+  setSel,
+} from '../../actionCreators'
+import { State } from '../../reducer'
 import AnnotatedDoc from '../../types/AnnotatedDoc'
 import Annotation from '../../types/Annotation'
-import { State } from '../../reducer'
-import Action from '../../actions'
+import DecorationRange from '../../types/DecorationRange'
+import DecorationSet, { Decoration } from '../../types/DecorationSet'
+import { identity, preventDefault } from '../../utils/common'
+import SelectionUtils from '../../utils/SelectionUtils'
+import './AnnotationEditorView.styl'
+import './annotations.styl'
 import Span from './Span'
 
 export interface AnnotationEditorViewProps {
   doc: AnnotatedDoc
   sel: Set<Decoration>
+  range: DecorationRange
   add(annotationSet: Set<Annotation>): void
   addOne(annotation: Annotation): void
   remove(annotationSet: Set<Annotation>): void
   removeOne(annotation: Annotation): void
   setSel(decorationSet: Set<Decoration>): void
+  setRange(range: DecorationRange): void
 }
 
-export interface AnnotationEditorViewState {
-  selectedText: string
-}
-
-class AnnotationEditorView extends React.Component<
-  AnnotationEditorViewProps,
-  AnnotationEditorViewState
-> {
-  off: () => void
-  didUpdateCallback: any = null
-
+class AnnotationEditorView extends React.Component<AnnotationEditorViewProps> {
   componentDidMount() {
-    this.off = SelectionUtils.on(this.onSelectionChange)
     document.addEventListener('keydown', this.onKeyDown)
   }
 
-  componentDidUpdate() {
-    if (this.didUpdateCallback) {
-      const callback = this.didUpdateCallback
-      this.didUpdateCallback = null
-      callback()
+  getSnapshotBeforeUpdate() {
+    return SelectionUtils.getCurrentRange()
+  }
+
+  componentDidUpdate(prevProps: any, prevState: any, snapshot: DecorationRange) {
+    const currentRange = SelectionUtils.getCurrentRange()
+    if (!is(currentRange, snapshot)) {
+      SelectionUtils.setCurrentRange(snapshot)
     }
   }
 
   componentWillUnmount() {
-    this.off()
     document.removeEventListener('keydown', this.onKeyDown)
-    this.didUpdateCallback = null
-  }
-
-  state = {
-    selectedText: '',
   }
 
   onKeyDown = (event: KeyboardEvent) => {
@@ -85,55 +81,27 @@ class AnnotationEditorView extends React.Component<
     }
   }
 
-  onSelectionChange = () => {
-    const { doc } = this.props
-    const range = SelectionUtils.getCurrentRange()
-    if (range) {
-      const block = doc.plainDoc.blocks.get(range.blockIndex)
-      const selectedText = range.getText(block)
-      SelectionUtils.keepRange(cont => this.setState({ selectedText }, cont))
-    } else {
-      this.setState({ selectedText: '' })
-    }
-  }
-
   annotateFactory = (tag: string) => () => {
-    const { add, addOne, sel } = this.props
+    // TODO 有优化交互的空间
+    const { add, addOne, sel, range } = this.props
     if (sel.isEmpty()) {
-      const range = SelectionUtils.getCurrentRange()
       if (range) {
-        addOne(
-          new Annotation({
-            tag,
-            range: range.normalize(),
-            confidence: 1,
-            id: getNextId('annotation'),
-          }),
-        )
+        addOne(Annotation.tagRange(tag, range.normalize()))
       } else {
         // TODO make a toast showing 'invalid selection'
         console.log('invalid selection')
       }
     } else {
-      add(
-        sel.map(
-          slot =>
-            new Annotation({
-              tag,
-              range: slot.range,
-              confidence: 1,
-              id: getNextId('annotation'),
-            }),
-        ),
-      )
+      add(Annotation.tagSel(tag, sel))
       this.clearSel()
     }
   }
 
   addHighlightToSelection = () => {
-    const { doc, sel, setSel } = this.props
-    const { selectedText } = this.state
-    if (selectedText.length === 0) {
+    const { doc, sel, setSel, range } = this.props
+    const selectedText = DecorationRange.getText(doc, range)
+
+    if (selectedText === '') {
       return
     }
 
@@ -148,7 +116,7 @@ class AnnotationEditorView extends React.Component<
       )
       .map(slot => Object.assign({}, slot, { slotType: 'selection' }))
     setSel(sel.union(highlightSlots))
-    SelectionUtils.setCurrentRange(null)
+    setRange(null)
   }
 
   clearSel = () => {
@@ -157,19 +125,17 @@ class AnnotationEditorView extends React.Component<
   }
 
   removeCurrentAnnotations = () => {
-    const { doc, remove } = this.props
-    const range = SelectionUtils.getCurrentRange()
+    const { doc, remove, range } = this.props
     if (range == null) {
       console.log('invalid range')
     } else {
-      remove(range.normalize().intersect(doc.annotationSet))
-      SelectionUtils.scheduleSetCurrentRange(range)
+      remove(range.intersect(doc.annotationSet))
     }
   }
 
   render() {
-    const { doc, sel } = this.props
-    const { selectedText } = this.state
+    const { doc, sel, range } = this.props
+    const selectedText = DecorationRange.getText(doc, range)
 
     const decorationSet = DecorationSet.fromDoc(doc).addSel(sel)
 
@@ -224,7 +190,7 @@ class AnnotationEditorView extends React.Component<
                     decoration={decoration}
                     onClick={this.onClickDecoration}
                   >
-                    {decoration.range.getText(block)}
+                    {DecorationRange.getText(doc, decoration.range)}
                   </Span>
                 ))}
             </div>
@@ -236,33 +202,12 @@ class AnnotationEditorView extends React.Component<
 }
 
 const mapDispatchToProps = {
-  add(setToAdd: Set<Annotation>) {
-    return {
-      type: 'ADD_ANNOTATION_SET',
-      setToAdd,
-    } as Action.AddAnnotationSet
-  },
-  addOne(annotation: Annotation) {
-    return {
-      type: 'ADD_ANNOTATION_SET',
-      setToAdd: Set.of(annotation),
-    } as Action.AddAnnotationSet
-  },
-  remove(setToRemove: Set<Annotation>) {
-    return {
-      type: 'REMOVE_ANNOTATION_SET',
-      setToRemove,
-    } as Action.RemoveAnnotationSet
-  },
-  removeOne(annotation: Annotation) {
-    return {
-      type: 'REMOVE_ANNOTATION_SET',
-      setToRemove: Set.of(annotation),
-    } as Action.RemoveAnnotationSet
-  },
-  setSel(sel: Set<Decoration>): Action.SetSel {
-    return { type: 'SET_SEL', sel }
-  },
+  add: addAnnotationSet,
+  addOne: addOneAnnotation,
+  remove: removeAnnotationSet,
+  removeOne: removeOneAnnotation,
+  setSel,
+  setRange,
 }
 
 type Keyed<T> = { [key in keyof T]: any }

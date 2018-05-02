@@ -1,10 +1,10 @@
-import { hot } from 'react-hot-loader'
 import React from 'react'
+import { hot } from 'react-hot-loader'
 import AnnotationEditorView from '../AnnotationEditorView/AnnotationEditorView'
-import './App.styl'
 import Menubar from '../Menubar/Menubar'
-import StatusBar from '../StatusBar/StatusBar'
 import PanelContainer from '../panels/PanelContainer'
+import StatusBar from '../StatusBar/StatusBar'
+import './App.styl'
 
 @hot(module)
 export default class App extends React.Component {
@@ -26,6 +26,7 @@ export default class App extends React.Component {
                 justifyContent: 'center',
               }}
             >
+              {/* TODO */}
               navigator
             </div>
           </div>

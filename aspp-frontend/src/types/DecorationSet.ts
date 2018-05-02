@@ -1,7 +1,7 @@
 import { Record, Set } from 'immutable'
 import AnnotatedDoc from './AnnotatedDoc'
-import DecorationRange from './DecorationRange'
 import Annotation from './Annotation'
+import DecorationRange from './DecorationRange'
 
 interface AnnotationDecoration {
   readonly type: 'annotation'
