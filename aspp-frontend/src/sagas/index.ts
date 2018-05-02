@@ -1,9 +1,9 @@
 import { eventChannel } from 'redux-saga'
 import { fork, put, take } from 'redux-saga/effects'
-import { setRange } from './actionCreators'
-import SelectionUtils from './utils/SelectionUtils'
+import { setRange } from '../utils/actionCreators'
+import SelectionUtils from '../utils/SelectionUtils'
 
-function* autoUpdateRange() {
+function* autoUpdateRangeAccordingToNativeSelection() {
   const chan = eventChannel(emit => {
     const callback = () => emit('change')
     document.addEventListener('selectionchange', callback)
@@ -23,5 +23,5 @@ function* autoUpdateRange() {
 
 export default function* rootSaga() {
   console.log('root-saga started')
-  yield fork(autoUpdateRange)
+  yield fork(autoUpdateRangeAccordingToNativeSelection)
 }

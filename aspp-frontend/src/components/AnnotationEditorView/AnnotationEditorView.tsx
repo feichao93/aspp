@@ -1,6 +1,11 @@
 import { is, List, Set } from 'immutable'
 import React from 'react'
 import { connect } from 'react-redux'
+import { State } from '../../reducer'
+import AnnotatedDoc from '../../types/AnnotatedDoc'
+import Annotation from '../../types/Annotation'
+import DecorationRange from '../../types/DecorationRange'
+import DecorationSet, { Decoration } from '../../types/DecorationSet'
 import {
   addAnnotationSet,
   addOneAnnotation,
@@ -8,12 +13,7 @@ import {
   removeOneAnnotation,
   setRange,
   setSel,
-} from '../../actionCreators'
-import { State } from '../../reducer'
-import AnnotatedDoc from '../../types/AnnotatedDoc'
-import Annotation from '../../types/Annotation'
-import DecorationRange from '../../types/DecorationRange'
-import DecorationSet, { Decoration } from '../../types/DecorationSet'
+} from '../../utils/actionCreators'
 import { identity, preventDefault } from '../../utils/common'
 import SelectionUtils from '../../utils/SelectionUtils'
 import './AnnotationEditorView.styl'

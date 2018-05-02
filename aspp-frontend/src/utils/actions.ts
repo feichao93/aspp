@@ -1,7 +1,7 @@
 import { Set } from 'immutable'
-import Annotation from './types/Annotation'
-import DecorationRange from './types/DecorationRange'
-import { Decoration } from './types/DecorationSet'
+import Annotation from '../types/Annotation'
+import DecorationRange from '../types/DecorationRange'
+import { Decoration } from '../types/DecorationSet'
 
 type Action = Action.ALL
 

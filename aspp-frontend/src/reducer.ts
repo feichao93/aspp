@@ -1,6 +1,6 @@
 import { Set } from 'immutable'
 import { combineReducers } from 'redux'
-import Action from './actions'
+import Action from './utils/actions'
 import * as testData from './testData'
 import AnnotatedDoc from './types/AnnotatedDoc'
 import DecorationRange from './types/DecorationRange'

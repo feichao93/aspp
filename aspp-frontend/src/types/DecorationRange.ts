@@ -8,11 +8,13 @@ const DecorationRangeRecord = Record({
   endOffset: 0,
 })
 
+/** 文档中一段文本的位置 */
 export default class DecorationRange extends DecorationRangeRecord {
   static fromJS(object: any) {
     return new DecorationRange(object)
   }
 
+  /** 从文档中获取 range 对应的文本；range 为 `null` 时，该函数返回空字符串 */
   static getText(doc: AnnotatedDoc, range: DecorationRange) {
     if (range == null) {
       return ''
@@ -24,6 +26,7 @@ export default class DecorationRange extends DecorationRangeRecord {
     }
   }
 
+  /** 计算与该 range 有重叠的那些 Annotation */
   intersect(annotationSet: Set<Annotation>): Set<Annotation> {
     const normalized = this.normalize()
     return annotationSet.filter(annotation => {
@@ -36,6 +39,9 @@ export default class DecorationRange extends DecorationRangeRecord {
     })
   }
 
+  /** 标准化 `startOffset/endOffset` 字段
+   * 返回的对象满足条件「`startOffset` 字段小于等于 `endOffset` 字段」
+   * */
   normalize() {
     if (this.startOffset > this.endOffset) {
       return this.merge({

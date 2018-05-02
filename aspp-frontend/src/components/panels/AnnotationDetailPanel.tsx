@@ -4,7 +4,7 @@ import DecorationRange from '../../types/DecorationRange'
 import { getNextId } from '../../utils/common'
 import './AnnotationDetailPanel.styl'
 
-// TODO
+// TODO make it live!
 const testAnnotation = new Annotation({
   id: getNextId('annotation'),
   confidence: 0.8,

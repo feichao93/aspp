@@ -1,8 +1,8 @@
 import { Set } from 'immutable'
 import Action from './actions'
-import Annotation from './types/Annotation'
-import DecorationRange from './types/DecorationRange'
-import { Decoration } from './types/DecorationSet'
+import Annotation from '../types/Annotation'
+import DecorationRange from '../types/DecorationRange'
+import { Decoration } from '../types/DecorationSet'
 
 export function addOneAnnotation(annotation: Annotation): Action.AddAnnotationSet {
   return {
