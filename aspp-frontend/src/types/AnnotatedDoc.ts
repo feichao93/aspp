@@ -3,6 +3,7 @@ import PlainDoc from './PlainDoc'
 import Annotation from './Annotation'
 
 const AnnotatedDocRecord = Record({
+  id: '',
   author: '',
   plainDoc: new PlainDoc(),
   annotationSet: Set<Annotation>(),

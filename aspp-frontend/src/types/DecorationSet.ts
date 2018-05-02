@@ -43,7 +43,7 @@ export default class DecorationSet extends DecorationSetRecord {
     })
   }
 
-  addSelection(selection: Set<Decoration>) {
+  addSel(selection: Set<Decoration>) {
     return this.update('decSet', decSet => decSet.union(selection))
   }
 

@@ -23,3 +23,7 @@ export function getNextId(tag: string) {
   nextIdMap.set(tag, nextId + 1)
   return `${tag}-${nextId}`
 }
+
+export function identity<T>(arg: T): T {
+  return arg
+}

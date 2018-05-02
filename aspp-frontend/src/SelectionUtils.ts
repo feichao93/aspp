@@ -37,6 +37,12 @@ function ignoreSelectionChangeUntilNextMicroTask() {
   })
 }
 
+function scheduleSetCurrentRange(annotationRange: DecorationRange) {
+  Promise.resolve(0).then(() => {
+    setCurrentRange(annotationRange)
+  })
+}
+
 function setCurrentRange(annotationRange: DecorationRange) {
   ignoreSelectionChangeUntilNextMicroTask()
   const selection = document.getSelection()
@@ -85,7 +91,7 @@ function keepRange(callback: (cont: () => void) => void) {
   callback(() => setCurrentRange(range))
 }
 
-export default { getCurrentRange, setCurrentRange, on, keepRange }
+export default { getCurrentRange, setCurrentRange, on, keepRange, scheduleSetCurrentRange }
 
 if (process.env.NODE_ENV === 'development') {
   const injectToolsToGlobal = function(global: any) {

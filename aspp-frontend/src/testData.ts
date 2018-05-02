@@ -10,6 +10,7 @@ export const plainDoc: PlainDoc = PlainDoc.fromJS({
 })
 
 export const annotatedDoc = AnnotatedDoc.fromJS({
+  id: getNextId('annotated-doc'),
   author: 'test-author',
   annotationSet: [
     {
