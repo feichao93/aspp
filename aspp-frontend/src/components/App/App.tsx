@@ -8,6 +8,7 @@ import './App.styl'
 import Menubar from '../Menubar/Menubar'
 import StatusBar from '../StatusBar/StatusBar'
 import Annotation from '../../types/Annotation'
+import PanelContainer from '../panels/PanelContainer'
 
 @hot(module)
 export default class App extends React.Component {
@@ -60,7 +61,7 @@ export default class App extends React.Component {
               navigator
             </div>
           </div>
-          <div className="view">
+          <div className="view-container" style={{ gridArea: 'view' }}>
             <AnnotationEditorView
               doc={annotatedDoc}
               add={this.add}
@@ -69,21 +70,7 @@ export default class App extends React.Component {
               removeOne={this.removeOne}
             />
           </div>
-          <div className="panel">
-            <div
-              style={{
-                background: '#ff9577',
-                width: 100,
-                height: '100%',
-                fontSize: '32px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              panel
-            </div>
-          </div>
+          <PanelContainer />
           <StatusBar />
         </div>
       </div>

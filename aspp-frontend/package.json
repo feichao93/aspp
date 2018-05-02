@@ -7,11 +7,13 @@
     "build": "webpack --mode=production"
   },
   "dependencies": {
+    "@types/classnames": "^2.2.3",
     "@types/node": "^9.6.6",
     "@types/react": "^16.3.12",
     "@types/react-dom": "^16.0.5",
     "@types/react-hot-loader": "^3.0.6",
     "@types/react-redux": "^5.0.19",
+    "classnames": "^2.2.5",
     "immutable": "^4.0.0-rc.9",
     "normalize.css": "^8.0.0",
     "react": "^16.3.2",

@@ -3,6 +3,10 @@ html {
   font-family Consolas, "Microsoft Yahei", sans-serif
 }
 
+.no-user-select {
+  user-select none
+}
+
 .app {
   width 100vw
   height 100vh
@@ -11,20 +15,12 @@ html {
 .app-content {
   height 100%
   display grid
-  grid-template-areas "menubar menubar menubar" "left middle right" "status-bar status-bar status-bar"
+  grid-template-areas "menubar menubar menubar" "navigator view panel" "status-bar status-bar status-bar"
   grid-template-rows 0fr auto 0fr
   grid-template-columns 0fr auto 0fr
 
   .navigator {
-    grid-area left
-  }
-
-  .view {
-    grid-area middle
-  }
-
-  .panel {
-    grid-area right
+    grid-area navigator
   }
 
   .status-bar {

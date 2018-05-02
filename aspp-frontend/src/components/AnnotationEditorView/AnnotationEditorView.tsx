@@ -21,9 +21,15 @@ export interface AnnotationEditorViewState {
   selection: Set<Decoration>
 }
 
-class Span extends React.Component<{ decoration: Decoration; block: string }> {
+interface SpanProps {
+  decoration: Decoration
+  block: string
+  onClick: (event: React.MouseEvent<HTMLSpanElement>, decoration: Decoration) => void
+}
+
+class Span extends React.Component<SpanProps> {
   render() {
-    const { decoration, children } = this.props
+    const { decoration, children, onClick } = this.props
     const { range } = decoration
     if (decoration.type === 'text') {
       return (
@@ -50,7 +56,11 @@ class Span extends React.Component<{ decoration: Decoration; block: string }> {
       )
     } else if (decoration.type === 'slot') {
       return (
-        <span className={['slot', decoration.slotType].join(' ')} data-offset={range.startOffset}>
+        <span
+          className={['slot', decoration.slotType].join(' ')}
+          data-offset={range.startOffset}
+          onClick={e => onClick(e, decoration)}
+        >
           {children}
         </span>
       )
@@ -76,6 +86,11 @@ export default class AnnotationEditorView extends React.Component<
     document.removeEventListener('keypress', this.onKeyPress)
   }
 
+  state = {
+    selectedText: '',
+    selection: Set<Decoration>(),
+  }
+
   onKeyPress = (event: KeyboardEvent) => {
     if (event.key === 'a') {
       this.addHighlightToSelection()
@@ -94,9 +109,15 @@ export default class AnnotationEditorView extends React.Component<
     }
   }
 
-  state = {
-    selectedText: '',
-    selection: Set<Decoration>(),
+  onClickDecoration = (event: React.MouseEvent<HTMLSpanElement>, decoration: Decoration) => {
+    console.log(decoration)
+    if (decoration.type === 'slot') {
+      if (decoration.slotType === 'selection') {
+        if (event.ctrlKey) {
+          this.setState({ selection: this.state.selection.remove(decoration) })
+        }
+      }
+    }
   }
 
   onSelectionChange = () => {
@@ -186,7 +207,7 @@ export default class AnnotationEditorView extends React.Component<
     const { doc } = this.props
     const { selectedText, selection } = this.state
 
-    const decorationSet = DecorationSet.fromDoc(doc)
+    const decorationSet = DecorationSet.fromDoc(doc).addSelection(selection)
 
     return (
       <div className="view annotation-editor-view">
@@ -230,11 +251,15 @@ export default class AnnotationEditorView extends React.Component<
           {doc.plainDoc.blocks.map((block, blockIndex) => (
             <div key={blockIndex} data-block data-blockindex={blockIndex}>
               {decorationSet
-                .addSelection(selection)
                 .highlightMatch(block, blockIndex, selectedText)
                 .completeTexts(block, blockIndex)
                 .map((decoration, index) => (
-                  <Span key={index} block={block} decoration={decoration}>
+                  <Span
+                    key={index}
+                    block={block}
+                    decoration={decoration}
+                    onClick={this.onClickDecoration}
+                  >
                     {decoration.range.getText(block)}
                   </Span>
                 ))}
