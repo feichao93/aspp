@@ -1,8 +1,8 @@
+import { Button, ButtonGroup, Intent, Menu, MenuItem, Popover, Position } from '@blueprintjs/core'
 import { is, Set } from 'immutable'
 import React from 'react'
 import { connect } from 'react-redux'
 import { State } from '../../reducer'
-import AnnotatedDoc from '../../types/AnnotatedDoc'
 import Decoration from '../../types/Decoration'
 import DecorationRange from '../../types/DecorationRange'
 import DecorationSet from '../../types/DecorationSet'
@@ -14,16 +14,13 @@ import {
   setRange,
   setSel,
 } from '../../utils/actionCreators'
-import { identity, preventDefault } from '../../utils/common'
+import { identity } from '../../utils/common'
 import SelectionUtils from '../../utils/SelectionUtils'
 import './AnnotationEditorView.styl'
 import './annotations.styl'
 import Span from './Span'
 
 export interface AnnotationEditorViewProps {
-  doc: AnnotatedDoc
-  sel: Set<Decoration>
-  range: DecorationRange
   setSel(decorationSet: Set<Decoration>): void
   setRange(range: DecorationRange): void
   annotate(tag: string): void
@@ -32,7 +29,7 @@ export interface AnnotationEditorViewProps {
   selectMatch(pattern: string | RegExp): void
 }
 
-class AnnotationEditorView extends React.Component<AnnotationEditorViewProps> {
+class AnnotationEditorView extends React.Component<State & AnnotationEditorViewProps> {
   componentDidMount() {
     document.addEventListener('keydown', this.onKeyDown)
   }
@@ -82,24 +79,29 @@ class AnnotationEditorView extends React.Component<AnnotationEditorViewProps> {
 
     return (
       <div className="view annotation-editor-view">
-        <div className="button-group" style={{ margin: '16px 0' }}>
-          <h3>标注工具</h3>
-          <button onMouseDown={preventDefault} onClick={() => annotate('role')}>
-            (1)<span className="annotation role">角色</span>
-          </button>
-          <button onMouseDown={preventDefault} onClick={() => annotate('item')}>
-            (2)<span className="annotation item">道具</span>
-          </button>
-          <button onMouseDown={preventDefault} onClick={() => annotate('time')}>
-            (3)<span className="annotation time">时间点</span>
-          </button>
-          <button onMouseDown={preventDefault} onClick={() => annotate('action')}>
-            (4)<span className="annotation action">动作</span>
-          </button>
-          <button style={{ marginLeft: 16 }} onMouseDown={preventDefault} onClick={clearAnnotation}>
-            清除标注
-          </button>
-        </div>
+        <ButtonGroup style={{ margin: '16px 8px', display: 'flex' }}>
+          <Popover
+            content={
+              <Menu>
+                <MenuItem icon="annotation" text="标注工具" />
+                <MenuItem icon="layout-grid" text="缩略图" />
+                <MenuItem icon="timeline-bar-chart" text="统计图表" />
+              </Menu>
+            }
+            position={Position.BOTTOM_LEFT}
+            minimal
+            transitionDuration={0}
+          >
+            <Button icon="annotation" text="标注工具" rightIcon="caret-down" />
+          </Popover>
+          <Button onClick={() => annotate('role')}>1 角色</Button>
+          <Button onClick={() => annotate('item')}>2 道具</Button>
+          <Button onClick={() => annotate('time')}>3 时间点</Button>
+          <Button onClick={() => annotate('action')}>4 动作</Button>
+          <Button intent={Intent.DANGER} icon="trash" onClick={clearAnnotation}>
+            删除标注
+          </Button>
+        </ButtonGroup>
 
         <div className="editor">
           {doc.plainDoc.blocks.map((block, blockIndex) => (

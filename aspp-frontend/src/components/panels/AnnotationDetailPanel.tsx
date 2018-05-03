@@ -1,3 +1,4 @@
+import { Button, ButtonGroup, Intent } from '@blueprintjs/core'
 import { Set } from 'immutable'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -10,13 +11,6 @@ import { clearAnnotation, clickDecoration, selectMatch, setSel } from '../../uti
 import { compareArray, shortenText } from '../../utils/common'
 import Span from '../AnnotationEditorView/Span'
 import './AnnotationDetailPanel.styl'
-
-interface AnnotationDetailPanelProps {
-  doc: AnnotatedDoc
-  sel: Set<Decoration>
-  range: DecorationRange
-  dispatch: Dispatch
-}
 
 const Rich = {
   string(str: string) {
@@ -55,23 +49,32 @@ function TextDetail({ range, doc, dispatch }: TextDetailProps) {
           <p>startOffset: {Rich.number(range ? range.startOffset : 'N/A')}</p>
           <p>endOffset: {Rich.number(range ? range.endOffset : 'N/A')}</p>
         </div>
-        <div className="button-group" style={{ marginTop: 8 }}>
-          <button onClick={() => dispatch(selectMatch(selectedText))}>选中所有相同的文本</button>
-        </div>
+        <Button onClick={() => dispatch(selectMatch(selectedText))}>选中所有相同的文本</Button>
       </div>
       <hr style={{ margin: 8, border: '1px solid #ccc' }} />
-      <div className="part intersected-part">
-        <h2>Intersected Decorations:</h2>
+      <div className="part">
+        <h2>{intersected.isEmpty() ? 'No Intersected Decorations' : 'Intersected Decorations:'}</h2>
         <DecorationSetPreview set={intersected} doc={doc} dispatch={dispatch} />
-        <div style={{ marginTop: 8 }}>
-          <button onClick={() => dispatch(setSel(intersected))}>
-            选中这些标注({intersected.count()})
-          </button>
-          <button onClick={() => dispatch(clearAnnotation())}>
-            清除这些标注({intersected.count()})
-          </button>
-          <button onClick={() => 0 /* TODO */}>接受所有的 hint (TODO)</button>
-        </div>
+        <ButtonGroup vertical>
+          <Button
+            icon="locate"
+            disabled={intersected.isEmpty()}
+            onClick={() => dispatch(setSel(intersected))}
+          >
+            选中标注({intersected.count()})
+          </Button>
+          <Button icon="confirm" disabled={intersected.isEmpty()} onClick={() => 0 /* TODO */}>
+            接受提示(0)
+          </Button>
+          <Button
+            intent={Intent.DANGER}
+            disabled={intersected.isEmpty()}
+            icon="trash"
+            onClick={() => dispatch(clearAnnotation())}
+          >
+            删除标注({intersected.count()})
+          </Button>
+        </ButtonGroup>
       </div>
     </div>
   )
@@ -81,10 +84,14 @@ function DecorationSetDetail({ doc, sel, dispatch }: TextDetailProps) {
   return (
     <div className="part">
       <DecorationSetPreview doc={doc} set={sel} dispatch={dispatch} />
-      <div style={{ marginTop: 8 }}>
-        <button onClick={() => 0 /* TODO */}>接受所有的 hint (TODO)</button>
-        <button onClick={() => dispatch(clearAnnotation())}>清除这些标注({sel.count()})</button>
-      </div>
+      <ButtonGroup vertical>
+        <Button icon="confirm" onClick={() => 0 /* TODO */}>
+          接受提示(0)
+        </Button>
+        <Button icon="trash" intent={Intent.DANGER} onClick={() => dispatch(clearAnnotation())}>
+          删除标注({sel.count()})
+        </Button>
+      </ButtonGroup>
     </div>
   )
 }
@@ -116,7 +123,7 @@ function DecorationSetPreview({ doc, set, dispatch }: DecorationSetPreviewProps)
 
 type SelMode = 'empty' | 'text' | 'decoration-set'
 
-class AnnotationDetailPanel extends React.Component<AnnotationDetailPanelProps> {
+class AnnotationDetailPanel extends React.Component<State & { dispatch: Dispatch }> {
   render() {
     const { doc, sel, range, dispatch } = this.props
     const mode: SelMode = sel.isEmpty() ? (range ? 'text' : 'empty') : 'decoration-set'

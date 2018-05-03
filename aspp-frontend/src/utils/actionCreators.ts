@@ -45,3 +45,7 @@ export function clickDecoration(decoration: Decoration, ctrlKey: boolean): Actio
 export function selectMatch(pattern: string | RegExp): Action.SelectMatch {
   return { type: 'SELECT_MATCH', pattern }
 }
+
+export function toggleDarkTheme(): Action.ToggleDarkTheme {
+  return { type: 'TOGGLE_DARK_THEME' }
+}

@@ -1,29 +1,12 @@
 .panel-container {
   width 350px
-  overflow-y: auto
+  overflow-y auto
   height 100%
-  background #e7e7e7
-}
+  padding-left 8px
+  border-left #d2d6d9 1px solid
 
-.panel-chooser {
-  display flex
-  background #282c34
-
-  .panel-chooser-item {
-    background: inherit
-    border: none
-    cursor: pointer
-    color: rgba(231, 231, 231, 0.5)
-    font-size: 12px
-    height: 32px
-    line-height: 24px
-    padding: 4px 16px
-    text-transform: uppercase
-    outline: none
-
-    &.active {
-      color: #e7e7e7
-      border-bottom 2px solid #fff
-    }
+  .tab-header {
+    outline none
+    text-transform uppercase
   }
 }

@@ -16,6 +16,7 @@ namespace Action {
     | ClickDecoration
     | ClearAnnotation
     | SelectMatch
+    | ToggleDarkTheme
 
   export interface AddAnnotationSet {
     type: 'ADD_ANNOTATION_SET'
@@ -60,6 +61,10 @@ namespace Action {
   export interface SelectMatch {
     type: 'SELECT_MATCH'
     pattern: string | RegExp
+  }
+
+  export interface ToggleDarkTheme {
+    type: 'TOGGLE_DARK_THEME'
   }
 }
 

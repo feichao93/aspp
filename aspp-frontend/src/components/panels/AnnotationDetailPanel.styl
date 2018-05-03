@@ -1,23 +1,22 @@
 .panel {
+  text-transform initial
   h2 {
+    font-size 20px
+    height 24px
+    line-height @height
     font-weight normal
-    margin 8px 0
+    margin 0
   }
 }
 
 .annotation-detail-panel {
   user-select none
-  .part {
-    margin 0 8px
-  }
 
   .code {
-    background #ccc
-    padding 8px
-    margin 0 -8px
     white-space pre
     line-height 1.3
-    font-size 1.5rem
+    font-size 18px
+    margin 8px 0
 
     > p {
       margin 0 0
@@ -26,34 +25,21 @@
     .string {
       font-weight bold
       color #2b7e18
+      .pt-dark & {
+        color #a5c261
+      }
     }
 
     .number {
       color #0c38f9
+      .pt-dark & {
+        color #6897bb
+      }
     }
 
     .reserved {
       color #666
     }
-  }
-
-  .accept-button {
-    margin-left 16px
-    font-size 14px
-    background green
-    color white
-  }
-
-  .deny-button {
-    margin-left 4px
-    font-size 14px
-    background red
-    color white
-  }
-
-  .edit-button {
-    margin-left 4px
-    font-size 14px
   }
 }
 

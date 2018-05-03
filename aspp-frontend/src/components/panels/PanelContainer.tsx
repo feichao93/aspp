@@ -1,3 +1,4 @@
+import { Classes, Tab, Tabs } from '@blueprintjs/core'
 import classNames from 'classnames'
 import React from 'react'
 import AlgorithmsPanel from './AlgorithmsPanel'
@@ -6,50 +7,40 @@ import HistoryPanel from './HistoryPanel'
 import './PanelContainer.styl'
 import TagsPanel from './TagsPanel'
 
-function ChooserItem({
-  activePanel,
-  name,
-  onChoose,
-}: {
-  activePanel: string
-  name: string
-  onChoose: (name: string) => void
-}) {
-  return (
-    <button
-      className={classNames('panel-chooser-item', { active: activePanel === name })}
-      onClick={() => onChoose(name)}
-    >
-      {name}
-    </button>
-  )
-}
-
 export default class PanelContainer extends React.Component {
   state = {
-    activePanel: 'annotation',
+    selectedTabId: 'annotation',
   }
 
-  onChoose = (panelName: string) => {
-    this.setState({ activePanel: panelName })
+  onChange = (panelName: string) => {
+    this.setState({ selectedTabId: panelName })
   }
 
   render() {
-    const { activePanel } = this.state
+    const { selectedTabId } = this.state
 
     return (
-      <div className="panel-container">
-        <div className="panel-chooser">
-          <ChooserItem name="annotation" activePanel={activePanel} onChoose={this.onChoose} />
-          <ChooserItem name="tags" activePanel={activePanel} onChoose={this.onChoose} />
-          <ChooserItem name="algorithms" activePanel={activePanel} onChoose={this.onChoose} />
-          <ChooserItem name="history" activePanel={activePanel} onChoose={this.onChoose} />
-        </div>
-        {activePanel === 'annotation' && <AnnotationDetailPanel />}
-        {activePanel === 'tags' && <TagsPanel />}
-        {activePanel === 'algorithms' && <AlgorithmsPanel />}
-        {activePanel === 'history' && <HistoryPanel />}
-      </div>
+      <Tabs
+        id="panel-container"
+        className={classNames('panel-container')}
+        selectedTabId={selectedTabId}
+        onChange={this.onChange}
+      >
+        <Tab
+          id="annotation"
+          className="tab-header"
+          title="annotation"
+          panel={<AnnotationDetailPanel />}
+        />
+        <Tab id="tags" className="tab-header" title="tags" panel={<TagsPanel />} />
+        <Tab
+          id="algorithms"
+          className="tab-header"
+          title="algorithms"
+          panel={<AlgorithmsPanel />}
+        />
+        <Tab id="history" className="tab-header" title="history" panel={<HistoryPanel />} />
+      </Tabs>
     )
   }
 }

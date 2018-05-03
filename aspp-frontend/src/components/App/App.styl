@@ -1,5 +1,4 @@
-html {
-  font-size 12px
+body {
   font-family Consolas, "Microsoft Yahei", sans-serif
 }
 
@@ -10,18 +9,17 @@ html {
 .app {
   width 100vw
   height 100vh
+  &.pt-dark {
+    background #2b3741
+  }
 }
 
 .app-content {
   height 100%
   display grid
-  grid-template-areas "menubar menubar menubar" "navigator view panel" "status-bar status-bar status-bar"
+  grid-template-areas "menubar menubar menubar" "task-tree view panel" "status-bar status-bar status-bar"
   grid-template-rows 0fr auto 0fr
   grid-template-columns 0fr auto 0fr
-
-  .navigator {
-    grid-area navigator
-  }
 
   .status-bar {
     grid-area status-bar

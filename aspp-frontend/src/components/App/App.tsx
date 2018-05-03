@@ -1,35 +1,27 @@
+import { Classes } from '@blueprintjs/core'
+import classNames from 'classnames'
 import React from 'react'
 import { hot } from 'react-hot-loader'
+import { connect } from 'react-redux'
+import { MiscState, State } from '../../reducer'
 import AnnotationEditorView from '../AnnotationEditorView/AnnotationEditorView'
 import Menubar from '../Menubar/Menubar'
 import PanelContainer from '../panels/PanelContainer'
 import StatusBar from '../StatusBar/StatusBar'
+import TaskTree from '../TaskTree/TaskTree'
 import './App.styl'
 
 @hot(module)
-export default class App extends React.Component {
+@(connect as any)((s: State) => s.misc)
+export default class App extends React.Component<MiscState> {
   render() {
+    const { darkTheme } = this.props
     return (
-      <div className="app">
+      <div className={classNames('app', { [Classes.DARK]: darkTheme })}>
         <div className="overlay" />
         <div className="app-content">
           <Menubar />
-          <div className="navigator">
-            <div
-              style={{
-                background: '#afc4e1',
-                width: 200,
-                height: '100%',
-                fontSize: '32px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              {/* TODO */}
-              navigator
-            </div>
-          </div>
+          <TaskTree />
           <div className="view-container" style={{ gridArea: 'view' }}>
             <AnnotationEditorView />
           </div>
