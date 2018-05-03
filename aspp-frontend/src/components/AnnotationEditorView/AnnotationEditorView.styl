@@ -1,6 +1,4 @@
 .annotation-editor-view {
-  font-size 16px
-
   .button-group {
     display flex
     align-items center
@@ -10,28 +8,31 @@
   }
 
   .editor {
+    font-size 16px
     font-family consolas, 'Microsoft Yahei', sans-serif
-    padding 16px
+    padding 8px
+    margin 8px
     border 1px solid #ccc
-    line-height 1.5
-    white-space pre-wrap
-    letter-spacing 0.15em
 
     ::selection {
       background #ffdcd4
     }
-
-    .slot {
-      &.selection {
-        box-shadow: rgba(158, 158, 158, 0.33) 1px 1px 3px 1.5px
-        background #FFEB3B
-        cursor pointer
-      }
-      &.highlight {
-        outline 1.5px solid #f7957e
-        outline-offset 0.5px
-      }
-    }
   }
 }
 
+.block {
+  line-height 1.5
+  white-space pre-wrap
+  letter-spacing 0.15em
+
+  .slot {
+    &.selection {
+      box-shadow rgba(158, 158, 158, 0.33) 1px 1px 3px 1.5px
+      background #FFEB3B
+    }
+    &.highlight {
+      outline 1.5px solid #f7957e
+      outline-offset 0.5px
+    }
+  }
+}

@@ -1,21 +1,24 @@
 .panel {
-  > h2 {
+  h2 {
     font-weight normal
-    margin-bottom 4px
-    padding-left 8px
+    margin 8px 0
   }
 }
 
 .annotation-detail-panel {
-  .code {
-    background #ccc
-    padding 8px
-    white-space pre
-    line-height 1.3
-    font-size 1.5rem
+  user-select none
+  .part {
+    margin 0 8px
   }
 
   .code {
+    background #ccc
+    padding 8px
+    margin 0 -8px
+    white-space pre
+    line-height 1.3
+    font-size 1.5rem
+
     > p {
       margin 0 0
     }
@@ -27,6 +30,10 @@
 
     .number {
       color #0c38f9
+    }
+
+    .reserved {
+      color #666
     }
   }
 
@@ -47,5 +54,15 @@
   .edit-button {
     margin-left 4px
     font-size 14px
+  }
+}
+
+.block.sparse {
+  line-height 2
+  > span {
+    margin-left 6px
+    &:first-child {
+      margin-left 2px
+    }
   }
 }

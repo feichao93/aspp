@@ -1,26 +1,34 @@
-.annotation {
-  cursor pointer
-}
-
-.annotation.role {
-  background rgba(147, 180, 228, 0.7)
-  outline 2px solid rgba(37, 107, 210, 0.18)
-
-  &:hover {
-    background rgba(147, 180, 228, 1)
+.block {
+  .annotation {
+    cursor pointer
   }
-}
 
-.annotation.item {
-  background #8bc34a
-}
+  .annotation.role {
+    background rgba(147, 180, 228, 0.7)
+    outline 2px solid rgba(37, 107, 210, 0.18)
 
-.annotation.time {
-  background #795548
-  color white
-}
+    &:hover {
+      background rgba(147, 180, 228, 1)
+    }
+  }
 
-.annotation.action {
-  color #3F51B5
-  font-weight bold
+  .annotation.item {
+    background #8bc34a
+  }
+
+  .annotation.time {
+    background #795548
+    color white
+  }
+
+  .annotation.action {
+    color #3F51B5
+    font-weight bold
+  }
+
+  .annotation.selected
+  .annotation.selected:hover {
+    box-shadow rgba(158, 158, 158, 0.33) 1px 1px 3px 1.5px
+    background #FFEB3B
+  }
 }

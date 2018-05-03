@@ -1,10 +1,10 @@
 import { Set } from 'immutable'
 import { combineReducers } from 'redux'
+import Decoration from './types/Decoration'
 import Action from './utils/actions'
 import * as testData from './testData'
 import AnnotatedDoc from './types/AnnotatedDoc'
 import DecorationRange from './types/DecorationRange'
-import { Decoration } from './types/DecorationSet'
 
 export interface State {
   doc: AnnotatedDoc

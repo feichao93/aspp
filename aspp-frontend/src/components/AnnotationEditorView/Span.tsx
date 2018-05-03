@@ -1,45 +1,55 @@
+import classNames from 'classnames'
 import React from 'react'
-import { Decoration } from '../../types/DecorationSet'
+import Decoration from '../../types/Decoration'
 
 interface SpanProps {
   decoration: Decoration
-  block: string
-  onClick: (event: React.MouseEvent<HTMLSpanElement>, decoration: Decoration) => void
+  onClick?: (decoration: Decoration, ctrlKey: boolean) => void
+  selected?: boolean
 }
 
 export default class Span extends React.Component<SpanProps> {
   render() {
-    const { decoration, children, onClick } = this.props
+    const { decoration, children, onClick, selected } = this.props
     const { range } = decoration
-    if (decoration.type === 'text') {
-      return (
-        <span className="text" data-offset={range.startOffset}>
-          {children}
-        </span>
-      )
-    } else if (decoration.type === 'annotation') {
-      const annotation = decoration.annotation
+    if (Decoration.isText(decoration)) {
       return (
         <span
-          className={['annotation', annotation.tag].join(' ')}
-          data-annotationid={annotation ? annotation.id : undefined}
+          className="text"
           data-offset={range.startOffset}
+          onClick={e => onClick(decoration, e.ctrlKey)}
         >
           {children}
         </span>
       )
-    } else if (decoration.type === 'hint') {
+    } else if (Decoration.isAnnotation(decoration)) {
+      const annotation = decoration.annotation
       return (
-        <span className="hint" data-offset={range.startOffset}>
+        <span
+          className={classNames('annotation', annotation.tag, { selected })}
+          data-annotationid={annotation ? annotation.id : undefined}
+          data-offset={range.startOffset}
+          onClick={e => onClick(decoration, e.ctrlKey)}
+        >
           {children}
         </span>
       )
-    } else if (decoration.type === 'slot') {
+    } else if (Decoration.isHint(decoration)) {
       return (
         <span
-          className={['slot', decoration.slotType].join(' ')}
+          className={classNames('hint', { selected })}
           data-offset={range.startOffset}
-          onClick={e => onClick(e, decoration)}
+          onClick={e => onClick(decoration, e.ctrlKey)}
+        >
+          {children}
+        </span>
+      )
+    } else if (Decoration.isSlot(decoration)) {
+      return (
+        <span
+          className={classNames('slot', decoration.slotType, { selected })}
+          data-offset={range.startOffset}
+          onClick={e => onClick(decoration, e.ctrlKey)}
         >
           {children}
         </span>

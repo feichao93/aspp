@@ -1,12 +1,21 @@
 import { Set } from 'immutable'
 import Annotation from '../types/Annotation'
+import Decoration from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
-import { Decoration } from '../types/DecorationSet'
 
 type Action = Action.ALL
 
 namespace Action {
-  export type ALL = AddAnnotationSet | RemoveAnnotationSet | SetSel | SetRange | Toast
+  export type ALL =
+    | AddAnnotationSet
+    | RemoveAnnotationSet
+    | SetSel
+    | SetRange
+    | Toast
+    | Annotate
+    | ClickDecoration
+    | ClearAnnotation
+    | SelectMatch
 
   export interface AddAnnotationSet {
     type: 'ADD_ANNOTATION_SET'
@@ -31,6 +40,26 @@ namespace Action {
   export interface Toast {
     type: 'TOAST'
     text: string
+  }
+
+  export interface Annotate {
+    type: 'ANNOTATE'
+    tag: string
+  }
+
+  export interface ClickDecoration {
+    type: 'CLICK_DECORATION'
+    decoration: Decoration
+    ctrlKey: boolean
+  }
+
+  export interface ClearAnnotation {
+    type: 'CLEAR_ANNOTATION'
+  }
+
+  export interface SelectMatch {
+    type: 'SELECT_MATCH'
+    pattern: string | RegExp
   }
 }
 

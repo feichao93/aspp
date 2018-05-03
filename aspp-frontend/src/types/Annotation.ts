@@ -1,7 +1,7 @@
 import { Record, Set } from 'immutable'
 import { getNextId } from '../utils/common'
+import Decoration from './Decoration'
 import DecorationRange from './DecorationRange'
-import { Decoration } from './DecorationSet'
 
 const AnnotationRecord = Record({
   id: '',

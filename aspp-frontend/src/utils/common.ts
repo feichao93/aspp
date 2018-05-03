@@ -1,3 +1,4 @@
+import { Set } from 'immutable'
 import React from 'react'
 
 export function preventDefault(event: React.MouseEvent<any>) {
@@ -26,4 +27,27 @@ export function getNextId(tag: string) {
 
 export function identity<T>(arg: T): T {
   return arg
+}
+
+export function toggle<T>(set: Set<T>, t: T) {
+  return set.has(t) ? set.delete(t) : set.add(t)
+}
+
+export function compareArray(arr1: number[], arr2: number[]) {
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return arr1[i] - arr2[i]
+    }
+  }
+  return 0
+}
+
+export function shortenText(maxLen: number, text: string) {
+  if (text.length <= maxLen) {
+    return text
+  } else {
+    const size = text.length
+    const half = Math.floor(maxLen / 2 - 1)
+    return text.substring(0, half) + '...' + text.substring(size - half)
+  }
 }

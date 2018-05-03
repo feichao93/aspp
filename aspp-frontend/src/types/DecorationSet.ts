@@ -1,33 +1,7 @@
 import { Record, Set } from 'immutable'
 import AnnotatedDoc from './AnnotatedDoc'
-import Annotation from './Annotation'
+import Decoration, { Slot, Text } from './Decoration'
 import DecorationRange from './DecorationRange'
-
-interface AnnotationDecoration {
-  readonly type: 'annotation'
-  readonly range: DecorationRange
-  readonly annotation: Annotation
-}
-
-interface Text {
-  readonly type: 'text'
-  readonly range: DecorationRange
-}
-
-interface Hint {
-  readonly type: 'hint'
-  readonly range: DecorationRange
-  readonly hint: string
-}
-
-interface Slot {
-  readonly type: 'slot'
-  readonly slotType: string
-  readonly range: DecorationRange
-}
-
-// TODO add Diagnostics
-export type Decoration = Text | AnnotationDecoration | Hint | Slot
 
 const DecorationSetRecord = Record({
   decSet: Set<Decoration>(),
@@ -35,12 +9,7 @@ const DecorationSetRecord = Record({
 
 export default class DecorationSet extends DecorationSetRecord {
   static fromDoc(doc: AnnotatedDoc) {
-    return new DecorationSet({
-      decSet: doc.annotationSet.map(
-        annotation =>
-          ({ type: 'annotation', annotation, range: annotation.range } as AnnotationDecoration),
-      ),
-    })
+    return new DecorationSet({ decSet: doc.annotationSet.map(Decoration.fromAnnotation) })
   }
 
   addSel(selection: Set<Decoration>) {
@@ -72,18 +41,14 @@ export default class DecorationSet extends DecorationSetRecord {
 
     return this.update('decSet', decSet =>
       decSet.union(
-        indexArray.map(
-          i =>
-            ({
-              type: 'slot',
-              slotType: 'highlight',
-              range: new DecorationRange({
-                blockIndex,
-                startOffset: i,
-                endOffset: i + text.length,
-              }),
-            } as Slot),
-        ),
+        indexArray.map(index => {
+          const range = new DecorationRange({
+            blockIndex,
+            startOffset: index,
+            endOffset: index + text.length,
+          })
+          return new Slot({ type: 'slot', slotType: 'highlight', range })
+        }),
       ),
     )
   }
@@ -102,14 +67,16 @@ export default class DecorationSet extends DecorationSetRecord {
       const decoration = list.get(decorationIndex)
       if (i < decoration.range.startOffset) {
         const endOffset = decoration.range.startOffset
-        result.push({
-          type: 'text',
-          range: new DecorationRange({
-            blockIndex,
-            startOffset: i,
-            endOffset,
+        result.push(
+          new Text({
+            type: 'text',
+            range: new DecorationRange({
+              blockIndex,
+              startOffset: i,
+              endOffset,
+            }),
           }),
-        })
+        )
         i = endOffset
       } else if (i === decoration.range.startOffset) {
         result.push(decoration)
@@ -122,14 +89,16 @@ export default class DecorationSet extends DecorationSetRecord {
     }
 
     if (i < block.length) {
-      result.push({
-        type: 'text',
-        range: new DecorationRange({
-          blockIndex,
-          startOffset: i,
-          endOffset: block.length,
+      result.push(
+        new Text({
+          type: 'text',
+          range: new DecorationRange({
+            blockIndex,
+            startOffset: i,
+            endOffset: block.length,
+          }),
         }),
-      })
+      )
     }
 
     return result
