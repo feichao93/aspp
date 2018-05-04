@@ -37,11 +37,12 @@ const INIT_CONTENTS: ITreeNode[] = [
         id: getNextId('tree-node'),
         icon: 'document',
         label: 'Doc-190f',
+        hasCaret: true,
       },
     ],
   },
   {
-    id: 1,
+    id: getNextId('tree-node'),
     isExpanded: true,
     label: <Tooltip content="已完成 45%">Task-002</Tooltip>,
     childNodes: [
@@ -49,11 +50,32 @@ const INIT_CONTENTS: ITreeNode[] = [
         id: getNextId('tree-node'),
         icon: 'document',
         label: 'Doc-5377',
+        hasCaret: true,
       },
       {
         id: getNextId('tree-node'),
         icon: 'document',
         label: 'Doc-0a68',
+        hasCaret: true,
+      },
+    ],
+  },
+  {
+    id: getNextId('tree-node'),
+    isExpanded: true,
+    label: <Tooltip content="已完成 45%">Task-003</Tooltip>,
+    childNodes: [
+      {
+        id: getNextId('tree-node'),
+        icon: 'document',
+        label: 'Doc-6a43',
+        hasCaret: true,
+      },
+      {
+        id: getNextId('tree-node'),
+        icon: 'document',
+        label: 'Doc-1239',
+        hasCaret: true,
       },
     ],
   },

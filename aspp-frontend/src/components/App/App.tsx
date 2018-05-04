@@ -13,7 +13,7 @@ import './App.styl'
 
 @hot(module)
 @(connect as any)((s: State) => s.misc)
-export default class App extends React.Component<MiscState> {
+export default class App extends React.Component<Partial<MiscState>> {
   render() {
     const { darkTheme } = this.props
     return (

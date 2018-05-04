@@ -45,7 +45,12 @@ class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
           <Button minimal icon="help" text="help" />
         </NavbarGroup>
         <NavbarGroup align={Alignment.RIGHT}>
-          <Switch checked={darkTheme} label="Dark Theme" onChange={() => dispatch(toggleDarkTheme())} />
+          <Switch
+            style={{ marginBottom: 0 }}
+            checked={darkTheme}
+            label="Dark Theme"
+            onChange={() => dispatch(toggleDarkTheme())}
+          />
         </NavbarGroup>
       </Navbar>
     )
