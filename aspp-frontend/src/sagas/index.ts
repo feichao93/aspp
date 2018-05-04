@@ -1,3 +1,4 @@
+import { Intent, Toaster } from '@blueprintjs/core'
 import { List, Set } from 'immutable'
 import { eventChannel } from 'redux-saga'
 import { fork, put, select, take, takeEvery } from 'redux-saga/effects'
@@ -5,13 +6,7 @@ import { State } from '../reducer'
 import Annotation from '../types/Annotation'
 import Decoration, { Slot } from '../types/Decoration'
 import DecorationSet from '../types/DecorationSet'
-import {
-  addAnnotationSet,
-  removeAnnotationSet,
-  setRange,
-  setSel,
-  toast,
-} from '../utils/actionCreators'
+import { addAnnotationSet, removeAnnotationSet, setRange, setSel, toast, } from '../utils/actionCreators'
 import Action from '../utils/actions'
 import { toggle } from '../utils/common'
 import SelectionUtils from '../utils/SelectionUtils'
@@ -122,9 +117,9 @@ function* handleSelectMatch({ pattern }: Action.SelectMatch) {
   }
 }
 
-function handleToast({ text }: Action.Toast) {
-  // TODO
-  console.log('TOAST:', text)
+const toaster = Toaster.create()
+function handleToast({ message }: Action.Toast) {
+  toaster.show({ intent: Intent.PRIMARY, message })
 }
 
 export default function* rootSaga() {

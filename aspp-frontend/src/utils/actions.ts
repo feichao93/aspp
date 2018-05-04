@@ -40,7 +40,7 @@ namespace Action {
 
   export interface Toast {
     type: 'TOAST'
-    text: string
+    message: string
   }
 
   export interface Annotate {

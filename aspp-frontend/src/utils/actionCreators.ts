@@ -27,7 +27,7 @@ export function setRange(range: DecorationRange): Action.SetRange {
 }
 
 export function toast(text: string): Action.Toast {
-  return { type: 'TOAST', text }
+  return { type: 'TOAST', message: text }
 }
 
 export function annotate(tag: string): Action.Annotate {
