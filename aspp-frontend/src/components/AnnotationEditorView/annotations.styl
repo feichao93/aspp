@@ -1,33 +1,63 @@
-.block {
-  .annotation {
-    cursor pointer
+.block .annotation {
+  cursor pointer
+
+  &[data-height="0"] {
     &:hover {
-      outline 2px dashed #666
+      outline 1px solid #666
+    }
+
+    &.selected
+    &.selected:hover {
+      box-shadow #616161 1px 1px 4px 0.5px
+      background #ffe500
     }
   }
 
-  .annotation.role {
-    background rgba(147, 180, 228, 0.7)
+  &[data-height="1"] {
+    &:hover {
+      outline 1px dashed #666
+      outline-offset 3px
+    }
+
+    &.selected
+    &.selected:hover {
+      box-shadow rgba(128, 128, 128, 0.3) 0px 0px 10px 3px
+      background #fff177
+    }
   }
 
-  .annotation.item {
-    background #8bc34a
+  &[data-height="2"] {
+    &:hover {
+      outline 1px dashed #666
+      outline-offset 6px
+    }
+
+    &.selected
+    &.selected:hover {
+      box-shadow rgba(158, 158, 158, 0.2) 0px 0px 10px 2px
+      background #fffbd9
+    }
+  }
+}
+
+.block {
+  .annotation.corporation {
+    background #93b4e4
+  }
+
+  .annotation.nation {
+    background #ffa631
   }
 
   .annotation.time {
-    background #795548
-    color white
+    background #9dbf87
   }
 
-  .annotation.action {
-    color #3F51B5
-    font-weight bold
+  .annotation.concept {
+    background #db72ec
   }
 
-  .annotation.selected
-  .annotation.selected:hover {
-    box-shadow rgba(0, 0, 0, 0.2) 0px 0px 10px 4px
-    background #FFEB3B
-    color black
+  .annotation.sentence {
+    background #ddd
   }
 }

@@ -22,9 +22,7 @@ export default class App extends React.Component<Partial<MiscState>> {
         <div className="app-content">
           <Menubar />
           <TaskTree />
-          <div className="view-container" style={{ gridArea: 'view' }}>
-            <AnnotationEditorView />
-          </div>
+          <AnnotationEditorView />
           <PanelContainer />
           <StatusBar />
         </div>

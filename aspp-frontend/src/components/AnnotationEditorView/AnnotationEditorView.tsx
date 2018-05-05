@@ -22,10 +22,15 @@ import Span from './Span'
 
 export interface AnnotationEditorViewProps {
   setSel(decorationSet: Set<Decoration>): void
+
   setRange(range: DecorationRange): void
+
   annotate(tag: string): void
+
   clearAnnotation(): void
+
   clickDecoration(decoration: Decoration, ctrlKey: boolean): void
+
   selectMatch(pattern: string | RegExp): void
 }
 
@@ -50,18 +55,25 @@ class AnnotationEditorView extends React.Component<State & AnnotationEditorViewP
   }
 
   onKeyDown = (event: KeyboardEvent) => {
-    const { annotate, clearAnnotation } = this.props
+    const { annotate, clearAnnotation, setSel, doc, range } = this.props
     if (event.key === 'Escape') {
       this.clearSel()
     } else if (event.key === '1') {
-      annotate('role')
+      annotate('corporation')
     } else if (event.key === '2') {
-      annotate('item')
+      annotate('nation')
     } else if (event.key === '3') {
       annotate('time')
     } else if (event.key === '4') {
-      annotate('action')
-    } else if (event.key === 'Backspace') {
+      annotate('concept')
+    } else if (event.key === '5') {
+      annotate('sentence')
+    } else if (event.key === 's') {
+      if (range) {
+        const intersected = range.intersect(doc.annotationSet).map(Decoration.fromAnnotation)
+        setSel(intersected)
+      }
+    } else if (event.key === 'Backspace' || event.key === 'd') {
       clearAnnotation()
     }
   }
@@ -77,8 +89,8 @@ class AnnotationEditorView extends React.Component<State & AnnotationEditorViewP
     const decorationSet = doc.annotationSet.map(Decoration.fromAnnotation).toOrderedSet()
 
     return (
-      <div className="view annotation-editor-view">
-        <ButtonGroup style={{ margin: '16px 8px', display: 'flex' }}>
+      <div className="annotation-editor-view">
+        <ButtonGroup style={{ margin: '16px 8px', flex: '0 0 auto' }}>
           <Popover
             content={
               <Menu>
@@ -93,10 +105,11 @@ class AnnotationEditorView extends React.Component<State & AnnotationEditorViewP
           >
             <Button icon="annotation" text="标注工具" rightIcon="caret-down" />
           </Popover>
-          <Button onClick={() => annotate('role')}>1 角色</Button>
-          <Button onClick={() => annotate('item')}>2 道具</Button>
+          <Button onClick={() => annotate('corporation')}>1 公司</Button>
+          <Button onClick={() => annotate('nation')}>2 国家</Button>
           <Button onClick={() => annotate('time')}>3 时间点</Button>
-          <Button onClick={() => annotate('action')}>4 动作</Button>
+          <Button onClick={() => annotate('concept')}>4 概念</Button>
+          <Button onClick={() => annotate('sentence')}>5 句子</Button>
           <Button intent={Intent.DANGER} icon="trash" onClick={clearAnnotation}>
             删除标注
           </Button>
