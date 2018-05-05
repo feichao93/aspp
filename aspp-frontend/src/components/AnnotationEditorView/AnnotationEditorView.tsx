@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { State } from '../../reducer'
 import Decoration from '../../types/Decoration'
 import DecorationRange from '../../types/DecorationRange'
-import DecorationSet from '../../types/DecorationSet'
 import {
   annotate,
   clearAnnotation,
@@ -15,6 +14,7 @@ import {
   setSel,
 } from '../../utils/actionCreators'
 import { identity } from '../../utils/common'
+import digest from '../../utils/digest'
 import SelectionUtils from '../../utils/SelectionUtils'
 import './AnnotationEditorView.styl'
 import './annotations.styl'
@@ -73,9 +73,8 @@ class AnnotationEditorView extends React.Component<State & AnnotationEditorViewP
 
   render() {
     const { doc, sel, range, annotate, clearAnnotation, clickDecoration } = this.props
-    const selectedText = DecorationRange.getText(doc, range)
 
-    const decorationSet = DecorationSet.fromDoc(doc).addSel(sel)
+    const decorationSet = doc.annotationSet.map(Decoration.fromAnnotation).toOrderedSet()
 
     return (
       <div className="view annotation-editor-view">
@@ -106,19 +105,15 @@ class AnnotationEditorView extends React.Component<State & AnnotationEditorViewP
         <div className="editor">
           {doc.plainDoc.blocks.map((block, blockIndex) => (
             <div key={blockIndex} className="block" data-block data-blockindex={blockIndex}>
-              {decorationSet
-                .highlightMatch(block, blockIndex, selectedText)
-                .completeTexts(block, blockIndex)
-                .map((decoration, index) => (
-                  <Span
-                    key={index}
-                    decoration={decoration}
-                    onClick={clickDecoration}
-                    selected={sel.includes(decoration)}
-                  >
-                    {DecorationRange.getText(doc, decoration.range)}
-                  </Span>
-                ))}
+              {digest(block, blockIndex, decorationSet).map((spanInfo, index) => (
+                <Span
+                  key={index}
+                  info={spanInfo}
+                  onMouseDown={clickDecoration}
+                  isSelected={(decoration: Decoration) => sel.includes(decoration)}
+                  block={block}
+                />
+              ))}
             </div>
           ))}
         </div>

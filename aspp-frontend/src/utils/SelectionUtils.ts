@@ -1,33 +1,43 @@
 import DecorationRange from '../types/DecorationRange'
 
 namespace SelectionUtils {
+  function isCompositionSpan(element: Element) {
+    return (element as HTMLSpanElement).dataset.composition != null
+  }
+  function getOffset(element: Element) {
+    return Number((element as HTMLSpanElement).dataset.offset)
+  }
+
+  function findBlock(element: HTMLElement) {
+    while (element != null) {
+      if (element.dataset.block != null) {
+        return element
+      } else {
+        element = element.parentElement
+      }
+    }
+    return element
+  }
+
   export function getCurrentRange(): DecorationRange | null {
     const sel = document.getSelection()
     if (!sel.isCollapsed) {
       const startSpan = sel.anchorNode.parentElement
       const endSpan = sel.focusNode.parentElement
-      if (
-        startSpan.dataset &&
-        startSpan.dataset.offset != null &&
-        endSpan.dataset &&
-        endSpan.dataset.offset != null
-      ) {
-        const block = startSpan.parentElement
-        if (block === endSpan.parentElement) {
-          const blockIndex = Number(block.dataset.blockindex)
+      if (getOffset(startSpan) != null && getOffset(endSpan) != null) {
+        const startBlock = findBlock(startSpan)
+        const endBlock = findBlock(endSpan)
+        if (startBlock === endBlock) {
+          const blockIndex = Number(startBlock.dataset.blockindex)
           return new DecorationRange({
             blockIndex,
-            startOffset: Number(startSpan.dataset.offset) + sel.anchorOffset,
-            endOffset: Number(endSpan.dataset.offset) + sel.focusOffset,
+            startOffset: getOffset(startSpan) + sel.anchorOffset,
+            endOffset: getOffset(endSpan) + sel.focusOffset,
           })
         }
       }
     }
     return null
-  }
-
-  function getOffset(element: Element) {
-    return Number((element as HTMLSpanElement).dataset.offset)
   }
 
   export function setCurrentRange(annotationRange: DecorationRange) {
@@ -37,9 +47,8 @@ namespace SelectionUtils {
       return
     }
     const block = document.querySelector(`*[data-blockindex="${annotationRange.blockIndex}"]`)
-    const spans = block.children
-    const startSpan = find(annotationRange.startOffset)
-    const endSpan = find(annotationRange.endOffset)
+    const startSpan = find(block, annotationRange.startOffset)
+    const endSpan = find(block, annotationRange.endOffset)
     selection.setBaseAndExtent(
       startSpan.firstChild,
       annotationRange.startOffset - getOffset(startSpan),
@@ -48,19 +57,23 @@ namespace SelectionUtils {
     )
 
     // region function-definition
-    function find(targetOffset: number) {
+    function find(parent: Element, targetOffset: number): Element {
       let low = 0
-      let high = spans.length - 1
+      let high = parent.children.length - 1
       while (low < high) {
         const mid = Math.ceil((low + high) / 2)
-        const midSpan = spans.item(mid)
+        const midSpan = parent.children.item(mid)
         if (getOffset(midSpan) > targetOffset) {
           high = mid - 1
         } else {
           low = mid
         }
       }
-      return spans.item(low)
+      const span = parent.children.item(low)
+      if (isCompositionSpan(span)) {
+        return find(span, targetOffset)
+      }
+      return span
     }
     // endregion
   }

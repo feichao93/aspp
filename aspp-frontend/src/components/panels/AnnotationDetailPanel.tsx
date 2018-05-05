@@ -8,7 +8,8 @@ import AnnotatedDoc from '../../types/AnnotatedDoc'
 import Decoration from '../../types/Decoration'
 import DecorationRange from '../../types/DecorationRange'
 import { clearAnnotation, clickDecoration, selectMatch, setSel } from '../../utils/actionCreators'
-import { compareArray, shortenText } from '../../utils/common'
+import { shortenText } from '../../utils/common'
+import digest from '../../utils/digest'
 import Span from '../AnnotationEditorView/Span'
 import './AnnotationDetailPanel.styl'
 
@@ -103,20 +104,23 @@ type DecorationSetPreviewProps = {
 }
 
 function DecorationSetPreview({ doc, set, dispatch }: DecorationSetPreviewProps) {
+  if (set.isEmpty()) {
+    return null
+  }
+  const blockIndex = set.first().range.blockIndex
+  const block = doc.plainDoc.blocks.get(blockIndex)
+
   return (
-    <div className="block sparse">
-      {set
-        .toList()
-        .sortBy(Decoration.getPosition, compareArray)
-        .map((decoration, index) => (
-          <Span
-            key={index}
-            decoration={decoration}
-            onClick={(d: Decoration, ctrlKey: boolean) => dispatch(clickDecoration(d, ctrlKey))}
-          >
-            {shortenText(20, DecorationRange.getText(doc, decoration.range))}
-          </Span>
-        ))}
+    <div className="block preview">
+      {digest(block, blockIndex, set).map((spanInfo, index) => (
+        <Span
+          key={index}
+          info={spanInfo}
+          onMouseDown={(d: Decoration, ctrlKey: boolean) => dispatch(clickDecoration(d, ctrlKey))}
+          isSelected={() => false}
+          block={block}
+        />
+      ))}
     </div>
   )
 }

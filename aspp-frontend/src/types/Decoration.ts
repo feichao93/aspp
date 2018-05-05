@@ -3,25 +3,25 @@ import { Record } from 'immutable'
 import DecorationRange from './DecorationRange'
 
 export class AnnotationDecoration extends Record({
-  type: 'annotation',
+  type: 'annotation' as 'annotation',
   range: new DecorationRange(),
   annotation: new Annotation(),
 }) {}
 
 export class Text extends Record({
-  type: 'text',
+  type: 'text' as 'text',
   range: new DecorationRange(),
 }) {}
 
 export class Hint extends Record({
-  type: 'hint',
+  type: 'hint' as 'hint',
   range: new DecorationRange(),
   hint: '',
   // TODO actions
 }) {}
 
 export class Slot extends Record({
-  type: 'slot',
+  type: 'slot' as 'slot',
   slotType: '',
   range: new DecorationRange(),
 }) {}
