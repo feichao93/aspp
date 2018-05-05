@@ -33,7 +33,7 @@ interface TextDetailProps {
 }
 
 function TextDetail({ range, doc, dispatch }: TextDetailProps) {
-  const intersected = range.intersect(doc.annotationSet).map(Decoration.fromAnnotation)
+  const intersected = range.filterIntersected(doc.annotationSet).map(Decoration.fromAnnotation)
   const selectedText = DecorationRange.getText(doc, range)
 
   return (

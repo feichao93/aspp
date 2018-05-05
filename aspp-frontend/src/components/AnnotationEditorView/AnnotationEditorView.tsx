@@ -70,7 +70,9 @@ class AnnotationEditorView extends React.Component<State & AnnotationEditorViewP
       annotate('sentence')
     } else if (event.key === 's') {
       if (range) {
-        const intersected = range.intersect(doc.annotationSet).map(Decoration.fromAnnotation)
+        const intersected = range
+          .filterIntersected(doc.annotationSet)
+          .map(Decoration.fromAnnotation)
         setSel(intersected)
       }
     } else if (event.key === 'Backspace' || event.key === 'd') {

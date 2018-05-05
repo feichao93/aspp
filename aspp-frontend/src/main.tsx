@@ -1,4 +1,5 @@
 import 'normalize.css'
+import '@blueprintjs/core/lib/css/blueprint.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'

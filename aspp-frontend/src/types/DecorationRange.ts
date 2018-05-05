@@ -27,8 +27,36 @@ export default class DecorationRange extends DecorationRangeRecord {
     }
   }
 
+  static isIntersected(r1: DecorationRange, r2: DecorationRange) {
+    r1 = r1.normalize()
+    r2 = r2.normalize()
+    return (
+      r1.blockIndex === r2.blockIndex &&
+      r1.startOffset < r2.endOffset &&
+      r1.endOffset > r2.startOffset
+    )
+  }
+
+  static contains(r1: DecorationRange, r2: DecorationRange) {
+    r1 = r1.normalize()
+    r2 = r2.normalize()
+    return (
+      r1.blockIndex === r2.blockIndex &&
+      r1.startOffset <= r2.startOffset &&
+      r1.endOffset >= r2.endOffset
+    )
+  }
+
+  static isOverlapped(r1: DecorationRange, r2: DecorationRange) {
+    return (
+      DecorationRange.isIntersected(r1, r2) &&
+      !DecorationRange.contains(r1, r2) &&
+      !DecorationRange.contains(r2, r1)
+    )
+  }
+
   /** 计算与该 range 有重叠的那些 Annotation */
-  intersect(annotationSet: Set<Annotation>): Set<Annotation> {
+  filterIntersected(annotationSet: Set<Annotation>): Set<Annotation> {
     const normalized = this.normalize()
     return annotationSet.filter(annotation => {
       const { blockIndex, startOffset, endOffset } = annotation.range

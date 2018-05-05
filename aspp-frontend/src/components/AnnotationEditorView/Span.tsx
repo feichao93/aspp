@@ -31,7 +31,7 @@ export default class Span extends React.Component<SpanProps> {
       <span
         data-height={height}
         data-offset={decoration.range.startOffset}
-        className={getClassName(decoration)}
+        className={getClassName(decoration, isSelected(decoration))}
         onMouseDown={this.onMouseDown}
       >
         {height > 0
@@ -48,22 +48,19 @@ export default class Span extends React.Component<SpanProps> {
           : decoration.range.substring(block, shortenLongText)}
       </span>
     )
+  }
+}
 
-    // region function-definition
-    function getClassName(decoration: Decoration) {
-      const selected = isSelected(decoration)
-      if (decoration.type === 'text') {
-        return classNames('text', { selected })
-      } else if (decoration.type === 'annotation') {
-        return classNames('annotation', decoration.annotation.tag, { selected })
-      } else {
-        if (decoration.type === 'slot') {
-          return classNames('slot', decoration.slotType, { selected })
-        } else if (decoration.type === 'hint') {
-          return classNames('hint', { selected })
-        }
-      }
+function getClassName(decoration: Decoration, selected: boolean) {
+  if (decoration.type === 'text') {
+    return classNames('text', { selected })
+  } else if (decoration.type === 'annotation') {
+    return classNames('annotation', decoration.annotation.tag, { selected })
+  } else {
+    if (decoration.type === 'slot') {
+      return classNames('slot', decoration.slotType, { selected })
+    } else if (decoration.type === 'hint') {
+      return classNames('hint', { selected })
     }
-    // endregion
   }
 }

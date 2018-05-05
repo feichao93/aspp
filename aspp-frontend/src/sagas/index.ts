@@ -5,6 +5,7 @@ import { fork, put, select, take, takeEvery } from 'redux-saga/effects'
 import { State } from '../reducer'
 import Annotation from '../types/Annotation'
 import Decoration, { Slot } from '../types/Decoration'
+import DecorationRange from '../types/DecorationRange'
 import DecorationSet from '../types/DecorationSet'
 import {
   addAnnotationSet,
@@ -49,17 +50,26 @@ function* autoClearSelAndUpdateRange() {
 }
 
 function* handleAnnotate({ tag }: Action.Annotate) {
-  const { sel, range }: State = yield select()
-  if (sel.isEmpty()) {
-    if (range == null) {
-      yield put(toast('invalid selection'))
-    } else {
-      const annotation = Annotation.tagRange(tag, range.normalize())
-      yield put(addAnnotationSet(Set.of(annotation)))
-    }
+  const { sel, range, doc }: State = yield select()
+  if (sel.isEmpty() && range == null) {
+    yield put(toast('Invalid selection'))
+    return
+  }
+
+  const setToAdd = sel.isEmpty()
+    ? Set.of(Annotation.tagRange(tag, range.normalize()))
+    : Annotation.tagSel(tag, sel)
+  const setToRemove = sel.filter(Decoration.isAnnotation).map(dec => dec.annotation)
+  const overlapped = setToAdd.some(a1 =>
+    doc.annotationSet.some(a2 => DecorationRange.isOverlapped(a1.range, a2.range)),
+  )
+
+  if (overlapped) {
+    yield put(toast('Overlap'))
   } else {
-    yield put(addAnnotationSet(Annotation.tagSel(tag, sel)))
-    yield put(setSel(Set()))
+    yield put(removeAnnotationSet(setToRemove))
+    yield put(addAnnotationSet(setToAdd))
+    yield put(setSel(setToAdd.map(Decoration.fromAnnotation)))
   }
 }
 
@@ -69,14 +79,11 @@ function* handleClearAnnotation() {
     if (range == null) {
       yield put(toast('invalid range'))
     } else {
-      yield put(removeAnnotationSet(range.intersect(doc.annotationSet)))
+      yield put(removeAnnotationSet(range.filterIntersected(doc.annotationSet)))
     }
   } else {
-    yield put(
-      removeAnnotationSet(
-        sel.filter(Decoration.isAnnotation).map(decoration => decoration.annotation),
-      ),
-    )
+    const setToRemove = sel.filter(Decoration.isAnnotation).map(decoration => decoration.annotation)
+    yield put(removeAnnotationSet(setToRemove))
     yield put(setSel(Set()))
   }
 }
