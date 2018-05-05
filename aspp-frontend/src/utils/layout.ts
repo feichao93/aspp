@@ -4,37 +4,15 @@ import Decoration, { AnnotationDecoration, Slot, Text } from '../types/Decoratio
 import DecorationRange from '../types/DecorationRange'
 import { compareArray, getNextId } from './common'
 
-export type SpanInfo =
-  | { type: 'composition'; decoration: AnnotationDecoration; children: SpanInfo[] }
-  | { type: 'atom'; decoration: Decoration; children?: SpanInfo[] }
-
-export function covertSpanInfoArraytoString(block: string, spanInfoArray: SpanInfo[]) {
-  function dfs(spanInfo: SpanInfo): string {
-    if (spanInfo.type === 'composition') {
-      return `${spanInfo.decoration.annotation.tag}[ ${spanInfo.children.map(dfs).join(', ')} ]`
-    } else {
-      const decoration = spanInfo.decoration
-      if (decoration.type === 'text') {
-        return JSON.stringify(
-          block.substring(decoration.range.startOffset, decoration.range.endOffset),
-        )
-      } else if (decoration.type === 'annotation') {
-        return JSON.stringify(
-          `${decoration.annotation.tag}:${block.substring(
-            decoration.range.startOffset,
-            decoration.range.endOffset,
-          )}`,
-        )
-      } else {
-        return String(spanInfo.decoration)
-      }
-    }
-  }
-
-  return spanInfoArray.map(dfs).join(', ')
+export interface SpanInfo {
+  // span的「高度」，-1 表示高度位置，0 表示该 span 没有子节点
+  // 大于 0 表示 span 至少存在一个高度为 height-1 的子节点
+  height: number
+  decoration: Decoration
+  children?: SpanInfo[]
 }
 
-export default function digest(
+export default function layout(
   block: string,
   blockIndex: number,
   decorationSet: Set<Decoration>,
@@ -47,7 +25,7 @@ export default function digest(
   if (array.length === 0) {
     return [
       {
-        type: 'atom',
+        height: 0,
         decoration: new Text({
           type: 'text',
           range: new DecorationRange({ blockIndex, startOffset: 0, endOffset: block.length }),
@@ -58,7 +36,7 @@ export default function digest(
 
   const stack: SpanInfo[] = [
     {
-      type: 'composition',
+      height: -1,
       decoration: Decoration.fromAnnotation(
         new Annotation({
           id: getNextId('dummy-annotation'),
@@ -75,11 +53,7 @@ export default function digest(
   ]
 
   for (const decoration of array) {
-    append({
-      type: 'composition',
-      decoration: decoration as AnnotationDecoration,
-      children: [],
-    })
+    append({ height: -1, decoration })
   }
 
   return flush()
@@ -91,18 +65,17 @@ export default function digest(
       const last = stack[stack.length - 1]
       const lastEnd = last.decoration.range.endOffset
       if (lastEnd >= range.endOffset) {
-        if (spanInfo.type !== 'atom') {
+        if (spanInfo.height !== 0) {
           stack.push(spanInfo)
-          const prevSibling =
-            last.children.length === 0 ? null : last.children[last.children.length - 1]
+          const prevSibling = lastChild(last)
           const prevSiblingEnd = prevSibling
             ? prevSibling.decoration.range.endOffset
             : last.decoration.range.startOffset
           if (prevSiblingEnd < range.startOffset) {
-            last.children.push(makeText(prevSiblingEnd, range.startOffset))
+            ensureChildren(last).push(makeText(prevSiblingEnd, range.startOffset))
           }
         }
-        last.children.push(spanInfo)
+        ensureChildren(last).push(spanInfo)
         break
       } else if (lastEnd <= range.startOffset) {
         stack.pop()
@@ -112,10 +85,7 @@ export default function digest(
             append(makeText(lastEnd, Math.min(parentEnd, range.startOffset)))
           }
         }
-        if (last.children.length === 0) {
-          last.type = 'atom'
-          delete last.children
-        }
+        assignHeight(last)
       } else {
         throw new Error('Decoration Overlapping!')
       }
@@ -131,13 +101,10 @@ export default function digest(
         const lastEnd = last.decoration.range.endOffset
         const parentEnd = parent.decoration.range.endOffset
         if (lastEnd < parentEnd) {
-          parent.children.push(makeText(lastEnd, parentEnd))
+          ensureChildren(parent).push(makeText(lastEnd, parentEnd))
         }
       }
-      if (last.children.length === 0) {
-        last.type = 'atom'
-        delete last.children
-      }
+      assignHeight(last)
       stack.pop()
     }
     return stack[0].children
@@ -145,11 +112,35 @@ export default function digest(
 
   function makeText(startOffset: number, endOffset: number): SpanInfo {
     return {
-      type: 'atom',
+      height: 0,
       decoration: new Text({
         type: 'text',
         range: new DecorationRange({ blockIndex, startOffset, endOffset }),
       }),
+    }
+  }
+
+  function assignHeight(spanInfo: SpanInfo) {
+    if (spanInfo.children == null || spanInfo.children.length === 0) {
+      spanInfo.height = 0
+    } else {
+      const childHeights = spanInfo.children.map(child => child.height)
+      spanInfo.height = Math.max(...childHeights) + 1
+    }
+  }
+
+  function ensureChildren(spanInfo: SpanInfo) {
+    if (spanInfo.children == null) {
+      spanInfo.children = []
+    }
+    return spanInfo.children
+  }
+
+  function lastChild(spanInfo: SpanInfo) {
+    if (spanInfo.children && spanInfo.children.length > 0) {
+      return spanInfo.children[spanInfo.children.length - 1]
+    } else {
+      return null
     }
   }
   // endregion

@@ -14,7 +14,7 @@ import {
   setSel,
 } from '../../utils/actionCreators'
 import { identity } from '../../utils/common'
-import digest from '../../utils/digest'
+import layout from '../../utils/layout'
 import SelectionUtils from '../../utils/SelectionUtils'
 import './AnnotationEditorView.styl'
 import './annotations.styl'
@@ -105,7 +105,7 @@ class AnnotationEditorView extends React.Component<State & AnnotationEditorViewP
         <div className="editor">
           {doc.plainDoc.blocks.map((block, blockIndex) => (
             <div key={blockIndex} className="block" data-block data-blockindex={blockIndex}>
-              {digest(block, blockIndex, decorationSet).map((spanInfo, index) => (
+              {layout(block, blockIndex, decorationSet).map((spanInfo, index) => (
                 <Span
                   key={index}
                   info={spanInfo}

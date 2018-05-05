@@ -9,7 +9,7 @@ import Decoration from '../../types/Decoration'
 import DecorationRange from '../../types/DecorationRange'
 import { clearAnnotation, clickDecoration, selectMatch, setSel } from '../../utils/actionCreators'
 import { shortenText } from '../../utils/common'
-import digest from '../../utils/digest'
+import layout from '../../utils/layout'
 import Span from '../AnnotationEditorView/Span'
 import './AnnotationDetailPanel.styl'
 
@@ -112,13 +112,14 @@ function DecorationSetPreview({ doc, set, dispatch }: DecorationSetPreviewProps)
 
   return (
     <div className="block preview">
-      {digest(block, blockIndex, set).map((spanInfo, index) => (
+      {layout(block, blockIndex, set).map((spanInfo, index) => (
         <Span
           key={index}
           info={spanInfo}
           onMouseDown={(d: Decoration, ctrlKey: boolean) => dispatch(clickDecoration(d, ctrlKey))}
           isSelected={() => false}
           block={block}
+          shortenLongText
         />
       ))}
     </div>

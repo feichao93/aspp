@@ -1,13 +1,14 @@
 import classNames from 'classnames'
 import React from 'react'
 import Decoration from '../../types/Decoration'
-import { SpanInfo } from '../../utils/digest'
+import { SpanInfo } from '../../utils/layout'
 
 interface SpanProps {
   info: SpanInfo
   onMouseDown?(decoration: Decoration, ctrlKey: boolean): void
   isSelected(decoration: Decoration): boolean
   block: string
+  shortenLongText?: boolean
 }
 
 export default class Span extends React.Component<SpanProps> {
@@ -23,32 +24,28 @@ export default class Span extends React.Component<SpanProps> {
   }
 
   render(): any {
-    const {
-      info: { type: infoType, decoration, children },
-      block,
-      onMouseDown,
-      isSelected,
-    } = this.props
-    const range = decoration.range
+    const { info, block, onMouseDown, isSelected, shortenLongText } = this.props
+    const { height, decoration, children } = info
 
     return (
       <span
-        data-composition={infoType === 'composition' ? '' : undefined}
-        data-offset={range.startOffset}
+        data-height={height}
+        data-offset={decoration.range.startOffset}
         className={getClassName(decoration)}
         onMouseDown={this.onMouseDown}
       >
-        {infoType === 'atom'
-          ? block.substring(range.startOffset, range.endOffset)
-          : children.map((child, index) => (
+        {height > 0
+          ? children.map((child, index) => (
               <Span
                 key={index}
                 info={child}
                 onMouseDown={onMouseDown}
                 isSelected={isSelected}
                 block={block}
+                shortenLongText={shortenLongText}
               />
-            ))}
+            ))
+          : decoration.range.substring(block, shortenLongText)}
       </span>
     )
 

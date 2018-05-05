@@ -1,5 +1,6 @@
 import { Set } from 'immutable'
 import React from 'react'
+import Decoration from '../types/Decoration'
 
 export function preventDefault(event: React.MouseEvent<any>) {
   event.preventDefault()
@@ -49,5 +50,15 @@ export function shortenText(maxLen: number, text: string) {
     const size = text.length
     const half = Math.floor(maxLen / 2 - 1)
     return text.substring(0, half) + '...' + text.substring(size - half)
+  }
+}
+
+export function getDecorationName(decoration: Decoration) {
+  if (decoration.type === 'annotation') {
+    return decoration.annotation.tag
+  } else if (decoration.type === 'slot') {
+    return decoration.slotType
+  } else {
+    return decoration.type
   }
 }

@@ -1,4 +1,5 @@
 import { Record, Set } from 'immutable'
+import { shortenText } from '../utils/common'
 import AnnotatedDoc from './AnnotatedDoc'
 import Annotation from './Annotation'
 
@@ -51,5 +52,14 @@ export default class DecorationRange extends DecorationRangeRecord {
     } else {
       return this
     }
+  }
+
+  substring(block: string, shortenLongText = false, maxLen = 15) {
+    const normalized = this.normalize()
+    const text = block.substring(normalized.startOffset, normalized.endOffset)
+    if (shortenLongText) {
+      return shortenText(maxLen, text)
+    }
+    return text
   }
 }

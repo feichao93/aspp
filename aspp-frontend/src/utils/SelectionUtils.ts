@@ -1,8 +1,8 @@
 import DecorationRange from '../types/DecorationRange'
 
 namespace SelectionUtils {
-  function isCompositionSpan(element: Element) {
-    return (element as HTMLSpanElement).dataset.composition != null
+  function getCompositionHeight(element: Element) {
+    return Number((element as HTMLSpanElement).dataset.height)
   }
   function getOffset(element: Element) {
     return Number((element as HTMLSpanElement).dataset.offset)
@@ -70,7 +70,7 @@ namespace SelectionUtils {
         }
       }
       const span = parent.children.item(low)
-      if (isCompositionSpan(span)) {
+      if (getCompositionHeight(span) > 0) {
         return find(span, targetOffset)
       }
       return span
