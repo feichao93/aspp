@@ -18,7 +18,7 @@ import './Menubar.styl'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { MiscState, State } from '../../reducer'
-import { toggleDarkTheme } from '../../utils/actionCreators'
+import { toggleDarkTheme, toggleTaskTreeVisibility } from '../../utils/actionCreators'
 
 // TODO 完善状态栏
 class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
@@ -42,6 +42,18 @@ class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
             }
           />
           <Button minimal icon="edit" text="edit" />
+          <Popover
+            position={Position.TOP_LEFT}
+            target={<Button minimal icon="eye-open" text="view" />}
+            content={
+              <Menu>
+                <MenuItem
+                  text="Toggle Task Tree"
+                  onClick={() => dispatch(toggleTaskTreeVisibility())}
+                />
+              </Menu>
+            }
+          />
           <Button minimal icon="help" text="help" />
         </NavbarGroup>
         <NavbarGroup align={Alignment.RIGHT}>

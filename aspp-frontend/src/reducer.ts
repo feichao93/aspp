@@ -8,6 +8,7 @@ import DecorationRange from './types/DecorationRange'
 
 export interface MiscState {
   darkTheme: boolean
+  hideTaskTree: boolean
 }
 
 export interface State {
@@ -45,9 +46,11 @@ export function rangeReducer(state: DecorationRange = null, action: Action) {
 
 const darkTheme = localStorage.getItem('dark-theme') != null
 
-export function miscReducer(state: MiscState = { darkTheme }, action: Action) {
+export function miscReducer(state: MiscState = { darkTheme, hideTaskTree: false }, action: Action) {
   if (action.type === 'TOGGLE_DARK_THEME') {
-    return { darkTheme: !state.darkTheme }
+    return { ...state, darkTheme: !state.darkTheme }
+  } else if (action.type === 'TOGGLE_TASK_TREE_VISIBILITY') {
+    return { ...state, hideTaskTree: !state.hideTaskTree }
   } else {
     return state
   }

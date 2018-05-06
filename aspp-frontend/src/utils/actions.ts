@@ -17,6 +17,7 @@ namespace Action {
     | ClearAnnotation
     | SelectMatch
     | ToggleDarkTheme
+    | ToggleTaskTreeVisibility
 
   export interface AddAnnotationSet {
     type: 'ADD_ANNOTATION_SET'
@@ -65,6 +66,10 @@ namespace Action {
 
   export interface ToggleDarkTheme {
     type: 'TOGGLE_DARK_THEME'
+  }
+
+  export interface ToggleTaskTreeVisibility {
+    type: 'TOGGLE_TASK_TREE_VISIBILITY'
   }
 }
 

@@ -49,3 +49,7 @@ export function selectMatch(pattern: string | RegExp): Action.SelectMatch {
 export function toggleDarkTheme(): Action.ToggleDarkTheme {
   return { type: 'TOGGLE_DARK_THEME' }
 }
+
+export function toggleTaskTreeVisibility(): Action.ToggleTaskTreeVisibility {
+  return { type: 'TOGGLE_TASK_TREE_VISIBILITY' }
+}

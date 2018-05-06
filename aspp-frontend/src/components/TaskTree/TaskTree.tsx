@@ -1,5 +1,8 @@
 import { ContextMenu, ITreeNode, Menu, MenuItem, Tooltip, Tree } from '@blueprintjs/core'
+import classNames from 'classnames'
 import React from 'react'
+import { connect } from 'react-redux'
+import { MiscState, State } from '../../reducer'
 import { getNextId } from '../../utils/common'
 import './TaskTree.styl'
 
@@ -81,7 +84,7 @@ const INIT_CONTENTS: ITreeNode[] = [
   },
 ]
 
-export default class TaskTree extends React.Component {
+class TaskTree extends React.Component<MiscState> {
   state = {
     contents: INIT_CONTENTS,
   }
@@ -142,8 +145,9 @@ export default class TaskTree extends React.Component {
   }
 
   render() {
+    const { hideTaskTree } = this.props
     return (
-      <div className="task-tree">
+      <div className={classNames('task-tree', { hide: hideTaskTree })}>
         <Tree
           contents={this.state.contents}
           onNodeClick={this.handleNodeClick}
@@ -155,3 +159,5 @@ export default class TaskTree extends React.Component {
     )
   }
 }
+
+export default connect((s: State) => s.misc)(TaskTree)
