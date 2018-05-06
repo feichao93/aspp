@@ -31,6 +31,11 @@ export function docReducer(state = testData.annotatedDoc, action: Action) {
 export function selReducer(state = Set<Decoration>(), action: Action) {
   if (action.type === 'SET_SEL') {
     return action.sel
+  } else if (action.type === 'REMOVE_ANNOTATION_SET') {
+    return state.filterNot(
+      decoration =>
+        Decoration.isAnnotation(decoration) && action.setToRemove.has(decoration.annotation),
+    )
   } else {
     return state
   }

@@ -10,6 +10,8 @@ namespace Action {
     | AddAnnotationSet
     | RemoveAnnotationSet
     | SetSel
+    | SelectBlockText
+    | ClearBlockDecorations
     | SetRange
     | Toast
     | Annotate
@@ -32,6 +34,16 @@ namespace Action {
   export interface SetSel {
     type: 'SET_SEL'
     sel: Set<Decoration>
+  }
+
+  export interface SelectBlockText {
+    type: 'SELECT_BLOCK_TEXT'
+    blockIndex: number
+  }
+
+  export interface ClearBlockDecorations {
+    type: 'CLEAR_BLOCK_DECORATIONS'
+    blockIndex: number
   }
 
   export interface SetRange {

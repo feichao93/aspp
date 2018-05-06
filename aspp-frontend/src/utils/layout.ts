@@ -1,8 +1,7 @@
 import { Set } from 'immutable'
-import Annotation from '../types/Annotation'
-import Decoration, { AnnotationDecoration, Slot, Text } from '../types/Decoration'
+import Decoration, { Slot, Text } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
-import { compareArray, getNextId } from './common'
+import { compareArray } from './common'
 
 export interface SpanInfo {
   // span的「高度」，-1 表示高度位置，0 表示该 span 没有子节点
@@ -16,44 +15,28 @@ export default function layout(
   block: string,
   blockIndex: number,
   decorationSet: Set<Decoration>,
-): SpanInfo[] {
+): SpanInfo {
   const array = decorationSet
+    // TODO 使用 decorationByBlockIndex 进行性能优化
     .filter(decoration => decoration.range.blockIndex === blockIndex)
     .sortBy(({ range }) => [range.startOffset, -range.endOffset], compareArray)
     .toArray()
 
-  if (array.length === 0) {
-    return [
-      {
-        height: 0,
-        decoration: new Text({
-          type: 'text',
-          range: new DecorationRange({ blockIndex, startOffset: 0, endOffset: block.length }),
-        }),
-      },
-    ]
-  }
-
+  const blockRange = new DecorationRange({ blockIndex, startOffset: 0, endOffset: block.length })
   const stack: SpanInfo[] = [
     {
       height: -1,
-      decoration: Decoration.fromAnnotation(
-        new Annotation({
-          id: getNextId('dummy-annotation'),
-          range: new DecorationRange({
-            blockIndex,
-            startOffset: 0,
-            endOffset: block.length,
-          }),
-          tag: 'block',
-        }),
-      ),
+      decoration: new Slot({ range: blockRange, slotType: 'block-slot' }),
       children: [],
     },
   ]
 
-  for (const decoration of array) {
-    append({ height: -1, decoration })
+  if (array.length === 0) {
+    append(makeText(0, block.length))
+  } else {
+    for (const decoration of array) {
+      append({ height: -1, decoration })
+    }
   }
 
   return flush()
@@ -92,8 +75,8 @@ export default function layout(
     }
   }
 
-  function flush() {
-    // 不断 pop，直到 stack 中只剩下 block 对应的 dummy-annotation
+  function flush(): SpanInfo {
+    // 不断 pop，直到 stack 中只剩下 block-slot
     while (stack.length > 1) {
       const last = stack[stack.length - 1]
       const parent = stack[stack.length - 2]
@@ -107,7 +90,8 @@ export default function layout(
       assignHeight(last)
       stack.pop()
     }
-    return stack[0].children
+    assignHeight(stack[0])
+    return stack[0]
   }
 
   function makeText(startOffset: number, endOffset: number): SpanInfo {

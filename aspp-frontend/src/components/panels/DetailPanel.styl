@@ -1,15 +1,4 @@
-.panel {
-  text-transform initial
-  h2 {
-    font-size 20px
-    height 24px
-    line-height @height
-    font-weight normal
-    margin 0
-  }
-}
-
-.annotation-detail-panel {
+.detail-panel {
   user-select none
 
   .code {
@@ -44,12 +33,14 @@
 }
 
 .block.preview {
-  line-height 2
+  margin-top 0
+
+  &:hover {
+    outline none
+  }
+
   > span {
-    margin-left 6px
-    &:first-child {
-      margin-left 2px
-    }
+    margin-left 4px
 
     &.text {
       display none

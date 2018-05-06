@@ -134,6 +134,24 @@ function handleToast({ message }: Action.Toast) {
   toaster.show({ intent: Intent.PRIMARY, message })
 }
 
+function* handleSelectBlockText({ blockIndex }: Action.SelectBlockText) {
+  const { doc }: State = yield select()
+  const block = doc.plainDoc.blocks.get(blockIndex)
+  SelectionUtils.setCurrentRange(
+    new DecorationRange({
+      blockIndex,
+      startOffset: 0,
+      endOffset: block.length,
+    }),
+  )
+}
+
+function* handleClearBlockDecorations({ blockIndex }: Action.ClearBlockDecorations) {
+  const { doc }: State = yield select()
+  const setToRemove = doc.annotationSet.filter(anno => anno.range.blockIndex === blockIndex)
+  yield put(removeAnnotationSet(setToRemove))
+}
+
 export default function* rootSaga() {
   console.log('root-saga started')
   yield fork(autoClearSelAndUpdateRange)
@@ -143,4 +161,6 @@ export default function* rootSaga() {
   yield takeEvery('CLICK_DECORATION', handleClickDecoration)
   yield takeEvery('SELECT_MATCH', handleSelectMatch)
   yield takeEvery('TOAST', handleToast)
+  yield takeEvery('SELECT_BLOCK_TEXT', handleSelectBlockText)
+  yield takeEvery('CLEAR_BLOCK_DECORATIONS', handleClearBlockDecorations)
 }

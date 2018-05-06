@@ -1,15 +1,15 @@
-import { Classes, Tab, Tabs } from '@blueprintjs/core'
+import { Tab, Tabs } from '@blueprintjs/core'
 import classNames from 'classnames'
 import React from 'react'
 import AlgorithmsPanel from './AlgorithmsPanel'
-import AnnotationDetailPanel from './AnnotationDetailPanel'
+import DetailPanel from './DetailPanel'
 import HistoryPanel from './HistoryPanel'
 import './PanelContainer.styl'
 import TagsPanel from './TagsPanel'
 
 export default class PanelContainer extends React.Component {
   state = {
-    selectedTabId: 'annotation',
+    selectedTabId: 'detail',
   }
 
   onChange = (panelName: string) => {
@@ -26,12 +26,7 @@ export default class PanelContainer extends React.Component {
         selectedTabId={selectedTabId}
         onChange={this.onChange}
       >
-        <Tab
-          id="annotation"
-          className="tab-header"
-          title="annotation"
-          panel={<AnnotationDetailPanel />}
-        />
+        <Tab id="detail" className="tab-header" title="detail" panel={<DetailPanel />} />
         <Tab id="tags" className="tab-header" title="tags" panel={<TagsPanel />} />
         <Tab
           id="algorithms"

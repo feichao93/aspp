@@ -22,6 +22,14 @@ export function setSel(sel: Set<Decoration>): Action.SetSel {
   return { type: 'SET_SEL', sel }
 }
 
+export function selectBlockText(blockIndex: number): Action.SelectBlockText {
+  return { type: 'SELECT_BLOCK_TEXT', blockIndex }
+}
+
+export function clearBlockDecorations(blockIndex: number): Action.ClearBlockDecorations {
+  return { type: 'CLEAR_BLOCK_DECORATIONS', blockIndex }
+}
+
 export function setRange(range: DecorationRange): Action.SetRange {
   return { type: 'SET_RANGE', range }
 }

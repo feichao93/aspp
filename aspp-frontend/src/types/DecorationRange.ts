@@ -82,7 +82,8 @@ export default class DecorationRange extends DecorationRangeRecord {
     }
   }
 
-  substring(block: string, shortenLongText = false, maxLen = 15) {
+  // TODO 将 shortenText 的功能移动到其他地方
+  substring(block: string, shortenLongText = false, maxLen = 14) {
     const normalized = this.normalize()
     const text = block.substring(normalized.startOffset, normalized.endOffset)
     if (shortenLongText) {

@@ -27,7 +27,7 @@ namespace SelectionUtils {
       if (getOffset(startSpan) != null && getOffset(endSpan) != null) {
         const startBlock = findBlock(startSpan)
         const endBlock = findBlock(endSpan)
-        if (startBlock === endBlock) {
+        if (startBlock != null && endBlock != null && startBlock === endBlock) {
           const blockIndex = Number(startBlock.dataset.blockindex)
           return new DecorationRange({
             blockIndex,
@@ -40,20 +40,20 @@ namespace SelectionUtils {
     return null
   }
 
-  export function setCurrentRange(annotationRange: DecorationRange) {
+  export function setCurrentRange(decorationRange: DecorationRange) {
     const selection = document.getSelection()
-    if (annotationRange == null) {
+    if (decorationRange == null) {
       selection.removeAllRanges()
       return
     }
-    const block = document.querySelector(`*[data-blockindex="${annotationRange.blockIndex}"]`)
-    const startSpan = find(block, annotationRange.startOffset)
-    const endSpan = find(block, annotationRange.endOffset)
+    const block = document.querySelector(`*[data-blockindex="${decorationRange.blockIndex}"]`)
+    const startSpan = find(block, decorationRange.startOffset)
+    const endSpan = find(block, decorationRange.endOffset)
     selection.setBaseAndExtent(
       startSpan.firstChild,
-      annotationRange.startOffset - getOffset(startSpan),
+      decorationRange.startOffset - getOffset(startSpan),
       endSpan.firstChild,
-      annotationRange.endOffset - getOffset(endSpan),
+      decorationRange.endOffset - getOffset(endSpan),
     )
 
     // region function-definition

@@ -8,29 +8,25 @@ import DecorationRange from '../../types/DecorationRange'
 import {
   annotate,
   clearAnnotation,
+  clearBlockDecorations,
   clickDecoration,
+  selectBlockText,
   selectMatch,
-  setRange,
   setSel,
 } from '../../utils/actionCreators'
 import { identity } from '../../utils/common'
-import layout from '../../utils/layout'
 import SelectionUtils from '../../utils/SelectionUtils'
 import './AnnotationEditorView.styl'
 import './annotations.styl'
-import Span from './Span'
+import Block from './Block'
 
 export interface AnnotationEditorViewProps {
   setSel(decorationSet: Set<Decoration>): void
-
-  setRange(range: DecorationRange): void
-
+  selectBlockText(blockIndex: number): void
+  clearBlockDecorations(blockIndex: number): void
   annotate(tag: string): void
-
   clearAnnotation(): void
-
   clickDecoration(decoration: Decoration, ctrlKey: boolean): void
-
   selectMatch(pattern: string | RegExp): void
 }
 
@@ -55,6 +51,7 @@ class AnnotationEditorView extends React.Component<State & AnnotationEditorViewP
   }
 
   onKeyDown = (event: KeyboardEvent) => {
+    // TODO 将逻辑移动到 saga 处
     const { annotate, clearAnnotation, setSel, doc, range } = this.props
     if (event.key === 'Escape') {
       this.clearSel()
@@ -86,9 +83,20 @@ class AnnotationEditorView extends React.Component<State & AnnotationEditorViewP
   }
 
   render() {
-    const { doc, sel, range, annotate, clearAnnotation, clickDecoration } = this.props
+    const {
+      doc,
+      sel,
+      annotate,
+      clearAnnotation,
+      clearBlockDecorations,
+      selectBlockText,
+      clickDecoration,
+    } = this.props
 
     const decorationSet = doc.annotationSet.map(Decoration.fromAnnotation).toOrderedSet()
+    const countMap = decorationSet
+      .groupBy(decoration => decoration.range.blockIndex)
+      .map(decSet => decSet.count())
 
     return (
       <div className="annotation-editor-view">
@@ -119,17 +127,17 @@ class AnnotationEditorView extends React.Component<State & AnnotationEditorViewP
 
         <div className="editor">
           {doc.plainDoc.blocks.map((block, blockIndex) => (
-            <div key={blockIndex} className="block" data-block data-blockindex={blockIndex}>
-              {layout(block, blockIndex, decorationSet).map((spanInfo, index) => (
-                <Span
-                  key={index}
-                  info={spanInfo}
-                  onMouseDown={clickDecoration}
-                  isSelected={(decoration: Decoration) => sel.includes(decoration)}
-                  block={block}
-                />
-              ))}
-            </div>
+            <Block
+              key={blockIndex}
+              block={block}
+              blockIndex={blockIndex}
+              decorationCount={countMap.get(blockIndex, 0)}
+              decorationSet={decorationSet}
+              sel={sel}
+              clearBlockDecorations={clearBlockDecorations}
+              clickDecoration={clickDecoration}
+              selectBlockText={selectBlockText}
+            />
           ))}
         </div>
       </div>
@@ -139,7 +147,8 @@ class AnnotationEditorView extends React.Component<State & AnnotationEditorViewP
 
 const mapDispatchToProps = {
   setSel,
-  setRange,
+  selectBlockText,
+  clearBlockDecorations,
   annotate,
   clearAnnotation,
   clickDecoration,
