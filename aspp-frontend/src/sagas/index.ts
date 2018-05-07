@@ -1,16 +1,16 @@
 import { Intent, Toaster } from '@blueprintjs/core'
-import { List, OrderedSet, Set } from 'immutable'
+import { Set } from 'immutable'
 import { eventChannel } from 'redux-saga'
 import { fork, put, select, take, takeEvery } from 'redux-saga/effects'
 import { State } from '../reducers'
 import Annotation from '../types/Annotation'
-import Decoration, { Slot } from '../types/Decoration'
+import Decoration from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
-import DecorationSet from '../types/DecorationSet'
 import { addDecorations, removeDecorations, setRange, setSel, toast } from '../utils/actionCreators'
 import Action from '../utils/actions'
-import { toggle } from '../utils/common'
+import { keyed, toggle, toIdSet } from '../utils/common'
 import SelectionUtils from '../utils/SelectionUtils'
+import handleSelectMatch from './handleSelectMatch'
 import shortcutSaga from './shortcutSaga'
 
 function* autoClearNativeSelectionAfterSetSel() {
@@ -35,7 +35,7 @@ function* autoClearSelAndUpdateRange() {
       const { main }: State = yield select()
       const nextRange = SelectionUtils.getCurrentRange()
       if (!main.sel.isEmpty() && nextRange != null) {
-        yield put(setSel(OrderedSet()))
+        yield put(setSel(Set()))
       }
       yield put(setRange(nextRange))
     }
@@ -44,7 +44,7 @@ function* autoClearSelAndUpdateRange() {
   }
 }
 
-function* handleAnnotate({ tag }: Action.Annotate) {
+function* handleAnnotateCurrent({ tag }: Action.AnnotateCurrent) {
   const { main }: State = yield select()
   if (main.sel.isEmpty() && main.range == null) {
     yield put(toast('Invalid selection'))
@@ -63,8 +63,8 @@ function* handleAnnotate({ tag }: Action.Annotate) {
     yield put(toast('Overlap'))
   } else {
     yield put(removeDecorations(main.sel))
-    yield put(addDecorations(setToAdd.toMap().mapKeys(dec => dec.id)))
-    yield put(setSel(setToAdd.map(dec => dec.id).toOrderedSet()))
+    yield put(addDecorations(keyed(setToAdd)))
+    yield put(setSel(toIdSet(setToAdd)))
   }
 }
 
@@ -75,11 +75,8 @@ function* handleClearAnnotation() {
     if (main.range == null) {
       yield put(toast('invalid range'))
     } else {
-      const removingIdSet = main.range
-        .filterIntersected(gathered)
-        .keySeq()
-        .toSet()
-      yield put(removeDecorations(removingIdSet))
+      const removing = main.range.filterIntersected(gathered)
+      yield put(removeDecorations(toIdSet(removing)))
     }
   } else {
     yield put(removeDecorations(main.sel))
@@ -103,30 +100,6 @@ function* handleClickDecoration({ decoration, ctrlKey }: Action.ClickDecoration)
     }
   }
 }
-
-// function* handleSelectMatch({ pattern }: Action.SelectMatch) {
-//   const { main }: State = yield select()
-//   if (typeof pattern === 'string') {
-//     const decorationSet = DecorationSet.fromDoc(doc)
-//     const matchedSlots = List(doc.plainDoc.blocks)
-//       .flatMap((block, blockIndex) =>
-//         decorationSet
-//           .highlightMatch(block, blockIndex, pattern)
-//           .decSet.filter(
-//             decoration => Decoration.isSlot(decoration) && decoration.slotType === 'highlight',
-//           ),
-//       )
-//       .map((slot: Slot) => slot.set('slotType', 'selection'))
-//     if (matchedSlots.isEmpty()) {
-//       yield put(toast('找不到相同的文本'))
-//     } else {
-//       yield put(setSel(matchedSlots.toSet()))
-//     }
-//   } else {
-//     // RegExp
-//     yield put(toast('SelectMatch for RegExp is not implemented'))
-//   }
-// }
 
 const toaster = Toaster.create()
 function handleToast({ message }: Action.Toast) {
@@ -157,10 +130,10 @@ export default function* rootSaga() {
   yield fork(autoClearNativeSelectionAfterSetSel)
   yield fork(shortcutSaga)
 
-  yield takeEvery('ANNOTATE', handleAnnotate)
-  yield takeEvery('CLEAR_ANNOTATION', handleClearAnnotation)
+  yield takeEvery('ANNOTATE_CURRENT', handleAnnotateCurrent)
+  yield takeEvery('DELETE_CURRENT', handleClearAnnotation)
   yield takeEvery('CLICK_DECORATION', handleClickDecoration)
-  // yield takeEvery('SELECT_MATCH', handleSelectMatch)
+  yield takeEvery('SELECT_MATCH', handleSelectMatch)
   yield takeEvery('TOAST', handleToast)
   yield takeEvery('SELECT_BLOCK_TEXT', handleSelectBlockText)
   yield takeEvery('CLEAR_BLOCK_DECORATIONS', handleClearBlockDecorations)

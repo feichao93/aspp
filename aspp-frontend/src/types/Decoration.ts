@@ -1,3 +1,4 @@
+import { getNextId } from '../utils/common'
 import Annotation from './Annotation'
 import { Record } from 'immutable'
 import DecorationRange from './DecorationRange'
@@ -32,6 +33,14 @@ export class Slot extends Record({
 }) {
   static fromJS(object: any) {
     return new Slot(object).update('range', DecorationRange.fromJS)
+  }
+
+  static match(range: DecorationRange) {
+    return new Slot({
+      id: getNextId('slot'),
+      range,
+      slotType: 'match',
+    })
   }
 }
 

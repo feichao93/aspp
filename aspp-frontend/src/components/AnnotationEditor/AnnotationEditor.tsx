@@ -7,11 +7,11 @@ import DecorationRange from '../../types/DecorationRange'
 import MainState  from '../../types/MainState'
 import SelectionUtils from '../../utils/SelectionUtils'
 import AnnotationButtonGroup from './AnnotationButtonGroup'
-import './AnnotationEditorView.styl'
+import './AnnotationEditor.styl'
 import './annotations.styl'
 import Block from './Block'
 
-class AnnotationEditorView extends React.Component<{ main: MainState; dispatch: Dispatch }> {
+class AnnotationEditor extends React.Component<{ main: MainState; dispatch: Dispatch }> {
   getSnapshotBeforeUpdate() {
     return SelectionUtils.getCurrentRange()
   }
@@ -30,7 +30,7 @@ class AnnotationEditorView extends React.Component<{ main: MainState; dispatch: 
     const countMap = decorations.groupBy(dec => dec.range.blockIndex).map(decSet => decSet.count())
 
     return (
-      <div className="annotation-editor-view">
+      <div className="annotation-editor">
         <AnnotationButtonGroup style={{ margin: '16px 8px', flex: '0 0 auto' }} />
         <div className="editor">
           {main.doc.blocks.map((block, blockIndex) => (
@@ -50,4 +50,4 @@ class AnnotationEditorView extends React.Component<{ main: MainState; dispatch: 
   }
 }
 
-export default connect(({ main }: State) => ({ main }))(AnnotationEditorView)
+export default connect(({ main }: State) => ({ main }))(AnnotationEditor)

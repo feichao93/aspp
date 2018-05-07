@@ -17,6 +17,10 @@ interface BlockProps {
 }
 
 export default class Block extends React.Component<BlockProps> {
+  onMouseDown = (decoration: Decoration, ctrlKey: boolean) => {
+    this.props.dispatch(clickDecoration(decoration, ctrlKey))
+  }
+
   render() {
     const { block, blockIndex, decorationCount, decorations, sel, dispatch } = this.props
 
@@ -45,7 +49,7 @@ export default class Block extends React.Component<BlockProps> {
           <Span
             key={index}
             info={spanInfo}
-            onMouseDown={clickDecoration}
+            onMouseDown={this.onMouseDown}
             isSelected={isSelected}
             block={block}
           />

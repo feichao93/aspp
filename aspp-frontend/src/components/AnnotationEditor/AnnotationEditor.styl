@@ -1,4 +1,4 @@
-.annotation-editor-view {
+.annotation-editor {
   grid-area view
   overflow auto
   display flex
@@ -61,15 +61,17 @@
     }
   }
 
-  .slot {
-    &.selection {
-      box-shadow rgba(158, 158, 158, 0.33) 1px 1px 3px 1.5px
+  .slot.match {
+    box-shadow rgba(158, 158, 158, 0.33) 1px 1px 3px 1.5px
+    outline 1px solid #ccc
+    background #fff9c5
+    &.selected {
       background #FFEB3B
-      color black
-    }
-    &.highlight {
-      outline 1.5px solid #f7957e
-      outline-offset 0.5px
     }
   }
+
+  //.slot.highlight {
+  //  outline 1.5px solid #f7957e
+  //  outline-offset 0.5px
+  //}
 }

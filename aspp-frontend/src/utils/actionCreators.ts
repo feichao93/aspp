@@ -1,4 +1,4 @@
-import { Set, Map } from 'immutable'
+import { Map, Set } from 'immutable'
 import Decoration from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import Action from './actions'
@@ -31,14 +31,12 @@ export function toast(text: string): Action.Toast {
   return { type: 'TOAST', message: text }
 }
 
-// TODO rename to annotateCurrent
-export function annotate(tag: string): Action.Annotate {
-  return { type: 'ANNOTATE', tag }
+export function annotateCurrent(tag: string): Action.AnnotateCurrent {
+  return { type: 'ANNOTATE_CURRENT', tag }
 }
 
-// TODO rename to deleteCurrentAnnotations
-export function clearAnnotation(): Action.ClearAnnotation {
-  return { type: 'CLEAR_ANNOTATION' }
+export function deleteCurrent(): Action.DeleteCurrent {
+  return { type: 'DELETE_CURRENT' }
 }
 
 export function clickDecoration(decoration: Decoration, ctrlKey: boolean): Action.ClickDecoration {

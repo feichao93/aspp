@@ -1,4 +1,4 @@
-import { Set } from 'immutable'
+import { List as IList, Map as IMap, Set as ISet } from 'immutable'
 import React from 'react'
 import Decoration from '../types/Decoration'
 
@@ -30,7 +30,7 @@ export function identity<T>(arg: T): T {
   return arg
 }
 
-export function toggle<T>(set: Set<T>, t: T) {
+export function toggle<T>(set: ISet<T>, t: T) {
   return set.has(t) ? set.delete(t) : set.add(t)
 }
 
@@ -65,4 +65,25 @@ export function getDecorationName(decoration: Decoration) {
 
 export function always<T>(value: T) {
   return () => value
+}
+
+export function keyed<T extends Decoration>(
+  set: ISet<T> | IList<T> | IMap<string, T>,
+): IMap<string, T> {
+  return (set as any).toMap().mapKeys((_: any, dec: Decoration) => dec.id)
+}
+
+export function toIdSet<T extends Decoration>(
+  set: ISet<T> | IList<T> | IMap<any, T> | ISet<string>,
+): ISet<string> {
+  if (set.isEmpty()) {
+    return set as any
+  } else {
+    const first = set.first()
+    if (typeof first === 'string') {
+      return set as any
+    } else {
+      return (set.valueSeq() as any).map((dec: Decoration) => dec.id).toSet()
+    }
+  }
 }

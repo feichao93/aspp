@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { primaryTagConfigs, secondaryTagConfigs } from '../../taskConfig'
-import { annotate } from '../../utils/actionCreators'
+import { annotateCurrent } from '../../utils/actionCreators'
 
 interface AnnotationButtonGroupProps {
   style: React.CSSProperties
@@ -16,7 +16,7 @@ class AnnotationButtonGroup extends React.Component<AnnotationButtonGroupProps> 
     return (
       <ButtonGroup style={style}>
         {primaryTagConfigs.map(tagConfig => (
-          <Button key={tagConfig.name} onClick={() => dispatch(annotate(tagConfig.name))}>
+          <Button key={tagConfig.name} onClick={() => dispatch(annotateCurrent(tagConfig.name))}>
             {tagConfig.shortcut} {tagConfig.label}
           </Button>
         ))}
@@ -29,7 +29,7 @@ class AnnotationButtonGroup extends React.Component<AnnotationButtonGroupProps> 
                     key={tagConfig.name}
                     text={tagConfig.label}
                     label={tagConfig.shortcut}
-                    onClick={() => dispatch(annotate(tagConfig.name))}
+                    onClick={() => dispatch(annotateCurrent(tagConfig.name))}
                   />
                 ))}
               </Menu>

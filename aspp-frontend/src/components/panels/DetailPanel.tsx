@@ -7,10 +7,10 @@ import { State } from '../../reducers'
 import Decoration, { Slot } from '../../types/Decoration'
 import MainState from '../../types/MainState'
 import PlainDoc from '../../types/PlainDoc'
-import { clearAnnotation, clickDecoration, selectMatch, setSel } from '../../utils/actionCreators'
-import { always, shortenText } from '../../utils/common'
+import { deleteCurrent, clickDecoration, selectMatch, setSel } from '../../utils/actionCreators'
+import { always, shortenText, toIdSet } from '../../utils/common'
 import layout, { SpanInfo } from '../../utils/layout'
-import Span from '../AnnotationEditorView/Span'
+import Span from '../AnnotationEditor/Span'
 import './DetailPanel.styl'
 
 function findParent(spanInfo: SpanInfo, target: Decoration): SpanInfo {
@@ -159,7 +159,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
           <Button
             icon="locate"
             disabled={intersected.isEmpty()}
-            onClick={() => dispatch(setSel(intersected.keySeq().toOrderedSet()))}
+            onClick={() => dispatch(setSel(toIdSet(intersected)))}
           >
             选中标注(s:{intersected.count()})
           </Button>
@@ -170,7 +170,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
             intent={Intent.DANGER}
             disabled={intersected.isEmpty()}
             icon="trash"
-            onClick={() => dispatch(clearAnnotation())}
+            onClick={() => dispatch(deleteCurrent())}
           >
             删除标注(d:{intersected.count()})
           </Button>
@@ -211,7 +211,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
           <Button icon="confirm" onClick={() => 0 /* TODO */} disabled={true}>
             接受提示
           </Button>
-          <Button icon="trash" intent={Intent.DANGER} onClick={() => dispatch(clearAnnotation())}>
+          <Button icon="trash" intent={Intent.DANGER} onClick={() => dispatch(deleteCurrent())}>
             删除标注
           </Button>
         </ButtonGroup>
@@ -308,7 +308,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
           <Button icon="confirm" onClick={() => 0 /* TODO */} disabled={true}>
             接受提示(a:?)
           </Button>
-          <Button icon="trash" intent={Intent.DANGER} onClick={() => dispatch(clearAnnotation())}>
+          <Button icon="trash" intent={Intent.DANGER} onClick={() => dispatch(deleteCurrent())}>
             删除标注(d:{main.sel.count()})
           </Button>
         </ButtonGroup>

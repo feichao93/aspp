@@ -13,9 +13,9 @@ namespace Action {
     | ClearBlockDecorations
     | SetRange
     | Toast
-    | Annotate
+    | AnnotateCurrent
     | ClickDecoration
-    | ClearAnnotation
+    | DeleteCurrent
     | SelectMatch
     | ToggleDarkTheme
     | ToggleTaskTreeVisibility
@@ -55,8 +55,8 @@ namespace Action {
     message: string
   }
 
-  export interface Annotate {
-    type: 'ANNOTATE'
+  export interface AnnotateCurrent {
+    type: 'ANNOTATE_CURRENT'
     tag: string
   }
 
@@ -66,8 +66,8 @@ namespace Action {
     ctrlKey: boolean
   }
 
-  export interface ClearAnnotation {
-    type: 'CLEAR_ANNOTATION'
+  export interface DeleteCurrent {
+    type: 'DELETE_CURRENT'
   }
 
   export interface SelectMatch {
