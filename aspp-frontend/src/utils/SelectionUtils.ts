@@ -4,8 +4,17 @@ namespace SelectionUtils {
   function getCompositionHeight(element: Element) {
     return Number((element as HTMLSpanElement).dataset.height)
   }
+
   function getOffset(element: Element) {
     return Number((element as HTMLSpanElement).dataset.offset)
+  }
+
+  function findFirstTextNode(element: Element) {
+    for (const child of element.childNodes) {
+      if (child.nodeType === Node.TEXT_NODE) {
+        return child
+      }
+    }
   }
 
   function findBlock(element: HTMLElement) {
@@ -50,9 +59,9 @@ namespace SelectionUtils {
     const startSpan = find(block, decorationRange.startOffset)
     const endSpan = find(block, decorationRange.endOffset)
     selection.setBaseAndExtent(
-      startSpan.firstChild,
+      findFirstTextNode(startSpan),
       decorationRange.startOffset - getOffset(startSpan),
-      endSpan.firstChild,
+      findFirstTextNode(endSpan),
       decorationRange.endOffset - getOffset(endSpan),
     )
 

@@ -53,13 +53,13 @@ function findChildren(blockSpanInfo: SpanInfo, target: Decoration): SpanInfo[] {
 
 const Rich = {
   string(str: string) {
-    return <span className="string">{JSON.stringify(str)}</span>
+    return <span className="rich string">{JSON.stringify(str)}</span>
   },
   number(num: number | string) {
-    return <span className="number">{num}</span>
+    return <span className="rich number">{num}</span>
   },
   reserved(s: string) {
-    return <span className="reserved">{s}</span>
+    return <span className="rich reserved">{s}</span>
   },
 }
 
@@ -71,9 +71,15 @@ type DecorationSetPreviewProps = {
   doc: AnnotatedDoc
   set: Set<Decoration>
   dispatch: Dispatch
+  isSelected?(decoration: Decoration): boolean
 }
 
-function DecorationSetPreview({ doc, set, dispatch }: DecorationSetPreviewProps) {
+function DecorationSetPreview({
+  doc,
+  set,
+  dispatch,
+  isSelected = () => false,
+}: DecorationSetPreviewProps) {
   if (set.isEmpty()) {
     return null
   }
@@ -87,7 +93,7 @@ function DecorationSetPreview({ doc, set, dispatch }: DecorationSetPreviewProps)
           key={index}
           info={spanInfo}
           onMouseDown={(d: Decoration, ctrlKey: boolean) => dispatch(clickDecoration(d, ctrlKey))}
-          isSelected={() => false}
+          isSelected={isSelected}
           block={block}
           shortenLongText
         />
@@ -190,7 +196,9 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
           {Decoration.isAnnotation(decoration) ? (
             <React.Fragment>
               <p>id: {Rich.string(decoration.annotation.id)}</p>
+              {/* TODO 使用 select 组件来优化 tag 选择 */}
               <p>tag: {Rich.string(decoration.annotation.tag)}</p>
+              {/* TODO 使用 slider 组件来优化 confidence 选择 */}
               <p>confidence: {Rich.number(decoration.annotation.confidence)}</p>
             </React.Fragment>
           ) : null}
@@ -257,16 +265,9 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
         {siblings.length > 1 && (
           <DecorationSetPreview
             doc={doc}
-            set={Set(siblings)
-              .remove(decoration)
-              .add(
-                new Slot({
-                  slotType: 'selection',
-                  range: decoration.range,
-                }),
-              )
-              .add(parent.decoration)}
+            set={Set(siblings).add(new Slot({ range: parent.decoration.range }))}
             dispatch={dispatch}
+            isSelected={dec => is(dec, decoration)}
           />
         )}
         <h3 className="subtitle">

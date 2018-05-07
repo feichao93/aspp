@@ -1,4 +1,4 @@
-import { ContextMenu, ITreeNode, Menu, MenuItem, Tooltip, Tree } from '@blueprintjs/core'
+import { ContextMenu, ITreeNode, Menu, MenuItem, Tree } from '@blueprintjs/core'
 import classNames from 'classnames'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -9,78 +9,51 @@ import './TaskTree.styl'
 const INIT_CONTENTS: ITreeNode[] = [
   {
     id: getNextId('tree-node'),
+    icon: 'document',
+    label: 'Doc-34de',
     isExpanded: true,
-    label: <Tooltip content="已完成 95%">Task-001</Tooltip>,
     childNodes: [
       {
         id: getNextId('tree-node'),
-        icon: 'document',
-        label: 'Doc-34de',
-        isExpanded: true,
-        childNodes: [
-          {
-            id: getNextId('tree-node'),
-            icon: 'annotation',
-            label: 'feichao-1',
-          },
-          {
-            id: getNextId('tree-node'),
-            isSelected: true,
-            icon: 'annotation',
-            label: 'feichao-2',
-          },
-          {
-            id: getNextId('tree-node'),
-            icon: 'annotation',
-            label: '[dbscan]-run-3f4052',
-          },
-        ],
+        icon: 'annotation',
+        label: 'feichao-1',
       },
       {
         id: getNextId('tree-node'),
-        icon: 'document',
-        label: 'Doc-190f',
-        hasCaret: true,
+        isSelected: true,
+        icon: 'annotation',
+        label: 'feichao-2',
+      },
+      {
+        id: getNextId('tree-node'),
+        icon: 'annotation',
+        label: '[dbscan]-run-3f4052',
       },
     ],
   },
   {
     id: getNextId('tree-node'),
+    icon: 'document',
+    label: 'Doc-190f',
     isExpanded: true,
-    label: <Tooltip content="已完成 45%">Task-002</Tooltip>,
     childNodes: [
       {
         id: getNextId('tree-node'),
-        icon: 'document',
-        label: 'Doc-5377',
-        hasCaret: true,
+        icon: 'annotation',
+        label: 'aoba-1',
       },
       {
         id: getNextId('tree-node'),
-        icon: 'document',
-        label: 'Doc-0a68',
-        hasCaret: true,
+        icon: 'annotation',
+        label: '[dbscan]-run-3f4052',
       },
     ],
   },
   {
     id: getNextId('tree-node'),
-    isExpanded: true,
-    label: <Tooltip content="已完成 45%">Task-003</Tooltip>,
-    childNodes: [
-      {
-        id: getNextId('tree-node'),
-        icon: 'document',
-        label: 'Doc-6a43',
-        hasCaret: true,
-      },
-      {
-        id: getNextId('tree-node'),
-        icon: 'document',
-        label: 'Doc-1239',
-        hasCaret: true,
-      },
-    ],
+    icon: 'document',
+    label: 'Doc-6a43',
+    hasCaret: true,
   },
 ]
 

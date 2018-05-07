@@ -11,6 +11,16 @@ interface SpanProps {
   shortenLongText?: boolean
 }
 
+function TagAbbr({ decoration }: { decoration: Decoration }) {
+  if (decoration.type === 'annotation') {
+    return (
+      <span className="tag-abbr">{decoration.annotation.tag.substring(0, 4).toUpperCase()}</span>
+    )
+  } else {
+    return null
+  }
+}
+
 export default class Span extends React.Component<SpanProps> {
   onMouseDown = (e: React.MouseEvent<HTMLElement>) => {
     const {
@@ -34,6 +44,7 @@ export default class Span extends React.Component<SpanProps> {
         className={getClassName(decoration, isSelected(decoration))}
         onMouseDown={this.onMouseDown}
       >
+        <TagAbbr decoration={decoration} />
         {height > 0
           ? children.map((child, index) => (
               <Span
