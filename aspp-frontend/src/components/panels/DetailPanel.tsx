@@ -3,12 +3,12 @@ import { is, Set } from 'immutable'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { State } from '../../reducer'
-import AnnotatedDoc from '../../types/AnnotatedDoc'
+import { State } from '../../reducers'
 import Decoration, { Slot } from '../../types/Decoration'
-import DecorationRange from '../../types/DecorationRange'
+import MainState from '../../types/MainState'
+import PlainDoc from '../../types/PlainDoc'
 import { clearAnnotation, clickDecoration, selectMatch, setSel } from '../../utils/actionCreators'
-import { shortenText } from '../../utils/common'
+import { always, shortenText } from '../../utils/common'
 import layout, { SpanInfo } from '../../utils/layout'
 import Span from '../AnnotationEditorView/Span'
 import './DetailPanel.styl'
@@ -67,8 +67,8 @@ function HorizontalLine() {
   return <hr style={{ margin: '8px 0' }} />
 }
 
-type DecorationSetPreviewProps = {
-  doc: AnnotatedDoc
+interface DecorationSetPreviewProps {
+  doc: PlainDoc
   set: Set<Decoration>
   dispatch: Dispatch
   isSelected?(decoration: Decoration): boolean
@@ -78,13 +78,13 @@ function DecorationSetPreview({
   doc,
   set,
   dispatch,
-  isSelected = () => false,
+  isSelected = always(false),
 }: DecorationSetPreviewProps) {
   if (set.isEmpty()) {
     return null
   }
   const blockIndex = set.first().range.blockIndex
-  const block = doc.plainDoc.blocks.get(blockIndex)
+  const block = doc.blocks.get(blockIndex)
 
   return (
     <div className="block preview">
@@ -104,13 +104,13 @@ function DecorationSetPreview({
 
 type SelMode = 'empty' | 'text' | 'decoration' | 'decoration-set'
 
-class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
+class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch }> {
   resolveMode(): SelMode {
-    const { sel, range } = this.props
-    if (sel.isEmpty()) {
-      return range == null ? 'empty' : 'text'
+    const { main } = this.props
+    if (main.sel.isEmpty()) {
+      return main.range == null ? 'empty' : 'text'
     } else {
-      return sel.count() > 1 ? 'decoration-set' : 'decoration'
+      return main.sel.count() > 1 ? 'decoration-set' : 'decoration'
     }
   }
 
@@ -118,8 +118,7 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
     if (mode !== 'text') {
       return null
     }
-    const { range, doc, dispatch } = this.props
-    const selectedText = DecorationRange.getText(doc, range)
+    const { main, dispatch } = this.props
 
     return (
       <div>
@@ -127,15 +126,15 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
         <div className="code">
           <p>
             text:&nbsp;
-            {range
-              ? Rich.string(shortenText(14, DecorationRange.getText(doc, range)))
+            {main.range
+              ? Rich.string(shortenText(14, main.getSelectedText()))
               : Rich.reserved('[invalid-range]')}
           </p>
-          <p>blockIndex: {Rich.number(range ? range.blockIndex : 'N/A')}</p>
-          <p>startOffset: {Rich.number(range ? range.startOffset : 'N/A')}</p>
-          <p>endOffset: {Rich.number(range ? range.endOffset : 'N/A')}</p>
+          <p>blockIndex: {Rich.number(main.range ? main.range.blockIndex : 'N/A')}</p>
+          <p>startOffset: {Rich.number(main.range ? main.range.startOffset : 'N/A')}</p>
+          <p>endOffset: {Rich.number(main.range ? main.range.endOffset : 'N/A')}</p>
         </div>
-        <Button onClick={() => dispatch(selectMatch(selectedText))}>
+        <Button onClick={() => dispatch(selectMatch(main.getSelectedText()))}>
           选中所有相同的文本(TODO count here!)
         </Button>
       </div>
@@ -146,8 +145,8 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
     if (mode !== 'text') {
       return null
     }
-    const { range, doc, dispatch } = this.props
-    const intersected = range.filterIntersected(doc.annotationSet).map(Decoration.fromAnnotation)
+    const { main, dispatch } = this.props
+    const intersected = main.range.filterIntersected(main.gather())
 
     return (
       <div>
@@ -155,12 +154,12 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
         <h2 className="part-title">
           Intersections: {intersected.isEmpty() ? 'None' : intersected.count()}
         </h2>
-        <DecorationSetPreview set={intersected} doc={doc} dispatch={dispatch} />
+        <DecorationSetPreview set={intersected.toSet()} doc={main.doc} dispatch={dispatch} />
         <ButtonGroup vertical style={{ marginTop: 8 }}>
           <Button
             icon="locate"
             disabled={intersected.isEmpty()}
-            onClick={() => dispatch(setSel(intersected))}
+            onClick={() => dispatch(setSel(intersected.keySeq().toOrderedSet()))}
           >
             选中标注(s:{intersected.count()})
           </Button>
@@ -184,22 +183,24 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
     if (mode !== 'decoration') {
       return null
     }
-    const { doc, sel, dispatch } = this.props
-    const decoration = sel.first()
+    const { main, dispatch } = this.props
+    const decoration = main.gather().get(main.sel.first())
     const { range } = decoration
 
     return (
       <div>
         <HorizontalLine />
-        <DecorationSetPreview doc={doc} set={Set.of(decoration)} dispatch={dispatch} />
+        <DecorationSetPreview doc={main.doc} set={Set.of(decoration)} dispatch={dispatch} />
         <div className="code">
           {Decoration.isAnnotation(decoration) ? (
             <React.Fragment>
-              <p>id: {Rich.string(decoration.annotation.id)}</p>
+              <p>id: {Rich.string(decoration.id)}</p>
               {/* TODO 使用 select 组件来优化 tag 选择 */}
-              <p>tag: {Rich.string(decoration.annotation.tag)}</p>
+              <p>tag: {Rich.string(decoration.tag)}</p>
               {/* TODO 使用 slider 组件来优化 confidence 选择 */}
-              <p>confidence: {Rich.number(decoration.annotation.confidence)}</p>
+              {decoration.type === 'annotation' ? (
+                <p>confidence: {Rich.number(decoration.confidence)}</p>
+              ) : null}
             </React.Fragment>
           ) : null}
           <p>blockIndex: {Rich.number(range.blockIndex)}</p>
@@ -208,10 +209,10 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
         </div>
         <ButtonGroup vertical>
           <Button icon="confirm" onClick={() => 0 /* TODO */} disabled={true}>
-            接受提示(a:?)
+            接受提示
           </Button>
           <Button icon="trash" intent={Intent.DANGER} onClick={() => dispatch(clearAnnotation())}>
-            删除标注(d:{sel.count()})
+            删除标注
           </Button>
         </ButtonGroup>
       </div>
@@ -222,17 +223,13 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
     if (mode !== 'decoration') {
       return null
     }
-    const { doc, sel, dispatch } = this.props
-    const decoration = sel.first()
+    const { main, dispatch } = this.props
+    const decoration = main.gather().get(main.sel.first())
 
     const blockIndex = decoration.range.blockIndex
-    const block = doc.plainDoc.blocks.get(blockIndex)
+    const block = main.doc.blocks.get(blockIndex)
 
-    const blockSpanInfo = layout(
-      block,
-      blockIndex,
-      doc.annotationSet.map(Decoration.fromAnnotation),
-    )
+    const blockSpanInfo = layout(block, blockIndex, main.gather().toSet())
     const parent = findParent(blockSpanInfo, decoration)
     const children = findChildren(blockSpanInfo, decoration)
 
@@ -254,7 +251,11 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
               {parent === blockSpanInfo && ' [no-parent]'}
             </h3>
             {parent !== blockSpanInfo && (
-              <DecorationSetPreview doc={doc} set={Set.of(parent.decoration)} dispatch={dispatch} />
+              <DecorationSetPreview
+                doc={main.doc}
+                set={Set.of(parent.decoration)}
+                dispatch={dispatch}
+              />
             )}
           </React.Fragment>
         )}
@@ -265,7 +266,7 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
         </h3>
         {siblings.length > 1 && (
           <DecorationSetPreview
-            doc={doc}
+            doc={main.doc}
             set={Set(siblings).add(new Slot({ range: parent.decoration.range }))}
             dispatch={dispatch}
             isSelected={dec => is(dec, decoration)}
@@ -277,7 +278,7 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
         </h3>
         {children.length > 0 && (
           <DecorationSetPreview
-            doc={doc}
+            doc={main.doc}
             set={Set(children)
               .map(span => span.decoration)
               .add((decoration as Slot).set('type', 'slot'))}
@@ -292,18 +293,23 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
     if (mode !== 'decoration-set') {
       return null
     }
-    const { doc, sel, dispatch } = this.props
+    const { main, dispatch } = this.props
+    const gathered = main.gather()
 
     return (
       <div>
         <HorizontalLine />
-        <DecorationSetPreview doc={doc} set={sel} dispatch={dispatch} />
+        <DecorationSetPreview
+          doc={main.doc}
+          set={main.sel.map(id => gathered.get(id))}
+          dispatch={dispatch}
+        />
         <ButtonGroup vertical>
           <Button icon="confirm" onClick={() => 0 /* TODO */} disabled={true}>
             接受提示(a:?)
           </Button>
           <Button icon="trash" intent={Intent.DANGER} onClick={() => dispatch(clearAnnotation())}>
-            删除标注(d:{sel.count()})
+            删除标注(d:{main.sel.count()})
           </Button>
         </ButtonGroup>
       </div>
@@ -327,4 +333,4 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
   }
 }
 
-export default connect((s: State) => s)(DetailPanel)
+export default connect((s: State) => ({ main: s.main }))(DetailPanel)

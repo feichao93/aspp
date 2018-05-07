@@ -2,34 +2,43 @@ import Annotation from './Annotation'
 import { Record } from 'immutable'
 import DecorationRange from './DecorationRange'
 
-export class AnnotationDecoration extends Record({
-  type: 'annotation' as 'annotation',
-  range: new DecorationRange(),
-  annotation: new Annotation(),
-}) {}
-
 export class Text extends Record({
+  id: '',
   type: 'text' as 'text',
   range: new DecorationRange(),
-}) {}
+}) {
+  static fromJS(object: any) {
+    return new Hint(object).update('range', DecorationRange.fromJS)
+  }
+}
 
 export class Hint extends Record({
+  id: '',
   type: 'hint' as 'hint',
   range: new DecorationRange(),
   hint: '',
   // TODO actions
-}) {}
+}) {
+  static fromJS(object: any) {
+    return new Hint(object).update('range', DecorationRange.fromJS)
+  }
+}
 
 export class Slot extends Record({
+  id: '',
   type: 'slot' as 'slot',
   slotType: '',
   range: new DecorationRange(),
-}) {}
+}) {
+  static fromJS(object: any) {
+    return new Slot(object).update('range', DecorationRange.fromJS)
+  }
+}
 
-type Decoration = Text | AnnotationDecoration | Hint | Slot
+type Decoration = Text | Annotation | Hint | Slot
 
 namespace Decoration {
-  export function isAnnotation(decoration: Decoration): decoration is AnnotationDecoration {
+  export function isAnnotation(decoration: Decoration): decoration is Annotation {
     return decoration.type === 'annotation'
   }
 
@@ -43,14 +52,6 @@ namespace Decoration {
 
   export function isSlot(decoration: Decoration): decoration is Slot {
     return decoration.type === 'slot'
-  }
-
-  export function fromAnnotation(annotation: Annotation) {
-    return new AnnotationDecoration({
-      type: 'annotation',
-      range: annotation.range,
-      annotation,
-    })
   }
 
   export function getPosition({ range: { blockIndex, startOffset, endOffset } }: Decoration) {

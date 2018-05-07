@@ -1,24 +1,17 @@
-import { Set } from 'immutable'
-import Annotation from '../types/Annotation'
+import { Set, Map } from 'immutable'
 import Decoration from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import Action from './actions'
 
-export function addAnnotationSet(setToAdd: Set<Annotation>): Action.AddAnnotationSet {
-  return {
-    type: 'ADD_ANNOTATION_SET',
-    setToAdd,
-  }
+export function addDecorations(decorations: Map<string, Decoration>): Action.AddDecorations {
+  return { type: 'ADD_DECORATIONS', decorations }
 }
 
-export function removeAnnotationSet(setToRemove: Set<Annotation>): Action.RemoveAnnotationSet {
-  return {
-    type: 'REMOVE_ANNOTATION_SET',
-    setToRemove,
-  }
+export function removeDecorations(idSet: Set<string>): Action.RemoveDecorations {
+  return { type: 'REMOVE_DECORATIONS', idSet }
 }
 
-export function setSel(sel: Set<Decoration>): Action.SetSel {
+export function setSel(sel: Set<string>): Action.SetSel {
   return { type: 'SET_SEL', sel }
 }
 

@@ -14,11 +14,12 @@ import {
 } from '@blueprintjs/core'
 import classNames from 'classnames'
 import React from 'react'
-import './Menubar.styl'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { MiscState, State } from '../../reducer'
+import { State } from '../../reducers'
+import { MiscState } from '../../reducers/miscReducer'
 import { toggleDarkTheme, toggleTaskTreeVisibility } from '../../utils/actionCreators'
+import './Menubar.styl'
 
 // TODO 完善状态栏
 class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {

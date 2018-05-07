@@ -1,19 +1,13 @@
 import { Intent, Toaster } from '@blueprintjs/core'
-import { List, Set } from 'immutable'
+import { List, OrderedSet, Set } from 'immutable'
 import { eventChannel } from 'redux-saga'
 import { fork, put, select, take, takeEvery } from 'redux-saga/effects'
-import { State } from '../reducer'
+import { State } from '../reducers'
 import Annotation from '../types/Annotation'
 import Decoration, { Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import DecorationSet from '../types/DecorationSet'
-import {
-  addAnnotationSet,
-  removeAnnotationSet,
-  setRange,
-  setSel,
-  toast,
-} from '../utils/actionCreators'
+import { addDecorations, removeDecorations, setRange, setSel, toast } from '../utils/actionCreators'
 import Action from '../utils/actions'
 import { toggle } from '../utils/common'
 import SelectionUtils from '../utils/SelectionUtils'
@@ -38,10 +32,10 @@ function* autoClearSelAndUpdateRange() {
   try {
     while (true) {
       yield take(chan)
-      const { sel }: State = yield select()
+      const { main }: State = yield select()
       const nextRange = SelectionUtils.getCurrentRange()
-      if (!sel.isEmpty() && nextRange != null) {
-        yield put(setSel(Set()))
+      if (!main.sel.isEmpty() && nextRange != null) {
+        yield put(setSel(OrderedSet()))
       }
       yield put(setRange(nextRange))
     }
@@ -51,84 +45,88 @@ function* autoClearSelAndUpdateRange() {
 }
 
 function* handleAnnotate({ tag }: Action.Annotate) {
-  const { sel, range, doc }: State = yield select()
-  if (sel.isEmpty() && range == null) {
+  const { main }: State = yield select()
+  if (main.sel.isEmpty() && main.range == null) {
     yield put(toast('Invalid selection'))
     return
   }
-
-  const setToAdd = sel.isEmpty()
-    ? Set.of(Annotation.tagRange(tag, range.normalize()))
-    : Annotation.tagSel(tag, sel)
-  const setToRemove = sel.filter(Decoration.isAnnotation).map(dec => dec.annotation)
-  const overlapped = setToAdd.some(a1 =>
-    doc.annotationSet.some(a2 => DecorationRange.isOverlapped(a1.range, a2.range)),
+  const gathered = main.gather()
+  const selDecSet = main.sel.map(id => gathered.get(id))
+  const setToAdd = main.sel.isEmpty()
+    ? Set.of(Annotation.tagRange(tag, main.range.normalize()))
+    : Annotation.tagSel(tag, selDecSet)
+  const overlapped = setToAdd.some(dec1 =>
+    gathered.some(dec2 => DecorationRange.isOverlapped(dec1.range, dec2.range)),
   )
 
   if (overlapped) {
     yield put(toast('Overlap'))
   } else {
-    yield put(removeAnnotationSet(setToRemove))
-    yield put(addAnnotationSet(setToAdd))
-    yield put(setSel(setToAdd.map(Decoration.fromAnnotation)))
+    yield put(removeDecorations(main.sel))
+    yield put(addDecorations(setToAdd.toMap().mapKeys(dec => dec.id)))
+    yield put(setSel(setToAdd.map(dec => dec.id).toOrderedSet()))
   }
 }
 
 function* handleClearAnnotation() {
-  const { sel, doc, range }: State = yield select()
-  if (sel.isEmpty()) {
-    if (range == null) {
+  const { main }: State = yield select()
+  const gathered = main.gather()
+  if (main.sel.isEmpty()) {
+    if (main.range == null) {
       yield put(toast('invalid range'))
     } else {
-      yield put(removeAnnotationSet(range.filterIntersected(doc.annotationSet)))
+      const removingIdSet = main.range
+        .filterIntersected(gathered)
+        .keySeq()
+        .toSet()
+      yield put(removeDecorations(removingIdSet))
     }
   } else {
-    const setToRemove = sel.filter(Decoration.isAnnotation).map(decoration => decoration.annotation)
-    yield put(removeAnnotationSet(setToRemove))
-    yield put(setSel(Set()))
+    yield put(removeDecorations(main.sel))
+    // TODO ?? yield put(setSel(()))
   }
 }
 
 function* handleClickDecoration({ decoration, ctrlKey }: Action.ClickDecoration) {
-  const { sel }: State = yield select()
+  const { main }: State = yield select()
   if (Decoration.isSlot(decoration)) {
     if (decoration.slotType === 'selection') {
       if (ctrlKey) {
-        yield put(setSel(toggle(sel, decoration)))
+        yield put(setSel(toggle(main.sel, decoration.id)))
       }
     }
   } else if (Decoration.isAnnotation(decoration)) {
     if (ctrlKey) {
-      yield put(setSel(toggle(sel, decoration)))
+      yield put(setSel(toggle(main.sel, decoration.id)))
     } else {
-      yield put(setSel(Set.of(decoration)))
+      yield put(setSel(Set.of(decoration.id)))
     }
   }
 }
 
-function* handleSelectMatch({ pattern }: Action.SelectMatch) {
-  const { doc }: State = yield select()
-  if (typeof pattern === 'string') {
-    const decorationSet = DecorationSet.fromDoc(doc)
-    const matchedSlots = List(doc.plainDoc.blocks)
-      .flatMap((block, blockIndex) =>
-        decorationSet
-          .highlightMatch(block, blockIndex, pattern)
-          .decSet.filter(
-            decoration => Decoration.isSlot(decoration) && decoration.slotType === 'highlight',
-          ),
-      )
-      .map((slot: Slot) => slot.set('slotType', 'selection'))
-    if (matchedSlots.isEmpty()) {
-      yield put(toast('找不到相同的文本'))
-    } else {
-      yield put(setSel(matchedSlots.toSet()))
-    }
-  } else {
-    // RegExp
-    yield put(toast('SelectMatch for RegExp is not implemented'))
-  }
-}
+// function* handleSelectMatch({ pattern }: Action.SelectMatch) {
+//   const { main }: State = yield select()
+//   if (typeof pattern === 'string') {
+//     const decorationSet = DecorationSet.fromDoc(doc)
+//     const matchedSlots = List(doc.plainDoc.blocks)
+//       .flatMap((block, blockIndex) =>
+//         decorationSet
+//           .highlightMatch(block, blockIndex, pattern)
+//           .decSet.filter(
+//             decoration => Decoration.isSlot(decoration) && decoration.slotType === 'highlight',
+//           ),
+//       )
+//       .map((slot: Slot) => slot.set('slotType', 'selection'))
+//     if (matchedSlots.isEmpty()) {
+//       yield put(toast('找不到相同的文本'))
+//     } else {
+//       yield put(setSel(matchedSlots.toSet()))
+//     }
+//   } else {
+//     // RegExp
+//     yield put(toast('SelectMatch for RegExp is not implemented'))
+//   }
+// }
 
 const toaster = Toaster.create()
 function handleToast({ message }: Action.Toast) {
@@ -136,8 +134,8 @@ function handleToast({ message }: Action.Toast) {
 }
 
 function* handleSelectBlockText({ blockIndex }: Action.SelectBlockText) {
-  const { doc }: State = yield select()
-  const block = doc.plainDoc.blocks.get(blockIndex)
+  const { main }: State = yield select()
+  const block = main.doc.blocks.get(blockIndex)
   SelectionUtils.setCurrentRange(
     new DecorationRange({
       blockIndex,
@@ -148,9 +146,9 @@ function* handleSelectBlockText({ blockIndex }: Action.SelectBlockText) {
 }
 
 function* handleClearBlockDecorations({ blockIndex }: Action.ClearBlockDecorations) {
-  const { doc }: State = yield select()
-  const setToRemove = doc.annotationSet.filter(anno => anno.range.blockIndex === blockIndex)
-  yield put(removeAnnotationSet(setToRemove))
+  const { main }: State = yield select()
+  const setToRemove = main.gather().filter(dec => dec.range.blockIndex === blockIndex)
+  yield put(removeDecorations(setToRemove.keySeq().toSet()))
 }
 
 export default function* rootSaga() {
@@ -162,7 +160,7 @@ export default function* rootSaga() {
   yield takeEvery('ANNOTATE', handleAnnotate)
   yield takeEvery('CLEAR_ANNOTATION', handleClearAnnotation)
   yield takeEvery('CLICK_DECORATION', handleClickDecoration)
-  yield takeEvery('SELECT_MATCH', handleSelectMatch)
+  // yield takeEvery('SELECT_MATCH', handleSelectMatch)
   yield takeEvery('TOAST', handleToast)
   yield takeEvery('SELECT_BLOCK_TEXT', handleSelectBlockText)
   yield takeEvery('CLEAR_BLOCK_DECORATIONS', handleClearBlockDecorations)

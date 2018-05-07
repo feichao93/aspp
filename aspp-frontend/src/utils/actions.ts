@@ -1,5 +1,4 @@
-import { Set } from 'immutable'
-import Annotation from '../types/Annotation'
+import { Map, Set } from 'immutable'
 import Decoration from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 
@@ -7,8 +6,8 @@ type Action = Action.ALL
 
 namespace Action {
   export type ALL =
-    | AddAnnotationSet
-    | RemoveAnnotationSet
+    | AddDecorations
+    | RemoveDecorations
     | SetSel
     | SelectBlockText
     | ClearBlockDecorations
@@ -21,19 +20,19 @@ namespace Action {
     | ToggleDarkTheme
     | ToggleTaskTreeVisibility
 
-  export interface AddAnnotationSet {
-    type: 'ADD_ANNOTATION_SET'
-    setToAdd: Set<Annotation>
+  export interface AddDecorations {
+    type: 'ADD_DECORATIONS'
+    decorations: Map<string, Decoration>
   }
 
-  export interface RemoveAnnotationSet {
-    type: 'REMOVE_ANNOTATION_SET'
-    setToRemove: Set<Annotation>
+  export interface RemoveDecorations {
+    type: 'REMOVE_DECORATIONS'
+    idSet: Set<string>
   }
 
   export interface SetSel {
     type: 'SET_SEL'
-    sel: Set<Decoration>
+    sel: Set<string>
   }
 
   export interface SelectBlockText {

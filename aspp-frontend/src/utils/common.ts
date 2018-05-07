@@ -55,10 +55,14 @@ export function shortenText(maxLen: number, text: string) {
 
 export function getDecorationName(decoration: Decoration) {
   if (decoration.type === 'annotation') {
-    return decoration.annotation.tag
+    return decoration.tag
   } else if (decoration.type === 'slot') {
     return decoration.slotType
   } else {
     return decoration.type
   }
+}
+
+export function always<T>(value: T) {
+  return () => value
 }

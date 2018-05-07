@@ -14,7 +14,7 @@ interface SpanProps {
 
 function TagAbbr({ decoration }: { decoration: Decoration }) {
   if (decoration.type === 'annotation') {
-    const abbr = abbrMap.get(decoration.annotation.tag)
+    const abbr = abbrMap.get(decoration.tag)
     if (abbr) {
       return (
         <span className="tag-abbr" data-skipoffset>
@@ -44,9 +44,7 @@ export default class Span extends React.Component<SpanProps> {
 
     const selected = isSelected(decoration)
     const style =
-      !selected && decoration.type === 'annotation'
-        ? styleMap.get(decoration.annotation.tag)
-        : undefined
+      !selected && decoration.type === 'annotation' ? styleMap.get(decoration.tag) : undefined
 
     return (
       <span
@@ -78,7 +76,7 @@ function getClassName(decoration: Decoration, selected: boolean) {
   if (decoration.type === 'text') {
     return classNames('text', { selected })
   } else if (decoration.type === 'annotation') {
-    return classNames('annotation', decoration.annotation.tag, { selected })
+    return classNames('annotation', decoration.tag, { selected })
   } else {
     if (decoration.type === 'slot') {
       return classNames('slot', decoration.slotType, { selected })

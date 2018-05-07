@@ -1,6 +1,6 @@
 import { Record, Set } from 'immutable'
 import AnnotatedDoc from './AnnotatedDoc'
-import Decoration, { Slot, Text } from './Decoration'
+import Decoration, { Slot } from './Decoration'
 import DecorationRange from './DecorationRange'
 
 const DecorationSetRecord = Record({
@@ -8,9 +8,9 @@ const DecorationSetRecord = Record({
 })
 
 export default class DecorationSet extends DecorationSetRecord {
-  static fromDoc(doc: AnnotatedDoc) {
-    return new DecorationSet({ decSet: doc.annotationSet.map(Decoration.fromAnnotation) })
-  }
+  // static fromDoc(doc: AnnotatedDoc) {
+  //   return new DecorationSet({ decSet: doc.annotationSet.map(Decoration.fromAnnotation) })
+  // }
 
   highlightMatch(block: string, blockIndex: number, text: string) {
     if (text.length === 0) {

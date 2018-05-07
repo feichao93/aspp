@@ -13,7 +13,7 @@ export default function stringifySpanLayout(block: string, spanInfoArray: SpanIn
         )
       } else if (decoration.type === 'annotation') {
         return JSON.stringify(
-          `${decoration.annotation.tag}:${block.substring(
+          `${decoration.tag}:${block.substring(
             decoration.range.startOffset,
             decoration.range.endOffset,
           )}`,

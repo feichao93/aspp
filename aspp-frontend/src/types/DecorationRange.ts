@@ -1,7 +1,7 @@
-import { Record, Set } from 'immutable'
+import { Map, Record } from 'immutable'
 import { shortenText } from '../utils/common'
-import AnnotatedDoc from './AnnotatedDoc'
-import Annotation from './Annotation'
+import Decoration from './Decoration'
+import PlainDoc from './PlainDoc'
 
 const DecorationRangeRecord = Record({
   blockIndex: 0,
@@ -16,12 +16,12 @@ export default class DecorationRange extends DecorationRangeRecord {
   }
 
   /** 从文档中获取 range 对应的文本；range 为 `null` 时，该函数返回空字符串 */
-  static getText(doc: AnnotatedDoc, range: DecorationRange) {
+  static getText(doc: PlainDoc, range: DecorationRange) {
     if (range == null) {
       return ''
     } else {
       const normalized = range.normalize()
-      return doc.plainDoc.blocks
+      return doc.blocks
         .get(normalized.blockIndex)
         .substring(normalized.startOffset, normalized.endOffset)
     }
@@ -55,10 +55,10 @@ export default class DecorationRange extends DecorationRangeRecord {
     )
   }
 
-  /** 计算与该 range 有重叠的那些 Annotation */
-  filterIntersected(annotationSet: Set<Annotation>): Set<Annotation> {
+  /** 计算与该 range 有重叠的那些 Decorations */
+  filterIntersected(annotations: Map<string, Decoration>): Map<string, Decoration> {
     const normalized = this.normalize()
-    return annotationSet.filter(annotation => {
+    return annotations.filter(annotation => {
       const { blockIndex, startOffset, endOffset } = annotation.range
       return (
         blockIndex === normalized.blockIndex &&

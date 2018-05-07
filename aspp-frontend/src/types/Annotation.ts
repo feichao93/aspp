@@ -5,6 +5,7 @@ import DecorationRange from './DecorationRange'
 
 const AnnotationRecord = Record({
   id: '',
+  type: 'annotation' as 'annotation',
   range: new DecorationRange(),
   confidence: 1,
   tag: '',

@@ -7,6 +7,7 @@ const AnnotatedDocRecord = Record({
   author: '',
   plainDoc: new PlainDoc(),
   annotationSet: Set<Annotation>(),
+  // TODO hints
 })
 
 export default class AnnotatedDoc extends AnnotatedDocRecord {

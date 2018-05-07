@@ -1,12 +1,12 @@
-import { Set } from 'immutable'
+import { OrderedSet, Set } from 'immutable'
 import { eventChannel } from 'redux-saga'
 import { put, select, take } from 'redux-saga/effects'
-import { State } from '../reducer'
+import { State } from '../reducers/index'
 import { shortcutMap } from '../taskConfig'
 import Decoration from '../types/Decoration'
 import { annotate, clearAnnotation, setSel } from '../utils/actionCreators'
 
-const emptySet = Set()
+const emptySet = OrderedSet()
 
 export default function* shortcutSaga() {
   const chan = eventChannel(emit => {
@@ -22,12 +22,11 @@ export default function* shortcutSaga() {
       } else if (event.key === 'Backspace' || event.key === 'd') {
         yield put(clearAnnotation())
       } else if (event.key === 's') {
-        const { range, doc }: State = yield select()
-        if (range) {
-          const intersected = range
-            .filterIntersected(doc.annotationSet)
-            .map(Decoration.fromAnnotation)
-          yield put(setSel(intersected))
+        const { main }: State = yield select()
+        if (main.range) {
+          // TODO ??? 只用 main.annotations 就足够了么
+          const intersected = main.range.filterIntersected(main.annotations)
+          yield put(setSel(intersected.keySeq().toOrderedSet()))
         }
       } else if (shortcutMap.has(event.key)) {
         yield put(annotate(shortcutMap.get(event.key)))
