@@ -38,10 +38,12 @@ export function toast(text: string): Action.Toast {
   return { type: 'TOAST', message: text }
 }
 
+// TODO rename to annotateCurrent
 export function annotate(tag: string): Action.Annotate {
   return { type: 'ANNOTATE', tag }
 }
 
+// TODO rename to deleteCurrentAnnotations
 export function clearAnnotation(): Action.ClearAnnotation {
   return { type: 'CLEAR_ANNOTATION' }
 }

@@ -5,8 +5,11 @@ namespace SelectionUtils {
     return Number((element as HTMLSpanElement).dataset.height)
   }
 
-  function getOffset(element: Element) {
-    return Number((element as HTMLSpanElement).dataset.offset)
+  function getOffset(span: any, textOffset = 0): number {
+    if (span.dataset.skipoffset != null) {
+      return getOffset(span.parentElement, 0)
+    }
+    return Number(span.dataset.offset) + textOffset
   }
 
   function findFirstTextNode(element: Element) {
@@ -40,8 +43,8 @@ namespace SelectionUtils {
           const blockIndex = Number(startBlock.dataset.blockindex)
           return new DecorationRange({
             blockIndex,
-            startOffset: getOffset(startSpan) + sel.anchorOffset,
-            endOffset: getOffset(endSpan) + sel.focusOffset,
+            startOffset: getOffset(startSpan, sel.anchorOffset),
+            endOffset: getOffset(endSpan, sel.focusOffset),
           })
         }
       }

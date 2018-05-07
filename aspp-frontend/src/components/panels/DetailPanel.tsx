@@ -261,6 +261,7 @@ class DetailPanel extends React.Component<State & { dispatch: Dispatch }> {
         <h3 className="subtitle">
           siblings
           {siblings.length <= 1 && ' [no siblings]'}
+          {/* TODO navigate to prev/next sibling */}
         </h3>
         {siblings.length > 1 && (
           <DecorationSetPreview

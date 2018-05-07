@@ -17,6 +17,7 @@ import {
 import Action from '../utils/actions'
 import { toggle } from '../utils/common'
 import SelectionUtils from '../utils/SelectionUtils'
+import shortcutSaga from './shortcutSaga'
 
 function* autoClearNativeSelectionAfterSetSel() {
   while (true) {
@@ -156,6 +157,8 @@ export default function* rootSaga() {
   console.log('root-saga started')
   yield fork(autoClearSelAndUpdateRange)
   yield fork(autoClearNativeSelectionAfterSetSel)
+  yield fork(shortcutSaga)
+
   yield takeEvery('ANNOTATE', handleAnnotate)
   yield takeEvery('CLEAR_ANNOTATION', handleClearAnnotation)
   yield takeEvery('CLICK_DECORATION', handleClickDecoration)

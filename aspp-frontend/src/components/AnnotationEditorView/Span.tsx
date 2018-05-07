@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import React from 'react'
+import { abbrMap, styleMap } from '../../taskConfig'
 import Decoration from '../../types/Decoration'
 import { SpanInfo } from '../../utils/layout'
 
@@ -13,12 +14,16 @@ interface SpanProps {
 
 function TagAbbr({ decoration }: { decoration: Decoration }) {
   if (decoration.type === 'annotation') {
-    return (
-      <span className="tag-abbr">{decoration.annotation.tag.substring(0, 4).toUpperCase()}</span>
-    )
-  } else {
-    return null
+    const abbr = abbrMap.get(decoration.annotation.tag)
+    if (abbr) {
+      return (
+        <span className="tag-abbr" data-skipoffset>
+          {abbr}
+        </span>
+      )
+    }
   }
+  return null
 }
 
 export default class Span extends React.Component<SpanProps> {
@@ -37,12 +42,19 @@ export default class Span extends React.Component<SpanProps> {
     const { info, block, onMouseDown, isSelected, shortenLongText } = this.props
     const { height, decoration, children } = info
 
+    const selected = isSelected(decoration)
+    const style =
+      !selected && decoration.type === 'annotation'
+        ? styleMap.get(decoration.annotation.tag)
+        : undefined
+
     return (
       <span
         data-height={height}
         data-offset={decoration.range.startOffset}
-        className={getClassName(decoration, isSelected(decoration))}
+        className={getClassName(decoration, selected)}
         onMouseDown={this.onMouseDown}
+        style={style}
       >
         <TagAbbr decoration={decoration} />
         {height > 0

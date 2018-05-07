@@ -2,37 +2,19 @@ name: test-task
 
 tags:
   -
-    # 标签的名字
     name: corporation
-
-    # 中文名，用于显示在 UI 上
     label: 公司
-
-    # 快捷键，一般为数字 1~9 对应的字符串，设置为 null 表示没有快捷键
     shortcut: '1'
-
-    # 标注按钮的显示方式
-    # button 表示直接在页面中显示对应的按钮
-    # drop-down 表示将按钮放到「更多标签」的下拉列表中
-    ui: button
-
-    # 标签的缩写，会显示在标注的文本的左侧
+    category: primary
     abbr: CORP
-
     theme:
-      # color 字体颜色
-      # backgrounColor 背景颜色
-      backgrounColor: '#97b6e2'
-      # border 边框颜色
-
-    # 黑色主题下的配色方案，配置方式请参考 theme
-    darkTheme: {}
+      backgroundColor: '#97b6e2'
 
   -
     name: nation
     label: 国家
     shortcut: '2'
-    ui: button
+    category: primary
     abbr: NATION
     theme:
       backgroundColor: '#f7a444'
@@ -41,7 +23,7 @@ tags:
     name: time
     label: 时间
     shortcut: '3'
-    ui: button
+    category: primary
     abbr: TIME
     theme:
       backgroundColor: '#a1be8a'
@@ -50,7 +32,7 @@ tags:
     name: concept
     label: 概念
     shortcut: '4'
-    ui: button
+    category: primary
     abbr: CPT
     theme:
       backgroundColor: '#d379e8'
@@ -59,8 +41,16 @@ tags:
     name: sentence
     label: 句子
     shortcut: '5'
-    ui: button
+    category: primary
     abbr: SENT
     theme:
       backgroundColor: '#dddddd'
 
+  -
+    name: organization
+    label: 组织
+    shortcut: null
+    category: secondary
+    abbr: ORG
+    theme:
+      backgroundColor: '#d8eae4'
