@@ -34,7 +34,6 @@ export default function* handleInteractions(collector: InteractionCollector) {
             }),
         )
       if (!hints.isEmpty()) {
-        console.log('generating hints', hints.toJS())
         yield put(addDecorations(keyed(hints)))
       }
     } else {

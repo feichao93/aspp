@@ -335,6 +335,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
     const byBlockIndex = set
       .groupBy(dec => dec.range.blockIndex)
       .sortBy((v, blockIndex) => blockIndex)
+    const hintCount = set.count(Decoration.isHint)
 
     return (
       <div>
@@ -355,11 +356,15 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
             .valueSeq()}
         </div>
         <ButtonGroup vertical style={{ marginTop: 8 }}>
-          <Button icon="confirm" onClick={() => 0 /* TODO */} disabled={true}>
-            接受提示(a:?)
+          <Button
+            icon="confirm"
+            onClick={() => dispatch(acceptCurrent())}
+            disabled={hintCount === 0}
+          >
+            接受提示(a:{hintCount})
           </Button>
           <Button icon="trash" intent={Intent.DANGER} onClick={() => dispatch(deleteCurrent())}>
-            删除标注(d:{main.sel.count()})
+            删除(d:{main.sel.count()})
           </Button>
         </ButtonGroup>
       </div>

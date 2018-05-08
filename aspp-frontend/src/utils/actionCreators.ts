@@ -4,7 +4,7 @@ import DecorationRange from '../types/DecorationRange'
 import Action from './actions'
 
 export function addDecorations(decorations: Map<string, Decoration>): Action.AddDecorations {
-  return { type: 'R_ADD_DECORATIONS', decorations }
+  return { type: 'R_ADD_DECORATIONS', decorations}
 }
 
 export function removeDecorations(idSet: Set<string>): Action.RemoveDecorations {

@@ -52,6 +52,7 @@ export default class Span extends React.Component<SpanProps> {
         className={getClassName(decoration, selected)}
         onMouseDown={this.handleMouseDown}
         style={style}
+        title={decoration.type === 'hint' ? decoration.hint : undefined}
       >
         <TagAbbr decoration={decoration} />
         {height > 0

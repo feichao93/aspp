@@ -77,6 +77,7 @@ function* handleAnnotateCurrent(collector: InteractionCollector, { tag }: Action
   } else {
     yield put(removeDecorations(main.sel))
     yield put(addDecorations(keyed(setToAdd)))
+    yield put(setSel(toIdSet(setToAdd)))
   }
 }
 
@@ -115,6 +116,8 @@ function* handleAcceptHints({ accepting }: Action.AcceptHints) {
   } else {
     const actions = accepting.map(hint => hint.action).filter(Boolean)
     yield put(removeDecorations(toIdSet(accepting)))
+    // TODO performance degradation
+    // 用户可能会一下子选中很多 hint，然后一次性进行接受，这里一个一个处理 action 比较低效
     yield* actions.map(action => put(action)).valueSeq()
   }
 }
