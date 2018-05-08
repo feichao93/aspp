@@ -3,8 +3,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
+import Decoration from '../../types/Decoration'
 import DecorationRange from '../../types/DecorationRange'
-import MainState  from '../../types/MainState'
+import MainState from '../../types/MainState'
 import SelectionUtils from '../../utils/SelectionUtils'
 import AnnotationButtonGroup from './AnnotationButtonGroup'
 import './AnnotationEditor.styl'
@@ -27,7 +28,12 @@ class AnnotationEditor extends React.Component<{ main: MainState; dispatch: Disp
     const { dispatch, main } = this.props
 
     const decorations = main.gather()
-    const countMap = decorations.groupBy(dec => dec.range.blockIndex).map(decSet => decSet.count())
+    const decorationCountMap = decorations
+      .groupBy(dec => dec.range.blockIndex)
+      .map(decSet => decSet.count())
+    const hintCountMap = decorations
+      .groupBy(dec => dec.range.blockIndex)
+      .map(decSet => decSet.count(Decoration.isHint))
 
     return (
       <div className="annotation-editor">
@@ -38,7 +44,8 @@ class AnnotationEditor extends React.Component<{ main: MainState; dispatch: Disp
               key={blockIndex}
               block={block}
               blockIndex={blockIndex}
-              decorationCount={countMap.get(blockIndex, 0)}
+              decorationCount={decorationCountMap.get(blockIndex, 0)}
+              hintCount={hintCountMap.get(blockIndex, 0)}
               decorations={decorations}
               sel={main.sel}
               dispatch={dispatch}

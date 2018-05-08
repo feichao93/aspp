@@ -1,5 +1,5 @@
 import { Map, Set } from 'immutable'
-import Decoration from '../types/Decoration'
+import Decoration, { Hint } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 
 type Action = Action.ALL
@@ -10,28 +10,31 @@ namespace Action {
     | RemoveDecorations
     | SetSel
     | SelectBlockText
+    | AcceptBlock
     | ClearBlockDecorations
     | SetRange
     | Toast
     | AnnotateCurrent
     | ClickDecoration
     | DeleteCurrent
+    | AcceptCurrent
     | SelectMatch
     | ToggleDarkTheme
     | ToggleTaskTreeVisibility
+    | AcceptHints
 
   export interface AddDecorations {
-    type: 'ADD_DECORATIONS'
+    type: 'R_ADD_DECORATIONS'
     decorations: Map<string, Decoration>
   }
 
   export interface RemoveDecorations {
-    type: 'REMOVE_DECORATIONS'
+    type: 'R_REMOVE_DECORATIONS'
     idSet: Set<string>
   }
 
   export interface SetSel {
-    type: 'SET_SEL'
+    type: 'R_SET_SEL'
     sel: Set<string>
   }
 
@@ -40,13 +43,19 @@ namespace Action {
     blockIndex: number
   }
 
+  export interface AcceptBlock {
+    type: 'ACCEPT_BLOCK'
+    blockIndex: number
+  }
+
+  // TODO rename to DELETE_BLOCK_DECORATIONS
   export interface ClearBlockDecorations {
     type: 'CLEAR_BLOCK_DECORATIONS'
     blockIndex: number
   }
 
   export interface SetRange {
-    type: 'SET_RANGE'
+    type: 'R_SET_RANGE'
     range: DecorationRange
   }
 
@@ -70,17 +79,26 @@ namespace Action {
     type: 'DELETE_CURRENT'
   }
 
+  export interface AcceptCurrent {
+    type: 'ACCEPT_CURRENT'
+  }
+
   export interface SelectMatch {
     type: 'SELECT_MATCH'
     pattern: string | RegExp
   }
 
   export interface ToggleDarkTheme {
-    type: 'TOGGLE_DARK_THEME'
+    type: 'R_TOGGLE_DARK_THEME'
   }
 
   export interface ToggleTaskTreeVisibility {
-    type: 'TOGGLE_TASK_TREE_VISIBILITY'
+    type: 'R_TOGGLE_TASK_TREE_VISIBILITY'
+  }
+
+  export interface AcceptHints {
+    type: 'ACCEPT_HINTS'
+    accepting: Map<string, Hint>
   }
 }
 

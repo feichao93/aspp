@@ -3,7 +3,12 @@ import { Map, Set } from 'immutable'
 import React from 'react'
 import { Dispatch } from 'redux'
 import Decoration from '../../types/Decoration'
-import { clearBlockDecorations, clickDecoration, selectBlockText } from '../../utils/actionCreators'
+import {
+  acceptBlock,
+  clearBlockDecorations,
+  clickDecoration,
+  selectBlockText,
+} from '../../utils/actionCreators'
 import layout from '../../utils/layout'
 import Span from './Span'
 
@@ -11,6 +16,7 @@ interface BlockProps {
   block: string
   blockIndex: number
   decorationCount: number
+  hintCount: number
   decorations: Map<string, Decoration>
   sel: Set<string>
   dispatch: Dispatch
@@ -22,7 +28,7 @@ export default class Block extends React.Component<BlockProps> {
   }
 
   render() {
-    const { block, blockIndex, decorationCount, decorations, sel, dispatch } = this.props
+    const { block, blockIndex, decorationCount, hintCount, decorations, sel, dispatch } = this.props
 
     const isSelected = (decoration: Decoration) => sel.includes(decoration.id)
 
@@ -32,16 +38,22 @@ export default class Block extends React.Component<BlockProps> {
           <p>block: {blockIndex}</p>
           <ButtonGroup className="block-button-group">
             <Button small onClick={() => dispatch(selectBlockText(blockIndex))}>
-              Select Text
+              选择整块文本
             </Button>
-            <Button small>Accept(?)</Button>
+            <Button
+              small
+              onClick={() => dispatch(acceptBlock(blockIndex))}
+              disabled={hintCount === 0}
+            >
+              接受提示({hintCount})
+            </Button>
             <Button
               small
               intent={Intent.DANGER}
               onClick={() => dispatch(clearBlockDecorations(blockIndex))}
               disabled={decorationCount === 0}
             >
-              Clear({decorationCount})
+              删除所有标注和提示({decorationCount})
             </Button>
           </ButtonGroup>
         </div>

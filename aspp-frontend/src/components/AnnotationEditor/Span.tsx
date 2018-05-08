@@ -30,7 +30,7 @@ export default class Span extends React.Component<SpanProps> {
   handleMouseDown = (e: React.MouseEvent<HTMLElement>) => {
     const { onMouseDown, info } = this.props
     if (info.decoration.type !== 'text' && !Decoration.isPlainSlot(info.decoration)) {
-      onMouseDown(info.decoration, e.ctrlKey)
+      onMouseDown && onMouseDown(info.decoration, e.ctrlKey)
       e.stopPropagation()
     }
   }

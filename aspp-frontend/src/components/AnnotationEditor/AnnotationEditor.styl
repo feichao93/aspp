@@ -70,6 +70,20 @@
     }
   }
 
+  // TODO 优化样式
+
+  .hint {
+    cursor pointer
+    transition box-shadow 250ms
+    box-shadow #3799c5 1.5px 1.5px 2px 0.5px
+    &:hover, &.selected {
+      box-shadow #3799c5 1.5px 1.5px 5px 3px
+    }
+    &.selected {
+      background #9bcce2
+    }
+  }
+
   //.slot.highlight {
   //  outline 1.5px solid #f7957e
   //  outline-offset 0.5px

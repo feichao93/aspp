@@ -1,3 +1,4 @@
+import Action from '../utils/actions'
 import { getNextId } from '../utils/common'
 import Annotation from './Annotation'
 import { Record } from 'immutable'
@@ -18,7 +19,7 @@ export class Hint extends Record({
   type: 'hint' as 'hint',
   range: new DecorationRange(),
   hint: '',
-  // TODO actions
+  action: null as Action,
 }) {
   static fromJS(object: any) {
     return new Hint(object).update('range', DecorationRange.fromJS)

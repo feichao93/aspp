@@ -11,9 +11,9 @@ export default function miscReducer(
   state: MiscState = { darkTheme, hideTaskTree: false },
   action: Action,
 ): MiscState {
-  if (action.type === 'TOGGLE_DARK_THEME') {
+  if (action.type === 'R_TOGGLE_DARK_THEME') {
     return { ...state, darkTheme: !state.darkTheme }
-  } else if (action.type === 'TOGGLE_TASK_TREE_VISIBILITY') {
+  } else if (action.type === 'R_TOGGLE_TASK_TREE_VISIBILITY') {
     return { ...state, hideTaskTree: !state.hideTaskTree }
   } else {
     return state

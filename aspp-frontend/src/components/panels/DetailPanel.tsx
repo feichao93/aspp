@@ -6,7 +6,13 @@ import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import Decoration from '../../types/Decoration'
 import MainState from '../../types/MainState'
-import { clickDecoration, deleteCurrent, selectMatch, setSel } from '../../utils/actionCreators'
+import {
+  acceptCurrent,
+  clickDecoration,
+  deleteCurrent,
+  selectMatch,
+  setSel,
+} from '../../utils/actionCreators'
 import { always, shortenText, toIdSet } from '../../utils/common'
 import findMatch from '../../utils/findMatch'
 import layout, { SpanInfo } from '../../utils/layout'
@@ -154,6 +160,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
     const intersected = main.range.filterIntersected(main.gather())
     const blockIndex = main.range.blockIndex
     const block = main.doc.blocks.get(blockIndex)
+    const intersectedHints = intersected.filter(Decoration.isHint)
 
     return (
       <div>
@@ -175,8 +182,12 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
           >
             选中标注(s:{intersected.count()})
           </Button>
-          <Button icon="confirm" disabled={intersected.isEmpty()} onClick={() => 0 /* TODO */}>
-            接受提示(a:?)
+          <Button
+            icon="confirm"
+            disabled={intersectedHints.isEmpty()}
+            onClick={() => dispatch(acceptCurrent())}
+          >
+            接受提示(a:{intersectedHints.count()})
           </Button>
           <Button
             intent={Intent.DANGER}
@@ -184,7 +195,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
             icon="trash"
             onClick={() => dispatch(deleteCurrent())}
           >
-            删除标注(d:{intersected.count()})
+            删除(d:{intersected.count()})
           </Button>
         </ButtonGroup>
       </div>
@@ -202,12 +213,14 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
     return (
       <div>
         <HorizontalLine />
-        <DecorationSetPreview
-          blockIndex={range.blockIndex}
-          block={main.doc.blocks.get(range.blockIndex)}
-          set={Set.of(decoration)}
-          dispatch={dispatch}
-        />
+        <div className="block preview">
+          {decoration.type}
+          <Span
+            block={main.doc.blocks.get(range.blockIndex)}
+            info={{ height: 0, decoration }}
+            isSelected={always(false)}
+          />
+        </div>
         <div className="code">
           {Decoration.isAnnotation(decoration) ? (
             <React.Fragment>
@@ -215,21 +228,24 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
               {/* TODO 使用 select 组件来优化 tag 选择 */}
               <p>tag: {Rich.string(decoration.tag)}</p>
               {/* TODO 使用 slider 组件来优化 confidence 选择 */}
-              {decoration.type === 'annotation' ? (
-                <p>confidence: {Rich.number(decoration.confidence)}</p>
-              ) : null}
+              <p>confidence: {Rich.number(decoration.confidence)}</p>
             </React.Fragment>
           ) : null}
+          {decoration.type === 'hint' ? <p>hint: {Rich.reserved(decoration.hint)}</p> : null}
           <p>blockIndex: {Rich.number(range.blockIndex)}</p>
           <p>startOffset: {Rich.number(range.startOffset)}</p>
           <p>endOffset: {Rich.number(range.endOffset)}</p>
         </div>
         <ButtonGroup vertical>
-          <Button icon="confirm" onClick={() => 0 /* TODO */} disabled={true}>
+          <Button
+            icon="confirm"
+            onClick={() => dispatch(acceptCurrent())}
+            disabled={decoration.type !== 'hint'}
+          >
             接受提示
           </Button>
           <Button icon="trash" intent={Intent.DANGER} onClick={() => dispatch(deleteCurrent())}>
-            删除标注
+            删除
           </Button>
         </ButtonGroup>
       </div>
