@@ -27,13 +27,10 @@ function TagAbbr({ decoration }: { decoration: Decoration }) {
 }
 
 export default class Span extends React.Component<SpanProps> {
-  onMouseDown = (e: React.MouseEvent<HTMLElement>) => {
-    const {
-      onMouseDown,
-      info: { decoration },
-    } = this.props
-    onMouseDown(decoration, e.ctrlKey)
-    if (decoration.type !== 'text') {
+  handleMouseDown = (e: React.MouseEvent<HTMLElement>) => {
+    const { onMouseDown, info } = this.props
+    if (info.decoration.type !== 'text' && !Decoration.isPlainSlot(info.decoration)) {
+      onMouseDown(info.decoration, e.ctrlKey)
       e.stopPropagation()
     }
   }
@@ -51,7 +48,7 @@ export default class Span extends React.Component<SpanProps> {
         data-height={height}
         data-offset={decoration.range.startOffset}
         className={getClassName(decoration, selected)}
-        onMouseDown={this.onMouseDown}
+        onMouseDown={this.handleMouseDown}
         style={style}
       >
         <TagAbbr decoration={decoration} />

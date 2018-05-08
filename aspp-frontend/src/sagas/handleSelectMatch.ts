@@ -1,41 +1,11 @@
-import { List, Map } from 'immutable'
+import { List } from 'immutable'
 import { put, select } from 'redux-saga/effects'
 import { State } from '../reducers'
-import Decoration, { Slot } from '../types/Decoration'
-import DecorationRange from '../types/DecorationRange'
+import { Slot } from '../types/Decoration'
 import { addDecorations, setSel, toast } from '../utils/actionCreators'
 import Action from '../utils/actions'
 import { keyed, toIdSet } from '../utils/common'
-
-function findMatch(
-  block: string,
-  blockIndex: number,
-  decorations: Map<string, Decoration>,
-  text: string,
-): DecorationRange[] {
-  const result: DecorationRange[] = []
-  if (text.length === 0) {
-    return result
-  }
-  let i = 0
-  while (true) {
-    const nextIndex = block.indexOf(text, i)
-    if (nextIndex === -1) {
-      break
-    }
-    const range = new DecorationRange({
-      blockIndex,
-      startOffset: nextIndex,
-      endOffset: nextIndex + text.length,
-    })
-    const occupied = decorations.some(dec => DecorationRange.isOverlapped(dec.range, range))
-    if (!occupied) {
-      result.push(range)
-    }
-    i = nextIndex + text.length
-  }
-  return result
-}
+import findMatch from '../utils/findMatch'
 
 export default function* handleSelectMatch({ pattern }: Action.SelectMatch) {
   const { main }: State = yield select()

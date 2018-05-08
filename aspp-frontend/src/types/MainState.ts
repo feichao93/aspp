@@ -4,18 +4,14 @@ import Decoration, { Hint, Slot } from './Decoration'
 import PlainDoc from './PlainDoc'
 import DecorationRange from '../types/DecorationRange'
 
-const object = {
+const MainStateRecord = Record({
   doc: new PlainDoc(),
   range: new DecorationRange(),
   sel: Set<string>(),
   annotations: Map<string, Annotation>(),
   slots: Map<string, Slot>(),
   hints: Map<string, Hint>(),
-}
-
-const MainStateRecord = Record(object)
-
-export type RawMainState = typeof object
+})
 
 export default class MainState extends MainStateRecord {
   // static fromJS(object: any) {

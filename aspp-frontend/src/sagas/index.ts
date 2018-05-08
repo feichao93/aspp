@@ -4,7 +4,6 @@ import { eventChannel } from 'redux-saga'
 import { fork, put, select, take, takeEvery } from 'redux-saga/effects'
 import { State } from '../reducers'
 import Annotation from '../types/Annotation'
-import Decoration from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import { addDecorations, removeDecorations, setRange, setSel, toast } from '../utils/actionCreators'
 import Action from '../utils/actions'
@@ -86,18 +85,10 @@ function* handleClearAnnotation() {
 
 function* handleClickDecoration({ decoration, ctrlKey }: Action.ClickDecoration) {
   const { main }: State = yield select()
-  if (Decoration.isSlot(decoration)) {
-    if (decoration.slotType === 'selection') {
-      if (ctrlKey) {
-        yield put(setSel(toggle(main.sel, decoration.id)))
-      }
-    }
-  } else if (Decoration.isAnnotation(decoration)) {
-    if (ctrlKey) {
-      yield put(setSel(toggle(main.sel, decoration.id)))
-    } else {
-      yield put(setSel(Set.of(decoration.id)))
-    }
+  if (ctrlKey) {
+    yield put(setSel(toggle(main.sel, decoration.id)))
+  } else {
+    yield put(setSel(Set.of(decoration.id)))
   }
 }
 

@@ -1,14 +1,14 @@
 import { Button, ButtonGroup, Intent } from '@blueprintjs/core'
-import { is, Set } from 'immutable'
+import { is, List, Set } from 'immutable'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
-import Decoration, { Slot } from '../../types/Decoration'
+import Decoration from '../../types/Decoration'
 import MainState from '../../types/MainState'
-import PlainDoc from '../../types/PlainDoc'
-import { deleteCurrent, clickDecoration, selectMatch, setSel } from '../../utils/actionCreators'
+import { clickDecoration, deleteCurrent, selectMatch, setSel } from '../../utils/actionCreators'
 import { always, shortenText, toIdSet } from '../../utils/common'
+import findMatch from '../../utils/findMatch'
 import layout, { SpanInfo } from '../../utils/layout'
 import Span from '../AnnotationEditor/Span'
 import './DetailPanel.styl'
@@ -68,14 +68,16 @@ function HorizontalLine() {
 }
 
 interface DecorationSetPreviewProps {
-  doc: PlainDoc
+  block: string
+  blockIndex: number
   set: Set<Decoration>
   dispatch: Dispatch
   isSelected?(decoration: Decoration): boolean
 }
 
 function DecorationSetPreview({
-  doc,
+  block,
+  blockIndex,
   set,
   dispatch,
   isSelected = always(false),
@@ -83,8 +85,6 @@ function DecorationSetPreview({
   if (set.isEmpty()) {
     return null
   }
-  const blockIndex = set.first().range.blockIndex
-  const block = doc.blocks.get(blockIndex)
 
   return (
     <div className="block preview">
@@ -120,6 +120,9 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
     }
     const { main, dispatch } = this.props
 
+    const gathered = main.gather()
+    const selectedText = main.getSelectedText()
+
     return (
       <div>
         <HorizontalLine />
@@ -135,7 +138,9 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
           <p>endOffset: {Rich.number(main.range ? main.range.endOffset : 'N/A')}</p>
         </div>
         <Button onClick={() => dispatch(selectMatch(main.getSelectedText()))}>
-          选中所有相同的文本(TODO count here!)
+          选中所有相同的文本({List(main.doc.blocks)
+            .flatMap((block, blockIndex) => findMatch(block, blockIndex, gathered, selectedText))
+            .count()})
         </Button>
       </div>
     )
@@ -147,6 +152,8 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
     }
     const { main, dispatch } = this.props
     const intersected = main.range.filterIntersected(main.gather())
+    const blockIndex = main.range.blockIndex
+    const block = main.doc.blocks.get(blockIndex)
 
     return (
       <div>
@@ -154,7 +161,12 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
         <h2 className="part-title">
           Intersections: {intersected.isEmpty() ? 'None' : intersected.count()}
         </h2>
-        <DecorationSetPreview set={intersected.toSet()} doc={main.doc} dispatch={dispatch} />
+        <DecorationSetPreview
+          set={intersected.toSet()}
+          block={block}
+          blockIndex={blockIndex}
+          dispatch={dispatch}
+        />
         <ButtonGroup vertical style={{ marginTop: 8 }}>
           <Button
             icon="locate"
@@ -190,7 +202,12 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
     return (
       <div>
         <HorizontalLine />
-        <DecorationSetPreview doc={main.doc} set={Set.of(decoration)} dispatch={dispatch} />
+        <DecorationSetPreview
+          blockIndex={range.blockIndex}
+          block={main.doc.blocks.get(range.blockIndex)}
+          set={Set.of(decoration)}
+          dispatch={dispatch}
+        />
         <div className="code">
           {Decoration.isAnnotation(decoration) ? (
             <React.Fragment>
@@ -252,7 +269,8 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
             </h3>
             {parent !== blockSpanInfo && (
               <DecorationSetPreview
-                doc={main.doc}
+                block={block}
+                blockIndex={blockIndex}
                 set={Set.of(parent.decoration)}
                 dispatch={dispatch}
               />
@@ -266,8 +284,9 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
         </h3>
         {siblings.length > 1 && (
           <DecorationSetPreview
-            doc={main.doc}
-            set={Set(siblings).add(new Slot({ range: parent.decoration.range }))}
+            block={block}
+            blockIndex={blockIndex}
+            set={Set(siblings).add(Decoration.asPlainSlot(parent.decoration))}
             dispatch={dispatch}
             isSelected={dec => is(dec, decoration)}
           />
@@ -278,10 +297,11 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
         </h3>
         {children.length > 0 && (
           <DecorationSetPreview
-            doc={main.doc}
+            block={block}
+            blockIndex={blockIndex}
             set={Set(children)
               .map(span => span.decoration)
-              .add((decoration as Slot).set('type', 'slot'))}
+              .add(Decoration.asPlainSlot(decoration))}
             dispatch={dispatch}
           />
         )}
@@ -295,16 +315,30 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
     }
     const { main, dispatch } = this.props
     const gathered = main.gather()
+    const set = main.sel.map(id => gathered.get(id))
+    const byBlockIndex = set
+      .groupBy(dec => dec.range.blockIndex)
+      .sortBy((v, blockIndex) => blockIndex)
 
     return (
       <div>
         <HorizontalLine />
-        <DecorationSetPreview
-          doc={main.doc}
-          set={main.sel.map(id => gathered.get(id))}
-          dispatch={dispatch}
-        />
-        <ButtonGroup vertical>
+        <div>
+          {byBlockIndex
+            .map((decorations, blockIndex) => (
+              <div key={blockIndex} style={{ marginTop: 4 }}>
+                <span>block: {blockIndex}</span>
+                <DecorationSetPreview
+                  block={main.doc.blocks.get(blockIndex)}
+                  blockIndex={blockIndex}
+                  set={decorations.toSet()}
+                  dispatch={dispatch}
+                />
+              </div>
+            ))
+            .valueSeq()}
+        </div>
+        <ButtonGroup vertical style={{ marginTop: 8 }}>
           <Button icon="confirm" onClick={() => 0 /* TODO */} disabled={true}>
             接受提示(a:?)
           </Button>

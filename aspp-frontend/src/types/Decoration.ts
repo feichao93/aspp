@@ -35,6 +35,7 @@ export class Slot extends Record({
     return new Slot(object).update('range', DecorationRange.fromJS)
   }
 
+  // TODO 不能每次都创建新的match，需要复用已有的match
   static match(range: DecorationRange) {
     return new Slot({
       id: getNextId('slot'),
@@ -61,6 +62,17 @@ namespace Decoration {
 
   export function isSlot(decoration: Decoration): decoration is Slot {
     return decoration.type === 'slot'
+  }
+
+  export function asPlainSlot(decoration: Decoration): Slot {
+    return new Slot(decoration).merge({
+      type: 'slot',
+      slotType: 'plain',
+    })
+  }
+
+  export function isPlainSlot(decoration: Decoration) {
+    return decoration.type === 'slot' && decoration.slotType === 'plain'
   }
 
   export function getPosition({ range: { blockIndex, startOffset, endOffset } }: Decoration) {
