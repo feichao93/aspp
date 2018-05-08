@@ -1,24 +1,29 @@
+import { List, Map } from 'immutable'
 import React from 'react'
+
 import TaskConfig from './types/TaskConfig'
 
-const taskConfig: TaskConfig = require('./aspp.config.yaml')
+namespace CONFIG {
+  const taskConfig: TaskConfig = require('./aspp.config.yaml')
 
-export const shortcutMap = new Map(
-  taskConfig.tags.filter(t => t.shortcut).map(t => [t.shortcut, t.name] as [string, string]),
-)
+  export const shortcutMap = Map(
+    taskConfig.tags.filter(t => t.shortcut).map(t => [t.shortcut, t.name] as [string, string]),
+  )
 
-export const primaryTagConfigs = taskConfig.tags.filter(
-  tagConfig => tagConfig.category === 'primary',
-)
+  function isDefaultGroup(tagConfig: TaskConfig.TagConfig) {
+    return tagConfig.group == null || tagConfig.group === 'default'
+  }
 
-export const secondaryTagConfigs = taskConfig.tags.filter(
-  tagConfig => tagConfig.category === 'secondary',
-)
+  export const defaultGroup = List(taskConfig.tags).filter(isDefaultGroup)
+  export const otherGroups = List(taskConfig.tags)
+    .filter(t => !isDefaultGroup(t))
+    .groupBy(t => t.group)
 
-export const styleMap = new Map(
-  taskConfig.tags.map(t => [t.name, t.theme] as [string, React.CSSProperties]),
-)
+  export const styleMap = Map(
+    taskConfig.tags.map(t => [t.name, t.theme] as [string, React.CSSProperties]),
+  )
 
-export const abbrMap = new Map(taskConfig.tags.map(t => [t.name, t.abbr] as [string, string]))
+  export const abbrMap = Map(taskConfig.tags.map(t => [t.name, t.abbr] as [string, string]))
+}
 
-export default taskConfig
+export default CONFIG

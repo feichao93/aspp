@@ -2,7 +2,7 @@ import { Set } from 'immutable'
 import { eventChannel } from 'redux-saga'
 import { put, select, take } from 'redux-saga/effects'
 import { State } from '../reducers'
-import { shortcutMap } from '../taskConfig'
+import CONFIG from '../taskConfig'
 import { annotateCurrent, deleteCurrent, setSel } from '../utils/actionCreators'
 import { toIdSet } from '../utils/common'
 
@@ -25,8 +25,8 @@ export default function* shortcutSaga() {
           const intersected = main.range.filterIntersected(main.gather())
           yield put(setSel(toIdSet(intersected)))
         }
-      } else if (shortcutMap.has(event.key)) {
-        yield put(annotateCurrent(shortcutMap.get(event.key)))
+      } else if (CONFIG.shortcutMap.has(event.key)) {
+        yield put(annotateCurrent(CONFIG.shortcutMap.get(event.key)))
       }
     }
   } finally {

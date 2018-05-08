@@ -1,56 +1,57 @@
 name: test-task
 
 tags:
-  -
-    name: corporation
+  - name: corporation
     label: 公司
     shortcut: '1'
-    category: primary
     abbr: CORP
     theme:
-      backgroundColor: '#97b6e2'
+      background: '#97b6e2'
 
-  -
-    name: nation
-    label: 国家
+  - name: person
+    label: 人物
     shortcut: '2'
-    category: primary
+    abbr: PERSON
+    theme:
+      background: '#e46dc5'
+
+  - name: location
+    label: 地点
+    shortcut: '3'
     abbr: NATION
     theme:
-      backgroundColor: '#f7a444'
+      background: '#f7a444'
 
-  -
-    name: time
+  - name: time
     label: 时间
-    shortcut: '3'
-    category: primary
+    shortcut: '4'
     abbr: TIME
     theme:
-      backgroundColor: '#a1be8a'
+      background: '#a1be8a'
 
-  -
-    name: concept
-    label: 概念
-    shortcut: '4'
-    category: primary
-    abbr: CPT
-    theme:
-      backgroundColor: '#d379e8'
-
-  -
-    name: sentence
+  - name: sentence
     label: 句子
-    shortcut: '5'
-    category: primary
-    abbr: SENT
+    group: 关系
     theme:
-      backgroundColor: '#dddddd'
+      background: '#dddddd'
 
-  -
-    name: organization
-    label: 组织
-    shortcut: null
-    category: secondary
-    abbr: ORG
+  - name: subject
+    label: 主语
+    group: 关系
+    abbr: S
     theme:
-      backgroundColor: '#d8eae4'
+      background: '#a4e8d2'
+
+  - name: predicate
+    label: 谓语
+    group: 关系
+    abbr: P
+    theme:
+      background: '#50b8c8'
+
+  - name: object
+    label: 宾语
+    group: 关系
+    abbr: O
+    theme:
+      background: '#d379e8'
