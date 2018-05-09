@@ -77,7 +77,7 @@ namespace Decoration {
   }
 
   export function getPosition({ range: { blockIndex, startOffset, endOffset } }: Decoration) {
-    return [blockIndex, startOffset, endOffset]
+    return [blockIndex, startOffset, -endOffset]
   }
 }
 

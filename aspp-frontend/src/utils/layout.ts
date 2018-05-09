@@ -19,7 +19,7 @@ export default function layout(
   const array = decorationSet
     // TODO 使用 decorationByBlockIndex 进行性能优化
     .filter(decoration => decoration.range.blockIndex === blockIndex)
-    .sortBy(({ range }) => [range.startOffset, -range.endOffset], compareArray)
+    .sortBy(Decoration.getPosition, compareArray)
     .toArray()
 
   const blockRange = new DecorationRange({ blockIndex, startOffset: 0, endOffset: block.length })

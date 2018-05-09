@@ -87,3 +87,29 @@ export function toIdSet<T extends Decoration>(
     }
   }
 }
+
+function efp(x: number, y: number) {
+  return document.elementFromPoint(x, y)
+}
+
+export function isElementVisible(ele: Element) {
+  const rect = ele.getBoundingClientRect()
+
+  // Return false if it's not in the viewport
+  if (
+    rect.right < 0 ||
+    rect.bottom < 0 ||
+    rect.left > window.innerWidth ||
+    rect.top > window.innerHeight
+  ) {
+    return false
+  }
+
+  // Return true if any of its four corners are visible
+  return (
+    ele.contains(efp(rect.left, rect.top)) ||
+    ele.contains(efp(rect.right, rect.top)) ||
+    ele.contains(efp(rect.right, rect.bottom)) ||
+    ele.contains(efp(rect.left, rect.bottom))
+  )
+}

@@ -4,7 +4,7 @@ import DecorationRange from '../types/DecorationRange'
 import Action from './actions'
 
 export function addDecorations(decorations: Map<string, Decoration>): Action.AddDecorations {
-  return { type: 'R_ADD_DECORATIONS', decorations}
+  return { type: 'R_ADD_DECORATIONS', decorations }
 }
 
 export function removeDecorations(idSet: Set<string>): Action.RemoveDecorations {
@@ -65,4 +65,8 @@ export function toggleTaskTreeVisibility(): Action.ToggleTaskTreeVisibility {
 
 export function acceptHints(accepting: Map<string, Hint>): Action.AcceptHints {
   return { type: 'ACCEPT_HINTS', accepting }
+}
+
+export function requestDownloadResult(): Action.RequestDownloadResult {
+  return { type: 'REQUEST_DOWNLOAD_RESULT' }
 }

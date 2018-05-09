@@ -18,6 +18,7 @@ import Action from '../utils/actions'
 import { keyed, toggle, toIdSet } from '../utils/common'
 import InteractionCollector from '../utils/InteractionCollector'
 import SelectionUtils from '../utils/SelectionUtils'
+import fileSaga from './fileSaga'
 import handleInteractions from './handleInteractions'
 import handleSelectMatch from './handleSelectMatch'
 import shortcutSaga from './shortcutSaga'
@@ -167,6 +168,7 @@ export default function* rootSaga() {
   yield fork(autoClearNativeSelectionAfterSetSel)
   yield fork(shortcutSaga)
   yield fork(handleInteractions, collector)
+  yield fork(fileSaga)
 
   yield takeEvery('ANNOTATE_CURRENT', handleAnnotateCurrent, collector)
   yield takeEvery('DELETE_CURRENT', handleDeleteCurrent)

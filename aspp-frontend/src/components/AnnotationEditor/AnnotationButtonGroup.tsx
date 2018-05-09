@@ -6,15 +6,14 @@ import CONFIG from '../../taskConfig'
 import { annotateCurrent } from '../../utils/actionCreators'
 
 interface AnnotationButtonGroupProps {
-  style: React.CSSProperties
   dispatch: Dispatch
 }
 
 class AnnotationButtonGroup extends React.Component<AnnotationButtonGroupProps> {
   render() {
-    const { style, dispatch } = this.props
+    const { dispatch } = this.props
     return (
-      <ButtonGroup style={style}>
+      <ButtonGroup>
         {CONFIG.defaultGroup.map(tagConfig => (
           <Button key={tagConfig.name} onClick={() => dispatch(annotateCurrent(tagConfig.name))}>
             {tagConfig.shortcut} {tagConfig.label}

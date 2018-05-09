@@ -21,7 +21,7 @@ export default function* handleInteractions(collector: InteractionCollector) {
 
       const hints = List(main.doc.blocks)
         .flatMap((block, blockIndex) => findMatch(block, blockIndex, gathered, text))
-        .filterNot(r => is(r, range))
+        .filterNot(r => is(r, range.normalize()))
         .map(
           range =>
             new Hint({

@@ -8,6 +8,7 @@ import DecorationRange from '../../types/DecorationRange'
 import MainState from '../../types/MainState'
 import SelectionUtils from '../../utils/SelectionUtils'
 import AnnotationButtonGroup from './AnnotationButtonGroup'
+import HintButtonGroup from './HintButtonGroup'
 import './AnnotationEditor.styl'
 import './annotations.styl'
 import Block from './Block'
@@ -37,7 +38,11 @@ class AnnotationEditor extends React.Component<{ main: MainState; dispatch: Disp
 
     return (
       <div className="annotation-editor">
-        <AnnotationButtonGroup style={{ margin: '16px 8px', flex: '0 0 auto' }} />
+        <div style={{ display: 'flex', margin: '16px 8px', flex: '0 0 auto' }}>
+          <AnnotationButtonGroup />
+          <HintButtonGroup />
+        </div>
+
         <div className="editor">
           {main.doc.blocks.map((block, blockIndex) => (
             <Block

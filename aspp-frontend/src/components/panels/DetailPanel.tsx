@@ -111,12 +111,14 @@ function DecorationSetPreview({
 type SelMode = 'empty' | 'text' | 'decoration' | 'decoration-set'
 
 class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch }> {
-  resolveMode(): SelMode {
+  resolveModes(): { mode: SelMode; subMode?: string } {
     const { main } = this.props
     if (main.sel.isEmpty()) {
-      return main.range == null ? 'empty' : 'text'
+      return { mode: main.range == null ? 'empty' : 'text', subMode: null }
     } else {
-      return main.sel.count() > 1 ? 'decoration-set' : 'decoration'
+      const mode = main.sel.count() > 1 ? 'decoration-set' : 'decoration'
+      const subMode = mode === 'decoration' ? main.gather().get(main.sel.first()).type : null
+      return { mode, subMode }
     }
   }
 
@@ -214,11 +216,11 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
       <div>
         <HorizontalLine />
         <div className="block preview">
-          {decoration.type}
           <Span
             block={main.doc.blocks.get(range.blockIndex)}
             info={{ height: 0, decoration }}
             isSelected={always(false)}
+            shortenLongText
           />
         </div>
         <div className="code">
@@ -372,11 +374,14 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
   }
 
   render() {
-    const mode = this.resolveMode()
+    const { mode, subMode } = this.resolveModes()
     return (
       <div className="panel detail-panel">
         <div>
-          <h2 className="part-title">{mode}</h2>
+          <h2 className="part-title">
+            {mode}
+            {subMode ? `/${subMode}` : null}
+          </h2>
         </div>
         {this.renderTextPart(mode)}
         {this.renderIntersectionPart(mode)}

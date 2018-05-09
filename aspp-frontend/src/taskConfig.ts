@@ -4,7 +4,7 @@ import React from 'react'
 import TaskConfig from './types/TaskConfig'
 
 namespace CONFIG {
-  const taskConfig: TaskConfig = require('./aspp.config.yaml')
+  export const taskConfig: TaskConfig = require('./aspp.config.yaml')
 
   export const shortcutMap = Map(
     taskConfig.tags.filter(t => t.shortcut).map(t => [t.shortcut, t.name] as [string, string]),

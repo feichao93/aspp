@@ -18,7 +18,11 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { MiscState } from '../../reducers/miscReducer'
-import { toggleDarkTheme, toggleTaskTreeVisibility } from '../../utils/actionCreators'
+import {
+  requestDownloadResult,
+  toggleDarkTheme,
+  toggleTaskTreeVisibility,
+} from '../../utils/actionCreators'
 import './Menubar.styl'
 
 // TODO 完善状态栏
@@ -35,10 +39,14 @@ class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
             target={<Button minimal icon="document" text="file" />}
             content={
               <Menu>
-                <MenuItem icon="new-text-box" text="New Task" />
-                <MenuItem icon="document" text="New Doc" />
+                <MenuItem
+                  icon="cloud-download"
+                  text="Download Result"
+                  onClick={() => dispatch(requestDownloadResult())}
+                />
+                <MenuItem disabled icon="document" text="New Doc" />
                 <MenuDivider />
-                <MenuItem text="Settings..." icon="cog" />
+                <MenuItem disabled text="Settings..." icon="cog" />
               </Menu>
             }
           />

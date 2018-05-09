@@ -13,12 +13,12 @@ tags:
     shortcut: '2'
     abbr: PERSON
     theme:
-      background: '#e46dc5'
+      background: '#ff6f42'
 
   - name: location
     label: 地点
     shortcut: '3'
-    abbr: NATION
+    abbr: LOC
     theme:
       background: '#f7a444'
 
@@ -55,3 +55,21 @@ tags:
     abbr: O
     theme:
       background: '#d379e8'
+
+  - name: nouns
+    label: 名词
+    group: 词性
+    theme:
+      outline: '1px solid steelblue'
+
+  - name: adjective
+    label: 形容词
+    group: 词性
+    theme:
+      outline: '1px solid orange'
+
+  - name: verb
+    label: 动词
+    group: 词性
+    theme:
+      outline: '1px solid #ea2000'

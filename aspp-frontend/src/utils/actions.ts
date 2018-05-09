@@ -22,6 +22,7 @@ namespace Action {
     | ToggleDarkTheme
     | ToggleTaskTreeVisibility
     | AcceptHints
+    | RequestDownloadResult
 
   export interface AddDecorations {
     type: 'R_ADD_DECORATIONS'
@@ -99,6 +100,10 @@ namespace Action {
   export interface AcceptHints {
     type: 'ACCEPT_HINTS'
     accepting: Map<string, Hint>
+  }
+
+  export interface RequestDownloadResult {
+    type: 'REQUEST_DOWNLOAD_RESULT'
   }
 }
 
