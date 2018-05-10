@@ -19,6 +19,7 @@ import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { MiscState } from '../../reducers/miscReducer'
 import {
+  loadFileContent,
   requestDownloadResult,
   toggleDarkTheme,
   toggleTaskTreeVisibility,
@@ -27,6 +28,20 @@ import './Menubar.styl'
 
 // TODO 完善状态栏
 class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
+  onRequestOpenFile = () => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.click()
+    input.onchange = () => {
+      const file = input.files[0]
+      const fileReader = new FileReader()
+      fileReader.readAsText(file)
+      fileReader.onload = () => {
+        this.props.dispatch(loadFileContent(fileReader.result))
+      }
+    }
+  }
+
   render() {
     const { darkTheme, dispatch } = this.props
     return (
@@ -44,6 +59,7 @@ class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
                   text="Download Result"
                   onClick={() => dispatch(requestDownloadResult())}
                 />
+                <MenuItem icon="document-open" text="Open" onClick={this.onRequestOpenFile} />
                 <MenuItem disabled icon="document" text="New Doc" />
                 <MenuDivider />
                 <MenuItem disabled text="Settings..." icon="cog" />

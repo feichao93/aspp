@@ -26,6 +26,10 @@ export function getNextId(tag: string) {
   return `${tag}-${nextId}`
 }
 
+export function setNextId(tag: string, nextId: number) {
+  nextIdMap.set(tag, nextId)
+}
+
 export function identity<T>(arg: T): T {
   return arg
 }
@@ -68,7 +72,7 @@ export function always<T>(value: T) {
 }
 
 export function keyed<T extends Decoration>(
-  set: ISet<T> | IList<T> | IMap<string, T>,
+  set: ISet<T> | IList<T> | IMap<any, T>,
 ): IMap<string, T> {
   return (set as any).toMap().mapKeys((_: any, dec: Decoration) => dec.id)
 }

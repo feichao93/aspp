@@ -79,3 +79,7 @@ export function acceptHints(accepting: Map<string, Hint>): Action.AcceptHints {
 export function requestDownloadResult(): Action.RequestDownloadResult {
   return { type: 'REQUEST_DOWNLOAD_RESULT' }
 }
+
+export function loadFileContent(content: string): Action.LoadFileContent {
+  return { type: 'LOAD_FILE_CONTENT', content }
+}

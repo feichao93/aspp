@@ -1,4 +1,5 @@
 import { Map, Set } from 'immutable'
+import InlineAlgorithm from '../inline-algorithms/InlineAlgorithm'
 import Annotation from '../types/Annotation'
 import Decoration, { Hint, Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
@@ -26,6 +27,9 @@ namespace Action {
     | ToggleTaskTreeVisibility
     | AcceptHints
     | RequestDownloadResult
+    | LoadFileContent
+    | SubscribeAlgorithm
+    | UnsubscribeAlgorithm
 
   export interface AddAnnotations {
     type: 'R_ADD_ANNOTATIONS'
@@ -117,6 +121,24 @@ namespace Action {
 
   export interface RequestDownloadResult {
     type: 'REQUEST_DOWNLOAD_RESULT'
+  }
+
+  export interface LoadFileContent {
+    type: 'LOAD_FILE_CONTENT'
+    content: string
+  }
+
+  export interface SubscribeAlgorithm {
+    type: 'SUBSCRIBE_ALGORITHM'
+    id: string
+    // TODO add support for 'worker' and 'websocket'
+    algorithmType: 'inline'
+    inlineImplementation: { new (): InlineAlgorithm }
+  }
+
+  export interface UnsubscribeAlgorithm {
+    type: 'UNSUBSCRIBE_ALGORITHM'
+    id: string
   }
 }
 

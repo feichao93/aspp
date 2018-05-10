@@ -1,5 +1,5 @@
 import { Set } from 'immutable'
-import { multicastChannel as makeMulticastChannel } from 'redux-saga'
+import { channel as makeChannel } from 'redux-saga'
 import Decoration, { Hint } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 
@@ -41,7 +41,7 @@ export interface UserChangeRange {
 }
 
 export default class InteractionCollector {
-  readonly channel = makeMulticastChannel<Interaction>()
+  readonly channel = makeChannel<Interaction>()
 
   userAnnotateText(range: DecorationRange, tag: string) {
     this.channel.put({ type: 'USER_ANNOTATE_TEXT', range, tag })
