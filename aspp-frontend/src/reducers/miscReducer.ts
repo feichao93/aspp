@@ -8,7 +8,7 @@ export interface MiscState {
 }
 
 export default function miscReducer(
-  state: MiscState = { darkTheme, hideTaskTree: false },
+  state: MiscState = { darkTheme, hideTaskTree: true },
   action: Action,
 ): MiscState {
   if (action.type === 'R_TOGGLE_DARK_THEME') {
