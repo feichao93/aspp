@@ -1,10 +1,11 @@
 import { is, List } from 'immutable'
 import { put, select, take } from 'redux-saga/effects'
+import { delay } from 'redux-saga/utils'
 import { State } from '../reducers'
 import Annotation from '../types/Annotation'
 import { Hint } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
-import { addDecorations } from '../utils/actionCreators'
+import { addAnnotations, addHints } from '../utils/actionCreators'
 import { getNextId, keyed } from '../utils/common'
 import findMatch from '../utils/findMatch'
 import InteractionCollector, { Interaction } from '../utils/InteractionCollector'
@@ -12,6 +13,7 @@ import InteractionCollector, { Interaction } from '../utils/InteractionCollector
 export default function* handleInteractions(collector: InteractionCollector) {
   while (true) {
     const interaction: Interaction = yield take(collector.channel, '*')
+    yield delay(0)
 
     if (interaction.type === 'USER_ANNOTATE_TEXT') {
       const { range, tag } = interaction
@@ -28,16 +30,12 @@ export default function* handleInteractions(collector: InteractionCollector) {
               range,
               id: getNextId('hint'),
               hint: `Apply ${tag}`,
-              action: addDecorations(
-                keyed(List.of(new Annotation({ range, id: getNextId('annotation'), tag }))),
-              ),
+              action: addAnnotations(keyed(List.of(Annotation.annotateRange(tag, range)))),
             }),
         )
       if (!hints.isEmpty()) {
-        yield put(addDecorations(keyed(hints)))
+        yield put(addHints(keyed(hints)))
       }
-    } else {
-      throw new Error()
-    }
+    } // TODO else if (interaction.type === 'USER_ACCEPT_HINTS') { }
   }
 }

@@ -47,7 +47,7 @@ export default class Span extends React.Component<SpanProps> {
 
     return (
       <span
-        data-id={decoration.id}
+        data-id={decoration.id ? decoration.id : undefined}
         data-height={height}
         data-offset={decoration.range.startOffset}
         className={getClassName(decoration, selected)}

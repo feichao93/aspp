@@ -159,7 +159,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
       return null
     }
     const { main, dispatch } = this.props
-    const intersected = main.range.filterIntersected(main.gather())
+    const intersected = main.range.intersected(main.gather())
     const blockIndex = main.range.blockIndex
     const block = main.doc.blocks.get(blockIndex)
     const intersectedHints = intersected.filter(Decoration.isHint)

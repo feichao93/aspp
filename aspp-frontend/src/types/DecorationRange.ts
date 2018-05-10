@@ -56,7 +56,7 @@ export default class DecorationRange extends DecorationRangeRecord {
   }
 
   /** 计算与该 range 有重叠的那些 Decorations */
-  filterIntersected(annotations: Map<string, Decoration>): Map<string, Decoration> {
+  intersected(annotations: Map<string, Decoration>): Map<string, Decoration> {
     const normalized = this.normalize()
     return annotations.filter(annotation => {
       const { blockIndex, startOffset, endOffset } = annotation.range

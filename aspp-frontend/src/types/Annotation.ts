@@ -16,24 +16,23 @@ export default class Annotation extends AnnotationRecord {
     return new Annotation(object).update('range', DecorationRange.fromJS)
   }
 
-  static tagRange(tag: string, range: DecorationRange) {
+  /** 对一个 range 打上标签，总是返回新的 Annotation 对象 */
+  static annotateRange(tag: string, range: DecorationRange) {
     return new Annotation({
       id: getNextId('annotation'),
       tag,
-      range,
+      range: range.normalize(),
       confidence: 1,
     })
   }
 
-  static tagSel(tag: string, sel: Set<Decoration>) {
-    return sel.map(
-      slot =>
-        new Annotation({
-          tag,
-          range: slot.range,
-          confidence: 1,
-          id: getNextId('annotation'),
-        }),
+  /** 对若干 Decoration 打上标签，会尽量复用已有的 Annotation 对象 */
+  static annotateSet(tag: string, set: Set<Decoration>) {
+    return set.map(
+      decoration =>
+        Decoration.isAnnotation(decoration)
+          ? decoration.set('tag', tag)
+          : Annotation.annotateRange(tag, decoration.range),
     )
   }
 }

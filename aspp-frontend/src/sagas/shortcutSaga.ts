@@ -24,7 +24,7 @@ export default function* shortcutSaga() {
       } else if (event.key === 's') {
         const { main }: State = yield select()
         if (main.range) {
-          const intersected = main.range.filterIntersected(main.gather())
+          const intersected = main.range.intersected(main.gather())
           yield put(setSel(toIdSet(intersected)))
         }
       } else if (CONFIG.shortcutMap.has(event.key)) {

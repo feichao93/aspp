@@ -1,15 +1,15 @@
 import { Intent, Toaster } from '@blueprintjs/core'
-import { Map, Set } from 'immutable'
+import { is, Map, Set } from 'immutable'
 import { eventChannel } from 'redux-saga'
 import { fork, put, select, take, takeEvery } from 'redux-saga/effects'
 import { State } from '../reducers'
 import Annotation from '../types/Annotation'
-import Decoration from '../types/Decoration'
+import Decoration, { Hint } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import {
   acceptHints,
-  addDecorations,
-  removeDecorations,
+  addAnnotations,
+  deleteDecorations,
   setRange,
   setSel,
   toast,
@@ -32,7 +32,7 @@ function* autoClearNativeSelectionAfterSetSel() {
   }
 }
 
-function* autoClearSelAndUpdateRange() {
+function* autoClearSelAndUpdateRange(collector: InteractionCollector) {
   const chan = eventChannel(emit => {
     const callback = () => emit('change')
     document.addEventListener('selectionchange', callback)
@@ -47,7 +47,10 @@ function* autoClearSelAndUpdateRange() {
       if (!main.sel.isEmpty() && nextRange != null) {
         yield put(setSel(Set()))
       }
-      yield put(setRange(nextRange))
+      if (!is(main.range, nextRange)) {
+        yield put(setRange(nextRange))
+        collector.userChangeRange(nextRange)
+      }
     }
   } finally {
     chan.close()
@@ -61,53 +64,63 @@ function* handleAnnotateCurrent(collector: InteractionCollector, { tag }: Action
     return
   }
   const gathered = main.gather()
-  const selDecSet = main.sel.map(id => gathered.get(id))
-  const setToAdd = main.sel.isEmpty()
-    ? Set.of(Annotation.tagRange(tag, main.range.normalize()))
-    : Annotation.tagSel(tag, selDecSet)
-  const overlapped = setToAdd.some(dec1 =>
+  const selection = main.sel.map(id => gathered.get(id))
+  const adding = main.sel.isEmpty()
+    ? Set.of(Annotation.annotateRange(tag, main.range))
+    : Annotation.annotateSet(tag, selection)
+  const overlapped = adding.some(dec1 =>
     gathered.some(dec2 => DecorationRange.isOverlapped(dec1.range, dec2.range)),
   )
-
-  if (main.range) {
-    collector.userAnnotateText(main.range, tag)
-  }
 
   if (overlapped) {
     yield put(toast('Overlap'))
   } else {
-    yield put(removeDecorations(main.sel))
-    yield put(addDecorations(keyed(setToAdd)))
-    yield put(setSel(toIdSet(setToAdd)))
+    if (main.range) {
+      collector.userAnnotateText(main.range, tag)
+    } else {
+      collector.userAnnotateSel(main.sel, tag)
+    }
+    yield put(deleteDecorations(toIdSet(selection.filterNot(Decoration.isAnnotation))))
+    yield put(addAnnotations(keyed(adding)))
+    yield put(setSel(toIdSet(adding)))
   }
 }
 
-function* handleDeleteCurrent() {
+function* handleDeleteCurrent(collector: InteractionCollector) {
   const { main }: State = yield select()
   const gathered = main.gather()
   if (main.sel.isEmpty()) {
     if (main.range == null) {
       yield put(toast('invalid range'))
     } else {
-      const removing = main.range.filterIntersected(gathered)
-      yield put(removeDecorations(toIdSet(removing)))
+      const removing = main.range.intersected(gathered)
+      collector.userDeleteDecoration(removing.toSet())
+      yield put(deleteDecorations(toIdSet(removing)))
     }
   } else {
-    yield put(removeDecorations(main.sel))
+    yield put(deleteDecorations(main.sel))
   }
 }
 
-function* handleAcceptCurrent() {
+function* handleAcceptCurrent(collector: InteractionCollector) {
   const { main }: State = yield select()
   const gathered = main.gather()
+  let accepting: Map<string, Hint>
   if (main.sel.isEmpty()) {
     if (main.range == null) {
-      yield put(acceptHints(Map()))
+      accepting = Map()
     } else {
-      yield put(acceptHints(main.range.filterIntersected(gathered).filter(Decoration.isHint)))
+      accepting = main.range.intersected(gathered).filter(Decoration.isHint)
     }
   } else {
-    yield put(acceptHints(keyed(main.sel.map(id => gathered.get(id)).filter(Decoration.isHint))))
+    accepting = keyed(main.sel.map(id => gathered.get(id)).filter(Decoration.isHint))
+  }
+
+  if (accepting.isEmpty()) {
+    yield put(toast('No hints to accept'))
+  } else {
+    collector.userAcceptHints(accepting.toSet())
+    yield put(acceptHints(accepting))
   }
 }
 
@@ -116,7 +129,7 @@ function* handleAcceptHints({ accepting }: Action.AcceptHints) {
     yield put(toast('No hints to accept'))
   } else {
     const actions = accepting.map(hint => hint.action).filter(Boolean)
-    yield put(removeDecorations(toIdSet(accepting)))
+    yield put(deleteDecorations(toIdSet(accepting)))
     // TODO performance degradation
     // 用户可能会一下子选中很多 hint，然后一次性进行接受，这里一个一个处理 action 比较低效
     yield* actions.map(action => put(action)).valueSeq()
@@ -149,35 +162,43 @@ function* handleSelectBlockText({ blockIndex }: Action.SelectBlockText) {
   )
 }
 
-function* handleAcceptBlock({ blockIndex }: Action.AcceptBlock) {
+function* handleAcceptBlock(collector: InteractionCollector, { blockIndex }: Action.AcceptBlock) {
   const { main }: State = yield select()
-  yield put(acceptHints(main.hints.filter(dec => dec.range.blockIndex === blockIndex)))
+  const accepting = main.hints.filter(dec => dec.range.blockIndex === blockIndex)
+  if (!accepting.isEmpty()) {
+    collector.userAcceptHints(accepting.toSet())
+    yield put(acceptHints(accepting))
+  }
 }
 
-function* handleClearBlockDecorations({ blockIndex }: Action.ClearBlockDecorations) {
+function* handleClearBlockDecorations(
+  collector: InteractionCollector,
+  { blockIndex }: Action.ClearBlockDecorations,
+) {
   const { main }: State = yield select()
-  const setToRemove = main.gather().filter(dec => dec.range.blockIndex === blockIndex)
-  yield put(removeDecorations(setToRemove.keySeq().toSet()))
+  const removing = main.gather().filter(dec => dec.range.blockIndex === blockIndex)
+  collector.userDeleteDecoration(removing.toSet())
+  yield put(deleteDecorations(toIdSet(removing)))
 }
 
 export default function* rootSaga() {
   const collector = new InteractionCollector()
 
   console.log('root-saga started')
-  yield fork(autoClearSelAndUpdateRange)
+  yield fork(autoClearSelAndUpdateRange, collector)
   yield fork(autoClearNativeSelectionAfterSetSel)
   yield fork(shortcutSaga)
   yield fork(handleInteractions, collector)
   yield fork(fileSaga)
 
   yield takeEvery('ANNOTATE_CURRENT', handleAnnotateCurrent, collector)
-  yield takeEvery('DELETE_CURRENT', handleDeleteCurrent)
-  yield takeEvery('ACCEPT_CURRENT', handleAcceptCurrent)
+  yield takeEvery('DELETE_CURRENT', handleDeleteCurrent, collector)
+  yield takeEvery('ACCEPT_CURRENT', handleAcceptCurrent, collector)
   yield takeEvery('CLICK_DECORATION', handleClickDecoration)
   yield takeEvery('SELECT_MATCH', handleSelectMatch)
   yield takeEvery('TOAST', handleToast)
   yield takeEvery('SELECT_BLOCK_TEXT', handleSelectBlockText)
-  yield takeEvery('ACCEPT_BLOCK', handleAcceptBlock)
-  yield takeEvery('CLEAR_BLOCK_DECORATIONS', handleClearBlockDecorations)
+  yield takeEvery('ACCEPT_BLOCK', handleAcceptBlock, collector)
+  yield takeEvery('CLEAR_BLOCK_DECORATIONS', handleClearBlockDecorations, collector)
   yield takeEvery('ACCEPT_HINTS', handleAcceptHints)
 }

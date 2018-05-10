@@ -1,13 +1,16 @@
 import { Map, Set } from 'immutable'
-import Decoration, { Hint } from '../types/Decoration'
+import Annotation from '../types/Annotation'
+import Decoration, { Hint, Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 
 type Action = Action.ALL
 
 namespace Action {
   export type ALL =
-    | AddDecorations
-    | RemoveDecorations
+    | AddAnnotations
+    | AddSlots
+    | AddHints
+    | DeleteDecorations
     | SetSel
     | SelectBlockText
     | AcceptBlock
@@ -24,13 +27,23 @@ namespace Action {
     | AcceptHints
     | RequestDownloadResult
 
-  export interface AddDecorations {
-    type: 'R_ADD_DECORATIONS'
-    decorations: Map<string, Decoration>
+  export interface AddAnnotations {
+    type: 'R_ADD_ANNOTATIONS'
+    annotations: Map<string, Annotation>
   }
 
-  export interface RemoveDecorations {
-    type: 'R_REMOVE_DECORATIONS'
+  export interface AddSlots {
+    type: 'R_ADD_SLOTS'
+    slots: Map<string, Slot>
+  }
+
+  export interface AddHints {
+    type: 'R_ADD_HINTS'
+    hints: Map<string, Hint>
+  }
+
+  export interface DeleteDecorations {
+    type: 'R_DELETE_DECORATIONS'
     idSet: Set<string>
   }
 

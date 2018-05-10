@@ -1,14 +1,23 @@
 import { Map, Set } from 'immutable'
-import Decoration, { Hint } from '../types/Decoration'
+import Annotation from '../types/Annotation'
+import Decoration, { Hint, Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import Action from './actions'
 
-export function addDecorations(decorations: Map<string, Decoration>): Action.AddDecorations {
-  return { type: 'R_ADD_DECORATIONS', decorations }
+export function addAnnotations(annotations: Map<string, Annotation>): Action.AddAnnotations {
+  return { type: 'R_ADD_ANNOTATIONS', annotations }
 }
 
-export function removeDecorations(idSet: Set<string>): Action.RemoveDecorations {
-  return { type: 'R_REMOVE_DECORATIONS', idSet }
+export function addSlots(slots: Map<string, Slot>): Action.AddSlots {
+  return { type: 'R_ADD_SLOTS', slots }
+}
+
+export function addHints(hints: Map<string, Hint>): Action.AddHints {
+  return { type: 'R_ADD_HINTS', hints }
+}
+
+export function deleteDecorations(idSet: Set<string>): Action.DeleteDecorations {
+  return { type: 'R_DELETE_DECORATIONS', idSet }
 }
 
 export function setSel(sel: Set<string>): Action.SetSel {
