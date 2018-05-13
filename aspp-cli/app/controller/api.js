@@ -4,13 +4,11 @@ const Controller = require('egg').Controller
 
 class APIController extends Controller {
   async nextId() {
-    this.ctx.body = this.ctx.aspp.incAndGetNextId()
+    this.ctx.body = this.app.incAndGetNextId()
   }
 
   async list() {
-    const status = yaml.safeLoad(fs.readFileSync('test-dir/aspp.status.yaml'))
-    this.ctx.set('content-type', 'application/json')
-    this.ctx.body = JSON.stringify(status.docs, null, 2)
+    this.ctx.body = this.app.getStatus()
   }
 
   async getDoc() {
@@ -29,34 +27,35 @@ class APIController extends Controller {
     const { docId, annotationSetName } = this.ctx.params
     const status = yaml.safeLoad(fs.readFileSync('test-dir/aspp.status.yaml'))
     const doc = status.docs.find(doc => doc.id === docId)
-    const filename = `test-dir/annotations/${doc.name}.${annotationSetName}.json`
+    const filename = this.app.resolveAnnotationFilename(doc.name, annotationSetName)
     if (!fs.existsSync(filename)) {
       this.ctx.throw(404, 'annotation-set file not found')
     }
-    this.ctx.body = fs.readFileSync(filename)
-    this.ctx.response.set('content-type', 'text/plain;charset=utf8')
+    this.ctx.body = yaml.safeLoad(fs.readFileSync(filename))
   }
 
   async deleteAnnotationSet() {
-    // TODO
     const { docId, annotationSetName } = this.ctx.params
-    const status = yaml.safeLoad(fs.readFileSync('test-dir/aspp.status.yaml'))
+    const status = this.app.getStatus()
     const doc = status.docs.find(doc => doc.id === docId)
-    const filename = `test-dir/annotations/${doc.name}.${annotationSetName}.json`
+    const filename = this.app.resolveAnnotationFilename(doc.name, annotationSetName)
     fs.unlinkSync(filename)
     doc.annotations.splice(doc.annotations.indexOf(annotationSetName))
-    // TODO this.ctx.saveStatus()
+    this.app.save()
     this.ctx.status = 200
   }
 
-  // TODO 更新标注文件
   async putAnnotationSet() {
-    this.ctx.NOT_IMPLEMENTED()
-  }
-
-  // TODO 新增一个标注文件
-  async addAnnotationSet() {
-    const { docId } = this.ctx.params
+    const { docId, annotationSetName } = this.ctx.params
+    const status = this.app.getStatus()
+    const doc = status.docs.find(doc => doc.id === docId)
+    if (!doc.annotations.includes(annotationSetName)) {
+      doc.annotations.push(annotationSetName)
+    }
+    const filename = this.app.resolveAnnotationFilename(doc.name, annotationSetName)
+    fs.writeFileSync(filename, yaml.safeDump(this.ctx.request.body), 'utf-8')
+    this.app.save()
+    this.ctx.status = 200
   }
 }
 
