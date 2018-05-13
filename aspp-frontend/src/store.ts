@@ -14,6 +14,12 @@ window.addEventListener('beforeunload', () => {
   } else {
     localStorage.removeItem('dark-theme')
   }
+
+  if (state.misc.hideTaskTree) {
+    localStorage.setItem('hide-task-tree', 'true')
+  } else {
+    localStorage.removeItem('hide-task-tree')
+  }
 })
 
 export default store

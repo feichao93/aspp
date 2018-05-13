@@ -1,84 +1,112 @@
 import { ContextMenu, ITreeNode, Menu, MenuItem, Tree } from '@blueprintjs/core'
+import { saveAs } from 'file-saver'
 import classNames from 'classnames'
 import React from 'react'
 import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { MiscState } from '../../reducers/miscReducer'
-import { getNextId } from '../../utils/common'
+import { TreeState } from '../../reducers/treeReducer'
 import './TaskTree.styl'
+import fetchHost from '../../sagas/fetchHost'
+import {
+  clickAnnotationSetTreeNode,
+  clickDocTreeNode,
+  requestAddAnnotationSet,
+  requestDeleteAnnotationSet,
+  toast,
+} from '../../utils/actionCreators'
 
-const INIT_CONTENTS: ITreeNode[] = [
-  {
-    id: getNextId('tree-node'),
-    icon: 'document',
-    label: 'Doc-34de',
-    isExpanded: true,
-    childNodes: [
-      {
-        id: getNextId('tree-node'),
-        icon: 'annotation',
-        label: 'feichao-1',
-      },
-      {
-        id: getNextId('tree-node'),
-        isSelected: true,
-        icon: 'annotation',
-        label: 'feichao-2',
-      },
-      {
-        id: getNextId('tree-node'),
-        icon: 'annotation',
-        label: '[dbscan]-run-3f4052',
-      },
-    ],
-  },
-  {
-    id: getNextId('tree-node'),
-    icon: 'document',
-    label: 'Doc-190f',
-    isExpanded: true,
-    childNodes: [
-      {
-        id: getNextId('tree-node'),
-        icon: 'annotation',
-        label: 'aoba-1',
-      },
-      {
-        id: getNextId('tree-node'),
-        icon: 'annotation',
-        label: '[dbscan]-run-3f4052',
-      },
-    ],
-  },
-  {
-    id: getNextId('tree-node'),
-    icon: 'document',
-    label: 'Doc-6a43',
-    hasCaret: true,
-  },
-]
+export interface TaskTreeProps {
+  misc: MiscState
+  tree: TreeState
+  dispatch: Dispatch
+}
 
-class TaskTree extends React.Component<MiscState> {
-  state = {
-    contents: INIT_CONTENTS,
+export interface TaskTreeState {
+  contents: ITreeNode[]
+  treeState: TreeState
+}
+
+function genTreeNodes({ docs }: TreeState, prevState: ITreeNode[]): ITreeNode[] {
+  return docs.map(
+    doc =>
+      ({
+        id: doc.id,
+        icon: 'document',
+        label: doc.name,
+        isExpanded: isExpanded(prevState, doc.id),
+        childNodes: doc.annotations.map(
+          name =>
+            ({
+              id: `${doc.id}-${name}`,
+              icon: 'annotation',
+              label: name,
+            } as ITreeNode),
+        ),
+      } as ITreeNode),
+  )
+
+  function isExpanded(prevState: ITreeNode[], docId: string) {
+    const docEntry = prevState.find(node => node.id === docId)
+    return Boolean(docEntry && docEntry.isExpanded)
+  }
+}
+
+class TaskTree extends React.Component<TaskTreeProps, TaskTreeState> {
+  static getDerivedStateFromProps(nextProps: TaskTreeProps, prevState: TaskTreeState) {
+    if (prevState.treeState != nextProps.tree) {
+      console.log('updating state from props...')
+      return {
+        contents: genTreeNodes(nextProps.tree, prevState.contents),
+        treeState: nextProps.tree,
+      }
+    }
+    return null
   }
 
-  handleNodeClick = (
-    nodeData: ITreeNode,
-    _nodePath: number[],
-    e: React.MouseEvent<HTMLElement>,
-  ) => {
-    const originallySelected = nodeData.isSelected
+  state = {
+    contents: [] as ITreeNode[],
+    treeState: null as TreeState,
+  }
+
+  onDownloadResult = async (docId: string, annotationSetName: string) => {
+    const {
+      tree: { docs },
+    } = this.props
+    const docName = docs.find(doc => doc.id === docId).name
+    const response = await fetchHost(`/api/annotation-set/${docId}/${annotationSetName}`)
+    if (response.ok) {
+      saveAs(await response.blob(), `${docName}.${annotationSetName}.json`)
+    } else {
+      this.props.dispatch(toast('Fail to download'))
+    }
+  }
+
+  handleNodeClick = (nodeData: ITreeNode, nodePath: number[], e: React.MouseEvent<HTMLElement>) => {
     if (!e.ctrlKey) {
       this.forEachNode(this.state.contents, n => (n.isSelected = false))
+      nodeData.isSelected = true
+      this.forceUpdate()
+    } // TODO 考虑按住 ctrl 键多选的情况 if (!e.ctrlKey) { }
+
+    const { dispatch } = this.props
+    const { treeState } = this.state
+    if (nodePath.length === 1) {
+      const doc = treeState.docs[nodePath[0]]
+      dispatch(clickDocTreeNode(doc.id))
+    } else if (nodePath.length === 2) {
+      const doc = treeState.docs[nodePath[0]]
+      const annotationSetName = doc.annotations[nodePath[1]]
+      dispatch(clickAnnotationSetTreeNode(doc.id, annotationSetName))
+    } else {
+      throw new Error('invalid click node path')
     }
-    nodeData.isSelected = originallySelected == null ? true : !originallySelected
-    this.forceUpdate()
   }
 
   handleNodeCollapse = (nodeData: ITreeNode) => {
     nodeData.isExpanded = false
-    this.setState(this.state)
+    this.forceUpdate()
   }
 
   handleNodeExpand = (nodeData: ITreeNode) => {
@@ -88,7 +116,7 @@ class TaskTree extends React.Component<MiscState> {
 
   handleNodeContextMenu = (
     nodeData: ITreeNode,
-    _nodePath: any,
+    nodePath: number[],
     e: React.MouseEvent<HTMLElement>,
   ) => {
     e.preventDefault()
@@ -97,17 +125,48 @@ class TaskTree extends React.Component<MiscState> {
       nodeData.isSelected = true
       this.forceUpdate()
     }
-    ContextMenu.show(
-      <Menu>
-        <MenuItem icon="new-object" text="New Annotation Set" />
-        <MenuItem icon="comparison" text="Compare" disabled />
-        <MenuItem icon="download" text="Download Result" />
-      </Menu>,
-      { left: e.clientX, top: e.clientY },
-    )
+
+    const { dispatch } = this.props
+    const { treeState } = this.state
+    if (nodePath.length === 1) {
+      const doc = treeState.docs[nodePath[0]]
+      ContextMenu.show(
+        <Menu>
+          <MenuItem
+            icon="new-object"
+            text="New Annotation Set"
+            onClick={() => dispatch(requestAddAnnotationSet(doc.id))}
+          />
+          <MenuItem icon="comparison" text="Compare" disabled />
+          <MenuItem icon="download" text="Download Result" disabled />
+        </Menu>,
+        { left: e.clientX, top: e.clientY },
+      )
+    } else if (nodePath.length === 2) {
+      const doc = treeState.docs[nodePath[0]]
+      const annotationSetName = doc.annotations[nodePath[1]]
+      ContextMenu.show(
+        <Menu>
+          <MenuItem
+            icon="trash"
+            text="Delete"
+            onClick={() => dispatch(requestDeleteAnnotationSet(doc.id, annotationSetName))}
+          />
+          <MenuItem
+            icon="download"
+            text="Download JSON"
+            onClick={() => this.onDownloadResult(doc.id, annotationSetName)}
+          />
+          <MenuItem icon="download" text="Download BME(TODO)" disabled />
+        </Menu>,
+        { left: e.clientX, top: e.clientY },
+      )
+    } else {
+      throw new Error('invalid click node path')
+    }
   }
 
-  forEachNode(nodes: ITreeNode[], callback: (node: ITreeNode) => void) {
+  private forEachNode(nodes: ITreeNode[], callback: (node: ITreeNode) => void) {
     if (nodes == null) {
       return
     }
@@ -119,9 +178,9 @@ class TaskTree extends React.Component<MiscState> {
   }
 
   render() {
-    const { hideTaskTree } = this.props
+    const { misc } = this.props
     return (
-      <div className={classNames('task-tree', { hide: hideTaskTree })}>
+      <div className={classNames('task-tree', { hide: misc.hideTaskTree })}>
         <Tree
           contents={this.state.contents}
           onNodeClick={this.handleNodeClick}
@@ -134,4 +193,4 @@ class TaskTree extends React.Component<MiscState> {
   }
 }
 
-export default connect((s: State) => s.misc)(TaskTree)
+export default connect((s: State) => ({ misc: s.misc, tree: s.tree }))(TaskTree)

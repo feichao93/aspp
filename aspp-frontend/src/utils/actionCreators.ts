@@ -1,4 +1,5 @@
 import { Map, Set } from 'immutable'
+import { TreeState } from '../reducers/treeReducer'
 import Annotation from '../types/Annotation'
 import Decoration, { Hint, Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
@@ -82,4 +83,30 @@ export function requestDownloadResult(): Action.RequestDownloadResult {
 
 export function loadFileContent(content: string): Action.LoadFileContent {
   return { type: 'LOAD_FILE_CONTENT', content }
+}
+
+export function loadData(data: TreeState): Action.LoadData {
+  return { type: 'LOAD_DATA', data }
+}
+
+export function clickDocTreeNode(docId: string): Action.ClickDocTreeNode {
+  return { type: 'CLICK_DOC_TREE_NODE', docId }
+}
+
+export function clickAnnotationSetTreeNode(
+  docId: string,
+  annotationSetName: string,
+): Action.ClickAnnotationSetTreeNode {
+  return { type: 'CLICK_ANNOTATION_SET_TREE_NODE', docId, annotationSetName }
+}
+
+export function requestAddAnnotationSet(docId: string): Action.RequestAddAnnotationSet {
+  return { type: 'REQUEST_ADD_ANNOTATION_SET', docId }
+}
+
+export function requestDeleteAnnotationSet(
+  docId: string,
+  annotationSetName: string,
+): Action.RequestDeleteAnnotationSet {
+  return { type: 'REQUEST_DELETE_ANNOTATION_SET', docId, annotationSetName }
 }

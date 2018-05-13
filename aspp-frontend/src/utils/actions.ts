@@ -1,5 +1,6 @@
 import { Map, Set } from 'immutable'
 import InlineAlgorithm from '../inline-algorithms/InlineAlgorithm'
+import { TreeState } from '../reducers/treeReducer'
 import Annotation from '../types/Annotation'
 import Decoration, { Hint, Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
@@ -30,6 +31,11 @@ namespace Action {
     | LoadFileContent
     | SubscribeAlgorithm
     | UnsubscribeAlgorithm
+    | LoadData
+    | ClickDocTreeNode
+    | ClickAnnotationSetTreeNode
+    | RequestAddAnnotationSet
+    | RequestDeleteAnnotationSet
 
   export interface AddAnnotations {
     type: 'R_ADD_ANNOTATIONS'
@@ -139,6 +145,33 @@ namespace Action {
   export interface UnsubscribeAlgorithm {
     type: 'UNSUBSCRIBE_ALGORITHM'
     id: string
+  }
+
+  export interface LoadData {
+    type: 'LOAD_DATA'
+    data: TreeState
+  }
+
+  export interface ClickDocTreeNode {
+    type: 'CLICK_DOC_TREE_NODE'
+    docId: string
+  }
+
+  export interface ClickAnnotationSetTreeNode {
+    type: 'CLICK_ANNOTATION_SET_TREE_NODE'
+    docId: string
+    annotationSetName: string
+  }
+
+  export interface RequestAddAnnotationSet {
+    type: 'REQUEST_ADD_ANNOTATION_SET'
+    docId: string
+  }
+
+  export interface RequestDeleteAnnotationSet {
+    type: 'REQUEST_DELETE_ANNOTATION_SET'
+    docId: string
+    annotationSetName: string
   }
 }
 

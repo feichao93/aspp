@@ -25,7 +25,7 @@ export default class App extends React.Component<Partial<MiscState>> {
           <TaskTree />
           <AnnotationEditor />
           <PanelContainer />
-          <StatusBar />
+          {/*<StatusBar />*/}
         </div>
       </div>
     )

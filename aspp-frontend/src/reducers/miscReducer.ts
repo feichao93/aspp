@@ -1,6 +1,7 @@
 import Action from '../utils/actions'
 
 const darkTheme = localStorage.getItem('dark-theme') != null
+const hideTaskTree = localStorage.getItem('hide-task-tree') != null
 
 export interface MiscState {
   darkTheme: boolean
@@ -8,7 +9,7 @@ export interface MiscState {
 }
 
 export default function miscReducer(
-  state: MiscState = { darkTheme, hideTaskTree: true },
+  state: MiscState = { darkTheme, hideTaskTree },
   action: Action,
 ): MiscState {
   if (action.type === 'R_TOGGLE_DARK_THEME') {
