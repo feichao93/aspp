@@ -1,5 +1,3 @@
-const fs = require('fs')
-const yaml = require('js-yaml')
 const Controller = require('egg').Controller
 
 class APIController extends Controller {

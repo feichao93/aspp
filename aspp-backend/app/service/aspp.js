@@ -52,7 +52,7 @@ class AsppService extends Service {
 
   deleteAnnotation(docname, annotationSetName) {
     const status = this.getStatus()
-    const doc = status.docs.find(doc => doc.id === docname)
+    const doc = status.docs.find(doc => doc.name === docname)
     doc.annotations.splice(doc.annotations.indexOf(annotationSetName))
     this.save()
 
