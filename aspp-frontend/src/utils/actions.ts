@@ -127,6 +127,7 @@ namespace Action {
 
   export interface RequestDownloadResult {
     type: 'REQUEST_DOWNLOAD_RESULT'
+    format: 'json' | 'bio'
   }
 
   export interface LoadFileContent {
@@ -154,23 +155,23 @@ namespace Action {
 
   export interface ClickDocTreeNode {
     type: 'CLICK_DOC_TREE_NODE'
-    docId: string
+    docname: string
   }
 
   export interface ClickAnnotationSetTreeNode {
     type: 'CLICK_ANNOTATION_SET_TREE_NODE'
-    docId: string
+    docname: string
     annotationSetName: string
   }
 
   export interface RequestAddAnnotationSet {
     type: 'REQUEST_ADD_ANNOTATION_SET'
-    docId: string
+    docname: string
   }
 
   export interface RequestDeleteAnnotationSet {
     type: 'REQUEST_DELETE_ANNOTATION_SET'
-    docId: string
+    docname: string
     annotationSetName: string
   }
 }

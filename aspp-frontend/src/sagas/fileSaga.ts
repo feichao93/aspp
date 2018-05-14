@@ -13,6 +13,7 @@ import {
 } from '../utils/actionCreators'
 import Action from '../utils/actions'
 import { keyed, setNextId, toIdSet } from '../utils/common'
+import layout from '../utils/layout'
 import fetchHost from './fetchHost'
 
 /** 从后台加载文档树 */
@@ -30,11 +31,40 @@ function* loadTreeState() {
   }
 }
 
-function* handleRequestDownloadResult() {
+function* handleRequestDownloadResultJSON() {
   const state: State = yield select()
-  const annotations = state.main.annotations
+  const annotations = state.main.annotations.valueSeq().toArray()
   const content = JSON.stringify({ annotations }, null, 2)
   saveAs(new Blob([content], { type: 'text/plain;charset=utf-8' }), 'aspp-result.json')
+}
+
+function* handleRequestDownloadResultBIO() {
+  const { main }: State = yield select()
+  // TODO 暂时先只考虑 block-0
+  const block = main.doc.blocks.get(0)
+  const lines: string[] = []
+  const rootNode = layout(block, 0, main.annotations.toSet())
+  for (const { decoration } of rootNode.children) {
+    const { startOffset, endOffset } = decoration.range
+    if (decoration.type === 'text') {
+      for (let i = startOffset; i < endOffset; i++) {
+        lines.push(`${block[i]} O`) // other
+      }
+    } else if (decoration.type === 'annotation') {
+      if (startOffset + 1 === endOffset) {
+        lines.push(`${block[startOffset]} S-${decoration.tag}`)
+      } else {
+        // BME
+        lines.push(`${block[startOffset]} B-${decoration.tag}`)
+        for (let i = startOffset + 1; i < endOffset - 1; i++) {
+          lines.push(`${block[i]} M-${decoration.tag}`)
+        }
+        lines.push(`${block[endOffset - 1]} E-${decoration.tag}`)
+      }
+    }
+  }
+  const content = lines.map(line => line + '\n').join('')
+  saveAs(new Blob([content], { type: 'text/plain;charset=utf-8' }), 'aspp-result.anns')
 }
 
 function* handleLoadFileContent({ content }: Action.LoadFileContent) {
@@ -56,10 +86,10 @@ function* handleLoadFileContent({ content }: Action.LoadFileContent) {
   }
 }
 
-function* handleClickDocTreeNode({ docId }: Action.ClickDocTreeNode) {
-  console.log('handleClickDocTreeNode', docId)
+function* handleClickDocTreeNode({ docname }: Action.ClickDocTreeNode) {
+  console.log('handleClickDocTreeNode', docname)
   try {
-    const response = yield fetchHost(`/api/doc/${docId}`)
+    const response = yield fetchHost(`/api/doc/${docname}`)
     if (response.ok) {
       const text = yield response.text()
       // console.log(text)
@@ -73,13 +103,13 @@ function* handleClickDocTreeNode({ docId }: Action.ClickDocTreeNode) {
 }
 
 function* handleClickAnnotationSetTreeNode({
-  docId,
+  docname,
   annotationSetName,
 }: Action.ClickAnnotationSetTreeNode) {
   // const { main }: State = yield select()
-  console.log('handleClickAnnotationSetTreeNode', docId, annotationSetName)
+  console.log('handleClickAnnotationSetTreeNode', docname, annotationSetName)
   try {
-    const response = yield fetchHost(`/api/annotation-set/${docId}/${annotationSetName}`)
+    const response = yield fetchHost(`/api/annotation-set/${docname}/${annotationSetName}`)
     if (response.ok) {
       const json = yield response.json()
       // console.log(json)
@@ -92,13 +122,13 @@ function* handleClickAnnotationSetTreeNode({
   }
 }
 
-function* handleRequestAddAnnotationSet({ docId }: Action.RequestAddAnnotationSet) {
+function* handleRequestAddAnnotationSet({ docname }: Action.RequestAddAnnotationSet) {
   const annotationSetName = window.prompt('请输入标注集合名称：')
   if (annotationSetName == null) {
     return
   }
   try {
-    const response = yield fetchHost(`/api/annotation-set/${docId}/${annotationSetName}`, {
+    const response = yield fetchHost(`/api/annotation-set/${docname}/${annotationSetName}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
@@ -117,16 +147,16 @@ function* handleRequestAddAnnotationSet({ docId }: Action.RequestAddAnnotationSe
 }
 
 function* handleRequestDeleteAnnotationSet({
-  docId,
+  docname,
   annotationSetName,
 }: Action.RequestDeleteAnnotationSet) {
   try {
-    const response = yield fetchHost(`/api/annotation-set/${docId}/${annotationSetName}`, {
+    const response = yield fetchHost(`/api/annotation-set/${docname}/${annotationSetName}`, {
       method: 'DELETE',
     })
     if (response.ok) {
       yield loadTreeState()
-      yield put(toast(`Deleted. ${docId}/${annotationSetName}.`))
+      yield put(toast(`Deleted. ${docname}/${annotationSetName}.`))
     } else {
       throw new Error('response not ok')
     }
@@ -139,7 +169,14 @@ function* handleRequestDeleteAnnotationSet({
 export default function* fileSaga() {
   yield fork(loadTreeState)
 
-  yield takeEvery('REQUEST_DOWNLOAD_RESULT', handleRequestDownloadResult)
+  yield takeEvery(
+    (action: Action) => action.type === 'REQUEST_DOWNLOAD_RESULT' && action.format === 'json',
+    handleRequestDownloadResultJSON,
+  )
+  yield takeEvery(
+    (action: Action) => action.type === 'REQUEST_DOWNLOAD_RESULT' && action.format === 'bio',
+    handleRequestDownloadResultBIO,
+  )
   yield takeEvery('LOAD_FILE_CONTENT', handleLoadFileContent)
   yield takeEvery('REQUEST_ADD_ANNOTATION_SET', handleRequestAddAnnotationSet)
   yield takeEvery('REQUEST_DELETE_ANNOTATION_SET', handleRequestDeleteAnnotationSet)

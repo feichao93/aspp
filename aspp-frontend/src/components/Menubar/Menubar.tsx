@@ -56,8 +56,13 @@ class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
               <Menu>
                 <MenuItem
                   icon="cloud-download"
-                  text="Download Result"
-                  onClick={() => dispatch(requestDownloadResult())}
+                  text="Download Result (json)"
+                  onClick={() => dispatch(requestDownloadResult('json'))}
+                />
+                <MenuItem
+                  icon="cloud-download"
+                  text="Download Result (bio)"
+                  onClick={() => dispatch(requestDownloadResult('bio'))}
                 />
                 <MenuItem icon="document-open" text="Open" onClick={this.onRequestOpenFile} />
                 <MenuItem disabled icon="document" text="New Doc" />

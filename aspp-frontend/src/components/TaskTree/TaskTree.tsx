@@ -32,14 +32,14 @@ function genTreeNodes({ docs }: TreeState, prevState: ITreeNode[]): ITreeNode[] 
   return docs.map(
     doc =>
       ({
-        id: doc.id,
+        id: doc.name,
         icon: 'document',
         label: doc.name,
-        isExpanded: isExpanded(prevState, doc.id),
+        isExpanded: isExpanded(prevState, doc.name),
         childNodes: doc.annotations.map(
           name =>
             ({
-              id: `${doc.id}-${name}`,
+              id: `${doc.name}-${name}`,
               icon: 'annotation',
               label: name,
             } as ITreeNode),
@@ -47,8 +47,8 @@ function genTreeNodes({ docs }: TreeState, prevState: ITreeNode[]): ITreeNode[] 
       } as ITreeNode),
   )
 
-  function isExpanded(prevState: ITreeNode[], docId: string) {
-    const docEntry = prevState.find(node => node.id === docId)
+  function isExpanded(prevState: ITreeNode[], docname: string) {
+    const docEntry = prevState.find(node => node.id === docname)
     return Boolean(docEntry && docEntry.isExpanded)
   }
 }
@@ -70,12 +70,8 @@ class TaskTree extends React.Component<TaskTreeProps, TaskTreeState> {
     treeState: null as TreeState,
   }
 
-  onDownloadResult = async (docId: string, annotationSetName: string) => {
-    const {
-      tree: { docs },
-    } = this.props
-    const docName = docs.find(doc => doc.id === docId).name
-    const response = await fetchHost(`/api/annotation-set/${docId}/${annotationSetName}`)
+  onDownloadResult = async (docName: string, annotationSetName: string) => {
+    const response = await fetchHost(`/api/annotation-set/${docName}/${annotationSetName}`)
     if (response.ok) {
       saveAs(await response.blob(), `${docName}.${annotationSetName}.json`)
     } else {
@@ -94,11 +90,11 @@ class TaskTree extends React.Component<TaskTreeProps, TaskTreeState> {
     const { treeState } = this.state
     if (nodePath.length === 1) {
       const doc = treeState.docs[nodePath[0]]
-      dispatch(clickDocTreeNode(doc.id))
+      dispatch(clickDocTreeNode(doc.name))
     } else if (nodePath.length === 2) {
       const doc = treeState.docs[nodePath[0]]
       const annotationSetName = doc.annotations[nodePath[1]]
-      dispatch(clickAnnotationSetTreeNode(doc.id, annotationSetName))
+      dispatch(clickAnnotationSetTreeNode(doc.name, annotationSetName))
     } else {
       throw new Error('invalid click node path')
     }
@@ -135,7 +131,7 @@ class TaskTree extends React.Component<TaskTreeProps, TaskTreeState> {
           <MenuItem
             icon="new-object"
             text="New Annotation Set"
-            onClick={() => dispatch(requestAddAnnotationSet(doc.id))}
+            onClick={() => dispatch(requestAddAnnotationSet(doc.name))}
           />
           <MenuItem icon="comparison" text="Compare" disabled />
           <MenuItem icon="download" text="Download Result" disabled />
@@ -150,12 +146,12 @@ class TaskTree extends React.Component<TaskTreeProps, TaskTreeState> {
           <MenuItem
             icon="trash"
             text="Delete"
-            onClick={() => dispatch(requestDeleteAnnotationSet(doc.id, annotationSetName))}
+            onClick={() => dispatch(requestDeleteAnnotationSet(doc.name, annotationSetName))}
           />
           <MenuItem
             icon="download"
             text="Download JSON"
-            onClick={() => this.onDownloadResult(doc.id, annotationSetName)}
+            onClick={() => this.onDownloadResult(doc.name, annotationSetName)}
           />
           <MenuItem icon="download" text="Download BME(TODO)" disabled />
         </Menu>,

@@ -77,8 +77,8 @@ export function acceptHints(accepting: Map<string, Hint>): Action.AcceptHints {
   return { type: 'ACCEPT_HINTS', accepting }
 }
 
-export function requestDownloadResult(): Action.RequestDownloadResult {
-  return { type: 'REQUEST_DOWNLOAD_RESULT' }
+export function requestDownloadResult(format: 'json' | 'bio'): Action.RequestDownloadResult {
+  return { type: 'REQUEST_DOWNLOAD_RESULT', format }
 }
 
 export function loadFileContent(content: string): Action.LoadFileContent {
@@ -89,24 +89,24 @@ export function loadData(data: TreeState): Action.LoadData {
   return { type: 'LOAD_DATA', data }
 }
 
-export function clickDocTreeNode(docId: string): Action.ClickDocTreeNode {
-  return { type: 'CLICK_DOC_TREE_NODE', docId }
+export function clickDocTreeNode(docname: string): Action.ClickDocTreeNode {
+  return { type: 'CLICK_DOC_TREE_NODE', docname }
 }
 
 export function clickAnnotationSetTreeNode(
-  docId: string,
+  docname: string,
   annotationSetName: string,
 ): Action.ClickAnnotationSetTreeNode {
-  return { type: 'CLICK_ANNOTATION_SET_TREE_NODE', docId, annotationSetName }
+  return { type: 'CLICK_ANNOTATION_SET_TREE_NODE', docname, annotationSetName }
 }
 
-export function requestAddAnnotationSet(docId: string): Action.RequestAddAnnotationSet {
-  return { type: 'REQUEST_ADD_ANNOTATION_SET', docId }
+export function requestAddAnnotationSet(docname: string): Action.RequestAddAnnotationSet {
+  return { type: 'REQUEST_ADD_ANNOTATION_SET', docname }
 }
 
 export function requestDeleteAnnotationSet(
-  docId: string,
+  docname: string,
   annotationSetName: string,
 ): Action.RequestDeleteAnnotationSet {
-  return { type: 'REQUEST_DELETE_ANNOTATION_SET', docId, annotationSetName }
+  return { type: 'REQUEST_DELETE_ANNOTATION_SET', docname, annotationSetName }
 }
