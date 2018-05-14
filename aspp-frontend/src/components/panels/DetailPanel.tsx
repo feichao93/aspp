@@ -146,7 +146,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
           <p>endOffset: {Rich.number(main.range ? main.range.endOffset : 'N/A')}</p>
         </div>
         <Button onClick={() => dispatch(selectMatch(main.getSelectedText()))}>
-          选中所有相同的文本({List(main.doc.blocks)
+          选中所有相同的文本({List(main.blocks)
             .flatMap((block, blockIndex) => findMatch(block, blockIndex, gathered, selectedText))
             .count()})
         </Button>
@@ -161,7 +161,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
     const { main, dispatch } = this.props
     const intersected = main.range.intersected(main.gather())
     const blockIndex = main.range.blockIndex
-    const block = main.doc.blocks.get(blockIndex)
+    const block = main.blocks.get(blockIndex)
     const intersectedHints = intersected.filter(Decoration.isHint)
 
     return (
@@ -217,7 +217,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
         <HorizontalLine />
         <div className="block preview">
           <Span
-            block={main.doc.blocks.get(range.blockIndex)}
+            block={main.blocks.get(range.blockIndex)}
             info={{ height: 0, decoration }}
             isSelected={always(false)}
             shortenLongText
@@ -262,7 +262,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
     const decoration = main.gather().get(main.sel.first())
 
     const blockIndex = decoration.range.blockIndex
-    const block = main.doc.blocks.get(blockIndex)
+    const block = main.blocks.get(blockIndex)
 
     const blockSpanInfo = layout(block, blockIndex, main.gather().toSet())
     const parent = findParent(blockSpanInfo, decoration)
@@ -348,7 +348,7 @@ class DetailPanel extends React.Component<{ main: MainState; dispatch: Dispatch 
               <div key={blockIndex} style={{ marginTop: 4 }}>
                 <span>block: {blockIndex}</span>
                 <DecorationSetPreview
-                  block={main.doc.blocks.get(blockIndex)}
+                  block={main.blocks.get(blockIndex)}
                   blockIndex={blockIndex}
                   set={decorations.toSet()}
                   dispatch={dispatch}

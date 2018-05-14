@@ -1,7 +1,6 @@
 import { is, List } from 'immutable'
 import Annotation from '../types/Annotation'
 import { Hint } from '../types/Decoration'
-import DecorationRange from '../types/DecorationRange'
 import { addAnnotations, addHints } from '../utils/actionCreators'
 import { getNextId, keyed } from '../utils/common'
 import findMatch from '../utils/findMatch'
@@ -23,11 +22,12 @@ export default class SimpleMatching extends InlineAlgorithm {
 
     if (interaction.type === 'USER_ANNOTATE_TEXT') {
       const { range, tag } = interaction
+      console.assert(range != null)
       const { main } = this.getState()
-      const text = DecorationRange.getText(main.doc, range)
+      const text = range.substring(main.blocks.get(range.blockIndex))
       const gathered = main.gather()
 
-      const hints = List(main.doc.blocks)
+      const hints = List(main.blocks)
         .flatMap((block, blockIndex) => findMatch(block, blockIndex, gathered, text))
         .filterNot(r => is(r, range.normalize()))
         .map(

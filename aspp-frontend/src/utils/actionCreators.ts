@@ -1,12 +1,22 @@
+import { Intent } from '@blueprintjs/core'
 import { Map, Set } from 'immutable'
 import { TreeState } from '../reducers/treeReducer'
 import Annotation from '../types/Annotation'
 import Decoration, { Hint, Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
+import MainState from '../types/MainState'
 import Action from './actions'
+
+export function setMainState(mainState: MainState): Action.SetMainState {
+  return { type: 'R_SET_MAIN_STATE', mainState }
+}
 
 export function addAnnotations(annotations: Map<string, Annotation>): Action.AddAnnotations {
   return { type: 'R_ADD_ANNOTATIONS', annotations }
+}
+
+export function annotationsSaved(): Action.AnnotationsSaved {
+  return { type: 'R_ANNOTATIONS_SAVED' }
 }
 
 export function addSlots(slots: Map<string, Slot>): Action.AddSlots {
@@ -41,8 +51,8 @@ export function setRange(range: DecorationRange): Action.SetRange {
   return { type: 'R_SET_RANGE', range }
 }
 
-export function toast(text: string): Action.Toast {
-  return { type: 'TOAST', message: text }
+export function toast(text: string, intent = Intent.NONE): Action.Toast {
+  return { type: 'TOAST', message: text, intent }
 }
 
 export function annotateCurrent(tag: string): Action.AnnotateCurrent {
@@ -89,10 +99,12 @@ export function loadData(data: TreeState): Action.LoadData {
   return { type: 'LOAD_DATA', data }
 }
 
+/** @deprecated useless */
 export function clickDocTreeNode(docname: string): Action.ClickDocTreeNode {
   return { type: 'CLICK_DOC_TREE_NODE', docname }
 }
 
+/** @deprecated useless */
 export function clickAnnotationSetTreeNode(
   docname: string,
   annotationSetName: string,
@@ -108,5 +120,24 @@ export function requestDeleteAnnotationSet(
   docname: string,
   annotationSetName: string,
 ): Action.RequestDeleteAnnotationSet {
-  return { type: 'REQUEST_DELETE_ANNOTATION_SET', docname, annotationSetName }
+  return {
+    type: 'REQUEST_DELETE_ANNOTATION_SET',
+    docname,
+    annotationSetName,
+  }
+}
+
+export function requestSaveCurrentAnnotationSet(): Action.RequestSaveCurrentAnnotationSet {
+  return { type: 'REQUEST_SAVE_CURRENT_ANNOTATION_SET' }
+}
+
+export function requestOpenAnnotationSetFile(
+  docname: string,
+  annotationSetName: string,
+): Action.RequestOpenAnnotationSetFile {
+  return {
+    type: 'REQUEST_OPEN_ANNOTATION_SET_FILE',
+    docname,
+    annotationSetName,
+  }
 }

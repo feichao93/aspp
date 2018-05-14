@@ -12,6 +12,7 @@ import fetchHost from '../../sagas/fetchHost'
 import {
   clickAnnotationSetTreeNode,
   clickDocTreeNode,
+  requestOpenAnnotationSetFile,
   requestAddAnnotationSet,
   requestDeleteAnnotationSet,
   toast,
@@ -100,6 +101,20 @@ class TaskTree extends React.Component<TaskTreeProps, TaskTreeState> {
     }
   }
 
+  handleNodeDoubleClick = (nodeData: ITreeNode, nodePath: number[]) => {
+    const { dispatch } = this.props
+    const { treeState } = this.state
+    if (nodePath.length === 1) {
+      nodeData.isExpanded = !nodeData.isExpanded
+      this.forceUpdate()
+    }
+    if (nodePath.length === 2) {
+      const doc = treeState.docs[nodePath[0]]
+      const annotationSetName = doc.annotations[nodePath[1]]
+      dispatch(requestOpenAnnotationSetFile(doc.name, annotationSetName))
+    }
+  }
+
   handleNodeCollapse = (nodeData: ITreeNode) => {
     nodeData.isExpanded = false
     this.forceUpdate()
@@ -180,6 +195,7 @@ class TaskTree extends React.Component<TaskTreeProps, TaskTreeState> {
         <Tree
           contents={this.state.contents}
           onNodeClick={this.handleNodeClick}
+          onNodeDoubleClick={this.handleNodeDoubleClick}
           onNodeCollapse={this.handleNodeCollapse}
           onNodeExpand={this.handleNodeExpand}
           onNodeContextMenu={this.handleNodeContextMenu}

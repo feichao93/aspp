@@ -1,13 +1,17 @@
+import { Intent } from '@blueprintjs/core'
 import { saveAs } from 'file-saver'
-import { Map } from 'immutable'
+import { List, Map, Seq } from 'immutable'
 import { fork, put, select, takeEvery } from 'redux-saga/effects'
 import { State } from '../reducers'
 import { TreeState } from '../reducers/treeReducer'
 import Annotation from '../types/Annotation'
+import MainState from '../types/MainState'
 import {
   addAnnotations,
+  annotationsSaved,
   deleteDecorations,
   loadData,
+  setMainState,
   setRange,
   toast,
 } from '../utils/actionCreators'
@@ -24,10 +28,10 @@ function* loadTreeState() {
       const treeState: TreeState = yield response.json()
       yield put(loadData(treeState))
     } else {
-      yield put(toast('fail to load data from server'))
+      yield put(toast('fail to load data from server', Intent.DANGER))
     }
   } catch (e) {
-    yield put(toast('fail to load data from server'))
+    yield put(toast('fail to load data from server', Intent.DANGER))
   }
 }
 
@@ -41,7 +45,7 @@ function* handleRequestDownloadResultJSON() {
 function* handleRequestDownloadResultBIO() {
   const { main }: State = yield select()
   // TODO 暂时先只考虑 block-0
-  const block = main.doc.blocks.get(0)
+  const block = main.blocks.get(0)
   const lines: string[] = []
   const rootNode = layout(block, 0, main.annotations.toSet())
   for (const { decoration } of rootNode.children) {
@@ -86,33 +90,65 @@ function* handleLoadFileContent({ content }: Action.LoadFileContent) {
   }
 }
 
-function* handleClickDocTreeNode({ docname }: Action.ClickDocTreeNode) {
-  console.log('handleClickDocTreeNode', docname)
+/** 保存当前的标注工作进度 */
+function* saveCurrentAnnotationSet() {
+  const { main }: State = yield select()
+  const { docname, annotationSetName } = main
   try {
-    const response = yield fetchHost(`/api/doc/${docname}`)
+    const response = yield fetchHost(`/api/annotation-set/${docname}/${annotationSetName}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ annotations: main.annotations.valueSeq() }),
+    })
     if (response.ok) {
-      const text = yield response.text()
-      // console.log(text)
+      yield put(annotationsSaved())
+      yield put(toast('Saved'))
     } else {
       throw new Error('response not ok')
     }
   } catch (e) {
     console.error(e)
-    yield put(toast(e.message))
+    yield put(toast(e.message, Intent.DANGER))
   }
 }
 
-function* handleClickAnnotationSetTreeNode({
+function* handleRequestOpenAnnotationSetFile({
   docname,
   annotationSetName,
-}: Action.ClickAnnotationSetTreeNode) {
-  // const { main }: State = yield select()
-  console.log('handleClickAnnotationSetTreeNode', docname, annotationSetName)
+}: Action.RequestOpenAnnotationSetFile) {
+  const { main }: State = yield select()
+  if (main.docname === docname && main.annotationSetName === annotationSetName) {
+    return
+  }
+  if (main.altered) {
+    if (!window.confirm('有尚未保存的内容，跳转前将对当前文件进行自动保存')) {
+      return
+    }
+    yield saveCurrentAnnotationSet()
+  }
+
   try {
-    const response = yield fetchHost(`/api/annotation-set/${docname}/${annotationSetName}`)
-    if (response.ok) {
-      const json = yield response.json()
-      // console.log(json)
+    console.log('opening doc...', docname)
+    const res1 = yield fetchHost(`/api/doc/${docname}`)
+    if (res1.ok) {
+      const text = yield res1.text()
+      console.log('opening annotation set...', docname, annotationSetName)
+      const res2 = yield fetchHost(`/api/annotation-set/${docname}/${annotationSetName}`)
+      if (res2.ok) {
+        const json = yield res2.json()
+        const mainState = new MainState({
+          docname,
+          annotationSetName,
+          blocks: List([text]),
+          annotations: keyed(Seq(json.annotations).map(Annotation.fromJS)),
+          // TODO hints & slots
+        })
+        yield put(setMainState(mainState))
+      } else {
+        throw new Error('response not ok')
+      }
     } else {
       throw new Error('response not ok')
     }
@@ -181,6 +217,6 @@ export default function* fileSaga() {
   yield takeEvery('REQUEST_ADD_ANNOTATION_SET', handleRequestAddAnnotationSet)
   yield takeEvery('REQUEST_DELETE_ANNOTATION_SET', handleRequestDeleteAnnotationSet)
 
-  yield takeEvery('CLICK_DOC_TREE_NODE', handleClickDocTreeNode)
-  yield takeEvery('CLICK_ANNOTATION_SET_TREE_NODE', handleClickAnnotationSetTreeNode)
+  yield takeEvery('REQUEST_SAVE_CURRENT_ANNOTATION_SET', saveCurrentAnnotationSet)
+  yield takeEvery('REQUEST_OPEN_ANNOTATION_SET_FILE', handleRequestOpenAnnotationSetFile)
 }

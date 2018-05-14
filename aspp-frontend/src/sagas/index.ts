@@ -146,13 +146,13 @@ function* handleClickDecoration({ decoration, ctrlKey }: Action.ClickDecoration)
 }
 
 const toaster = Toaster.create()
-function handleToast({ message }: Action.Toast) {
-  toaster.show({ intent: Intent.PRIMARY, message })
+function handleToast({ message, intent = Intent.PRIMARY }: Action.Toast) {
+  toaster.show({ intent, message })
 }
 
 function* handleSelectBlockText({ blockIndex }: Action.SelectBlockText) {
   const { main }: State = yield select()
-  const block = main.doc.blocks.get(blockIndex)
+  const block = main.blocks.get(blockIndex)
   SelectionUtils.setCurrentRange(
     new DecorationRange({
       blockIndex,

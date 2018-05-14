@@ -1,15 +1,19 @@
+import { Intent } from '@blueprintjs/core'
 import { Map, Set } from 'immutable'
 import InlineAlgorithm from '../inline-algorithms/InlineAlgorithm'
 import { TreeState } from '../reducers/treeReducer'
 import Annotation from '../types/Annotation'
 import Decoration, { Hint, Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
+import MainState from '../types/MainState'
 
 type Action = Action.ALL
 
 namespace Action {
   export type ALL =
+    | SetMainState
     | AddAnnotations
+    | AnnotationsSaved
     | AddSlots
     | AddHints
     | DeleteDecorations
@@ -36,10 +40,21 @@ namespace Action {
     | ClickAnnotationSetTreeNode
     | RequestAddAnnotationSet
     | RequestDeleteAnnotationSet
+    | RequestSaveCurrentAnnotationSet
+    | RequestOpenAnnotationSetFile
+
+  export interface SetMainState {
+    type: 'R_SET_MAIN_STATE'
+    mainState: MainState
+  }
 
   export interface AddAnnotations {
     type: 'R_ADD_ANNOTATIONS'
     annotations: Map<string, Annotation>
+  }
+
+  export interface AnnotationsSaved {
+    type: 'R_ANNOTATIONS_SAVED'
   }
 
   export interface AddSlots {
@@ -86,6 +101,7 @@ namespace Action {
   export interface Toast {
     type: 'TOAST'
     message: string
+    intent: Intent
   }
 
   export interface AnnotateCurrent {
@@ -153,11 +169,13 @@ namespace Action {
     data: TreeState
   }
 
+  /** @deprecated useless */
   export interface ClickDocTreeNode {
     type: 'CLICK_DOC_TREE_NODE'
     docname: string
   }
 
+  /** @deprecated useless */
   export interface ClickAnnotationSetTreeNode {
     type: 'CLICK_ANNOTATION_SET_TREE_NODE'
     docname: string
@@ -171,6 +189,16 @@ namespace Action {
 
   export interface RequestDeleteAnnotationSet {
     type: 'REQUEST_DELETE_ANNOTATION_SET'
+    docname: string
+    annotationSetName: string
+  }
+
+  export interface RequestSaveCurrentAnnotationSet {
+    type: 'REQUEST_SAVE_CURRENT_ANNOTATION_SET'
+  }
+
+  export interface RequestOpenAnnotationSetFile {
+    type: 'REQUEST_OPEN_ANNOTATION_SET_FILE'
     docname: string
     annotationSetName: string
   }

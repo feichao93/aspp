@@ -11,7 +11,7 @@ export default function* handleSelectMatch({ pattern }: Action.SelectMatch) {
   const { main }: State = yield select()
   if (typeof pattern === 'string') {
     let gathered = main.gather()
-    const slots = List(main.doc.blocks)
+    const slots = List(main.blocks)
       .flatMap((block, blockIndex) => findMatch(block, blockIndex, gathered, pattern))
       .map(Slot.match)
 

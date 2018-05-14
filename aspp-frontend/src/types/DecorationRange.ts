@@ -1,7 +1,6 @@
 import { Map, Record } from 'immutable'
 import { shortenText } from '../utils/common'
 import Decoration from './Decoration'
-import PlainDoc from './PlainDoc'
 
 const DecorationRangeRecord = Record({
   blockIndex: 0,
@@ -13,18 +12,6 @@ const DecorationRangeRecord = Record({
 export default class DecorationRange extends DecorationRangeRecord {
   static fromJS(object: any) {
     return new DecorationRange(object)
-  }
-
-  /** 从文档中获取 range 对应的文本；range 为 `null` 时，该函数返回空字符串 */
-  static getText(doc: PlainDoc, range: DecorationRange) {
-    if (range == null) {
-      return ''
-    } else {
-      const normalized = range.normalize()
-      return doc.blocks
-        .get(normalized.blockIndex)
-        .substring(normalized.startOffset, normalized.endOffset)
-    }
   }
 
   static isIntersected(r1: DecorationRange, r2: DecorationRange) {

@@ -18,6 +18,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { MiscState } from '../../reducers/miscReducer'
+import MainState from '../../types/MainState'
 import {
   loadFileContent,
   requestDownloadResult,
@@ -26,8 +27,14 @@ import {
 } from '../../utils/actionCreators'
 import './Menubar.styl'
 
+export interface MenubarProps {
+  misc: MiscState
+  main: MainState
+  dispatch: Dispatch
+}
+
 // TODO 完善状态栏
-class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
+class Menubar extends React.Component<MenubarProps> {
   onRequestOpenFile = () => {
     const input = document.createElement('input')
     input.type = 'file'
@@ -43,7 +50,11 @@ class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
   }
 
   render() {
-    const { darkTheme, dispatch } = this.props
+    const {
+      misc: { darkTheme },
+      main,
+      dispatch,
+    } = this.props
     return (
       <Navbar className={classNames('menubar')}>
         <NavbarGroup align={Alignment.LEFT}>
@@ -55,12 +66,12 @@ class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
             content={
               <Menu>
                 <MenuItem
-                  icon="cloud-download"
+                  icon="download"
                   text="Download Result (json)"
                   onClick={() => dispatch(requestDownloadResult('json'))}
                 />
                 <MenuItem
-                  icon="cloud-download"
+                  icon="download"
                   text="Download Result (bio)"
                   onClick={() => dispatch(requestDownloadResult('bio'))}
                 />
@@ -71,20 +82,16 @@ class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
               </Menu>
             }
           />
-          <Button minimal icon="edit" text="edit" />
-          <Popover
-            position={Position.TOP_LEFT}
-            target={<Button minimal icon="eye-open" text="view" />}
-            content={
-              <Menu>
-                <MenuItem
-                  text="Toggle Task Tree"
-                  onClick={() => dispatch(toggleTaskTreeVisibility())}
-                />
-              </Menu>
-            }
+          <Button
+            minimal
+            icon="column-layout"
+            text="Tree"
+            onClick={() => dispatch(toggleTaskTreeVisibility())}
           />
           <Button minimal icon="help" text="help" />
+          <div style={{ marginLeft: 24 }}>
+            当前文件名: {main.docname} {main.annotationSetName}
+          </div>
         </NavbarGroup>
         <NavbarGroup align={Alignment.RIGHT}>
           <Switch
@@ -99,4 +106,4 @@ class Menubar extends React.Component<MiscState & { dispatch: Dispatch }> {
   }
 }
 
-export default connect((s: State) => s.misc)(Menubar)
+export default connect((s: State) => ({ misc: s.misc, main: s.main }))(Menubar)

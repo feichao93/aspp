@@ -8,10 +8,11 @@ import DecorationRange from '../../types/DecorationRange'
 import MainState from '../../types/MainState'
 import SelectionUtils from '../../utils/SelectionUtils'
 import AnnotationButtonGroup from './AnnotationButtonGroup'
-import HintButtonGroup from './HintButtonGroup'
 import './AnnotationEditor.styl'
 import './annotations.styl'
 import Block from './Block'
+import EditHistoryButtonGroup from './EditHistoryButtonGroup'
+import HintButtonGroup from './HintButtonGroup'
 
 class AnnotationEditor extends React.Component<{ main: MainState; dispatch: Dispatch }> {
   getSnapshotBeforeUpdate() {
@@ -40,11 +41,12 @@ class AnnotationEditor extends React.Component<{ main: MainState; dispatch: Disp
       <div className="annotation-editor">
         <div style={{ display: 'flex', margin: '16px 8px', flex: '0 0 auto' }}>
           <AnnotationButtonGroup />
+          <EditHistoryButtonGroup />
           <HintButtonGroup />
         </div>
 
         <div className="editor">
-          {main.doc.blocks.map((block, blockIndex) => (
+          {main.blocks.map((block, blockIndex) => (
             <Block
               key={blockIndex}
               block={block}
