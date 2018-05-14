@@ -1,11 +1,10 @@
 {
   "name": "aspp-cli",
   "version": "0.1.0-SNAPSHOT",
-  "main": "aspp.js",
   "license": "MIT",
   "private": true,
-  "scripts": {
-    "dev": "egg-bin dev"
+  "bin": {
+    "aspp": "bin/aspp"
   },
   "prettier": {
     "printWidth": 100,
@@ -14,15 +13,10 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "egg-bin": "^4.7.0",
-    "js-yaml": "^3.11.0",
-    "prettier": "^1.12.1",
-    "uuid": "^3.2.1"
+    "prettier": "^1.12.1"
   },
   "dependencies": {
-    "egg": "^2.8.1",
-    "egg-cors": "^2.0.0",
-    "egg-view-nunjucks": "^2.2.0",
+    "egg-cluster": "^1.16.0",
     "yargs": "^11.0.0"
   }
 }
