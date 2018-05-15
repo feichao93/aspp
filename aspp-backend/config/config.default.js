@@ -10,12 +10,15 @@ exports.view = {
 }
 
 exports.security = {
-  domainWhiteList: ['http://localhost:8080'],
   csrf: {
     enable: false,
   },
 }
 
+exports.static = {
+  dir: path.resolve(__dirname, '../../public'),
+}
+
 exports.aspp = {
-  dir: path.resolve(__dirname, '../test-dir'),
+  dir: process.env.TASK_DIR,
 }

@@ -4,4 +4,4 @@ dist
 logs
 /aspp-backend/test-dir/
 /aspp-backend/run/
-/aspp-backend/app/public/
+/public

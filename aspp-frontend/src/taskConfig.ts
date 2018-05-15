@@ -4,7 +4,14 @@ import React from 'react'
 import TaskConfig from './types/TaskConfig'
 
 namespace CONFIG {
-  export const taskConfig: TaskConfig = require('./aspp.config.yaml')
+  export let taskConfig: TaskConfig
+  if (process.env.NODE_ENV === 'production') {
+    console.log('loading configuration from aspp-backend')
+    taskConfig = (window as any).ASPP_CONFIG
+  } else {
+    taskConfig = require('./aspp.config.yaml')
+    console.log(taskConfig)
+  }
 
   export const shortcutMap = Map(
     taskConfig.tags.filter(t => t.shortcut).map(t => [t.shortcut, t.name] as [string, string]),

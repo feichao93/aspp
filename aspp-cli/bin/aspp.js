@@ -5,8 +5,11 @@ const path = require('path')
 const noop = () => {}
 
 const commandHandlers = {
-  serve(port) {
+  serve({ taskDir, port }) {
     const startCluster = require('egg-cluster').startCluster
+    process.env.TASK_DIR = taskDir
+    // FIXME 设置为 prod 的时候，访问 api 都会报 404
+    // process.env.EGG_SERVER_ENV = 'prod'
     startCluster({
       baseDir: path.resolve(__dirname, '../../aspp-backend'),
       workers: 1,
@@ -29,7 +32,7 @@ require('yargs')
         default: 8080,
       })
     },
-    argv => commandHandlers.serve(argv.port),
+    args => commandHandlers.serve(args),
   )
   .option('task-dir', { default: '.' })
   .parse()

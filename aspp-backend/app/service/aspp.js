@@ -5,8 +5,18 @@ const Service = require('egg').Service
 const getStatus = require('../../lib/getStatus')
 
 const STATUS = Symbol('status')
+const CONFIG = Symbol('config')
 
 class AsppService extends Service {
+  getConfig() {
+    if (this[CONFIG] == null) {
+      this[CONFIG] = yaml.safeLoad(
+        fs.readFileSync(path.resolve(this.config.aspp.dir, 'aspp.config.yaml'), 'utf-8'),
+      )
+    }
+    return this[CONFIG]
+  }
+
   getStatus() {
     if (this[STATUS] == null) {
       this[STATUS] = getStatus(this.config.aspp.dir)

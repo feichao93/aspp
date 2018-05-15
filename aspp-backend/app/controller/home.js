@@ -2,7 +2,8 @@ const Controller = require('egg').Controller
 
 class HomeController extends Controller {
   async index() {
-    await this.ctx.render('index.html')
+    const context = { ASPP_CONFIG: JSON.stringify(this.service.aspp.getConfig()) }
+    await this.ctx.render('index.njk', context)
   }
 }
 
