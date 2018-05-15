@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "egg-cluster": "^1.16.0",
+    "js-yaml": "^3.11.0",
     "yargs": "^11.0.0"
   }
 }

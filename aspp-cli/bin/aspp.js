@@ -2,6 +2,9 @@
 
 const fs = require('fs')
 const path = require('path')
+const yaml = require('js-yaml')
+const getStatus = require('../../aspp-backend/lib/getStatus')
+
 const noop = () => {}
 
 const commandHandlers = {
@@ -16,12 +19,19 @@ const commandHandlers = {
       port,
     })
   },
+  showStatus({ taskDir }) {
+    console.log(JSON.stringify(getStatus(taskDir), null, 2))
+  },
   showConfig(options) {
-    console.log(fs.readFileSync(path.resolve(options.taskDir, 'aspp.config.yaml'), 'utf8'))
+    const config = yaml.safeLoad(
+      fs.readFileSync(path.resolve(options.taskDir, 'aspp.config.yaml'), 'utf8'),
+    )
+    console.log(JSON.stringify(config, null, 2))
   },
 }
 
 require('yargs')
+  .command('status', 'show status of the task', noop, commandHandlers.showStatus)
   .command('config', 'show config of the task', noop, commandHandlers.showConfig)
   .command(
     'serve [port]',
@@ -32,7 +42,7 @@ require('yargs')
         default: 8080,
       })
     },
-    args => commandHandlers.serve(args),
+    commandHandlers.serve,
   )
   .option('task-dir', { default: '.' })
   .parse()

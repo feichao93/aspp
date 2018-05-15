@@ -1,0 +1,8 @@
+{
+  "name": "aspp",
+  "version": "0.1.0-SNAPSHOT",
+  "private": true,
+  "bin": {
+    "aspp": "aspp-cli/bin/aspp.js"
+  }
+}
