@@ -27,16 +27,7 @@ class AsppService extends Service {
   incAndGetNextId() {
     const status = this.getStatus()
     status.nextId = (status.nextId || 0) + 1
-    this.save()
     return status.nextId
-  }
-
-  save() {
-    fs.writeFileSync(
-      path.resolve(this.config.aspp.dir, 'aspp.status.yaml'),
-      yaml.safeDump(this.getStatus()),
-      'utf-8',
-    )
   }
 
   resolveAnnotationFilename(docName, annotationSetName) {
@@ -64,7 +55,6 @@ class AsppService extends Service {
     const status = this.getStatus()
     const doc = status.docs.find(doc => doc.name === docname)
     doc.annotations.splice(doc.annotations.indexOf(annotationSetName))
-    this.save()
 
     const filename = this.resolveAnnotationFilename(docname, annotationSetName)
     fs.unlinkSync(filename)
@@ -78,7 +68,6 @@ class AsppService extends Service {
     }
     const filename = this.resolveAnnotationFilename(doc.name, annotationSetName)
     fs.writeFileSync(filename, yaml.safeDump(this.ctx.request.body), 'utf-8')
-    this.save()
   }
 }
 

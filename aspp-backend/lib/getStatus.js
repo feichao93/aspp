@@ -1,17 +1,8 @@
 const fs = require('fs')
 const path = require('path')
-const yaml = require('js-yaml')
 
 module.exports = function getStatus(dir) {
-  const statusFile = path.resolve(dir, 'aspp.status.yaml')
-  let status
-  if (fs.existsSync(statusFile)) {
-    status = yaml.safeLoad(fs.readFileSync(statusFile, 'utf8')) || {}
-  } else {
-    status = {}
-  }
-
-  status.docs = status.docs || []
+  const status = { docs: [] }
   const docs = status.docs
   const docnameSet = new Set(docs.map(doc => doc.name))
 
