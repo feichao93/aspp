@@ -3,20 +3,16 @@
 const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
+const packageInfo = require('../package')
 const getStatus = require('../lib/getStatus')
 
 const noop = () => {}
 
 const commandHandlers = {
   serve({ taskDir, port }) {
-    const startCluster = require('egg-cluster').startCluster
-    process.env.TASK_DIR = taskDir
-    // TODO 检查 taskDir 文件夹下是否包含 aspp.config.yaml
-    startCluster({
-      baseDir: path.resolve(__dirname, '..'),
-      workers: 1,
-      port,
-    })
+    const server = require('../lib/server')
+    console.log(`ASPP v${packageInfo.version}`)
+    server({ port, taskDir })
   },
   showStatus({ taskDir }) {
     console.log(JSON.stringify(getStatus(taskDir), null, 2))
@@ -29,20 +25,28 @@ const commandHandlers = {
   },
 }
 
+// TODO 检查 taskDir 文件夹下是否包含 aspp.config.yaml
 require('yargs')
-  .command('status', 'show status of the task', noop, commandHandlers.showStatus)
-  .command('config', 'show config of the task', noop, commandHandlers.showConfig)
+  .option('task-dir', {
+    default: '.',
+    type: 'string',
+    alias: 't',
+    describe: 'Task directory',
+  })
+  .command('status', 'Show status of the task', noop, commandHandlers.showStatus)
+  .command('config', 'Show config of the task', noop, commandHandlers.showConfig)
   .command(
-    'serve [port]',
-    'start the server',
+    'serve',
+    'Start the server',
     yargs => {
-      yargs.positional('port', {
+      yargs.option('port', {
+        alias: 'p',
         describe: 'port to bind on',
         default: 1477,
+        type: 'number',
       })
     },
     commandHandlers.serve,
   )
-  // TODO default command
-  .option('task-dir', { default: '.' })
+  .demandCommand(1, 'You need at least one command before moving on')
   .parse()
