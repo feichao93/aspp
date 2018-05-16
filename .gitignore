@@ -1,7 +1,4 @@
 .idea
 node_modules
-dist
-logs
-/aspp-backend/test-dir/
-/aspp-backend/run/
-/public
+/logs
+/run

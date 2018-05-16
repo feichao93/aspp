@@ -3,6 +3,27 @@
   "version": "0.1.0-SNAPSHOT",
   "private": true,
   "bin": {
-    "aspp": "aspp-cli/bin/aspp.js"
+    "aspp": "bin/aspp.js"
+  },
+  "scripts": {
+    "egg:dev": "egg-bin dev"
+  },
+  "dependencies": {
+    "egg": "^2.8.1",
+    "egg-cluster": "^1.16.0",
+    "egg-cors": "^2.0.0",
+    "egg-view-nunjucks": "^2.2.0",
+    "js-yaml": "^3.11.0",
+    "yargs": "^11.0.0"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.7.0",
+    "prettier": "^1.12.1"
   }
 }
