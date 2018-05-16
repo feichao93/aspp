@@ -1,6 +1,6 @@
 {
   "name": "aspp",
-  "version": "0.1.0-SNAPSHOT",
+  "version": "0.0.1",
   "private": true,
   "bin": {
     "aspp": "bin/aspp.js"
@@ -8,12 +8,24 @@
   "scripts": {
     "egg:dev": "egg-bin dev"
   },
+  "files": [
+    "app/",
+    "bin/",
+    "config/",
+    "lib/",
+    "public/",
+    ".editorconfig",
+    ".gitignore",
+    "package.json",
+    "readme.md"
+  ],
   "dependencies": {
     "egg": "^2.8.1",
     "egg-cluster": "^1.16.0",
     "egg-cors": "^2.0.0",
     "egg-view-nunjucks": "^2.2.0",
     "js-yaml": "^3.11.0",
+    "mkdirp": "^0.5.1",
     "yargs": "^11.0.0"
   },
   "prettier": {

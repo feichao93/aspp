@@ -3,7 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
-const getStatus = require('../aspp-backend/lib/getStatus')
+const getStatus = require('../lib/getStatus')
 
 const noop = () => {}
 
@@ -11,10 +11,9 @@ const commandHandlers = {
   serve({ taskDir, port }) {
     const startCluster = require('egg-cluster').startCluster
     process.env.TASK_DIR = taskDir
-    // FIXME 设置为 prod 的时候，访问 api 都会报 404
-    // process.env.EGG_SERVER_ENV = 'prod'
+    // TODO 检查 taskDir 文件夹下是否包含 aspp.config.yaml
     startCluster({
-      baseDir: path.resolve(__dirname, '../../aspp-backend'),
+      baseDir: path.resolve(__dirname, '..'),
       workers: 1,
       port,
     })
@@ -39,10 +38,11 @@ require('yargs')
     yargs => {
       yargs.positional('port', {
         describe: 'port to bind on',
-        default: 8080,
+        default: 1477,
       })
     },
     commandHandlers.serve,
   )
+  // TODO default command
   .option('task-dir', { default: '.' })
   .parse()
