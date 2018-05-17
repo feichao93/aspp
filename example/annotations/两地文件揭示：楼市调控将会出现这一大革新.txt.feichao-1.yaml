@@ -1,0 +1,593 @@
+annotations:
+  - id: annotation-13
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 953
+      endOffset: 958
+    confidence: 1
+    tag: 日期
+  - id: annotation-24
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 395
+      endOffset: 397
+    confidence: 1
+    tag: 地名
+  - id: annotation-35
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 398
+      endOffset: 401
+    confidence: 1
+    tag: 地名
+  - id: annotation-57
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 795
+      endOffset: 800
+    confidence: 1
+    tag: 百分比
+  - id: annotation-68
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1007
+      endOffset: 1010
+    confidence: 1
+    tag: 行业
+  - id: annotation-14
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 28
+      endOffset: 30
+    confidence: 1
+    tag: 时间
+  - id: annotation-36
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 402
+      endOffset: 405
+    confidence: 1
+    tag: 地名
+  - id: annotation-47
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 858
+      endOffset: 861
+    confidence: 1
+    tag: 地名
+  - id: annotation-58
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 751
+      endOffset: 753
+    confidence: 1
+    tag: 公司
+  - id: annotation-69
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1101
+      endOffset: 1104
+    confidence: 1
+    tag: 行业
+  - id: annotation-15
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 31
+      endOffset: 34
+    confidence: 1
+    tag: 地名
+  - id: annotation-37
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 406
+      endOffset: 409
+    confidence: 1
+    tag: 地名
+  - id: annotation-48
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 865
+      endOffset: 868
+    confidence: 1
+    tag: 地名
+  - id: annotation-59
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 801
+      endOffset: 803
+    confidence: 1
+    tag: 公司
+  - id: annotation-27
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 627
+      endOffset: 629
+    confidence: 1
+    tag: 地名
+  - id: annotation-38
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 411
+      endOffset: 415
+    confidence: 1
+    tag: 地名
+  - id: annotation-49
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1957
+      endOffset: 1960
+    confidence: 1
+    tag: 地名
+  - id: annotation-17
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 691
+      endOffset: 694
+    confidence: 1
+    tag: 地名
+  - id: annotation-28
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 664
+      endOffset: 666
+    confidence: 1
+    tag: 地名
+  - id: annotation-39
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 429
+      endOffset: 432
+    confidence: 1
+    tag: 地名
+  - id: annotation-18
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1815
+      endOffset: 1818
+    confidence: 1
+    tag: 地名
+  - id: annotation-19
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 144
+      endOffset: 150
+    confidence: 1
+    tag: 地名
+  - id: annotation-100
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1893
+      endOffset: 1896
+    confidence: 1
+    tag: 日期
+  - id: annotation-70
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1117
+      endOffset: 1120
+    confidence: 1
+    tag: 行业
+  - id: annotation-81
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1299
+      endOffset: 1304
+    confidence: 1
+    tag: 日期
+  - id: annotation-92
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1720
+      endOffset: 1722
+    confidence: 1
+    tag: 地名
+  - id: annotation-71
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1142
+      endOffset: 1145
+    confidence: 1
+    tag: 行业
+  - id: annotation-82
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2152
+      endOffset: 2157
+    confidence: 1
+    tag: 日期
+  - id: annotation-50
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1975
+      endOffset: 1978
+    confidence: 1
+    tag: 地名
+  - id: annotation-61
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1085
+      endOffset: 1090
+    confidence: 1
+    tag: 地名
+  - id: annotation-72
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1284
+      endOffset: 1287
+    confidence: 1
+    tag: 行业
+  - id: annotation-83
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1457
+      endOffset: 1462
+    confidence: 1
+    tag: 金融投资机构
+  - id: annotation-51
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 655
+      endOffset: 657
+    confidence: 1
+    tag: 地名
+  - id: annotation-62
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1218
+      endOffset: 1222
+    confidence: 1
+    tag: 日期
+  - id: annotation-73
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1397
+      endOffset: 1400
+    confidence: 1
+    tag: 行业
+  - id: annotation-84
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1628
+      endOffset: 1636
+    confidence: 1
+    tag: 日期
+  - id: annotation-95
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1935
+      endOffset: 1937
+    confidence: 1
+    tag: 地名
+  - id: annotation-30
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 764
+      endOffset: 766
+    confidence: 1
+    tag: 地名
+  - id: annotation-52
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 713
+      endOffset: 717
+    confidence: 1
+    tag: 百分比
+  - id: annotation-63
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1183
+      endOffset: 1186
+    confidence: 1
+    tag: 行业
+  - id: annotation-74
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1426
+      endOffset: 1429
+    confidence: 1
+    tag: 行业
+  - id: annotation-85
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1782
+      endOffset: 1790
+    confidence: 1
+    tag: 公司
+  - id: annotation-96
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2237
+      endOffset: 2239
+    confidence: 1
+    tag: 地名
+  - id: annotation-20
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 531
+      endOffset: 537
+    confidence: 1
+    tag: 地名
+  - id: annotation-31
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1717
+      endOffset: 1719
+    confidence: 1
+    tag: 地名
+  - id: annotation-42
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1815
+      endOffset: 1818
+    confidence: 1
+    tag: 地名
+  - id: annotation-53
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 722
+      endOffset: 727
+    confidence: 1
+    tag: 百分比
+  - id: annotation-64
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 123
+      endOffset: 126
+    confidence: 1
+    tag: 行业
+  - id: annotation-75
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1544
+      endOffset: 1547
+    confidence: 1
+    tag: 行业
+  - id: annotation-86
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2021
+      endOffset: 2029
+    confidence: 1
+    tag: 公司
+  - id: annotation-97
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2121
+      endOffset: 2126
+    confidence: 1
+    tag: 非货币数量词
+  - id: annotation-21
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 188
+      endOffset: 194
+    confidence: 1
+    tag: 日期
+  - id: annotation-32
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1795
+      endOffset: 1797
+    confidence: 1
+    tag: 地名
+  - id: annotation-43
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 554
+      endOffset: 557
+    confidence: 1
+    tag: 地名
+  - id: annotation-54
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 759
+      endOffset: 763
+    confidence: 1
+    tag: 日期
+  - id: annotation-65
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 199
+      endOffset: 202
+    confidence: 1
+    tag: 行业
+  - id: annotation-76
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1639
+      endOffset: 1642
+    confidence: 1
+    tag: 行业
+  - id: annotation-87
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1778
+      endOffset: 1781
+    confidence: 1
+    tag: 人名
+  - id: annotation-98
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1864
+      endOffset: 1872
+    confidence: 1
+    tag: 日期
+  - id: annotation-22
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1193
+      endOffset: 1199
+    confidence: 1
+    tag: 日期
+  - id: annotation-33
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1815
+      endOffset: 1817
+    confidence: 1
+    tag: 地名
+  - id: annotation-44
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 571
+      endOffset: 574
+    confidence: 1
+    tag: 地名
+  - id: annotation-55
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 686
+      endOffset: 690
+    confidence: 1
+    tag: 日期
+  - id: annotation-66
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 868
+      endOffset: 871
+    confidence: 1
+    tag: 行业
+  - id: annotation-77
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1759
+      endOffset: 1762
+    confidence: 1
+    tag: 行业
+  - id: annotation-88
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2254
+      endOffset: 2257
+    confidence: 1
+    tag: 人名
+  - id: annotation-99
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1853
+      endOffset: 1859
+    confidence: 1
+    tag: 非货币数量词
+  - id: annotation-12
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 23
+      endOffset: 28
+    confidence: 1
+    tag: 日期
+  - id: annotation-23
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2108
+      endOffset: 2114
+    confidence: 1
+    tag: 日期
+  - id: annotation-34
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2234
+      endOffset: 2236
+    confidence: 1
+    tag: 地名
+  - id: annotation-56
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 777
+      endOffset: 782
+    confidence: 1
+    tag: 百分比
+  - id: annotation-67
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 915
+      endOffset: 918
+    confidence: 1
+    tag: 行业
+  - id: annotation-78
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2289
+      endOffset: 2292
+    confidence: 1
+    tag: 行业
+  - id: annotation-89
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1771
+      endOffset: 1773
+    confidence: 1
+    tag: 公司

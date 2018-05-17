@@ -1,0 +1,225 @@
+annotations:
+  - id: annotation-13
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 338
+      endOffset: 344
+    confidence: 1
+    tag: 公司
+  - id: annotation-24
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 601
+      endOffset: 604
+    confidence: 1
+    tag: 金融投资机构
+  - id: annotation-35
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 350
+      endOffset: 353
+    confidence: 1
+    tag: 人名
+  - id: annotation-25
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 683
+      endOffset: 686
+    confidence: 1
+    tag: 金融投资机构
+  - id: annotation-36
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1267
+      endOffset: 1270
+    confidence: 1
+    tag: 人名
+  - id: annotation-15
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 354
+      endOffset: 362
+    confidence: 1
+    tag: 事务所
+  - id: annotation-26
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2021
+      endOffset: 2024
+    confidence: 1
+    tag: 金融投资机构
+  - id: annotation-37
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1370
+      endOffset: 1373
+    confidence: 1
+    tag: 人名
+  - id: annotation-16
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 385
+      endOffset: 388
+    confidence: 1
+    tag: 金融投资机构
+  - id: annotation-27
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 689
+      endOffset: 692
+    confidence: 1
+    tag: 人名
+  - id: annotation-17
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 562
+      endOffset: 565
+    confidence: 1
+    tag: 金融投资机构
+  - id: annotation-28
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 681
+      endOffset: 683
+    confidence: 1
+    tag: 地名
+  - id: annotation-18
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 432
+      endOffset: 435
+    confidence: 1
+    tag: 金融投资机构
+  - id: annotation-1
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 31
+      endOffset: 36
+    confidence: 1
+    tag: 日期
+  - id: annotation-2
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 74
+      endOffset: 81
+    confidence: 1
+    tag: 政府机构部门
+  - id: annotation-6
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 988
+      endOffset: 990
+    confidence: 1
+    tag: 非货币数量词
+  - id: annotation-7
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1567
+      endOffset: 1572
+    confidence: 1
+    tag: 日期
+  - id: annotation-8
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 332
+      endOffset: 337
+    confidence: 1
+    tag: 日期
+  - id: annotation-9
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 568
+      endOffset: 573
+    confidence: 1
+    tag: 日期
+  - id: annotation-30
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 696
+      endOffset: 702
+    confidence: 1
+    tag: 公司
+  - id: annotation-31
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 703
+      endOffset: 711
+    confidence: 1
+    tag: 公司
+  - id: annotation-10
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1604
+      endOffset: 1609
+    confidence: 1
+    tag: 交易所
+  - id: annotation-21
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 511
+      endOffset: 514
+    confidence: 1
+    tag: 金融投资机构
+  - id: annotation-32
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 978
+      endOffset: 983
+    confidence: 1
+    tag: 日期
+  - id: annotation-11
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 176
+      endOffset: 181
+    confidence: 1
+    tag: 交易所
+  - id: annotation-22
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 545
+      endOffset: 548
+    confidence: 1
+    tag: 金融投资机构
+  - id: annotation-23
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 549
+      endOffset: 552
+    confidence: 1
+    tag: 金融投资机构
+  - id: annotation-34
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1193
+      endOffset: 1196
+    confidence: 1
+    tag: 人名

@@ -36,7 +36,6 @@ const commandHandlers = {
   },
 }
 
-// TODO 检查 taskDir 文件夹下是否包含 aspp.config.yaml
 require('yargs')
   .option('task-dir', {
     default: '.',
