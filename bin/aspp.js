@@ -6,21 +6,32 @@ const yaml = require('js-yaml')
 const packageInfo = require('../package')
 const getStatus = require('../lib/getStatus')
 
+function checkTaskDir(taskDir) {
+  if (!fs.existsSync(path.join(taskDir, 'aspp.config.yaml'))) {
+    console.error(
+      `${path.resolve(taskDir)} is not a valid task directory.` +
+        ' A config file named `aspp.config.yaml` is required.',
+    )
+    process.exit(1)
+  }
+}
+
 const noop = () => {}
 
 const commandHandlers = {
   serve({ taskDir, port }) {
+    checkTaskDir(taskDir)
     const server = require('../lib/server')
     console.log(`ASPP v${packageInfo.version}`)
     server({ port, taskDir })
   },
   showStatus({ taskDir }) {
+    checkTaskDir(taskDir)
     console.log(JSON.stringify(getStatus(taskDir), null, 2))
   },
-  showConfig(options) {
-    const config = yaml.safeLoad(
-      fs.readFileSync(path.resolve(options.taskDir, 'aspp.config.yaml'), 'utf8'),
-    )
+  showConfig({ taskDir }) {
+    checkTaskDir(taskDir)
+    const config = yaml.safeLoad(fs.readFileSync(path.resolve(taskDir, 'aspp.config.yaml'), 'utf8'))
     console.log(JSON.stringify(config, null, 2))
   },
 }
