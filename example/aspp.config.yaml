@@ -24,7 +24,7 @@ tags:
 
   - name: 日期
     label: 日期
-    abbr: DTAE
+    abbr: DATE
     shortcut: '4'
     theme:
       background: 'linear-gradient(rgb(230, 169, 169), #ff3030 70%, rgb(189, 125, 127))'
