@@ -1,0 +1,1881 @@
+annotations:
+  - id: annotation-13
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 177
+      endOffset: 179
+    tag: 时间
+    entity: 6天
+  - id: annotation-24
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 319
+      endOffset: 327
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-35
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 430
+      endOffset: 436
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-46
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 569
+      endOffset: 572
+    tag: 非货币数量词
+    entity: 30家
+  - id: annotation-57
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 634
+      endOffset: 636
+    tag: 地名
+    entity: 小营
+  - id: annotation-68
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 786
+      endOffset: 788
+    tag: 公司
+    entity: 京东
+  - id: annotation-79
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 936
+      endOffset: 940
+    tag: 产品
+    entity: 深海鳕鱼
+  - id: annotation-14
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 198
+      endOffset: 202
+    tag: 产品
+    entity: 生鲜超市
+  - id: annotation-25
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 327
+      endOffset: 331
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-36
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 466
+      endOffset: 468
+    tag: 公司
+    entity: 京东
+  - id: annotation-47
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 579
+      endOffset: 582
+    tag: 地名
+    entity: 西直门
+  - id: annotation-58
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 637
+      endOffset: 639
+    tag: 地名
+    entity: 亦庄
+  - id: annotation-69
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 788
+      endOffset: 794
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-15
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 202
+      endOffset: 208
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-26
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 341
+      endOffset: 347
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-37
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 471
+      endOffset: 476
+    tag: 公司下属机构
+    entity: 生鲜事业部
+  - id: annotation-48
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 583
+      endOffset: 586
+    tag: 地名
+    entity: 广安门
+  - id: annotation-59
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 643
+      endOffset: 648
+    tag: 日期
+    entity: 2018年
+  - id: annotation-16
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 209
+      endOffset: 215
+    tag: 地名
+    entity: 亦庄大族广场
+  - id: annotation-27
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 348
+      endOffset: 350
+    tag: 公司
+    entity: 京东
+  - id: annotation-38
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 480
+      endOffset: 486
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-49
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 587
+      endOffset: 589
+    tag: 地名
+    entity: 双井
+  - id: annotation-17
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 226
+      endOffset: 231
+    tag: 产品
+    entity: 京东APP
+  - id: annotation-28
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 364
+      endOffset: 366
+    tag: 公司
+    entity: 京东
+  - id: annotation-39
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 487
+      endOffset: 490
+    tag: 公司
+    entity: 沃尔玛
+  - id: annotation-18
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 232
+      endOffset: 238
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-29
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 369
+      endOffset: 375
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-19
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 252
+      endOffset: 257
+    tag: 日期
+    entity: 2017年
+  - id: annotation-190
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2130
+      endOffset: 2134
+    tag: 行业
+    entity: 传统商超
+  - id: annotation-180
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2034
+      endOffset: 2036
+    tag: 产品
+    entity: 海鲜
+  - id: annotation-191
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2140
+      endOffset: 2144
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-170
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1947
+      endOffset: 1949
+    tag: 产品
+    entity: 蔬菜
+  - id: annotation-181
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2048
+      endOffset: 2051
+    tag: 非货币数量词
+    entity: 3公里
+  - id: annotation-192
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2146
+      endOffset: 2150
+    tag: 产品
+    entity: 食品生鲜
+  - id: annotation-160
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1864
+      endOffset: 1867
+    tag: 百分比
+    entity: 85%
+  - id: annotation-171
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1950
+      endOffset: 1952
+    tag: 产品
+    entity: 水产
+  - id: annotation-182
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2057
+      endOffset: 2061
+    tag: 时间
+    entity: 30分钟
+  - id: annotation-193
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2151
+      endOffset: 2154
+    tag: 产品
+    entity: 非食品
+  - id: annotation-150
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1678
+      endOffset: 1685
+    tag: 非货币数量词
+    entity: 1000多平米
+  - id: annotation-161
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1878
+      endOffset: 1882
+    tag: 行业
+    entity: 电商平台
+  - id: annotation-172
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1953
+      endOffset: 1955
+    tag: 产品
+    entity: 零食
+  - id: annotation-183
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2075
+      endOffset: 2079
+    tag: 行业
+    entity: 传统超市
+  - id: annotation-194
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2163
+      endOffset: 2167
+    tag: 产品
+    entity: 食品生鲜
+  - id: annotation-140
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1565
+      endOffset: 1572
+    tag: 非货币数量词
+    entity: 9000平方米
+  - id: annotation-151
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1691
+      endOffset: 1694
+    tag: 人名
+    entity: 王笑松
+  - id: annotation-162
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1884
+      endOffset: 1886
+    tag: 行业
+    entity: 零售
+  - id: annotation-173
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1956
+      endOffset: 1958
+    tag: 产品
+    entity: 饮料
+  - id: annotation-184
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2084
+      endOffset: 2086
+    tag: 产品
+    entity: 生鲜
+  - id: annotation-195
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2192
+      endOffset: 2196
+    tag: 行业
+    entity: 传统超市
+  - id: annotation-130
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1461
+      endOffset: 1463
+    tag: 产品
+    entity: 煎饺
+  - id: annotation-141
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1576
+      endOffset: 1578
+    tag: 日期
+    entity: 今年
+  - id: annotation-152
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1697
+      endOffset: 1703
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-163
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1894
+      endOffset: 1896
+    tag: 行业
+    entity: 零售
+  - id: annotation-174
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1959
+      endOffset: 1961
+    tag: 产品
+    entity: 鲜花
+  - id: annotation-185
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2087
+      endOffset: 2089
+    tag: 产品
+    entity: 食品
+  - id: annotation-196
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2217
+      endOffset: 2221
+    tag: 公司
+    entity: 盒马鲜生
+  - id: annotation-230
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2799
+      endOffset: 2807
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-120
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1313
+      endOffset: 1315
+    tag: 产品
+    entity: 海鲜
+  - id: annotation-131
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1486
+      endOffset: 1490
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-142
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1587
+      endOffset: 1590
+    tag: 非货币数量词
+    entity: 30家
+  - id: annotation-153
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1782
+      endOffset: 1785
+    tag: 人名
+    entity: 王笑松
+  - id: annotation-164
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1903
+      endOffset: 1905
+    tag: 公司
+    entity: 京东
+  - id: annotation-175
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1970
+      endOffset: 1972
+    tag: 行业
+    entity: 生鲜
+  - id: annotation-186
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2090
+      endOffset: 2093
+    tag: 产品
+    entity: 非食品
+  - id: annotation-197
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2237
+      endOffset: 2239
+    tag: 行业
+    entity: 餐饮
+  - id: annotation-220
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2609
+      endOffset: 2611
+    tag: 地名
+    entity: 中国
+  - id: annotation-110
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1210
+      endOffset: 1212
+    tag: 非货币数量词
+    entity: 5倍
+  - id: annotation-231
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2807
+      endOffset: 2810
+    tag: 公司
+    entity: 沃尔玛
+  - id: annotation-121
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1324
+      endOffset: 1328
+    tag: 日期
+    entity: 1月2日
+  - id: annotation-132
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1496
+      endOffset: 1504
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-143
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1590
+      endOffset: 1594
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-154
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1789
+      endOffset: 1794
+    tag: 行业
+    entity: 体验式零售
+  - id: annotation-165
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1906
+      endOffset: 1910
+    tag: 公司
+    entity: 阿里巴巴
+  - id: annotation-176
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1981
+      endOffset: 1986
+    tag: 行业
+    entity: 鲜活水产品
+  - id: annotation-187
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2098
+      endOffset: 2102
+    tag: 行业
+    entity: 传统商超
+  - id: annotation-198
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2240
+      endOffset: 2242
+    tag: 行业
+    entity: 零售
+  - id: annotation-210
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2485
+      endOffset: 2490
+    tag: 产品
+    entity: 山姆会员店
+  - id: annotation-100
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1119
+      endOffset: 1121
+    tag: 日期
+    entity: 元旦
+  - id: annotation-221
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2614
+      endOffset: 2617
+    tag: 人名
+    entity: 陈志宇
+  - id: annotation-111
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1218
+      endOffset: 1222
+    tag: 时间
+    entity: 3到5年
+  - id: annotation-232
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2811
+      endOffset: 2813
+    tag: 公司
+    entity: 京东
+  - id: annotation-122
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1329
+      endOffset: 1331
+    tag: 日期
+    entity: 元旦
+  - id: annotation-133
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1507
+      endOffset: 1511
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-144
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1599
+      endOffset: 1605
+    tag: 非货币数量词
+    entity: 5000平米
+  - id: annotation-155
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1800
+      endOffset: 1805
+    tag: 公司
+    entity: BCG咨询
+  - id: annotation-166
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1913
+      endOffset: 1917
+    tag: 公司
+    entity: 美团点评
+  - id: annotation-177
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1987
+      endOffset: 1991
+    tag: 公司
+    entity: 永辉超市
+  - id: annotation-188
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2108
+      endOffset: 2111
+    tag: 时间
+    entity: 30年
+  - id: annotation-199
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2254
+      endOffset: 2258
+    tag: 行业
+    entity: 传统超市
+  - id: annotation-2
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8
+      endOffset: 12
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-200
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2284
+      endOffset: 2289
+    tag: 行业
+    entity: 体验式超市
+  - id: annotation-211
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2500
+      endOffset: 2503
+    tag: 产品
+    entity: 海产品
+  - id: annotation-101
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1122
+      endOffset: 1126
+    tag: 公司
+    entity: 京东集团
+  - id: annotation-222
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2619
+      endOffset: 2627
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-112
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1223
+      endOffset: 1229
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-233
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2865
+      endOffset: 2867
+    tag: 公司
+    entity: 京东
+  - id: annotation-123
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1374
+      endOffset: 1376
+    tag: 产品
+    entity: 海鲜
+  - id: annotation-134
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1511
+      endOffset: 1515
+    tag: 产品
+    entity: 十里堡店
+  - id: annotation-145
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1606
+      endOffset: 1610
+    tag: 非货币数量词
+    entity: 1万平米
+  - id: annotation-156
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1806
+      endOffset: 1811
+    tag: 公司
+    entity: 阿里研究院
+  - id: annotation-167
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1920
+      endOffset: 1924
+    tag: 产品
+    entity: 掌鱼鲜生
+  - id: annotation-178
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1993
+      endOffset: 1998
+    tag: 日期
+    entity: 2017年
+  - id: annotation-189
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2118
+      endOffset: 2126
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-3
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 19
+      endOffset: 24
+    tag: 行业
+    entity: 体验式零售
+  - id: annotation-201
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2331
+      endOffset: 2336
+    tag: 行业
+    entity: 体验式零售
+  - id: annotation-212
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2525
+      endOffset: 2530
+    tag: 产品
+    entity: 山姆会员店
+  - id: annotation-102
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1135
+      endOffset: 1138
+    tag: 人名
+    entity: 刘强东
+  - id: annotation-223
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2644
+      endOffset: 2646
+    tag: 产品
+    entity: 活鲜
+  - id: annotation-90
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1025
+      endOffset: 1027
+    tag: 产品
+    entity: 酒水
+  - id: annotation-113
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1237
+      endOffset: 1242
+    tag: 非货币数量词
+    entity: 1000家
+  - id: annotation-234
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2867
+      endOffset: 2873
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-124
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1397
+      endOffset: 1405
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-135
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1519
+      endOffset: 1523
+    tag: 非货币数量词
+    entity: 一万平米
+  - id: annotation-146
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1621
+      endOffset: 1623
+    tag: 公司
+    entity: 京东
+  - id: annotation-157
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1830
+      endOffset: 1835
+    tag: 日期
+    entity: 2020年
+  - id: annotation-168
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1926
+      endOffset: 1933
+    tag: 日期
+    entity: 2017年7月
+  - id: annotation-179
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2004
+      endOffset: 2007
+    tag: 非货币数量词
+    entity: 26家
+  - id: annotation-4
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 29
+      endOffset: 34
+    tag: 日期
+    entity: 2018年
+  - id: annotation-202
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2355
+      endOffset: 2359
+    tag: 公司
+    entity: 盒马鲜生
+  - id: annotation-213
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2552
+      endOffset: 2557
+    tag: 行业
+    entity: 体验式超市
+  - id: annotation-80
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 959
+      endOffset: 961
+    tag: 产品
+    entity: 鳕鱼
+  - id: annotation-103
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1138
+      endOffset: 1142
+    tag: 日期
+    entity: 1月2日
+  - id: annotation-224
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2659
+      endOffset: 2661
+    tag: 产品
+    entity: 活鲜
+  - id: annotation-91
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1028
+      endOffset: 1032
+    tag: 产品
+    entity: 快消食品
+  - id: annotation-114
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1254
+      endOffset: 1259
+    tag: 行业
+    entity: 体验式零售
+  - id: annotation-235
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2878
+      endOffset: 2882
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-125
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1412
+      endOffset: 1414
+    tag: 公司
+    entity: 京东
+  - id: annotation-136
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1524
+      endOffset: 1528
+    tag: 公司
+    entity: 阿里巴巴
+  - id: annotation-147
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1623
+      endOffset: 1629
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-158
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1839
+      endOffset: 1841
+    tag: 行业
+    entity: 生鲜
+  - id: annotation-169
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1944
+      endOffset: 1946
+    tag: 产品
+    entity: 水果
+  - id: annotation-5
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 36
+      endOffset: 38
+    tag: 行业
+    entity: 生鲜
+  - id: annotation-203
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2363
+      endOffset: 2368
+    tag: 行业
+    entity: 体验式零售
+  - id: annotation-70
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 799
+      endOffset: 807
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-214
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2559
+      endOffset: 2561
+    tag: 行业
+    entity: 生鲜
+  - id: annotation-81
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 970
+      endOffset: 972
+    tag: 公司
+    entity: 京东
+  - id: annotation-104
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1147
+      endOffset: 1153
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-225
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2695
+      endOffset: 2698
+    tag: 人名
+    entity: 陈志宇
+  - id: annotation-92
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1033
+      endOffset: 1035
+    tag: 产品
+    entity: 百货
+  - id: annotation-115
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1264
+      endOffset: 1268
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-236
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2884
+      endOffset: 2889
+    tag: 行业
+    entity: 体验式零售
+  - id: annotation-126
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1414
+      endOffset: 1420
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-137
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1534
+      endOffset: 1542
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-148
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1636
+      endOffset: 1643
+    tag: 非货币数量词
+    entity: 4000平方米
+  - id: annotation-159
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1860
+      endOffset: 1863
+    tag: 百分比
+    entity: 75%
+  - id: annotation-6
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 45
+      endOffset: 47
+    tag: 地名
+    entity: 中国
+  - id: annotation-60
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 650
+      endOffset: 652
+    tag: 行业
+    entity: 生鲜
+  - id: annotation-204
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2370
+      endOffset: 2372
+    tag: 产品
+    entity: 蔬果
+  - id: annotation-71
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 832
+      endOffset: 834
+    tag: 行业
+    entity: 活鲜
+  - id: annotation-215
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2565
+      endOffset: 2567
+    tag: 公司下属机构
+    entity: 山姆
+  - id: annotation-82
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 978
+      endOffset: 984
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-105
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1171
+      endOffset: 1172
+    tag: 非货币数量词
+    entity: 万
+  - id: annotation-226
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2766
+      endOffset: 2768
+    tag: 公司
+    entity: 京东
+  - id: annotation-93
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1044
+      endOffset: 1050
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-116
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1269
+      endOffset: 1271
+    tag: 日期
+    entity: 元旦
+  - id: annotation-127
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1436
+      endOffset: 1440
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-138
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1556
+      endOffset: 1560
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-149
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1660
+      endOffset: 1667
+    tag: 非货币数量词
+    entity: 2000多平米
+  - id: annotation-7
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 50
+      endOffset: 53
+    tag: 人名
+    entity: 陈志宇
+  - id: annotation-50
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 598
+      endOffset: 603
+    tag: 日期
+    entity: 2017年
+  - id: annotation-61
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 659
+      endOffset: 662
+    tag: 公司
+    entity: 沃尔玛
+  - id: annotation-205
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2389
+      endOffset: 2393
+    tag: 行业
+    entity: 传统超市
+  - id: annotation-72
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 837
+      endOffset: 840
+    tag: 产品
+    entity: 帝王蟹
+  - id: annotation-216
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2585
+      endOffset: 2588
+    tag: 公司
+    entity: 沃尔玛
+  - id: annotation-83
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 984
+      endOffset: 988
+    tag: 地名
+    entity: 大族广场
+  - id: annotation-106
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1173
+      endOffset: 1177
+    tag: 公司
+    entity: 京东集团
+  - id: annotation-227
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2773
+      endOffset: 2779
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-94
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1068
+      endOffset: 1070
+    tag: 产品
+    entity: 日料
+  - id: annotation-117
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1282
+      endOffset: 1290
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-128
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1455
+      endOffset: 1457
+    tag: 产品
+    entity: 冒菜
+  - id: annotation-139
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1560
+      endOffset: 1563
+    tag: 产品
+    entity: 亦庄店
+  - id: annotation-8
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 55
+      endOffset: 63
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-40
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 492
+      endOffset: 496
+    tag: 公司
+    entity: 京东集团
+  - id: annotation-51
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 605
+      endOffset: 609
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-62
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 662
+      endOffset: 664
+    tag: 地名
+    entity: 中国
+  - id: annotation-206
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2401
+      endOffset: 2403
+    tag: 产品
+    entity: 蔬果
+  - id: annotation-73
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 841
+      endOffset: 846
+    tag: 产品
+    entity: 波士顿龙虾
+  - id: annotation-217
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2588
+      endOffset: 2590
+    tag: 地名
+    entity: 中国
+  - id: annotation-84
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 990
+      endOffset: 994
+    tag: 行业
+    entity: 生鲜产品
+  - id: annotation-107
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1181
+      endOffset: 1187
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-228
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2784
+      endOffset: 2789
+    tag: 行业
+    entity: 体验式零售
+  - id: annotation-95
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1071
+      endOffset: 1075
+    tag: 产品
+    entity: 中式烹饪
+  - id: annotation-118
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1292
+      endOffset: 1298
+    tag: 日期
+    entity: 12月31日
+  - id: annotation-129
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1458
+      endOffset: 1460
+    tag: 产品
+    entity: 茶饮
+  - id: annotation-9
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 108
+      endOffset: 112
+    tag: 行业
+    entity: 生鲜产品
+  - id: annotation-30
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 378
+      endOffset: 383
+    tag: 公司下属机构
+    entity: 生鲜事业部
+  - id: annotation-41
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 520
+      endOffset: 524
+    tag: 公司
+    entity: 京东集团
+  - id: annotation-52
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 610
+      endOffset: 612
+    tag: 地名
+    entity: 北京
+  - id: annotation-63
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 667
+      endOffset: 670
+    tag: 人名
+    entity: 陈志宇
+  - id: annotation-207
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2409
+      endOffset: 2417
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-74
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 863
+      endOffset: 865
+    tag: 地名
+    entity: 日本
+  - id: annotation-218
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2590
+      endOffset: 2595
+    tag: 产品
+    entity: 山姆会员店
+  - id: annotation-85
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 998
+      endOffset: 1001
+    tag: 百分比
+    entity: 75%
+  - id: annotation-108
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1189
+      endOffset: 1192
+    tag: 人名
+    entity: 王笑松
+  - id: annotation-229
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2795
+      endOffset: 2798
+    tag: 人名
+    entity: 陈志宇
+  - id: annotation-96
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1085
+      endOffset: 1087
+    tag: 产品
+    entity: 披萨
+  - id: annotation-119
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1298
+      endOffset: 1302
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-20
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 259
+      endOffset: 261
+    tag: 公司
+    entity: 京东
+  - id: annotation-31
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 388
+      endOffset: 393
+    tag: 公司下属机构
+    entity: 生鲜事业部
+  - id: annotation-42
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 547
+      endOffset: 551
+    tag: 日期
+    entity: 1月3日
+  - id: annotation-53
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 614
+      endOffset: 616
+    tag: 非货币数量词
+    entity: 5家
+  - id: annotation-64
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 672
+      endOffset: 680
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-208
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2468
+      endOffset: 2476
+    tag: 公司
+    entity: 21世纪经济报道
+  - id: annotation-75
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 868
+      endOffset: 870
+    tag: 产品
+    entity: 真鲷
+  - id: annotation-219
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2606
+      endOffset: 2609
+    tag: 公司
+    entity: 沃尔玛
+  - id: annotation-86
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1004
+      endOffset: 1006
+    tag: 产品
+    entity: 蔬果
+  - id: annotation-109
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1196
+      endOffset: 1202
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-97
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1088
+      endOffset: 1090
+    tag: 产品
+    entity: 牛排
+  - id: annotation-10
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 149
+      endOffset: 154
+    tag: 日期
+    entity: 2018年
+  - id: annotation-21
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 261
+      endOffset: 265
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-32
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 397
+      endOffset: 401
+    tag: 公司
+    entity: 京东集团
+  - id: annotation-43
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 552
+      endOffset: 556
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-54
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 623
+      endOffset: 626
+    tag: 地名
+    entity: 十里堡
+  - id: annotation-65
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 725
+      endOffset: 727
+    tag: 行业
+    entity: 生鲜
+  - id: annotation-209
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2482
+      endOffset: 2485
+    tag: 公司
+    entity: 沃尔玛
+  - id: annotation-76
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 871
+      endOffset: 874
+    tag: 产品
+    entity: 金目鲷
+  - id: annotation-87
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1007
+      endOffset: 1009
+    tag: 产品
+    entity: 活鲜
+  - id: annotation-98
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1091
+      endOffset: 1093
+    tag: 产品
+    entity: 意面
+  - id: annotation-11
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 155
+      endOffset: 157
+    tag: 行业
+    entity: 零售
+  - id: annotation-22
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 294
+      endOffset: 297
+    tag: 非货币数量词
+    entity: 3公里
+  - id: annotation-33
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 407
+      endOffset: 412
+    tag: 公司下属机构
+    entity: 生鲜事业部
+  - id: annotation-44
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 558
+      endOffset: 563
+    tag: 日期
+    entity: 2018年
+  - id: annotation-55
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 627
+      endOffset: 630
+    tag: 地名
+    entity: 大成路
+  - id: annotation-66
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 727
+      endOffset: 731
+    tag: 产品
+    entity: 盒马鲜生
+  - id: annotation-77
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 888
+      endOffset: 891
+    tag: 产品
+    entity: 花盖蟹
+  - id: annotation-88
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1010
+      endOffset: 1012
+    tag: 产品
+    entity: 肉类
+  - id: annotation-99
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1097
+      endOffset: 1103
+    tag: 产品
+    entity: 7Fresh
+  - id: annotation-12
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 169
+      endOffset: 173
+    tag: 日期
+    entity: 1月4日
+  - id: annotation-23
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 307
+      endOffset: 311
+    tag: 时间
+    entity: 30分钟
+  - id: annotation-34
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 415
+      endOffset: 418
+    tag: 人名
+    entity: 王笑松
+  - id: annotation-45
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 565
+      endOffset: 567
+    tag: 地名
+    entity: 北京
+  - id: annotation-56
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 631
+      endOffset: 633
+    tag: 地名
+    entity: 东坝
+  - id: annotation-67
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 774
+      endOffset: 785
+    tag: 日期
+    entity: 2017年12月29日
+  - id: annotation-78
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 902
+      endOffset: 905
+    tag: 产品
+    entity: 基围虾
+  - id: annotation-89
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1022
+      endOffset: 1024
+    tag: 产品
+    entity: 烘焙
