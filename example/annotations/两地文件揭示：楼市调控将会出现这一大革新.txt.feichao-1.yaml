@@ -3,591 +3,591 @@ annotations:
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 953
-      endOffset: 958
+      startOffset: 952
+      endOffset: 957
     tag: 日期
     entity: 3月21日
   - id: annotation-24
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 395
-      endOffset: 397
+      startOffset: 394
+      endOffset: 396
     tag: 地名
     entity: 大连
   - id: annotation-35
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 398
-      endOffset: 401
+      startOffset: 397
+      endOffset: 400
     tag: 地名
     entity: 中山区
   - id: annotation-57
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 795
-      endOffset: 800
+      startOffset: 794
+      endOffset: 799
     tag: 百分比
     entity: 35.3%
   - id: annotation-68
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1007
-      endOffset: 1010
+      startOffset: 1006
+      endOffset: 1009
     tag: 行业
     entity: 房地产
   - id: annotation-14
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 28
-      endOffset: 30
+      startOffset: 27
+      endOffset: 29
     tag: 时间
     entity: 晚间
   - id: annotation-36
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 402
-      endOffset: 405
+      startOffset: 401
+      endOffset: 404
     tag: 地名
     entity: 西岗区
   - id: annotation-47
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 858
-      endOffset: 861
+      startOffset: 857
+      endOffset: 860
     tag: 地名
     entity: 阜南县
   - id: annotation-58
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 751
-      endOffset: 753
+      startOffset: 750
+      endOffset: 752
     tag: 公司
     entity: 链家
   - id: annotation-69
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1101
-      endOffset: 1104
+      startOffset: 1100
+      endOffset: 1103
     tag: 行业
     entity: 房地产
   - id: annotation-37
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 406
-      endOffset: 409
+      startOffset: 405
+      endOffset: 408
     tag: 地名
     entity: 沙河口
   - id: annotation-48
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 865
-      endOffset: 868
+      startOffset: 864
+      endOffset: 867
     tag: 地名
     entity: 阜南县
   - id: annotation-59
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 801
-      endOffset: 803
+      startOffset: 800
+      endOffset: 802
     tag: 公司
     entity: 链家
   - id: annotation-27
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 627
-      endOffset: 629
+      startOffset: 626
+      endOffset: 628
     tag: 地名
     entity: 大连
   - id: annotation-38
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 411
-      endOffset: 415
+      startOffset: 410
+      endOffset: 414
     tag: 地名
     entity: 高新园区
   - id: annotation-49
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1957
-      endOffset: 1960
+      startOffset: 1956
+      endOffset: 1959
     tag: 地名
     entity: 阜南县
   - id: annotation-17
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 691
-      endOffset: 694
+      startOffset: 690
+      endOffset: 693
     tag: 地名
     entity: 大连市
   - id: annotation-28
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 664
-      endOffset: 666
+      startOffset: 663
+      endOffset: 665
     tag: 地名
     entity: 大连
   - id: annotation-39
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 429
-      endOffset: 432
+      startOffset: 428
+      endOffset: 431
     tag: 地名
     entity: 大连市
   - id: annotation-18
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1815
-      endOffset: 1818
+      startOffset: 1814
+      endOffset: 1817
     tag: 地名
     entity: 大连市
   - id: annotation-19
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 144
-      endOffset: 150
+      startOffset: 143
+      endOffset: 149
     tag: 地名
     entity: 阜阳市阜南县
   - id: annotation-100
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1893
-      endOffset: 1896
+      startOffset: 1892
+      endOffset: 1895
     tag: 日期
     entity: 3年前
   - id: annotation-2
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 31
-      endOffset: 34
+      startOffset: 30
+      endOffset: 33
     tag: 地名
     entity: 大连市
   - id: annotation-70
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1117
-      endOffset: 1120
+      startOffset: 1116
+      endOffset: 1119
     tag: 行业
     entity: 房地产
   - id: annotation-81
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1299
-      endOffset: 1304
+      startOffset: 1298
+      endOffset: 1303
     tag: 日期
     entity: 3月19日
   - id: annotation-92
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1720
-      endOffset: 1722
+      startOffset: 1719
+      endOffset: 1721
     tag: 地名
     entity: 阜阳
   - id: annotation-71
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1142
-      endOffset: 1145
+      startOffset: 1141
+      endOffset: 1144
     tag: 行业
     entity: 房地产
   - id: annotation-82
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 2152
-      endOffset: 2157
+      startOffset: 2151
+      endOffset: 2156
     tag: 日期
     entity: 3月19日
   - id: annotation-50
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1975
-      endOffset: 1978
+      startOffset: 1974
+      endOffset: 1977
     tag: 地名
     entity: 阜南县
   - id: annotation-61
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1085
-      endOffset: 1090
+      startOffset: 1084
+      endOffset: 1089
     tag: 地名
     entity: 2018年
   - id: annotation-72
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1284
-      endOffset: 1287
+      startOffset: 1283
+      endOffset: 1286
     tag: 行业
     entity: 房地产
   - id: annotation-83
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1457
-      endOffset: 1462
+      startOffset: 1456
+      endOffset: 1461
     tag: 金融投资机构
     entity: 同策研究院
   - id: annotation-51
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 655
-      endOffset: 657
+      startOffset: 654
+      endOffset: 656
     tag: 地名
     entity: 东北
   - id: annotation-62
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1218
-      endOffset: 1222
+      startOffset: 1217
+      endOffset: 1221
     tag: 日期
     entity: 3月5日
   - id: annotation-73
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1397
-      endOffset: 1400
+      startOffset: 1396
+      endOffset: 1399
     tag: 行业
     entity: 房地产
   - id: annotation-84
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1628
-      endOffset: 1636
+      startOffset: 1627
+      endOffset: 1635
     tag: 日期
     entity: 2017年四季度
   - id: annotation-95
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1935
-      endOffset: 1937
+      startOffset: 1934
+      endOffset: 1936
     tag: 地名
     entity: 阜阳
   - id: annotation-30
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 764
-      endOffset: 766
+      startOffset: 763
+      endOffset: 765
     tag: 地名
     entity: 大连
   - id: annotation-52
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 713
-      endOffset: 717
+      startOffset: 712
+      endOffset: 716
     tag: 百分比
     entity: 1.0%
   - id: annotation-63
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1183
-      endOffset: 1186
+      startOffset: 1182
+      endOffset: 1185
     tag: 行业
     entity: 房地产
   - id: annotation-74
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1426
-      endOffset: 1429
+      startOffset: 1425
+      endOffset: 1428
     tag: 行业
     entity: 房地产
   - id: annotation-85
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1782
-      endOffset: 1790
+      startOffset: 1781
+      endOffset: 1789
     tag: 公司
     entity: 21世纪经济报道
   - id: annotation-96
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 2237
-      endOffset: 2239
+      startOffset: 2236
+      endOffset: 2238
     tag: 地名
     entity: 阜阳
   - id: annotation-20
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 531
-      endOffset: 537
+      startOffset: 530
+      endOffset: 536
     tag: 地名
     entity: 阜阳市阜南县
   - id: annotation-31
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1717
-      endOffset: 1719
+      startOffset: 1716
+      endOffset: 1718
     tag: 地名
     entity: 大连
   - id: annotation-42
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1815
-      endOffset: 1818
+      startOffset: 1814
+      endOffset: 1817
     tag: 地名
     entity: 大连市
   - id: annotation-53
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 722
-      endOffset: 727
+      startOffset: 721
+      endOffset: 726
     tag: 百分比
     entity: 10.7%
   - id: annotation-64
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 123
-      endOffset: 126
+      startOffset: 122
+      endOffset: 125
     tag: 行业
     entity: 房地产
   - id: annotation-75
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1544
-      endOffset: 1547
+      startOffset: 1543
+      endOffset: 1546
     tag: 行业
     entity: 房地产
   - id: annotation-86
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 2021
-      endOffset: 2029
+      startOffset: 2020
+      endOffset: 2028
     tag: 公司
     entity: 21世纪经济报道
   - id: annotation-97
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 2121
-      endOffset: 2126
+      startOffset: 2120
+      endOffset: 2125
     tag: 非货币数量词
     entity: 580万套
   - id: annotation-21
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 188
-      endOffset: 194
+      startOffset: 187
+      endOffset: 193
     tag: 日期
     entity: 今年两会期间
   - id: annotation-32
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1795
-      endOffset: 1797
+      startOffset: 1794
+      endOffset: 1796
     tag: 地名
     entity: 大连
   - id: annotation-43
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 554
-      endOffset: 557
+      startOffset: 553
+      endOffset: 556
     tag: 地名
     entity: 安徽省
   - id: annotation-54
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 759
-      endOffset: 763
+      startOffset: 758
+      endOffset: 762
     tag: 日期
     entity: 今年2月
   - id: annotation-65
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 199
-      endOffset: 202
+      startOffset: 198
+      endOffset: 201
     tag: 行业
     entity: 房地产
   - id: annotation-76
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1639
-      endOffset: 1642
+      startOffset: 1638
+      endOffset: 1641
     tag: 行业
     entity: 房地产
   - id: annotation-87
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1778
-      endOffset: 1781
+      startOffset: 1777
+      endOffset: 1780
     tag: 人名
     entity: 杨现领
   - id: annotation-98
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1864
-      endOffset: 1872
+      startOffset: 1863
+      endOffset: 1871
     tag: 日期
     entity: 2014年10月
   - id: annotation-22
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1193
-      endOffset: 1199
+      startOffset: 1192
+      endOffset: 1198
     tag: 日期
     entity: 今年两会期间
   - id: annotation-33
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1815
-      endOffset: 1817
+      startOffset: 1814
+      endOffset: 1816
     tag: 地名
     entity: 大连
   - id: annotation-44
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 571
-      endOffset: 574
+      startOffset: 570
+      endOffset: 573
     tag: 地名
     entity: 阜南县
   - id: annotation-55
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 686
-      endOffset: 690
+      startOffset: 685
+      endOffset: 689
     tag: 日期
     entity: 今年2月
   - id: annotation-66
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 868
-      endOffset: 871
+      startOffset: 867
+      endOffset: 870
     tag: 行业
     entity: 房地产
   - id: annotation-77
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1759
-      endOffset: 1762
+      startOffset: 1758
+      endOffset: 1761
     tag: 行业
     entity: 房地产
   - id: annotation-88
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 2254
-      endOffset: 2257
+      startOffset: 2253
+      endOffset: 2256
     tag: 人名
     entity: 杨现领
   - id: annotation-99
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1853
-      endOffset: 1859
+      startOffset: 1852
+      endOffset: 1858
     tag: 非货币数量词
     entity: 58468万
   - id: annotation-12
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 23
-      endOffset: 28
+      startOffset: 22
+      endOffset: 27
     tag: 日期
     entity: 3月21日
   - id: annotation-23
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 2108
-      endOffset: 2114
+      startOffset: 2107
+      endOffset: 2113
     tag: 日期
     entity: 今年两会期间
   - id: annotation-34
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 2234
-      endOffset: 2236
+      startOffset: 2233
+      endOffset: 2235
     tag: 地名
     entity: 大连
   - id: annotation-56
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 777
-      endOffset: 782
+      startOffset: 776
+      endOffset: 781
     tag: 百分比
     entity: 19.2%
   - id: annotation-67
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 915
-      endOffset: 918
+      startOffset: 914
+      endOffset: 917
     tag: 行业
     entity: 房地产
   - id: annotation-78
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 2289
-      endOffset: 2292
+      startOffset: 2288
+      endOffset: 2291
     tag: 行业
     entity: 房地产
   - id: annotation-89
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1771
-      endOffset: 1773
+      startOffset: 1770
+      endOffset: 1772
     tag: 公司
     entity: 链家

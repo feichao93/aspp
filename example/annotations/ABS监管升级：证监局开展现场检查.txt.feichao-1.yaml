@@ -3,223 +3,223 @@ annotations:
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 338
-      endOffset: 344
+      startOffset: 337
+      endOffset: 343
     tag: 公司
     entity: 东方金诚结构
   - id: annotation-24
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 601
-      endOffset: 604
+      startOffset: 600
+      endOffset: 603
     tag: 金融投资机构
     entity: 证监局
   - id: annotation-35
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 350
-      endOffset: 353
+      startOffset: 349
+      endOffset: 352
     tag: 人名
     entity: 郭永刚
   - id: annotation-25
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 683
-      endOffset: 686
+      startOffset: 682
+      endOffset: 685
     tag: 金融投资机构
     entity: 证监局
   - id: annotation-36
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1267
-      endOffset: 1270
+      startOffset: 1266
+      endOffset: 1269
     tag: 人名
     entity: 郭永刚
   - id: annotation-15
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 354
-      endOffset: 362
+      startOffset: 353
+      endOffset: 361
     tag: 事务所
     entity: 21世纪经济报道
   - id: annotation-26
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 2021
-      endOffset: 2024
+      startOffset: 2019
+      endOffset: 2022
     tag: 金融投资机构
     entity: 证监局
   - id: annotation-37
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1370
-      endOffset: 1373
+      startOffset: 1369
+      endOffset: 1372
     tag: 人名
     entity: 郭永刚
   - id: annotation-16
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 385
-      endOffset: 388
+      startOffset: 384
+      endOffset: 387
     tag: 金融投资机构
     entity: 证监会
   - id: annotation-27
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 689
-      endOffset: 692
+      startOffset: 688
+      endOffset: 691
     tag: 人名
     entity: 程催禧
   - id: annotation-17
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 562
-      endOffset: 565
+      startOffset: 561
+      endOffset: 564
     tag: 金融投资机构
     entity: 证监会
   - id: annotation-28
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 681
-      endOffset: 683
+      startOffset: 680
+      endOffset: 682
     tag: 地名
     entity: 贵州
   - id: annotation-18
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 432
-      endOffset: 435
+      startOffset: 431
+      endOffset: 434
     tag: 金融投资机构
     entity: 证监局
   - id: annotation-1
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 31
-      endOffset: 36
+      startOffset: 30
+      endOffset: 35
     tag: 日期
     entity: 3月26日
   - id: annotation-2
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 74
-      endOffset: 81
+      startOffset: 73
+      endOffset: 80
     tag: 政府机构部门
     entity: 中国基金业协会
   - id: annotation-6
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 988
-      endOffset: 990
+      startOffset: 987
+      endOffset: 989
     tag: 非货币数量词
     entity: 9单
   - id: annotation-7
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1567
-      endOffset: 1572
+      startOffset: 1566
+      endOffset: 1571
     tag: 日期
     entity: 3月27日
   - id: annotation-8
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 332
-      endOffset: 337
+      startOffset: 331
+      endOffset: 336
     tag: 日期
     entity: 3月27日
   - id: annotation-9
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 568
-      endOffset: 573
+      startOffset: 567
+      endOffset: 572
     tag: 日期
     entity: 3月27日
   - id: annotation-30
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 696
-      endOffset: 702
+      startOffset: 695
+      endOffset: 701
     tag: 公司
     entity: 贵阳公交公司
   - id: annotation-31
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 703
-      endOffset: 711
+      startOffset: 702
+      endOffset: 710
     tag: 公司
     entity: 华能贵诚信托公司
   - id: annotation-10
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1604
-      endOffset: 1609
+      startOffset: 1603
+      endOffset: 1608
     tag: 交易所
     entity: 沪深交易所
   - id: annotation-21
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 511
-      endOffset: 514
+      startOffset: 510
+      endOffset: 513
     tag: 金融投资机构
     entity: 证监局
   - id: annotation-32
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 978
-      endOffset: 983
+      startOffset: 977
+      endOffset: 982
     tag: 日期
     entity: 2014年
   - id: annotation-11
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 176
-      endOffset: 181
+      startOffset: 175
+      endOffset: 180
     tag: 交易所
     entity: 沪深交易所
   - id: annotation-22
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 545
-      endOffset: 548
+      startOffset: 544
+      endOffset: 547
     tag: 金融投资机构
     entity: 证监局
   - id: annotation-23
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 549
-      endOffset: 552
+      startOffset: 548
+      endOffset: 551
     tag: 金融投资机构
     entity: 证监局
   - id: annotation-34
     type: annotation
     range:
       blockIndex: 0
-      startOffset: 1193
-      endOffset: 1196
+      startOffset: 1192
+      endOffset: 1195
     tag: 人名
     entity: 郭永刚

@@ -607,6 +607,14 @@ annotations:
       endOffset: 2242
     tag: 行业
     entity: 零售
+  - id: annotation-1
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 0
+      endOffset: 8
+    tag: 产品
+    entity: 京东7Fresh
   - id: annotation-210
     type: annotation
     range:
