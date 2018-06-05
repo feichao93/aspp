@@ -19,12 +19,14 @@ aspp 的工作在*标注任务文件夹*中，该文件夹需要具有下列结�
 ```
 <task-dir>:
   - aspp.config.yaml
-  - docs/:         (可选)
-    -- a.txt
-    -- b.txt
-  - annotations/:  (可选)
-    -- a.txt.foo.yaml
-    -- b.txt.bar.yaml
+  - docs/         (可选)
+    - a.txt
+    - b.txt
+  - annotations/  (可选)
+    - a.txt.foo.yaml
+    - b.txt.bar.yaml
+  - deleted/      (可选)
+    - some-deleted-file.yaml
 ```
 
 _aspp.config.yaml_ 存放了该标注任务的配置：标签的种类、快捷键、标注样式等.
@@ -32,3 +34,5 @@ _aspp.config.yaml_ 存放了该标注任务的配置：标签的种类、快捷�
 _docs/_ 文件夹下存放需要进行标注的文本文档.
 
 _annotations/_ 文件夹下存放标注的结果，一个文本文档可以包含多个标注结果文件，标注结果的文件名格式为 `<文本文档的文件名>.<标注作者信息>.yaml`.
+
+_deleted/_ 文件夹下存放被删除的标注集合文件。
