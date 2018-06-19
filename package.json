@@ -1,6 +1,6 @@
 {
   "name": "aspp",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "license": "MIT",
   "bin": {
     "aspp": "bin/aspp.js"
