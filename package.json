@@ -8,7 +8,8 @@
     "test": "lerna run --parallel test",
     "build-frontend": "yarn run --cwd=packages/frontend build",
     "update-bundle": "yarn run build-frontend && copyfiles --up 3 packages/frontend/dist/bundle.js packages/backend/public/",
-    "prepublishOnly": "yarn run test && yarn run update-bundle"
+    "version:patch": "lerna publish --yes --cd-version patch --skip-npm --skip-git",
+    "version:minor": "lerna publish --yes --cd-version minor --skip-npm --skip-git"
   },
   "devDependencies": {
     "copyfiles": "^2.0.0",

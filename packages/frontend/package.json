@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "private": true,
-  "version": "0.1.0-SNAPSHOT",
+  "version": "0.1.0",
   "scripts": {
     "start": "webpack-dev-server --mode=development",
     "build": "webpack --mode=production",
