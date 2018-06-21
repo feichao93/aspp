@@ -2,12 +2,16 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "bootstrap": "yarn && lerna bootstrap",
     "start": "lerna run --parallel start",
     "lint": "tslint --project tslint.json",
     "test": "lerna run --parallel test",
-    "build-fronent": "yarn run --cwd=packages/frontend build"
+    "build-frontend": "yarn run --cwd=packages/frontend build",
+    "update-bundle": "yarn run build-frontend && copyfiles --up 3 packages/frontend/dist/bundle.js packages/backend/public/",
+    "prepublishOnly": "yarn run test && yarn run update-bundle"
   },
   "devDependencies": {
+    "copyfiles": "^2.0.0",
     "husky": "^1.0.0-rc.9",
     "jest": "^23.1.0",
     "lerna": "^2.11.0",
