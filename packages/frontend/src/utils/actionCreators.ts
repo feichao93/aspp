@@ -56,11 +56,6 @@ export function userClickDecoration(
   return { type: 'USER_CLICK_DECORATION', decoration, ctrlKey }
 }
 
-/** @deprecated 使用算法框架来实现改功能 */
-export function selectMatch(pattern: string | RegExp): Action.SelectMatch {
-  return { type: 'SELECT_MATCH', pattern }
-}
-
 export function toggleHelpOverlay(): Action.ToggleHelpOverlay {
   return { type: 'R_TOGGLE_HELP_OVERLAY' }
 }

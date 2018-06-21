@@ -10,12 +10,14 @@ import {
   userRequestUndo,
   userSelectCurrent,
 } from '../utils/actionCreators'
+import schedulers from '../utils/schedulers'
 
 /** 绑定快捷键 */
 export default function* shortcutSaga() {
-  const chan = eventChannel((emit: any) => {
-    document.addEventListener('keydown', emit)
-    return () => document.removeEventListener('keydown', emit)
+  const chan = eventChannel<KeyboardEvent>(emit => {
+    const callback = (e: KeyboardEvent) => schedulers.batch(emit, e)
+    document.addEventListener('keydown', callback)
+    return () => document.removeEventListener('keydown', callback)
   })
 
   try {

@@ -9,7 +9,7 @@ interface AnnotationButtonGroupProps {
   dispatch: Dispatch
 }
 
-class AnnotationButtonGroup extends React.Component<AnnotationButtonGroupProps> {
+class AnnotationButtonGroup extends React.PureComponent<AnnotationButtonGroupProps> {
   render() {
     const { dispatch } = this.props
     return (

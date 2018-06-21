@@ -23,7 +23,6 @@ namespace Action {
   // region MiscTypes
   type MiscTypes =
     | Toast
-    | SelectMatch
     | ToggleHelpOverlay
     | ToggleDarkTheme
     | ToggleTaskTreeVisibility
@@ -34,12 +33,6 @@ namespace Action {
     type: 'TOAST'
     message: string
     intent: Intent
-  }
-
-  /** @deprecated 使用算法框架来实现改功能 */
-  export interface SelectMatch {
-    type: 'SELECT_MATCH'
-    pattern: string | RegExp
   }
 
   export interface ToggleHelpOverlay {

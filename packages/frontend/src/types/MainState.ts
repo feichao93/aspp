@@ -16,7 +16,7 @@ const MainStateRecord = Record({
   hints: Map<string, Hint>(),
 })
 
-type MainStateStatus = 'closed' | 'doc-stat' | 'coll'
+export type MainStateStatus = 'closed' | 'doc-stat' | 'coll'
 
 export default class MainState extends MainStateRecord {
   static fromJS(object: any) {

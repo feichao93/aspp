@@ -17,7 +17,6 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { MiscState } from '../../reducers/miscReducer'
-import MainState from '../../types/MainState'
 import {
   setUsername,
   toggleHelpOverlay,
@@ -28,7 +27,8 @@ import './Menubar.styl'
 
 export interface MenubarProps {
   misc: MiscState
-  main: MainState
+  docname: string
+  collName: string
   dispatch: Dispatch
 }
 
@@ -42,11 +42,7 @@ class Menubar extends React.Component<MenubarProps> {
   }
 
   render() {
-    const {
-      misc: { username },
-      main,
-      dispatch,
-    } = this.props
+    const { misc, docname, collName, dispatch } = this.props
     return (
       <Navbar className={classNames('menubar')}>
         <NavbarGroup align={Alignment.LEFT}>
@@ -72,7 +68,7 @@ class Menubar extends React.Component<MenubarProps> {
           <Button minimal icon="help" text="help" onClick={() => dispatch(toggleHelpOverlay())} />
           <HelpOverlay />
           <div style={{ marginLeft: 24 }}>
-            当前文件名: {main.docname} {main.collName}
+            当前文件名: {docname} {collName}
           </div>
         </NavbarGroup>
         <NavbarGroup align={Alignment.RIGHT}>
@@ -82,11 +78,15 @@ class Menubar extends React.Component<MenubarProps> {
           {/*label="Dark Theme"*/}
           {/*onChange={() => dispatch(toggleDarkTheme())}*/}
           {/*/>*/}
-          <Button minimal icon="user" text={username} onClick={this.onRequestChangeUsername} />
+          <Button minimal icon="user" text={misc.username} onClick={this.onRequestChangeUsername} />
         </NavbarGroup>
       </Navbar>
     )
   }
 }
 
-export default connect((s: State) => ({ misc: s.misc, main: s.main }))(Menubar)
+export default connect((s: State) => ({
+  misc: s.misc,
+  docname: s.main.docname,
+  collName: s.main.collName,
+}))(Menubar)

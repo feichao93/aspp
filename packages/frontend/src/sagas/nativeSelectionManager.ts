@@ -1,64 +1,44 @@
 import { is } from 'immutable'
-import { delay, eventChannel, io } from 'little-saga/compat'
+import { eventChannel, io } from 'little-saga/compat'
 import { State } from '../reducers'
 import { setRange } from '../reducers/mainReducer'
 import { userClearSel } from '../utils/actionCreators'
 import InteractionCollector from '../utils/InteractionCollector'
+import schedulers from '../utils/schedulers'
 import SelectionUtils from '../utils/SelectionUtils'
 
-function* autoClearNativeSelectionAfterSetSel() {
-  while (true) {
-    yield io.take('UPDATE_MAIN')
-    const state: State = yield io.select()
-    if (!state.main.sel.isEmpty()) {
-      SelectionUtils.setCurrentRange(null)
-    }
-  }
-}
-
+/** 用户只能通过改变 native-selection 才能更新 `main.range`
+ * 该 saga 监听浏览器 selectionchange 事件，自动将 native-selection 的更新映射到 `main.range`
+ * 更新 `main.range` 的一个例外是：当用户切换到一个非空的 `sel` 时，`main.range` 将自动设置为空
+ * `AnnotationEditor#componentDidUpdate` 用于处理此例外情况
+ * */
 function* autoClearSelAndUpdateRange() {
   const collector: InteractionCollector = yield io.getContext('collector')
-  const selectionChangeChan = eventChannel<'selection-change'>(emit => {
-    const selecttionChangeCallback = () => emit('selection-change')
-    document.addEventListener('selectionchange', selecttionChangeCallback)
-    return () => document.removeEventListener('selectionchange', selecttionChangeCallback)
-  })
-  const mouseupChan = eventChannel<'mouseup'>(emit => {
-    const mouseupCallback = () => emit('mouseup')
-    document.addEventListener('mouseup', mouseupCallback)
-    return () => document.removeEventListener('mouseup', mouseupCallback)
+  const chan = eventChannel<'selection-change'>(emit => {
+    const callback = () => schedulers.batch(emit, 'selection-change')
+    document.addEventListener('selectionchange', callback)
+    return () => document.removeEventListener('selectionchange', callback)
   })
 
   try {
     while (true) {
-      yield io.take(selectionChangeChan)
-      while (true) {
-        const [debouncing, mouseup, timeout] = yield io.race([
-          io.take(selectionChangeChan),
-          io.take(mouseupChan),
-          delay(100),
-        ])
-        if (mouseup || timeout) {
-          const { main }: State = yield io.select()
-          const nextRange = SelectionUtils.getCurrentRange()
-          // 当用户拖动鼠标选中某一段文本时，自动清空 sel
-          if (!main.sel.isEmpty() && nextRange != null) {
-            yield io.put(userClearSel('auto'))
-          }
-          if (!is(main.range, nextRange)) {
-            collector.userChangeRange(nextRange)
-            yield io.put(setRange(nextRange))
-          }
-          break
-        }
+      yield io.take(chan)
+      const { main }: State = yield io.select()
+      const nextRange = SelectionUtils.getCurrentRange()
+      // 当用户拖动鼠标选中某一段文本时，自动清空 sel
+      if (!main.sel.isEmpty() && nextRange != null) {
+        yield io.put(userClearSel('auto'))
+      }
+      if (!is(main.range, nextRange)) {
+        collector.userChangeRange(nextRange)
+        yield io.put(setRange(nextRange))
       }
     }
   } finally {
-    selectionChangeChan.close()
+    chan.close()
   }
 }
 
 export default function* nativeSelectionManager() {
   yield io.fork(autoClearSelAndUpdateRange)
-  yield io.fork(autoClearNativeSelectionAfterSetSel)
 }

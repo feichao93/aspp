@@ -39,7 +39,8 @@ export function deleteDecorations(idSet: Set<string>): Action.UpdateMain {
 }
 
 export function setSel(sel: Set<string>): Action.UpdateMain {
-  return updateMain(s => s.set('sel', sel))
+  // 当 sel 变为非空时，自动清空 range
+  return updateMain(s => s.set('sel', sel).set('range', sel.isEmpty() ? s.range : null))
 }
 
 export function setRange(range: DecorationRange): Action.UpdateMain {

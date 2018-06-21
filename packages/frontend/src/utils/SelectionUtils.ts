@@ -55,7 +55,7 @@ namespace SelectionUtils {
   export function setCurrentRange(decorationRange: DecorationRange) {
     const selection = document.getSelection()
     if (decorationRange == null) {
-      requestAnimationFrame(() => selection.removeAllRanges())
+      selection.removeAllRanges()
       return
     }
     const block = document.querySelector(`*[data-blockindex="${decorationRange.blockIndex}"]`)

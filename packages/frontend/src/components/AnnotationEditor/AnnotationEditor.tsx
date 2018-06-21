@@ -1,9 +1,11 @@
-import { Set } from 'immutable'
+import { is, Set } from 'immutable'
 import React from 'react'
 import { Dispatch } from 'redux'
 import { ConfigState } from '../../reducers/configReducer'
 import Decoration from '../../types/Decoration'
 import MainState from '../../types/MainState'
+import schedulers from '../../utils/schedulers'
+import SelectionUtils from '../../utils/SelectionUtils'
 import AnnotationButtonGroup from './AnnotationButtonGroup'
 import './AnnotationEditor.styl'
 import './annotations.styl'
@@ -18,22 +20,20 @@ interface AnnotationEditorProps {
 }
 
 export default class AnnotationEditor extends React.Component<AnnotationEditorProps> {
-  // TODO 这段代码目前看不懂了，好像已经没有什么用了
-  // getSnapshotBeforeUpdate() {
-  //   return SelectionUtils.getCurrentRange()
-  // }
-  //
-  // componentDidUpdate(prevProps: AnnotationEditorProps, prevState: any, snapshot: DecorationRange) {
-  //   const currentRange = SelectionUtils.getCurrentRange()
-  //   const { main } = this.props
-  //   if (
-  //     prevProps.main.docname === main.docname &&
-  //     prevProps.main.collName === main.collName &&
-  //     !is(currentRange, snapshot)
-  //   ) {
-  //     SelectionUtils.setCurrentRange(snapshot)
-  //   }
-  // }
+  componentDidUpdate(prevProps: AnnotationEditorProps) {
+    schedulers.raf(() => {
+      const currentRange = SelectionUtils.getCurrentRange()
+      const { main } = this.props
+      // Synchronize native selection if necessary
+      if (
+        prevProps.main.docname === main.docname &&
+        prevProps.main.collName === main.collName &&
+        !is(currentRange, main.range)
+      ) {
+        SelectionUtils.setCurrentRange(main.range)
+      }
+    })
+  }
 
   render() {
     const { dispatch, main, config } = this.props

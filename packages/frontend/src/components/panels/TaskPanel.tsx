@@ -1,5 +1,5 @@
 import {
-  Button,
+  AnchorButton,
   ButtonGroup,
   Dialog,
   Icon,
@@ -35,7 +35,7 @@ function AddTaskMenu({ dispatch }: { dispatch: Dispatch }) {
             ))}
         </Menu>
       }
-      target={<Button text="Add Task" rightIcon="caret-down" />}
+      target={<AnchorButton text="Add Task" rightIcon="caret-down" />}
       position={Position.BOTTOM_LEFT}
       minimal
       transitionDuration={0}
@@ -130,20 +130,20 @@ class TaskPanel extends React.Component<TaskPanelProps> {
               <main>
                 <ButtonGroup style={{ width: 120 }}>
                   {task.status === 'idle' ? (
-                    <Button
+                    <AnchorButton
                       icon="play"
                       disabled={task.impl.disabled}
                       onClick={() => dispatch(runTask(task.id))}
                     />
                   ) : (
-                    <Button icon="redo" onClick={() => this.restartTask(task.id)} />
+                    <AnchorButton icon="redo" onClick={() => this.restartTask(task.id)} />
                   )}
-                  <Button
+                  <AnchorButton
                     icon="symbol-square"
                     disabled={task.status === 'idle'}
                     onClick={() => dispatch(stopTask(task.id))}
                   />
-                  <Button
+                  <AnchorButton
                     icon="cog"
                     disabled={task.options == null}
                     onClick={() => this.openConfigDialog(task)}
@@ -151,8 +151,8 @@ class TaskPanel extends React.Component<TaskPanelProps> {
                 </ButtonGroup>
                 {!task.impl.singleton && (
                   <ButtonGroup>
-                    <Button icon="duplicate" onClick={() => this.duplicateTask(task.id)} />
-                    <Button
+                    <AnchorButton icon="duplicate" onClick={() => this.duplicateTask(task.id)} />
+                    <AnchorButton
                       intent={Intent.DANGER}
                       icon="delete"
                       onClick={() => this.deleteTask(task.id)}
