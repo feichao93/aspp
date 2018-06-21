@@ -1,0 +1,87 @@
+.annotation-editor {
+  display flex
+  flex-direction column
+  cursor default
+
+  .editor {
+    font-size 16px
+    font-family consolas, 'Microsoft Yahei', sans-serif
+    padding 8px
+    border-top 1px solid #d4d6d9
+    overflow auto
+
+    ::selection {
+      background #ffdcd4
+    }
+  }
+}
+
+.block {
+  line-height 1.8
+  white-space pre-wrap
+  letter-spacing 2px
+  margin-top 8px
+  &:first-child {
+    margin-top 0
+  }
+
+  .block-meta {
+    display flex
+    align-items center
+    color #ccc
+    user-select none
+
+    > p {
+      margin 0
+      line-height 24px
+    }
+
+    .block-button-group {
+      margin-left 8px
+      visibility hidden
+    }
+  }
+
+  .tag-abbr {
+    user-select none
+    pointer-events none
+    font-weight bold
+    letter-spacing 0
+  }
+
+  &:hover {
+    outline 1px solid #ccc
+    outline-offset 2px
+    .block-meta {
+      color #666
+      .block-button-group {
+        visibility visible
+      }
+    }
+  }
+
+  .slot.match
+  .slot.sentence {
+    box-shadow rgba(158, 158, 158, 0.33) 1px 1px 3px 1.5px
+    outline 1px solid #ccc
+    background #fff9c5
+    &.selected {
+      background #FFEB3B
+    }
+  }
+
+  // TODO 优化样式
+
+  .hint {
+    border-bottom 1px dotted #192126
+    cursor pointer
+    &.selected {
+      background #fce23c
+    }
+  }
+
+  //.slot.highlight {
+  //  outline 1.5px solid #f7957e
+  //  outline-offset 0.5px
+  //}
+}

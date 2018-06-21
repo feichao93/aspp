@@ -1,0 +1,29 @@
+.history-panel {
+  .action-list {
+    padding-left 16px
+    line-height 1.5
+    margin 0
+
+    > .action-item {
+      opacity 0.4
+      margin-top 4px
+
+      &:first-child {
+        margin-top 0
+      }
+
+      &.active {
+        opacity 1
+      }
+    }
+  }
+
+  .action-item {
+    &.task {
+      background #8bc34a
+    }
+    &.sideEffects {
+      background #ff9800
+    }
+  }
+}

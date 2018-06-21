@@ -1,0 +1,28 @@
+.task-tree {
+  grid-area task-tree
+  display flex
+  flex-direction column
+  width 500px
+  overflow auto
+  border-right 1px solid #d3d6d9
+
+  &.hide {
+    display none
+  }
+
+  > header {
+    flex-shrink 0
+    display flex
+    align-items center
+    padding-left 12px
+    border-bottom 1px solid #d4d6d9
+
+    .button-group {
+      margin-left auto
+    }
+  }
+
+  .tree {
+    overflow auto
+  }
+}

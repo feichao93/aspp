@@ -1,0 +1,57 @@
+.panel-container {
+  grid-area panel
+  display flex
+  flex-flow column
+  width 350px
+  overflow auto
+  border-left #d2d6d9 1px solid
+
+  .pt-tab-list {
+    padding 0 8px
+  }
+
+  .pt-tab {
+    text-transform uppercase
+  }
+
+  .pt-tab-panel {
+    overflow auto
+    padding 0 8px
+  }
+
+  .panel {
+    .part-title {
+      font-size 20px
+      line-height 24px
+    }
+
+    .subtitle {
+      font-size 18px
+      line-height 24px
+      margin 0
+      font-weight normal
+    }
+
+    .rich.string {
+      font-weight bold
+      color #2b7e18
+      .pt-dark & {
+        color #a5c261
+      }
+      &.danger {
+        color #ca1c3b
+      }
+    }
+
+    .rich.number {
+      color #0c38f9
+      .pt-dark & {
+        color #6897bb
+      }
+    }
+
+    .rich.reserved {
+      color #666
+    }
+  }
+}

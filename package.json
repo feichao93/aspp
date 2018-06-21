@@ -1,32 +1,18 @@
 {
-  "name": "aspp",
-  "version": "0.0.18",
+  "private": true,
   "license": "MIT",
-  "bin": {
-    "aspp": "bin/aspp.js"
-  },
   "scripts": {
-    "dev": "node ./bin/aspp.js serve --task-dir example"
+    "start": "lerna run --parallel start",
+    "lint": "tslint --project tslint.json",
+    "test": "lerna run --parallel test",
+    "build-fronent": "yarn run --cwd=packages/frontend build"
   },
-  "files": [
-    "bin/",
-    "lib/",
-    "public/",
-    ".editorconfig",
-    ".gitignore",
-    "package.json",
-    "readme.md"
-  ],
-  "dependencies": {
-    "js-yaml": "^3.11.0",
-    "koa": "^2.5.1",
-    "koa-bodyparser": "^4.2.0",
-    "koa-mount": "^3.0.0",
-    "koa-router": "^7.4.0",
-    "koa-static": "^4.0.2",
-    "mkdirp": "^0.5.1",
-    "nunjucks": "^3.1.2",
-    "yargs": "^11.0.0"
+  "devDependencies": {
+    "husky": "^1.0.0-rc.9",
+    "jest": "^23.1.0",
+    "lerna": "^2.11.0",
+    "lint-staged": "^7.2.0",
+    "tslint": "^5.10.0"
   },
   "prettier": {
     "printWidth": 100,
@@ -34,7 +20,21 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
-  "devDependencies": {
-    "prettier": "^1.12.1"
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "tslint --fix",
+      "git add"
+    ],
+    "!(bundle)*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "lerna run --parallel test"
+    }
   }
 }

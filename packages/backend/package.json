@@ -1,0 +1,43 @@
+{
+  "name": "aspp",
+  "version": "0.0.18",
+  "license": "MIT",
+  "bin": {
+    "aspp": "bin/aspp.js"
+  },
+  "scripts": {
+    "start": "supervisor --watch lib/ -- ./bin/aspp.js serve --task-dir example"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shinima/aspp.git"
+  },
+  "author": "Shi Feichao <842351815@qq.com>",
+  "bugs": {
+    "url": "https://github.com/shinima/aspp/issues"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "public/",
+    ".editorconfig",
+    ".gitignore",
+    "package.json",
+    "readme.md"
+  ],
+  "dependencies": {
+    "js-yaml": "^3.11.0",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-mount": "^3.0.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^4.0.2",
+    "mkdirp": "^0.5.1",
+    "nunjucks": "^3.1.2",
+    "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.12.1",
+    "supervisor": "^0.12.0"
+  }
+}

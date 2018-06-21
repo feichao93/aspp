@@ -1,0 +1,20 @@
+{
+  "extends": "./node_modules/tslint/lib/configs/recommended",
+  "rules": {
+    "quotemark": [true, "single", "jsx-double", "avoid-escape", "avoid-template"],
+    "semicolon": false,
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "member-access": false,
+    "interface-name": false,
+    "object-literal-sort-keys": false,
+    "no-namespace": false,
+    "no-shadowed-variable": false,
+    "no-console": false,
+    "no-empty": false,
+    "max-classes-per-file": false,
+    "only-arrow-functions": false,
+    "max-line-length": false,
+    "trailing-comma": false,
+    "jsdoc-format": false
+  }
+}
