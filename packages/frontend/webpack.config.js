@@ -1,7 +1,16 @@
 const webpack = require('webpack')
 const path = require('path')
+const getDevConfig = require('./devConfig')
 
-module.exports = {
+function stringifyValues(obj) {
+  const result = {}
+  for (const [key, value] of Object.entries(obj)) {
+    result[key] = JSON.stringify(value)
+  }
+  return result
+}
+
+module.exports = (env = {}) => ({
   entry: path.resolve(__dirname, 'src/main.tsx'),
   output: {
     publicPath: '/public',
@@ -11,6 +20,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       WEBPACK_BUILD: JSON.stringify(true),
+      ...stringifyValues(getDevConfig(Boolean(env.dev))),
     }),
   ],
   resolve: {
@@ -58,4 +68,4 @@ module.exports = {
     contentBase: __dirname,
     hot: true,
   },
-}
+})

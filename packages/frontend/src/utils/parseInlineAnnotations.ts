@@ -4,7 +4,6 @@ import { RawAnnotation } from '../types/Annotation'
 // tslint:disable no-var-requires
 export let basicParser: Parser
 
-declare const WEBPACK_BUILD: boolean
 if (typeof WEBPACK_BUILD !== 'undefined' && WEBPACK_BUILD) {
   basicParser = require('./inline-coll.pegjs')
 } else {

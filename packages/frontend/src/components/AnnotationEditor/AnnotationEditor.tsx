@@ -4,7 +4,6 @@ import { Dispatch } from 'redux'
 import { ConfigState } from '../../reducers/configReducer'
 import Decoration from '../../types/Decoration'
 import MainState from '../../types/MainState'
-import schedulers from '../../utils/schedulers'
 import SelectionUtils from '../../utils/SelectionUtils'
 import AnnotationButtonGroup from './AnnotationButtonGroup'
 import './AnnotationEditor.styl'
@@ -21,18 +20,23 @@ interface AnnotationEditorProps {
 
 export default class AnnotationEditor extends React.Component<AnnotationEditorProps> {
   componentDidUpdate(prevProps: AnnotationEditorProps) {
-    schedulers.raf(() => {
-      const currentRange = SelectionUtils.getCurrentRange()
-      const { main } = this.props
-      // Synchronize native selection if necessary
-      if (
-        prevProps.main.docname === main.docname &&
-        prevProps.main.collName === main.collName &&
-        !is(currentRange, main.range)
-      ) {
-        SelectionUtils.setCurrentRange(main.range)
+    const currentRange = SelectionUtils.getCurrentRange()
+    const { main } = this.props
+    // Synchronize native selection if necessary
+    if (
+      prevProps.main.docname === main.docname &&
+      prevProps.main.collName === main.collName &&
+      !is(currentRange, main.range)
+    ) {
+      if (DEV.LOG_RANGE) {
+        console.log(
+          '%cDEV.LOG_RANGE',
+          'background: #fedcd4;',
+          `sync current range ${currentRange} -> ${main.range}`,
+        )
       }
-    })
+      SelectionUtils.setCurrentRange(main.range)
+    }
   }
 
   render() {
