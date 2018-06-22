@@ -38,17 +38,17 @@ export class Config extends Record({
 }) {}
 
 export default function configReducer(state = new Config(), action: Action) {
-  if (action.type === 'R_TOGGLE_DARK_THEME') {
+  if (action.type === 'TOGGLE_DARK_THEME') {
     return state.update('darkTheme', not)
-  } else if (action.type === 'R_TOGGLE_HELP_OVERLAY') {
+  } else if (action.type === 'TOGGLE_HELP_OVERLAY') {
     return state.update('helpOverlay', not)
-  } else if (action.type === 'R_TOGGLE_TASK_TREE_VISIBILITY') {
+  } else if (action.type === 'TOGGLE_TASK_TREE_VISIBILITY') {
     return state.update('hideTaskTree', not)
-  } else if (action.type === 'R_SET_USERNAME') {
+  } else if (action.type === 'SET_USERNAME') {
     return state.set('username', action.username)
-  } else if (action.type === 'USER_TOGGLE_TAG_VISIBILITY') {
+  } else if (action.type === 'TOGGLE_TAG_VISIBILITY') {
     return state.update('visibleMap', map => map.update(action.tagName, not))
-  } else if (action.type === 'USER_SET_TAG_GROUP_VISIBILITY') {
+  } else if (action.type === 'SET_TAG_GROUP_VISIBILITY') {
     const tagNameSet = ASPP_CONFIG.groups
       .get(action.groupName)
       .map(g => g.name)

@@ -6,7 +6,7 @@ import SelectionUtils from '../utils/SelectionUtils'
 
 export default function* devHelper() {
   if (process.env.NODE_ENV === 'development') {
-    const { data: treeState }: Action.LoadData = yield take('LOAD_DATA')
+    const { treeState }: Action.LoadTreeState = yield take('LOAD_DATA')
     const firstDoc = treeState.docs[0]
     // if (firstDoc && firstDoc.annotations.length > 0) {
     //   yield put(requestOpenColl(firstDoc.name, firstDoc.annotations[0]))

@@ -11,7 +11,7 @@ import Annotation from '../types/Annotation'
 import MainState from '../types/MainState'
 import {
   historyClear,
-  loadData,
+  loadTreeData,
   requestLoadTree,
   requestOpenColl,
   setMainState,
@@ -30,7 +30,7 @@ function* loadTreeState(reload: boolean) {
     const res = yield fetch(`/api/list?reload=${reload ? 'true' : 'false'}`)
     if (res.ok) {
       const treeState: TreeState = yield res.json()
-      yield put(loadData(treeState))
+      yield put(loadTreeData(treeState))
       if (reload) {
         yield put(toast('更新文档树信息成功'))
       }

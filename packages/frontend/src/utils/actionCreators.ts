@@ -7,7 +7,7 @@ import Decoration from '../types/Decoration'
 import MainState from '../types/MainState'
 import Action from './actions'
 
-// TODO  去掉 Actions 或是 actionCreators
+// TODO  移动到 Actions 文件中
 
 export function setMainState(mainState: MainState): Action.UpdateMain {
   return { type: 'UPDATE_MAIN', updater: () => mainState }
@@ -57,19 +57,19 @@ export function userClickDecoration(
 }
 
 export function toggleHelpOverlay(): Action.ToggleHelpOverlay {
-  return { type: 'R_TOGGLE_HELP_OVERLAY' }
+  return { type: 'TOGGLE_HELP_OVERLAY' }
 }
 
 export function toggleDarkTheme(): Action.ToggleDarkTheme {
-  return { type: 'R_TOGGLE_DARK_THEME' }
+  return { type: 'TOGGLE_DARK_THEME' }
 }
 
 export function toggleTaskTreeVisibility(): Action.ToggleTaskTreeVisibility {
-  return { type: 'R_TOGGLE_TASK_TREE_VISIBILITY' }
+  return { type: 'TOGGLE_TASK_TREE_VISIBILITY' }
 }
 
-export function loadData(data: TreeState): Action.LoadData {
-  return { type: 'LOAD_DATA', data }
+export function loadTreeData(treeState: TreeState): Action.LoadTreeState {
+  return { type: 'LOAD_TREE_STATE', treeState }
 }
 
 export function requestAddColl(docname: string): Action.RequestAddColl {
@@ -105,7 +105,7 @@ export function requestOpenColl(docname: string, collName: string): Action.Reque
 }
 
 export function setUsername(username: string): Action.SetUsername {
-  return { type: 'R_SET_USERNAME', username }
+  return { type: 'SET_USERNAME', username }
 }
 
 export function requestDiffColls(docname: string, collNames: string[]): Action.RequestDiffColls {
@@ -116,16 +116,16 @@ export function requestLoadTree(reload: boolean): Action.RequestLoadTree {
   return { type: 'REQUEST_LOAD_TREE', reload }
 }
 
-export function userToggleTagVisibility(tagName: string): Action.UserToggleTagVisibility {
-  return { type: 'USER_TOGGLE_TAG_VISIBILITY', tagName }
+export function toggleTagVisibility(tagName: string): Action.ToggleTagVisibility {
+  return { type: 'TOGGLE_TAG_VISIBILITY', tagName }
 }
 
 export function userSetTagGroupVisibility(
   groupName: string,
   visible: boolean,
-): Action.UserSetTagGroupVisibility {
+): Action.SetTagGroupVisibility {
   return {
-    type: 'USER_SET_TAG_GROUP_VISIBILITY',
+    type: 'SET_TAG_GROUP_VISIBILITY',
     groupName,
     visible,
   }

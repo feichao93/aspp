@@ -86,8 +86,7 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
     prevState: TaskTreeState,
   ): Partial<TaskTreeState> {
     // 文档列表发生了更新
-    // tslint:disable-next-line
-    if (prevState.treeState != nextProps.tree) {
+    if (prevState.treeState !== nextProps.tree) {
       return {
         contents: genTreeNodes(nextProps.tree, prevState.contents),
         treeState: nextProps.tree,
@@ -150,10 +149,10 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
           const { filename, content } = generateANNFile(mainState)
           saveAs(new Blob([content], { type: 'text/plain;charset=utf-8' }), filename)
         } else {
-          throw new Error(`${res2.status} ${res2.statusText}`)
+          dispatch(toast(`${res2.status} ${res2.statusText}`, Intent.DANGER))
         }
       } else {
-        throw new Error(`${res1.status} ${res1.statusText}`)
+        dispatch(toast(`${res1.status} ${res1.statusText}`, Intent.DANGER))
       }
     } catch (e) {
       console.error(e)

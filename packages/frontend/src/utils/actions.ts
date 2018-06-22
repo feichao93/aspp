@@ -27,7 +27,7 @@ namespace Action {
     | ToggleDarkTheme
     | ToggleTaskTreeVisibility
     | SetUsername
-    | UserToggleTagVisibility
+    | ToggleTagVisibility
 
   export interface Toast {
     type: 'TOAST'
@@ -36,29 +36,29 @@ namespace Action {
   }
 
   export interface ToggleHelpOverlay {
-    type: 'R_TOGGLE_HELP_OVERLAY'
+    type: 'TOGGLE_HELP_OVERLAY'
   }
 
   export interface ToggleDarkTheme {
-    type: 'R_TOGGLE_DARK_THEME'
+    type: 'TOGGLE_DARK_THEME'
   }
 
   export interface ToggleTaskTreeVisibility {
-    type: 'R_TOGGLE_TASK_TREE_VISIBILITY'
+    type: 'TOGGLE_TASK_TREE_VISIBILITY'
   }
 
   export interface SetUsername {
-    type: 'R_SET_USERNAME'
+    type: 'SET_USERNAME'
     username: string
   }
 
-  export interface UserToggleTagVisibility {
-    type: 'USER_TOGGLE_TAG_VISIBILITY'
+  export interface ToggleTagVisibility {
+    type: 'TOGGLE_TAG_VISIBILITY'
     tagName: string
   }
 
-  export interface UserSetTagGroupVisibility {
-    type: 'USER_SET_TAG_GROUP_VISIBILITY'
+  export interface SetTagGroupVisibility {
+    type: 'SET_TAG_GROUP_VISIBILITY'
     groupName: string
     visible: boolean
   }
@@ -80,7 +80,7 @@ namespace Action {
   type FileTypes =
     | RequestDiffColls
     | RequestLoadTree
-    | LoadData
+    | LoadTreeState
     | RequestAddColl
     | RequestDeleteColl
     | RequestCloseCurrentColl
@@ -99,9 +99,9 @@ namespace Action {
     reload: boolean
   }
 
-  export interface LoadData {
-    type: 'LOAD_DATA'
-    data: TreeState
+  export interface LoadTreeState {
+    type: 'LOAD_TREE_STATE'
+    treeState: TreeState
   }
 
   export interface RequestAddColl {
@@ -171,7 +171,7 @@ namespace Action {
     | UserRequestRedo
     | UserRequestRevert
     | UserRequestUndo
-    | UserSetTagGroupVisibility
+    | SetTagGroupVisibility
     | UserSelectBlockHints
     | UserSelectBlockText
     | UserClickDecoration

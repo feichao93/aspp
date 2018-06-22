@@ -9,12 +9,11 @@ import { Config } from '../../reducers/configReducer'
 import AsppConfig from '../../types/AsppConfig'
 import MainState from '../../types/MainState'
 import {
+  toggleTagVisibility,
   userSetSel,
   userSetTagGroupVisibility,
-  userToggleTagVisibility,
 } from '../../utils/actionCreators'
 import { toIdSet } from '../../utils/common'
-import { DEFAULT_GROUP_NAME } from '../../utils/constants'
 import './TagsPanel.styl'
 
 interface TagRowProps {
@@ -124,7 +123,7 @@ class TagsPanel extends React.Component<TagsPanelProps, TagsPanelState> {
 
   onToggleTagVisibility = (tagName: string) => {
     const { dispatch } = this.props
-    dispatch(userToggleTagVisibility(tagName))
+    dispatch(toggleTagVisibility(tagName))
   }
 
   onSetTagGroupVisibility = (groupName: string, visible: boolean) => {
