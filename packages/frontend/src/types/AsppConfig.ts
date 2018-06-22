@@ -1,4 +1,4 @@
-type AsppConfig = AsppConfig.Config
+type AsppConfig = AsppConfig.AsppConfig
 
 namespace AsppConfig {
   export interface Theme {
@@ -29,7 +29,7 @@ namespace AsppConfig {
     // TODO readonly darkTheme: Theme
   }
 
-  export interface Config {
+  export interface AsppConfig {
     readonly name: string
     readonly tags: ReadonlyArray<TagConfig>
   }

@@ -14,7 +14,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
-import { MiscState } from '../../reducers/miscReducer'
+import { Config } from '../../reducers/configReducer'
 import { TreeDoc, TreeState } from '../../reducers/treeReducer'
 import MainState from '../../types/MainState'
 import {
@@ -31,7 +31,7 @@ import './TaskTree.styl'
 export interface TaskTreeProps {
   docname: string
   collName: string
-  misc: MiscState
+  config: Config
   tree: TreeState
   dispatch: Dispatch
 }
@@ -290,9 +290,9 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
   }
 
   render() {
-    const { misc } = this.props
+    const { config } = this.props
     return (
-      <div className={classNames('task-tree', { hide: misc.hideTaskTree })}>
+      <div className={classNames('task-tree', { hide: config.hideTaskTree })}>
         <header>
           <div>Task Tree</div>
           <ButtonGroup className="button-group">
@@ -316,8 +316,8 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
   }
 }
 
-function mapStateToProps({ main: { docname, collName }, misc, tree }: State) {
-  return { docname, collName, misc, tree }
+function mapStateToProps({ main: { docname, collName }, config, tree }: State) {
+  return { docname, collName, config, tree }
 }
 
 export default connect(mapStateToProps)(TaskTree)

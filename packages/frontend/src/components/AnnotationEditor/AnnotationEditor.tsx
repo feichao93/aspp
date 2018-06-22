@@ -1,7 +1,7 @@
 import { is, Set } from 'immutable'
 import React from 'react'
 import { Dispatch } from 'redux'
-import { ConfigState } from '../../reducers/configReducer'
+import { Config } from '../../reducers/configReducer'
 import Decoration from '../../types/Decoration'
 import MainState from '../../types/MainState'
 import SelectionUtils from '../../utils/SelectionUtils'
@@ -14,7 +14,7 @@ import HintButtonGroup from './HintButtonGroup'
 
 interface AnnotationEditorProps {
   main: MainState
-  config: ConfigState
+  config: Config
   dispatch: Dispatch
 }
 

@@ -16,7 +16,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
-import { MiscState } from '../../reducers/miscReducer'
+import { Config } from '../../reducers/configReducer'
 import {
   setUsername,
   toggleHelpOverlay,
@@ -26,7 +26,7 @@ import HelpOverlay from '../HelpOverlay/HelpOverlay'
 import './Menubar.styl'
 
 export interface MenubarProps {
-  misc: MiscState
+  config: Config
   docname: string
   collName: string
   dispatch: Dispatch
@@ -42,7 +42,7 @@ class Menubar extends React.Component<MenubarProps> {
   }
 
   render() {
-    const { misc, docname, collName, dispatch } = this.props
+    const { config, docname, collName, dispatch } = this.props
     return (
       <Navbar className={classNames('menubar')}>
         <NavbarGroup align={Alignment.LEFT}>
@@ -78,7 +78,12 @@ class Menubar extends React.Component<MenubarProps> {
           {/*label="Dark Theme"*/}
           {/*onChange={() => dispatch(toggleDarkTheme())}*/}
           {/*/>*/}
-          <Button minimal icon="user" text={misc.username} onClick={this.onRequestChangeUsername} />
+          <Button
+            minimal
+            icon="user"
+            text={config.username}
+            onClick={this.onRequestChangeUsername}
+          />
         </NavbarGroup>
       </Navbar>
     )
@@ -86,7 +91,7 @@ class Menubar extends React.Component<MenubarProps> {
 }
 
 export default connect((s: State) => ({
-  misc: s.misc,
+  config: s.config,
   docname: s.main.docname,
   collName: s.main.collName,
 }))(Menubar)

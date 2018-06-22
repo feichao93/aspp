@@ -1,18 +1,52 @@
 import { Map, Record } from 'immutable'
 import ASPP_CONFIG from '../aspp-config'
+import store from '../store'
 import Action from '../utils/actions'
 import { not } from '../utils/common'
 
-export class ConfigState extends Record({
-  visibleMap: Map<string, boolean>(),
-}) {}
+const darkTheme = localStorage.getItem('dark-theme') != null
+const hideTaskTree = localStorage.getItem('hide-task-tree') != null
+const username = localStorage.getItem('username')
 
-const initConfigState = new ConfigState({
-  visibleMap: Map(ASPP_CONFIG.asppConfig.tags.map(tag => [tag.name, true] as [string, boolean])),
+window.addEventListener('beforeunload', () => {
+  const state = store.getState()
+  if (state.config.darkTheme) {
+    localStorage.setItem('dark-theme', 'F')
+  } else {
+    localStorage.removeItem('dark-theme')
+  }
+
+  if (state.config.hideTaskTree) {
+    localStorage.setItem('hide-task-tree', '')
+  } else {
+    localStorage.removeItem('hide-task-tree')
+  }
+
+  if (state.config.username != null) {
+    localStorage.setItem('username', state.config.username)
+  } else {
+    localStorage.removeItem('username')
+  }
 })
 
-export default function configReducer(state = initConfigState, action: Action) {
-  if (action.type === 'USER_TOGGLE_TAG_VISIBILITY') {
+export class Config extends Record({
+  helpOverlay: false,
+  darkTheme,
+  hideTaskTree,
+  username,
+  visibleMap: Map(ASPP_CONFIG.asppConfig.tags.map(tag => [tag.name, true] as [string, boolean])),
+}) {}
+
+export default function configReducer(state = new Config(), action: Action) {
+  if (action.type === 'R_TOGGLE_DARK_THEME') {
+    return state.update('darkTheme', not)
+  } else if (action.type === 'R_TOGGLE_HELP_OVERLAY') {
+    return state.update('helpOverlay', not)
+  } else if (action.type === 'R_TOGGLE_TASK_TREE_VISIBILITY') {
+    return state.update('hideTaskTree', not)
+  } else if (action.type === 'R_SET_USERNAME') {
+    return state.set('username', action.username)
+  } else if (action.type === 'USER_TOGGLE_TAG_VISIBILITY') {
     return state.update('visibleMap', map => map.update(action.tagName, not))
   } else if (action.type === 'USER_SET_TAG_GROUP_VISIBILITY') {
     const tagNameSet = ASPP_CONFIG.groups

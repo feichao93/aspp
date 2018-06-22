@@ -81,4 +81,4 @@ class HelpOverlay extends React.PureComponent<HelpOverlayProps> {
   }
 }
 
-export default connect((s: State) => ({ isOpen: s.misc.helpOverlay }))(HelpOverlay)
+export default connect((s: State) => ({ isOpen: s.config.helpOverlay }))(HelpOverlay)

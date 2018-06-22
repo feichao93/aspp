@@ -214,19 +214,14 @@ function getNextCollName(doc: TreeDoc, username: string) {
 }
 
 function* handleRequestAddColl({ docname }: Action.RequestAddColl) {
-  const {
-    misc: { username },
-    tree,
-    main,
-    cache,
-  }: State = yield select()
+  const { config, tree, main, cache }: State = yield select()
   if (!is(main.annotations, cache.annotations)) {
     yield put(toast('创建新文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
   const doc = tree.docs.find(doc => doc.name === docname)
   console.assert(doc != null)
-  const collName = getNextCollName(doc, username)
+  const collName = getNextCollName(doc, config.username)
 
   try {
     const res = yield fetch(`/api/annotation-set/${e(docname)}/${e(collName)}`, {

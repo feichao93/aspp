@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import ASPP_CONFIG from '../../aspp-config'
 import { State } from '../../reducers'
-import { ConfigState } from '../../reducers/configReducer'
+import { Config } from '../../reducers/configReducer'
 import AsppConfig from '../../types/AsppConfig'
 import MainState from '../../types/MainState'
 import {
@@ -98,7 +98,7 @@ function TagGroupPreview({
 
 export interface TagsPanelProps {
   main: MainState
-  config: ConfigState
+  config: Config
   dispatch: Dispatch
 }
 

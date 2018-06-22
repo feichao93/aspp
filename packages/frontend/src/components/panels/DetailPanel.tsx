@@ -4,7 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
-import { ConfigState } from '../../reducers/configReducer'
+import { Config } from '../../reducers/configReducer'
 import { setSel } from '../../reducers/mainReducer'
 import Decoration from '../../types/Decoration'
 import MainState from '../../types/MainState'
@@ -105,7 +105,7 @@ type SelMode = 'empty' | 'text' | 'decoration' | 'decoration-set'
 
 interface DetailPanelProps {
   main: MainState
-  config: ConfigState
+  config: Config
   dispatch: Dispatch
 }
 

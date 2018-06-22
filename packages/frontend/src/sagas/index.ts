@@ -15,8 +15,8 @@ import taskManager from './taskManager'
 
 /** 如果当前没有设置用户名的话，提示用户输入用户名 */
 function* ensureUsername() {
-  const { misc }: State = yield select()
-  if (misc.username == null) {
+  const { config }: State = yield select()
+  if (config.username == null) {
     const username = prompt('Input your username')
     yield put(setUsername(username))
   }

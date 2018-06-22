@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
-import { ConfigState } from '../../reducers/configReducer'
+import { Config } from '../../reducers/configReducer'
 import MainState from '../../types/MainState'
 import AnnotationEditor from '../AnnotationEditor/AnnotationEditor'
 import DocStat from '../DocStat/DocStat'
@@ -11,7 +11,7 @@ import './ViewContainer.styl'
 
 interface ViewContainerProps {
   main: MainState
-  config: ConfigState
+  config: Config
   dispatch: Dispatch
 }
 
