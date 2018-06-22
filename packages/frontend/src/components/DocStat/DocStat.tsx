@@ -7,7 +7,7 @@ import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { DocStatState } from '../../reducers/docStatReducer'
 import MainState from '../../types/MainState'
-import { requestDeleteColl, requestDiffColls, requestOpenColl } from '../../utils/actionCreators'
+import Action from '../../utils/actions'
 import { toggle } from '../../utils/common'
 
 interface DocStatProps {
@@ -30,7 +30,7 @@ class DocStat extends React.Component<DocStatProps> {
   reqDiff = () => {
     const { main, dispatch } = this.props
     const { checkedCollNames } = this.state
-    dispatch(requestDiffColls(main.docname, checkedCollNames.toArray()))
+    dispatch(Action.requestDiffColls(main.docname, checkedCollNames.toArray()))
   }
 
   render() {
@@ -68,14 +68,14 @@ class DocStat extends React.Component<DocStatProps> {
                       small
                       text="打开"
                       icon="document-open"
-                      onClick={() => dispatch(requestOpenColl(main.docname, s.collName))}
+                      onClick={() => dispatch(Action.requestOpenColl(main.docname, s.collName))}
                     />
                     <Button
                       small
                       text="删除"
                       icon="trash"
                       intent={Intent.DANGER}
-                      onClick={() => dispatch(requestDeleteColl(main.docname, s.collName))}
+                      onClick={() => dispatch(Action.requestDeleteColl(main.docname, s.collName))}
                     />
                   </ButtonGroup>
                 </td>

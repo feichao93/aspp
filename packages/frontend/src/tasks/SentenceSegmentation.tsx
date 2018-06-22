@@ -9,7 +9,7 @@ import { State } from '../reducers'
 import { applyMainAction } from '../sagas/historyManager'
 import { Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
-import { toast } from '../utils/actionCreators'
+import Action from '../utils/actions'
 import { dec, getNextId, inc, keyed } from '../utils/common'
 import { Task } from './index'
 import TaskConstructor from './TaskConstructor'
@@ -143,6 +143,6 @@ export default class SentenceSegmentation {
       ),
     ).withCategory(ActionCategory.task)
     yield applyMainAction(mainAction)
-    yield put(toast('分句完成', Intent.PRIMARY))
+    yield put(Action.toast('分句完成', Intent.PRIMARY))
   }
 }

@@ -8,7 +8,7 @@ import { State } from '../reducers'
 import { applyMainAction } from '../sagas/historyManager'
 import Annotation from '../types/Annotation'
 import DecorationRange from '../types/DecorationRange'
-import { toast } from '../utils/actionCreators'
+import Action from '../utils/actions'
 import { keyed } from '../utils/common'
 import { Interaction } from '../utils/InteractionCollector'
 
@@ -53,7 +53,7 @@ function* autoTag({ range }: Interaction.UserChangeRange) {
       gathered.some(dec2 => DecorationRange.isOverlapped(dec1.range, dec2.range)),
     )
     if (overlapped) {
-      yield io.put(toast('Overlap', Intent.WARNING))
+      yield io.put(Action.toast('Overlap', Intent.WARNING))
       return
     }
     yield applyMainAction(

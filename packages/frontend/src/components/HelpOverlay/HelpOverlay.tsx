@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import ASPP_CONFIG from '../../aspp-config'
 import { State } from '../../reducers'
-import { toggleHelpOverlay } from '../../utils/actionCreators'
 import Action from '../../utils/actions'
 
 export interface HelpOverlayProps {
@@ -20,7 +19,7 @@ const Shortcut = ({ code, desc }: { code: string; desc: string }) => (
 
 class HelpOverlay extends React.PureComponent<HelpOverlayProps> {
   onClose = () => {
-    this.props.dispatch(toggleHelpOverlay())
+    this.props.dispatch(Action.toggleHelpOverlay())
   }
 
   render() {

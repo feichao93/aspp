@@ -32,7 +32,7 @@ export default class AnnotationEditor extends React.Component<AnnotationEditorPr
         console.log(
           '%cDEV.LOG_RANGE',
           'background: #fedcd4;',
-          `sync current range ${currentRange} -> ${main.range}`,
+          `sync native-selection ${currentRange} -> ${main.range}`,
         )
       }
       SelectionUtils.setCurrentRange(main.range)

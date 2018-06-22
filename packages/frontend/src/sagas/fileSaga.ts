@@ -9,14 +9,6 @@ import { DocStatState, updateDocStat } from '../reducers/docStatReducer'
 import { TreeDoc, TreeState } from '../reducers/treeReducer'
 import Annotation from '../types/Annotation'
 import MainState from '../types/MainState'
-import {
-  historyClear,
-  loadTreeData,
-  requestLoadTree,
-  requestOpenColl,
-  setMainState,
-  toast,
-} from '../utils/actionCreators'
 import Action from '../utils/actions'
 import { a, keyed, updateAnnotationNextId } from '../utils/common'
 import { DOC_STAT_NAME } from '../utils/constants'
@@ -30,24 +22,24 @@ function* loadTreeState(reload: boolean) {
     const res = yield fetch(`/api/list?reload=${reload ? 'true' : 'false'}`)
     if (res.ok) {
       const treeState: TreeState = yield res.json()
-      yield put(loadTreeData(treeState))
+      yield put(Action.loadTreeData(treeState))
       if (reload) {
-        yield put(toast('更新文档树信息成功'))
+        yield put(Action.toast('更新文档树信息成功'))
       }
     } else {
-      yield put(toast(`Failed to load tree. ${res.status} ${res.statusText}`, Intent.DANGER))
+      yield put(Action.toast(`Failed to load tree. ${res.status} ${res.statusText}`, Intent.DANGER))
     }
   } catch (e) {
-    yield put(toast(`Failed to load tree. ${e.message}`, Intent.DANGER))
+    yield put(Action.toast(`Failed to load tree. ${e.message}`, Intent.DANGER))
   }
 }
 
 function* handleRequestDiffColls({ docname, collNames }: Action.RequestDiffColls) {
   if (collNames.length < 2) {
-    yield put(toast('请选择两个以上的标注文件', Intent.WARNING))
+    yield put(Action.toast('请选择两个以上的标注文件', Intent.WARNING))
     return
   }
-  yield put(toast('diff 功能仍在开发中', Intent.WARNING)) // TODO
+  yield put(Action.toast('diff 功能仍在开发中', Intent.WARNING)) // TODO
   // const colls: RawColl[] = yield all(
   //   collNames.map(collName =>
   //     fetch(`/api/annotation-set/${e(docname)}/${e(collName)}`).then(res => res.json()),
@@ -64,16 +56,16 @@ function* closeCurrentColl() {
   }
 
   if (!is(cache.annotations, main.annotations)) {
-    yield put(toast('关闭文件之前请先保存或丢弃当前更改', Intent.WARNING))
+    yield put(Action.toast('关闭文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
 
   // 清空缓存
   yield put(setCachedAnnotations(Map()))
   // 清空当前编辑器状态
-  yield put(setMainState(new MainState()))
+  yield put(Action.setMainState(new MainState()))
   // 清空历史记录
-  yield put(historyClear())
+  yield put(Action.historyClear())
 }
 
 /** 保存当前的标注工作进度 */
@@ -97,13 +89,13 @@ function* saveCurrentColl() {
       yield applyMainAction(
         new EmptyMainAction('保存文件').withCategory(ActionCategory.sideEffects),
       )
-      yield put(toast('Saved'))
+      yield put(Action.toast('Saved'))
     } else {
       throw new Error('response not ok')
     }
   } catch (e) {
     console.error(e)
-    yield put(toast(e.message, Intent.DANGER))
+    yield put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
@@ -111,7 +103,7 @@ function* handleRequestOpenDocStat({ docname }: Action.RequestOpenDocStat) {
   const { main, cache }: State = yield select()
 
   if (main.getStatus() === 'coll' && !is(cache.annotations, main.annotations)) {
-    yield put(toast('打开统计信息之前请先保存或丢弃当前更改', Intent.WARNING))
+    yield put(Action.toast('打开统计信息之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
 
@@ -125,7 +117,7 @@ function* handleRequestOpenDocStat({ docname }: Action.RequestOpenDocStat) {
         blocks: List(),
         range: null,
       })
-      yield put(setMainState(mainState))
+      yield put(Action.setMainState(mainState))
       // TODO 还需要 UPDATE_DOC_STAT
       yield put(
         updateDocStat(
@@ -136,7 +128,7 @@ function* handleRequestOpenDocStat({ docname }: Action.RequestOpenDocStat) {
             }),
         ),
       )
-      yield put(historyClear())
+      yield put(Action.historyClear())
       yield applyMainAction(
         new EmptyMainAction(`打开文档 ${docname} 的统计信息`).withCategory(
           ActionCategory.sideEffects,
@@ -147,7 +139,7 @@ function* handleRequestOpenDocStat({ docname }: Action.RequestOpenDocStat) {
     }
   } catch (e) {
     console.error(e)
-    yield put(toast(e.message, Intent.DANGER))
+    yield put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
@@ -155,7 +147,7 @@ function* handleRequestOpenColl({ docname, collName }: Action.RequestOpenColl) {
   const collector = yield getContext('collector')
   const { main, cache }: State = yield select()
   if (main.getStatus() === 'coll' && !is(cache.annotations, main.annotations)) {
-    yield put(toast('打开文件之前请先保存或丢弃当前更改', Intent.WARNING))
+    yield put(Action.toast('打开文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
 
@@ -180,9 +172,9 @@ function* handleRequestOpenColl({ docname, collName }: Action.RequestOpenColl) {
 
         updateAnnotationNextId(annotations)
         collector.collOpened(docname, collName)
-        yield put(setMainState(mainState))
+        yield put(Action.setMainState(mainState))
         yield put(setCachedAnnotations(mainState.annotations))
-        yield put(historyClear())
+        yield put(Action.historyClear())
         yield applyMainAction(
           new EmptyMainAction(`打开文件 ${docname} - ${collName}`).withCategory(
             ActionCategory.sideEffects,
@@ -196,7 +188,7 @@ function* handleRequestOpenColl({ docname, collName }: Action.RequestOpenColl) {
     }
   } catch (e) {
     console.error(e)
-    yield put(toast(e.message, Intent.DANGER))
+    yield put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
@@ -216,7 +208,7 @@ function getNextCollName(doc: TreeDoc, username: string) {
 function* handleRequestAddColl({ docname }: Action.RequestAddColl) {
   const { config, tree, main, cache }: State = yield select()
   if (!is(main.annotations, cache.annotations)) {
-    yield put(toast('创建新文件之前请先保存或丢弃当前更改', Intent.WARNING))
+    yield put(Action.toast('创建新文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
   const doc = tree.docs.find(doc => doc.name === docname)
@@ -233,21 +225,21 @@ function* handleRequestAddColl({ docname }: Action.RequestAddColl) {
     })
     if (res.ok) {
       yield loadTreeState(false)
-      yield put(toast(`Created ${collName}`))
-      yield put(requestOpenColl(doc.name, collName))
+      yield put(Action.toast(`Created ${collName}`))
+      yield put(Action.requestOpenColl(doc.name, collName))
     } else {
       throw new Error(`${res.status} ${res.statusText})`)
     }
   } catch (e) {
     console.error(e)
-    yield put(toast(e.message, Intent.DANGER))
+    yield put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
 function* handleRequestDeleteColl({ docname, collName }: Action.RequestDeleteColl) {
   const { main }: State = yield select()
   if (main.docname === docname && collName === main.collName) {
-    yield put(toast('不能删除当前打开的文件'))
+    yield put(Action.toast('不能删除当前打开的文件'))
     return
   }
 
@@ -261,13 +253,13 @@ function* handleRequestDeleteColl({ docname, collName }: Action.RequestDeleteCol
     })
     if (response.ok) {
       yield loadTreeState(false)
-      yield put(toast(`Deleted. ${docname}/${collName}.`))
+      yield put(Action.toast(`Deleted. ${docname}/${collName}.`))
     } else {
       throw new Error('response not ok')
     }
   } catch (e) {
     console.error(e)
-    yield put(toast(e.message, Intent.DANGER))
+    yield put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
@@ -284,5 +276,5 @@ export default function* fileSaga() {
     loadTreeState(reload),
   )
 
-  yield put(requestLoadTree(true))
+  yield put(Action.requestLoadTree(true))
 }

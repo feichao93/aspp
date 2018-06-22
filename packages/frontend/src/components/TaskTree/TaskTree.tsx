@@ -17,14 +17,7 @@ import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
 import { TreeDoc, TreeState } from '../../reducers/treeReducer'
 import MainState from '../../types/MainState'
-import {
-  requestAddColl,
-  requestDeleteColl,
-  requestLoadTree,
-  requestOpenColl,
-  requestOpenDocStat,
-  toast,
-} from '../../utils/actionCreators'
+import Action from '../../utils/actions'
 import { generateANNFile } from '../../utils/annFileUtils'
 import './TaskTree.styl'
 
@@ -126,7 +119,7 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
     if (response.ok) {
       saveAs(await response.blob(), `${docName}.${collName}.json`)
     } else {
-      this.props.dispatch(toast('Fail to download', Intent.DANGER))
+      this.props.dispatch(Action.toast('Fail to download', Intent.DANGER))
     }
   }
 
@@ -149,25 +142,25 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
           const { filename, content } = generateANNFile(mainState)
           saveAs(new Blob([content], { type: 'text/plain;charset=utf-8' }), filename)
         } else {
-          dispatch(toast(`${res2.status} ${res2.statusText}`, Intent.DANGER))
+          dispatch(Action.toast(`${res2.status} ${res2.statusText}`, Intent.DANGER))
         }
       } else {
-        dispatch(toast(`${res1.status} ${res1.statusText}`, Intent.DANGER))
+        dispatch(Action.toast(`${res1.status} ${res1.statusText}`, Intent.DANGER))
       }
     } catch (e) {
       console.error(e)
-      dispatch(toast(e.message, Intent.DANGER))
+      dispatch(Action.toast(e.message, Intent.DANGER))
     }
   }
 
   onRequestAddColl = (doc: TreeDoc) => {
     const { dispatch } = this.props
-    dispatch(requestAddColl(doc.name))
+    dispatch(Action.requestAddColl(doc.name))
   }
 
   onRefresh = () => {
     const { dispatch } = this.props
-    dispatch(requestLoadTree(true))
+    dispatch(Action.requestLoadTree(true))
   }
 
   onExpandAll = () => {
@@ -211,12 +204,12 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
     if (nodePath.length === 1) {
       nodeData.isExpanded = true
       const doc = treeState.docs[nodePath[0]]
-      dispatch(requestOpenDocStat(doc.name))
+      dispatch(Action.requestOpenDocStat(doc.name))
     }
     if (nodePath.length === 2) {
       const doc = treeState.docs[nodePath[0]]
       const collName = doc.annotations[nodePath[1]]
-      dispatch(requestOpenColl(doc.name, collName))
+      dispatch(Action.requestOpenColl(doc.name, collName))
     }
     this.forceUpdate()
   }
@@ -268,7 +261,7 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
           <MenuItem
             icon="trash"
             text="Delete"
-            onClick={() => dispatch(requestDeleteColl(doc.name, collName))}
+            onClick={() => dispatch(Action.requestDeleteColl(doc.name, collName))}
           />
           <MenuItem
             icon="download"

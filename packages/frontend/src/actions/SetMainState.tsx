@@ -1,7 +1,7 @@
 import { put, select } from 'little-saga/compat'
 import { State } from '../reducers'
 import MainState from '../types/MainState'
-import { setMainState } from '../utils/actionCreators'
+import Action from '../utils/actions'
 import MainAction from './MainAction'
 
 export default class SetMainState extends MainAction {
@@ -21,10 +21,10 @@ export default class SetMainState extends MainAction {
   }
 
   *prev() {
-    yield put(setMainState(this.prevState))
+    yield put(Action.setMainState(this.prevState))
   }
 
   *next() {
-    yield put(setMainState(this.nextState))
+    yield put(Action.setMainState(this.nextState))
   }
 }

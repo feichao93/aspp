@@ -3,7 +3,7 @@ import { io } from 'little-saga/compat'
 import { State } from '../reducers'
 import { addAnnotations } from '../reducers/mainReducer'
 import Annotation from '../types/Annotation'
-import { toast } from '../utils/actionCreators'
+import Action from '../utils/actions'
 import { keyed, updateAnnotationNextId } from '../utils/common'
 
 // TODO 配置 UI 可以参考 src/components/panels/TyModel.tsx
@@ -48,11 +48,11 @@ export default class StanfordNLP {
           yield io.put(addAnnotations(annotations))
         } else {
           console.error(res)
-          yield io.put(toast('运行失败'))
+          yield io.put(Action.toast('运行失败'))
         }
       } catch (e) {
         console.error(e)
-        yield io.put(toast('运行失败'))
+        yield io.put(Action.toast('运行失败'))
       }
     }
   }

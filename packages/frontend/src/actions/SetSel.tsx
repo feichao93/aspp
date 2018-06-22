@@ -2,7 +2,7 @@ import { Set } from 'immutable'
 import { put, select } from 'little-saga/compat'
 import { State } from '../reducers'
 import { setSel } from '../reducers/mainReducer'
-import { historyPop } from '../utils/actionCreators'
+import Action from '../utils/actions'
 import MainAction from './MainAction'
 
 export enum SetSelMethod {
@@ -37,7 +37,7 @@ export default class SetSel extends MainAction {
         (this.method === last.method || last.method === autoClear) &&
         (this.method === toggle || this.method === select || this.method === intersection)
       ) {
-        yield put(historyPop())
+        yield put(Action.historyPop())
         this.prevSel = last.prevSel
         return
       }

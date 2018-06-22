@@ -7,7 +7,7 @@ import { State } from '../../reducers'
 import { setSel } from '../../reducers/mainReducer'
 import Decoration from '../../types/Decoration'
 import MainState from '../../types/MainState'
-import { userAcceptCurrent, userDeleteCurrent, userSetSel } from '../../utils/actionCreators'
+import Action from '../../utils/actions'
 import { compareArray, isElementVisible } from '../../utils/common'
 import './HintButtonGroup.styl'
 
@@ -57,13 +57,13 @@ class HintButtonGroup extends React.Component<HintButtonGroupProps> {
 
   onDeny = () => {
     const { dispatch } = this.props
-    dispatch(userDeleteCurrent())
+    dispatch(Action.userDeleteCurrent())
     this.selectNextHint()
   }
 
   onAccept = () => {
     const { dispatch } = this.props
-    dispatch(userAcceptCurrent())
+    dispatch(Action.userAcceptCurrent())
     this.selectNextHint()
   }
 
@@ -94,14 +94,14 @@ class HintButtonGroup extends React.Component<HintButtonGroupProps> {
           <Button
             icon="arrow-left"
             disabled={index === -1 || index === 0}
-            onClick={() => dispatch(userSetSel(Set.of(hintList.get(index - 1).id)))}
+            onClick={() => dispatch(Action.userSetSel(Set.of(hintList.get(index - 1).id)))}
           />
           <Button rightIcon="cross" disabled={index === -1} onClick={this.onDeny} />
           <Button rightIcon="tick" disabled={index === -1} onClick={this.onAccept} />
           <Button
             icon="arrow-right"
             disabled={index === hintList.count() - 1}
-            onClick={() => dispatch(userSetSel(Set.of(hintList.get(index + 1).id)))}
+            onClick={() => dispatch(Action.userSetSel(Set.of(hintList.get(index + 1).id)))}
           />
         </ButtonGroup>
       </div>

@@ -7,7 +7,7 @@ import { addAnnotations, deleteDecorations, setSel } from '../reducers/mainReduc
 import Annotation from '../types/Annotation'
 import Decoration from '../types/Decoration'
 import MainState from '../types/MainState'
-import { setMainState } from '../utils/actionCreators'
+import Action from '../utils/actions'
 import { shortenText, toIdSet } from '../utils/common'
 import MainAction from './MainAction'
 
@@ -43,7 +43,7 @@ export default class Annotate extends MainAction {
   }
 
   *prev() {
-    yield put(setMainState(this.oldState))
+    yield put(Action.setMainState(this.oldState))
   }
 
   *next() {

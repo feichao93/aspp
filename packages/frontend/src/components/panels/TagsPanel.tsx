@@ -8,11 +8,7 @@ import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
 import AsppConfig from '../../types/AsppConfig'
 import MainState from '../../types/MainState'
-import {
-  toggleTagVisibility,
-  userSetSel,
-  userSetTagGroupVisibility,
-} from '../../utils/actionCreators'
+import Action from '../../utils/actions'
 import { toIdSet } from '../../utils/common'
 import './TagsPanel.styl'
 
@@ -118,17 +114,17 @@ class TagsPanel extends React.Component<TagsPanelProps, TagsPanelState> {
   onSelectTag = (tagName: string) => {
     const { dispatch, main } = this.props
     const idSet = toIdSet(main.annotations.filter(annotation => annotation.tag === tagName))
-    dispatch(userSetSel(idSet))
+    dispatch(Action.userSetSel(idSet))
   }
 
   onToggleTagVisibility = (tagName: string) => {
     const { dispatch } = this.props
-    dispatch(toggleTagVisibility(tagName))
+    dispatch(Action.toggleTagVisibility(tagName))
   }
 
   onSetTagGroupVisibility = (groupName: string, visible: boolean) => {
     const { dispatch } = this.props
-    dispatch(userSetTagGroupVisibility(groupName, visible))
+    dispatch(Action.userSetTagGroupVisibility(groupName, visible))
   }
 
   render() {

@@ -9,7 +9,6 @@ import { State } from '../reducers'
 import Annotation from '../types/Annotation'
 import Decoration, { Hint } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
-import { toast } from '../utils/actionCreators'
 import Action from '../utils/actions'
 import { a, keyed, toggle, toIdSet } from '../utils/common'
 import InteractionCollector from '../utils/InteractionCollector'
@@ -39,7 +38,7 @@ function* handleUserClearSel({ method }: Action.UserClearSel) {
 function* handleUserAnnotateCurrent({ tag }: Action.UserAnnotateCurrent) {
   const { main }: State = yield select()
   if (main.sel.isEmpty() && main.range == null) {
-    yield put(toast('Invalid selection'))
+    yield put(Action.toast('Invalid selection'))
     return
   }
   const gathered = main.gather()
@@ -52,7 +51,7 @@ function* handleUserAnnotateCurrent({ tag }: Action.UserAnnotateCurrent) {
   )
 
   if (overlapped) {
-    yield put(toast('Overlap', Intent.WARNING))
+    yield put(Action.toast('Overlap', Intent.WARNING))
     return
   }
   const collector: InteractionCollector = yield getContext('collector')
@@ -71,7 +70,7 @@ function* handleUserDeleteCurrent() {
   let removing: Map<string, Decoration>
   if (main.sel.isEmpty()) {
     if (main.range == null) {
-      yield put(toast('invalid range'))
+      yield put(Action.toast('invalid range'))
       return
     }
     removing = main.range.intersected(gathered)
@@ -102,7 +101,7 @@ function* handleUserAcceptCurrent() {
   }
 
   if (accepting.isEmpty()) {
-    yield put(toast('No hints to accept'))
+    yield put(Action.toast('No hints to accept'))
     return
   }
 

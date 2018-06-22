@@ -17,11 +17,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
-import {
-  setUsername,
-  toggleHelpOverlay,
-  toggleTaskTreeVisibility,
-} from '../../utils/actionCreators'
+import Action from '../../utils/actions'
 import HelpOverlay from '../HelpOverlay/HelpOverlay'
 import './Menubar.styl'
 
@@ -37,7 +33,7 @@ class Menubar extends React.Component<MenubarProps> {
     const { dispatch } = this.props
     const username = window.prompt('Input your username')
     if (username) {
-      dispatch(setUsername(username))
+      dispatch(Action.setUsername(username))
     }
   }
 
@@ -63,9 +59,14 @@ class Menubar extends React.Component<MenubarProps> {
             minimal
             icon="column-layout"
             text="Tree"
-            onClick={() => dispatch(toggleTaskTreeVisibility())}
+            onClick={() => dispatch(Action.toggleTaskTreeVisibility())}
           />
-          <Button minimal icon="help" text="help" onClick={() => dispatch(toggleHelpOverlay())} />
+          <Button
+            minimal
+            icon="help"
+            text="help"
+            onClick={() => dispatch(Action.toggleHelpOverlay())}
+          />
           <HelpOverlay />
           <div style={{ marginLeft: 24 }}>
             当前文件名: {docname} {collName}

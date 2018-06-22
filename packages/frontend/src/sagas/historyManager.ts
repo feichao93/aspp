@@ -2,13 +2,13 @@ import { put, select, takeEvery } from 'little-saga/compat'
 import MainAction, { ActionCategory } from '../actions/MainAction'
 import { State } from '../reducers'
 import { emptyAction } from '../types/MainHistory'
-import { historyBack, historyForward, historyPush } from '../utils/actionCreators'
+import Action from '../utils/actions'
 import { a } from '../utils/common'
 
 export function* applyMainAction(mainAction: MainAction) {
   yield* mainAction.prepare()
   yield* mainAction.next()
-  yield put(historyPush(mainAction))
+  yield put(Action.historyPush(mainAction))
 }
 
 function* handleRevert() {
@@ -19,7 +19,7 @@ function* handleRevert() {
       break
     }
     yield* action.prev()
-    yield put(historyBack())
+    yield put(Action.historyBack())
     if (action.category === ActionCategory.sideEffects) {
       break
     }
@@ -33,7 +33,7 @@ function* handleUndo() {
     return
   }
   yield* action.prev()
-  yield put(historyBack())
+  yield put(Action.historyBack())
 }
 
 function* handleRedo() {
@@ -43,7 +43,7 @@ function* handleRedo() {
     return
   }
   yield* action.next()
-  yield put(historyForward())
+  yield put(Action.historyForward())
 }
 
 export default function* historyManager() {

@@ -8,7 +8,7 @@ import { State } from '../reducers'
 import adjustOffsets from '../sagas/adjustOffsets'
 import { applyMainAction } from '../sagas/historyManager'
 import Decoration from '../types/Decoration'
-import { toast } from '../utils/actionCreators'
+import Action from '../utils/actions'
 import { compareArray, keyed } from '../utils/common'
 import { Interaction } from '../utils/InteractionCollector'
 import { Task } from './index'
@@ -145,7 +145,7 @@ export default class SimpleOffsetAdjusting {
 
     const nextAnnotations = keyed(Seq(adjusted))
     if (is(main.annotations, nextAnnotations)) {
-      yield put(toast(`${name} 没有发现需要进行修复的标注`, Intent.PRIMARY))
+      yield put(Action.toast(`${name} 没有发现需要进行修复的标注`, Intent.PRIMARY))
       return
     }
     const mainAction = new SetMainState(
@@ -153,6 +153,6 @@ export default class SimpleOffsetAdjusting {
       `${name} 更新标注数据`,
     ).withCategory(ActionCategory.task)
     yield applyMainAction(mainAction)
-    yield put(toast(`${name} 修复完成`, Intent.PRIMARY))
+    yield put(Action.toast(`${name} 修复完成`, Intent.PRIMARY))
   }
 }

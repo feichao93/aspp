@@ -2,7 +2,7 @@ import { is } from 'immutable'
 import { eventChannel, io } from 'little-saga/compat'
 import { State } from '../reducers'
 import { setRange } from '../reducers/mainReducer'
-import { userClearSel } from '../utils/actionCreators'
+import Action from '../utils/actions'
 import InteractionCollector from '../utils/InteractionCollector'
 import schedulers from '../utils/schedulers'
 import SelectionUtils from '../utils/SelectionUtils'
@@ -27,7 +27,7 @@ function* autoClearSelAndUpdateRange() {
       const nextRange = SelectionUtils.getCurrentRange()
       // 当用户拖动鼠标选中某一段文本时，自动清空 sel
       if (!main.sel.isEmpty() && nextRange != null) {
-        yield io.put(userClearSel('auto'))
+        yield io.put(Action.userClearSel('auto'))
       }
       if (!is(main.range, nextRange)) {
         collector.userChangeRange(nextRange)

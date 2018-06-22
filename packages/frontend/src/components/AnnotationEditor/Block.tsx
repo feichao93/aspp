@@ -3,11 +3,7 @@ import { is, Map, Set } from 'immutable'
 import React from 'react'
 import { Dispatch } from 'redux'
 import Decoration from '../../types/Decoration'
-import {
-  userClickDecoration,
-  userSelectBlockHints,
-  userSelectBlockText,
-} from '../../utils/actionCreators'
+import Action from '../../utils/actions'
 import layout from '../../utils/layout'
 import Span from './Span'
 
@@ -32,7 +28,7 @@ export default class Block extends React.Component<BlockProps> {
   }
 
   onMouseDown = (decoration: Decoration, ctrlKey: boolean) => {
-    this.props.dispatch(userClickDecoration(decoration, ctrlKey))
+    this.props.dispatch(Action.userClickDecoration(decoration, ctrlKey))
   }
 
   render() {
@@ -43,10 +39,10 @@ export default class Block extends React.Component<BlockProps> {
         <div className="block-meta">
           <p>block: {blockIndex}</p>
           <ButtonGroup className="block-button-group">
-            <Button small onClick={() => dispatch(userSelectBlockHints(blockIndex))}>
+            <Button small onClick={() => dispatch(Action.userSelectBlockHints(blockIndex))}>
               选中提示({hintCount})
             </Button>
-            <Button small onClick={() => dispatch(userSelectBlockText(blockIndex))}>
+            <Button small onClick={() => dispatch(Action.userSelectBlockText(blockIndex))}>
               选中文本
             </Button>
           </ButtonGroup>

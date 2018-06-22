@@ -16,7 +16,7 @@ import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { setTaskName, setTaskOptions } from '../../reducers/taskReducer'
 import { Task, taskImplList, TaskMap } from '../../tasks'
-import { addTask, deleteTask, runTask, stopTask } from '../../utils/actionCreators'
+import Action from '../../utils/actions'
 import './TaskPanel.styl'
 
 function AddTaskMenu({ dispatch }: { dispatch: Dispatch }) {
@@ -30,7 +30,7 @@ function AddTaskMenu({ dispatch }: { dispatch: Dispatch }) {
               <MenuItem
                 key={impl.defaultTaskName}
                 text={impl.defaultTaskName}
-                onClick={() => dispatch(addTask(impl, impl.defaultOptions))}
+                onClick={() => dispatch(Action.addTask(impl, impl.defaultOptions))}
               />
             ))}
         </Menu>
@@ -55,23 +55,23 @@ class TaskPanel extends React.Component<TaskPanelProps> {
 
   restartTask = (id: string) => {
     const { dispatch } = this.props
-    dispatch(stopTask(id))
-    dispatch(runTask(id))
+    dispatch(Action.stopTask(id))
+    dispatch(Action.runTask(id))
   }
 
   duplicateTask = (id: string) => {
     const { taskMap, dispatch } = this.props
     const task = taskMap.get(id)
-    dispatch(addTask(task.impl, task.options))
+    dispatch(Action.addTask(task.impl, task.options))
   }
 
   deleteTask = (id: string) => {
     const { dispatch, taskMap } = this.props
     const task = taskMap.get(id)
     if (task.sagaTask) {
-      dispatch(stopTask(id))
+      dispatch(Action.stopTask(id))
     }
-    dispatch(deleteTask(id))
+    dispatch(Action.deleteTask(id))
   }
 
   closeConfigDialog = () => {
@@ -133,7 +133,7 @@ class TaskPanel extends React.Component<TaskPanelProps> {
                     <AnchorButton
                       icon="play"
                       disabled={task.impl.disabled}
-                      onClick={() => dispatch(runTask(task.id))}
+                      onClick={() => dispatch(Action.runTask(task.id))}
                     />
                   ) : (
                     <AnchorButton icon="redo" onClick={() => this.restartTask(task.id)} />
@@ -141,7 +141,7 @@ class TaskPanel extends React.Component<TaskPanelProps> {
                   <AnchorButton
                     icon="symbol-square"
                     disabled={task.status === 'idle'}
-                    onClick={() => dispatch(stopTask(task.id))}
+                    onClick={() => dispatch(Action.stopTask(task.id))}
                   />
                   <AnchorButton
                     icon="cog"

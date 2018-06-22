@@ -1,7 +1,6 @@
 import { Intent, Toaster } from '@blueprintjs/core'
 import { fork, put, select, setContext, takeEvery } from 'little-saga/compat'
 import { State } from '../reducers'
-import { setUsername } from '../utils/actionCreators'
 import Action from '../utils/actions'
 import { a } from '../utils/common'
 import InteractionCollector from '../utils/InteractionCollector'
@@ -18,7 +17,7 @@ function* ensureUsername() {
   const { config }: State = yield select()
   if (config.username == null) {
     const username = prompt('Input your username')
-    yield put(setUsername(username))
+    yield put(Action.setUsername(username))
   }
 }
 

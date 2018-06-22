@@ -5,13 +5,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { MainStateStatus } from '../../types/MainState'
-import {
-  requestCloseCurrentColl,
-  requestSaveCurrentColl,
-  userRequestRedo,
-  userRequestRevert,
-  userRequestUndo,
-} from '../../utils/actionCreators'
+import Action from '../../utils/actions'
 
 export interface EditHistoryGroupProps {
   mainStatus: MainStateStatus
@@ -32,35 +26,35 @@ class EditHistoryButtonGroup extends React.PureComponent<EditHistoryGroupProps> 
             style={{ marginLeft: 16 }}
             icon="cloud-upload"
             disabled={annotationsNoChange}
-            onClick={() => dispatch(requestSaveCurrentColl())}
+            onClick={() => dispatch(Action.requestSaveCurrentColl())}
           />
         </Tooltip>
         <Tooltip content="关闭当前文件">
           <AnchorButton
             disabled={mainStatus === 'closed'}
             icon="cross"
-            onClick={() => dispatch(requestCloseCurrentColl())}
+            onClick={() => dispatch(Action.requestCloseCurrentColl())}
           />
         </Tooltip>
         <Tooltip content="回滚操作记录到上一次保存文件前的状态">
           <AnchorButton
             icon="double-chevron-up"
             disabled={disableUndo}
-            onClick={() => dispatch(userRequestRevert())}
+            onClick={() => dispatch(Action.userRequestRevert())}
           />
         </Tooltip>
         <Tooltip content="撤销">
           <AnchorButton
             icon="undo"
             disabled={disableUndo}
-            onClick={() => dispatch(userRequestUndo())}
+            onClick={() => dispatch(Action.userRequestUndo())}
           />
         </Tooltip>
         <Tooltip content="重做">
           <AnchorButton
             icon="redo"
             disabled={disableRedo}
-            onClick={() => dispatch(userRequestRedo())}
+            onClick={() => dispatch(Action.userRequestRedo())}
           />
         </Tooltip>
       </ButtonGroup>

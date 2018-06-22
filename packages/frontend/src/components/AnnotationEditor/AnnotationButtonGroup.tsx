@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import ASPP_CONFIG from '../../aspp-config'
-import { userAnnotateCurrent } from '../../utils/actionCreators'
+import Action from '../../utils/actions'
 
 interface AnnotationButtonGroupProps {
   dispatch: Dispatch
@@ -17,7 +17,7 @@ class AnnotationButtonGroup extends React.PureComponent<AnnotationButtonGroupPro
         {ASPP_CONFIG.defaultGroup.map(tagConfig => (
           <Button
             key={tagConfig.name}
-            onClick={() => dispatch(userAnnotateCurrent(tagConfig.name))}
+            onClick={() => dispatch(Action.userAnnotateCurrent(tagConfig.name))}
           >
             {tagConfig.shortcut} {tagConfig.label}
           </Button>
@@ -33,7 +33,7 @@ class AnnotationButtonGroup extends React.PureComponent<AnnotationButtonGroupPro
                       key={tagConfig.name}
                       text={tagConfig.label}
                       label={tagConfig.shortcut}
-                      onClick={() => dispatch(userAnnotateCurrent(tagConfig.name))}
+                      onClick={() => dispatch(Action.userAnnotateCurrent(tagConfig.name))}
                     />
                   ))}
                 </Menu>

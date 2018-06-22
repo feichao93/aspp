@@ -8,11 +8,7 @@ import { Config } from '../../reducers/configReducer'
 import { setSel } from '../../reducers/mainReducer'
 import Decoration from '../../types/Decoration'
 import MainState from '../../types/MainState'
-import {
-  userAcceptCurrent,
-  userClickDecoration,
-  userDeleteCurrent,
-} from '../../utils/actionCreators'
+import Action from '../../utils/actions'
 import { shortenText, toIdSet } from '../../utils/common'
 import layout, { SpanInfo } from '../../utils/layout'
 import Span from '../AnnotationEditor/Span'
@@ -89,7 +85,7 @@ function DecorationSetPreview({
           key={index}
           info={spanInfo}
           onMouseDown={(d: Decoration, ctrlKey: boolean) =>
-            dispatch(userClickDecoration(d, ctrlKey))
+            dispatch(Action.userClickDecoration(d, ctrlKey))
           }
           sel={sel}
           visibleMap={visibleMap}
@@ -180,7 +176,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
           <Button
             icon="confirm"
             disabled={intersectedHints.isEmpty()}
-            onClick={() => dispatch(userAcceptCurrent())}
+            onClick={() => dispatch(Action.userAcceptCurrent())}
           >
             接受提示(a:{intersectedHints.count()})
           </Button>
@@ -188,7 +184,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
             intent={Intent.DANGER}
             disabled={intersected.isEmpty()}
             icon="trash"
-            onClick={() => dispatch(userDeleteCurrent())}
+            onClick={() => dispatch(Action.userDeleteCurrent())}
           >
             删除(d:{intersected.count()})
           </Button>
@@ -238,12 +234,16 @@ class DetailPanel extends React.Component<DetailPanelProps> {
         <ButtonGroup vertical>
           <Button
             icon="confirm"
-            onClick={() => dispatch(userAcceptCurrent())}
+            onClick={() => dispatch(Action.userAcceptCurrent())}
             disabled={decoration.type !== 'hint'}
           >
             接受提示
           </Button>
-          <Button icon="trash" intent={Intent.DANGER} onClick={() => dispatch(userDeleteCurrent())}>
+          <Button
+            icon="trash"
+            intent={Intent.DANGER}
+            onClick={() => dispatch(Action.userDeleteCurrent())}
+          >
             删除
           </Button>
         </ButtonGroup>
@@ -365,12 +365,16 @@ class DetailPanel extends React.Component<DetailPanelProps> {
         <ButtonGroup vertical style={{ marginTop: 8 }}>
           <Button
             icon="confirm"
-            onClick={() => dispatch(userAcceptCurrent())}
+            onClick={() => dispatch(Action.userAcceptCurrent())}
             disabled={hintCount === 0}
           >
             接受提示(a:{hintCount})
           </Button>
-          <Button icon="trash" intent={Intent.DANGER} onClick={() => dispatch(userDeleteCurrent())}>
+          <Button
+            icon="trash"
+            intent={Intent.DANGER}
+            onClick={() => dispatch(Action.userDeleteCurrent())}
+          >
             删除(d:{main.sel.count()})
           </Button>
         </ButtonGroup>
