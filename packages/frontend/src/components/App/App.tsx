@@ -13,7 +13,7 @@ import './App.styl'
 
 @hot(module)
 @(connect as any)((s: State) => ({ config: s.config }))
-export default class App extends React.Component<{ config: Config }> {
+export default class App extends React.Component<{ config?: Config }> {
   render() {
     const { config } = this.props
     return (

@@ -3,3 +3,4 @@ declare const DEV: {
 }
 
 declare const WEBPACK_BUILD: boolean
+declare const VERSION: string
