@@ -15,61 +15,94 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
-import { TreeDoc, TreeState } from '../../reducers/treeReducer'
-import MainState from '../../types/MainState'
+import { TreeItem } from '../../reducers/treeReducer'
+import FileInfo from '../../types/FileInfo'
 import Action from '../../utils/actions'
-import { generateANNFile } from '../../utils/annFileUtils'
+import server from '../../utils/server'
 import './TaskTree.styl'
 
 export interface TaskTreeProps {
   docname: string
   collName: string
   config: Config
-  tree: TreeState
+  tree: TreeItem[]
   dispatch: Dispatch
 }
 
 export interface TaskTreeState {
-  contents: ITreeNode[]
-  treeState: TreeState
+  contents: Array<ITreeNode<FileInfo>>
+  treeState: TreeItem[]
   docname: string
   collName: string
 }
 
-function forEachNode(nodes: ITreeNode[], callback: (node: ITreeNode) => void) {
+function forEachNode<T>(nodes: Array<ITreeNode<T>>, callback: (node: ITreeNode<T>) => void) {
   if (nodes == null) {
     return
   }
 
   for (const node of nodes) {
     callback(node)
-    forEachNode(node.childNodes, callback)
+    forEachNode(node.childNodes as Array<ITreeNode<T>>, callback)
   }
 }
 
-function genTreeNodes({ docs }: TreeState, prevState: ITreeNode[]): ITreeNode[] {
-  return docs.map(
-    doc =>
-      ({
-        id: doc.name,
-        icon: 'document',
-        label: doc.name,
-        isExpanded: isExpanded(prevState, doc.name),
-        childNodes: doc.annotations.map(
-          name =>
-            ({
-              id: `${doc.name}-${name}`,
-              icon: 'annotation',
-              label: name,
-              // TODO secondaryLabel: '<someone> is editing...',
-            } as ITreeNode),
-        ),
-      } as ITreeNode),
-  )
+function shouldExpand(prevState: Array<ITreeNode<FileInfo>>, fileInfo: FileInfo) {
+  let result
+  let nodes = prevState
+  for (const dirname of fileInfo.docPath) {
+    const directoryNode = nodes.find(node => node.nodeData.docPath.last() === dirname)
+    if (directoryNode == null) {
+      return false
+    }
+    result = directoryNode.isExpanded
+    nodes = directoryNode.childNodes as Array<ITreeNode<FileInfo>>
+  }
+  if (fileInfo.getType() === 'doc') {
+    const docNode = nodes.find(node => node.nodeData.docname === fileInfo.docname)
+    if (docNode == null) {
+      return false
+    }
+    result = docNode.isExpanded
+  }
+  return result
+}
 
-  function isExpanded(prevState: ITreeNode[], docname: string) {
-    const docEntry = prevState.find(node => node.id === docname)
-    return Boolean(docEntry && docEntry.isExpanded)
+function genTreeNodes(
+  items: TreeItem[],
+  prevState: Array<ITreeNode<FileInfo>>,
+): Array<ITreeNode<FileInfo>> {
+  const rootFileInfo = new FileInfo()
+  return items.map(item => genItemTreeNode(item, rootFileInfo))
+
+  function genItemTreeNode(item: TreeItem, parentInfo: FileInfo): ITreeNode<FileInfo> {
+    let nodeData: FileInfo
+    let childNodes: Array<ITreeNode<FileInfo>>
+    if (item.type === 'doc') {
+      nodeData = parentInfo.set('docname', item.name)
+      childNodes = item.collnames.map(collName => genCollTreeNode(collName, nodeData))
+    } else {
+      nodeData = parentInfo.update('docPath', path => path.push(item.name))
+      childNodes = item.items.map(item => genItemTreeNode(item, nodeData))
+    }
+    return {
+      id: item.name,
+      icon: item.type === 'doc' ? 'document' : 'folder-open',
+      label: item.name,
+      isExpanded: shouldExpand(prevState, nodeData),
+      nodeData,
+      childNodes,
+    }
+  }
+
+  function genCollTreeNode(collName: string, parentInfo: FileInfo): ITreeNode<FileInfo> {
+    return {
+      id: `${collName}`,
+      icon: 'annotation',
+      label: collName,
+      nodeData: parentInfo.set('collName', collName),
+      // TODO secondaryLabel: '<someone> is editing...',
+    }
   }
 }
 
@@ -85,7 +118,7 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
         treeState: nextProps.tree,
       }
     }
-    // 如果用户新建了文件，应该选中该文件
+    // TODO 如果用户新建了文件，应该选中该文件
     if (nextProps.docname !== prevState.docname || nextProps.collName !== prevState.collName) {
       const docname = nextProps.docname
       const collName = nextProps.collName
@@ -108,54 +141,19 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
   }
 
   state = {
-    contents: [] as ITreeNode[],
-    treeState: null as TreeState,
+    contents: [] as Array<ITreeNode<FileInfo>>,
+    treeState: null as TreeItem[],
     docname: '',
     collName: '',
   }
 
-  onDownloadResultJSON = async (docName: string, collName: string) => {
-    const response = await fetch(`/api/annotation-set/${docName}/${collName}`)
-    if (response.ok) {
-      saveAs(await response.blob(), `${docName}.${collName}.json`)
-    } else {
-      this.props.dispatch(Action.toast('Fail to download', Intent.DANGER))
-    }
-  }
-
-  onDownloadResultANN = async (docname: string, collName: string) => {
-    const { dispatch } = this.props
-
+  onDownloadResultJSON = async (info: FileInfo) => {
     try {
-      const res1 = await fetch(`/api/doc/${docname}`)
-      if (res1.ok) {
-        const block = await res1.text()
-        const res2 = await fetch(`/api/annotation-set/${docname}/${collName}`)
-        if (res2.ok) {
-          const json = await res2.json()
-          const mainState = MainState.fromJS({
-            docname,
-            collName,
-            blocks: [block],
-            annotations: json.annotations,
-          })
-          const { filename, content } = generateANNFile(mainState)
-          saveAs(new Blob([content], { type: 'text/plain;charset=utf-8' }), filename)
-        } else {
-          dispatch(Action.toast(`${res2.status} ${res2.statusText}`, Intent.DANGER))
-        }
-      } else {
-        dispatch(Action.toast(`${res1.status} ${res1.statusText}`, Intent.DANGER))
-      }
+      const coll = await server.getColl(info)
+      saveAs(new Blob([JSON.stringify(coll)]), `${info.docname}.${info.collName}.json`)
     } catch (e) {
-      console.error(e)
-      dispatch(Action.toast(e.message, Intent.DANGER))
+      this.props.dispatch(Action.toast(e.message, Intent.DANGER))
     }
-  }
-
-  onRequestAddColl = (doc: TreeDoc) => {
-    const { dispatch } = this.props
-    dispatch(Action.requestAddColl(doc.name))
   }
 
   onRefresh = () => {
@@ -190,28 +188,26 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
     this.forceUpdate()
   }
 
-  handleNodeClick = (nodeData: ITreeNode, nodePath: number[], e: React.MouseEvent<HTMLElement>) => {
-    if (!e.ctrlKey) {
-      forEachNode(this.state.contents, n => (n.isSelected = false))
-      nodeData.isSelected = true
-      this.forceUpdate()
-    } // TODO 考虑按住 ctrl 键多选的情况 if (!e.ctrlKey) { }
+  handleNodeClick = (node: ITreeNode<FileInfo>) => {
+    forEachNode(this.state.contents, n => (n.isSelected = false))
+    node.isSelected = true
+    this.forceUpdate()
   }
 
-  handleNodeDoubleClick = (nodeData: ITreeNode, nodePath: number[]) => {
+  handleNodeDoubleClick = (node: ITreeNode<FileInfo>) => {
     const { dispatch } = this.props
-    const { treeState } = this.state
-    if (nodePath.length === 1) {
-      nodeData.isExpanded = true
-      const doc = treeState.docs[nodePath[0]]
-      dispatch(Action.requestOpenDocStat(doc.name))
-    }
-    if (nodePath.length === 2) {
-      const doc = treeState.docs[nodePath[0]]
-      const collName = doc.annotations[nodePath[1]]
-      dispatch(Action.requestOpenColl(doc.name, collName))
+    const info = node.nodeData
+    const fileInfoType = info.getType()
+    if (fileInfoType === 'directory' || fileInfoType === 'doc') {
+      node.isExpanded = true
     }
     this.forceUpdate()
+
+    if (fileInfoType === 'doc') {
+      dispatch(Action.requestOpenDocStat(info))
+    } else if (fileInfoType === 'coll') {
+      dispatch(Action.requestOpenColl(info))
+    }
   }
 
   handleNodeCollapse = (nodeData: ITreeNode) => {
@@ -221,63 +217,54 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
 
   handleNodeExpand = (nodeData: ITreeNode) => {
     nodeData.isExpanded = true
-    this.setState(this.state)
     this.forceUpdate()
   }
 
   handleNodeContextMenu = (
-    nodeData: ITreeNode,
+    node: ITreeNode<FileInfo>,
     nodePath: number[],
     e: React.MouseEvent<HTMLElement>,
   ) => {
     e.preventDefault()
-    if (!nodeData.isSelected) {
+    if (!node.isSelected) {
       forEachNode(this.state.contents, n => (n.isSelected = false))
-      nodeData.isSelected = true
+      node.isSelected = true
       this.forceUpdate()
     }
 
     const { dispatch } = this.props
-    const { treeState } = this.state
-    if (nodePath.length === 1) {
-      const doc = treeState.docs[nodePath[0]]
+    const info = node.nodeData
+    const fileInfoType = info.getType()
+
+    if (fileInfoType === 'doc') {
       ContextMenu.show(
         <Menu>
           <MenuItem
             icon="new-object"
             text="New Annotation Set"
-            onClick={() => this.onRequestAddColl(doc)}
+            onClick={() => dispatch(Action.requestAddColl(info))}
           />
           <MenuItem icon="comparison" text="Compare" disabled />
           <MenuItem icon="download" text="Download Result" disabled />
         </Menu>,
         { left: e.clientX, top: e.clientY },
       )
-    } else if (nodePath.length === 2) {
-      const doc = treeState.docs[nodePath[0]]
-      const collName = doc.annotations[nodePath[1]]
+    } else if (fileInfoType === 'coll') {
       ContextMenu.show(
         <Menu>
           <MenuItem
             icon="trash"
             text="Delete"
-            onClick={() => dispatch(Action.requestDeleteColl(doc.name, collName))}
+            onClick={() => dispatch(Action.requestDeleteColl(info))}
           />
           <MenuItem
             icon="download"
             text="Download JSON"
-            onClick={() => this.onDownloadResultJSON(doc.name, collName)}
-          />
-          <MenuItem
-            icon="download"
-            text="Download ANN"
-            onClick={() => this.onDownloadResultANN(doc.name, collName)}
+            onClick={() => this.onDownloadResultJSON(info)}
           />
         </Menu>,
         { left: e.clientX, top: e.clientY },
       )
-    } else {
-      throw new Error('invalid click node path')
     }
   }
 

@@ -6,22 +6,22 @@ import { ActionCategory } from '../actions/MainAction'
 import { State } from '../reducers'
 import { setCachedAnnotations } from '../reducers/cacheReducer'
 import { DocStatState, updateDocStat } from '../reducers/docStatReducer'
-import { TreeDoc, TreeState } from '../reducers/treeReducer'
+import { TreeDirectory, TreeDoc, TreeItem } from '../reducers/treeReducer'
 import Annotation from '../types/Annotation'
+import FileInfo from '../types/FileInfo'
 import MainState from '../types/MainState'
 import Action from '../utils/actions'
 import { a, keyed, updateAnnotationNextId } from '../utils/common'
 import { DOC_STAT_NAME } from '../utils/constants'
+import server from '../utils/server'
 import { applyMainAction } from './historyManager'
-
-const e = encodeURIComponent
 
 /** 从后台加载文档树 */
 function* loadTreeState(reload: boolean) {
   try {
     const res = yield fetch(`/api/list?${reload ? 'reload' : ''}`)
     if (res.ok) {
-      const treeState: TreeState = yield res.json()
+      const treeState: TreeItem[] = yield res.json()
       yield put(Action.loadTreeData(treeState))
       if (reload) {
         yield put(Action.toast('更新文档树信息成功'))
@@ -68,38 +68,51 @@ function* closeCurrentColl() {
   yield put(Action.historyClear())
 }
 
+// TODO 去掉该函数
+function findDocInItemsStupidly(rootItems: TreeItem[], docname: string) {
+  return dfs(List(), rootItems)
+
+  function dfs(docPath: List<string>, items: TreeItem[]): List<string> {
+    for (const item of items) {
+      if (item.type === 'doc') {
+        if (item.name === docname) {
+          return docPath
+        }
+      } else {
+        const subResult = dfs(docPath.push(item.name), item.items)
+        if (subResult) {
+          return subResult
+        }
+      }
+    }
+    return null
+  }
+}
+
 /** 保存当前的标注工作进度 */
 function* saveCurrentColl() {
-  const { main, cache }: State = yield select()
+  const { main, cache, tree }: State = yield select()
   if (is(cache.annotations, main.annotations)) {
     return
   }
 
   const { docname, collName } = main
+  const docPath = findDocInItemsStupidly(tree, docname)
+  const fileInfo = new FileInfo({ docPath, docname, collName })
   try {
-    const response = yield fetch(`/api/annotation-set/${e(docname)}/${e(collName)}`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({ annotations: main.annotations.valueSeq() }),
+    yield server.putColl(fileInfo, {
+      annotations: main.annotations.valueSeq().toArray(),
     })
-    if (response.ok) {
-      yield put(setCachedAnnotations(main.annotations))
-      yield applyMainAction(
-        new EmptyMainAction('保存文件').withCategory(ActionCategory.sideEffects),
-      )
-      yield put(Action.toast('Saved'))
-    } else {
-      throw new Error('response not ok')
-    }
+    yield put(setCachedAnnotations(main.annotations))
+    yield applyMainAction(new EmptyMainAction('保存文件').withCategory(ActionCategory.sideEffects))
+    yield put(Action.toast('保存成功'))
   } catch (e) {
     console.error(e)
     yield put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
-function* handleRequestOpenDocStat({ docname }: Action.RequestOpenDocStat) {
+function* handleRequestOpenDocStat({ fileInfo }: Action.RequestOpenDocStat) {
   const { main, cache }: State = yield select()
 
   if (main.getStatus() === 'coll' && !is(cache.annotations, main.annotations)) {
@@ -108,42 +121,37 @@ function* handleRequestOpenDocStat({ docname }: Action.RequestOpenDocStat) {
   }
 
   try {
-    const res: Response = yield fetch(`/api/doc-stat/${e(docname)}`)
-    if (res.ok) {
-      const { stat } = yield res.json()
-      const mainState = new MainState({
-        docname,
-        collName: DOC_STAT_NAME,
-        blocks: List(),
-        range: null,
-      })
-      yield put(Action.setMainState(mainState))
-      // TODO 还需要 UPDATE_DOC_STAT
-      yield put(
-        updateDocStat(
-          () =>
-            new DocStatState({
-              docname,
-              stat: List(stat),
-            }),
-        ),
-      )
-      yield put(Action.historyClear())
-      yield applyMainAction(
-        new EmptyMainAction(`打开文档 ${docname} 的统计信息`).withCategory(
-          ActionCategory.sideEffects,
-        ),
-      )
-    } else {
-      throw new Error(`${res.status} ${res.statusText}`)
-    }
+    const stat = yield server.getDocStat(fileInfo)
+    const mainState = new MainState({
+      docname: fileInfo.docname,
+      collName: DOC_STAT_NAME,
+      blocks: List(),
+      range: null,
+    })
+    yield put(Action.setMainState(mainState))
+    // TODO 还需要 UPDATE_DOC_STAT
+    yield put(
+      updateDocStat(
+        () =>
+          new DocStatState({
+            docname: fileInfo.docname,
+            stat: List(stat),
+          }),
+      ),
+    )
+    yield put(Action.historyClear())
+    yield applyMainAction(
+      new EmptyMainAction(`打开文档 ${fileInfo.docname} 的统计信息`).withCategory(
+        ActionCategory.sideEffects,
+      ),
+    )
   } catch (e) {
     console.error(e)
     yield put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
-function* handleRequestOpenColl({ docname, collName }: Action.RequestOpenColl) {
+function* handleRequestOpenColl({ fileInfo }: Action.RequestOpenColl) {
   const collector = yield getContext('collector')
   const { main, cache }: State = yield select()
   if (main.getStatus() === 'coll' && !is(cache.annotations, main.annotations)) {
@@ -152,52 +160,41 @@ function* handleRequestOpenColl({ docname, collName }: Action.RequestOpenColl) {
   }
 
   try {
-    const docRes = yield fetch(`/api/doc/${e(docname)}`)
-    if (docRes.ok) {
-      const blocks = yield docRes.json()
-      const collRes = yield fetch(`/api/annotation-set/${e(docname)}/${e(collName)}`)
-      if (collRes.ok) {
-        const json = yield collRes.json()
-        const annotations: Map<string, Annotation> = keyed(
-          Seq(json.annotations).map(Annotation.fromJS),
-        )
-        const mainState = new MainState({
-          docname,
-          collName,
-          blocks: List(blocks),
-          annotations,
-          range: null,
-          // TODO hints & slots
-        })
+    const blocks: string[] = yield server.getDoc(fileInfo)
+    const coll = yield server.getColl(fileInfo)
 
-        updateAnnotationNextId(annotations)
-        collector.collOpened(docname, collName)
-        yield put(Action.setMainState(mainState))
-        yield put(setCachedAnnotations(mainState.annotations))
-        yield put(Action.historyClear())
-        yield applyMainAction(
-          new EmptyMainAction(`打开文件 ${docname} - ${collName}`).withCategory(
-            ActionCategory.sideEffects,
-          ),
-        )
-      } else {
-        throw new Error(`${collRes.status} ${collRes.statusText}`)
-      }
-    } else {
-      throw new Error(`${docRes.status} ${docRes.statusText}`)
-    }
+    const annotations = keyed<Annotation>(Seq(coll.annotations).map(Annotation.fromJS))
+    const mainState = new MainState({
+      docname: fileInfo.docname,
+      collName: fileInfo.collName,
+      blocks: List(blocks),
+      annotations,
+      range: null,
+      // TODO hints & slots
+    })
+
+    updateAnnotationNextId(annotations)
+    collector.collOpened(fileInfo.docname, fileInfo.collName)
+    yield put(Action.setMainState(mainState))
+    yield put(setCachedAnnotations(mainState.annotations))
+    yield put(Action.historyClear())
+    yield applyMainAction(
+      new EmptyMainAction(`打开文件 ${fileInfo.docname} - ${fileInfo.collName}`).withCategory(
+        ActionCategory.sideEffects,
+      ),
+    )
   } catch (e) {
     console.error(e)
     yield put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
-function getNextCollName(doc: TreeDoc, username: string) {
+function getNextCollname(doc: TreeDoc, username: string) {
   const prefix = username ? `${username}-` : 'anonymous-'
   let i = 1
   while (true) {
     const name = prefix + i
-    if (!doc.annotations.includes(name)) {
+    if (!doc.collnames.includes(name)) {
       break
     }
     i++
@@ -205,38 +202,49 @@ function getNextCollName(doc: TreeDoc, username: string) {
   return prefix + i
 }
 
-function* handleRequestAddColl({ docname }: Action.RequestAddColl) {
+function findDocInItems(items: TreeItem[], fileInfo: FileInfo): TreeDoc {
+  for (const dirname of fileInfo.docPath) {
+    const subDir = items.find(
+      item => item.type === 'directory' && item.name === dirname,
+    ) as TreeDirectory
+    if (DEV.ASSERT) {
+      console.assert(subDir != null)
+    }
+    items = subDir.items
+  }
+  return items.find(item => item.type === 'doc' && item.name === fileInfo.docname) as TreeDoc
+}
+
+function* handleRequestAddColl({ fileInfo }: Action.RequestAddColl) {
+  if (DEV.ASSERT) {
+    console.assert(fileInfo.getType() === 'doc')
+  }
   const { config, tree, main, cache }: State = yield select()
   if (!is(main.annotations, cache.annotations)) {
     yield put(Action.toast('创建新文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
-  const doc = tree.docs.find(doc => doc.name === docname)
-  console.assert(doc != null)
-  const collName = getNextCollName(doc, config.username)
+
+  const doc = findDocInItems(tree, fileInfo)
+  if (DEV.ASSERT) {
+    console.assert(doc != null)
+  }
+  const collName = getNextCollname(doc, config.username)
 
   try {
-    const res = yield fetch(`/api/annotation-set/${e(docname)}/${e(collName)}`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({ annotations: [] }),
-    })
-    if (res.ok) {
-      yield loadTreeState(false)
-      yield put(Action.toast(`Created ${collName}`))
-      yield put(Action.requestOpenColl(doc.name, collName))
-    } else {
-      throw new Error(`${res.status} ${res.statusText})`)
-    }
+    const newCollInfo = fileInfo.set('collName', collName)
+    yield server.putColl(newCollInfo, { annotations: [] })
+    yield loadTreeState(false)
+    yield put(Action.toast(`Created ${collName}`))
+    yield put(Action.requestOpenColl(newCollInfo))
   } catch (e) {
     console.error(e)
     yield put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
-function* handleRequestDeleteColl({ docname, collName }: Action.RequestDeleteColl) {
+function* handleRequestDeleteColl({ fileInfo }: Action.RequestDeleteColl) {
+  const { docname, collName } = fileInfo
   const { main }: State = yield select()
   if (main.docname === docname && collName === main.collName) {
     yield put(Action.toast('不能删除当前打开的文件'))
@@ -248,15 +256,9 @@ function* handleRequestDeleteColl({ docname, collName }: Action.RequestDeleteCol
   }
 
   try {
-    const response = yield fetch(`/api/annotation-set/${e(docname)}/${e(collName)}`, {
-      method: 'DELETE',
-    })
-    if (response.ok) {
-      yield loadTreeState(false)
-      yield put(Action.toast(`Deleted. ${docname}/${collName}.`))
-    } else {
-      throw new Error('response not ok')
-    }
+    yield server.deleteColl(fileInfo)
+    yield loadTreeState(false)
+    yield put(Action.toast(`Deleted. ${docname}/${collName}.`))
   } catch (e) {
     console.error(e)
     yield put(Action.toast(e.message, Intent.DANGER))

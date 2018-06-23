@@ -5,7 +5,7 @@ import Action from '../utils/actions'
 const DocStatRecord = Record({
   docname: '',
   stat: List<{
-    collName: string
+    collname: string
     annotationCount: number
     fileStat: fs.Stats
   }>(),

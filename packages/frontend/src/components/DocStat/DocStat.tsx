@@ -52,14 +52,14 @@ class DocStat extends React.Component<DocStatProps> {
           </thead>
           <tbody>
             {docStat.stat.map(s => (
-              <tr key={s.collName}>
+              <tr key={s.collname}>
                 <td>
                   <Checkbox
-                    checked={checkedCollNames.has(s.collName)}
-                    onClick={() => this.toggle(s.collName)}
+                    checked={checkedCollNames.has(s.collname)}
+                    onClick={() => this.toggle(s.collname)}
                   />
                 </td>
-                <td>{s.collName}</td>
+                <td>{s.collname}</td>
                 <td>{moment(s.fileStat.mtimeMs).format('YYYY-MM-DD HH:mm:ss')}</td>
                 <td>{s.annotationCount}</td>
                 <td style={{ padding: 8 }}>
@@ -68,6 +68,7 @@ class DocStat extends React.Component<DocStatProps> {
                       small
                       text="打开"
                       icon="document-open"
+                      disabled
                       onClick={() => dispatch(Action.requestOpenColl(main.docname, s.collName))}
                     />
                     <Button
@@ -75,6 +76,7 @@ class DocStat extends React.Component<DocStatProps> {
                       text="删除"
                       icon="trash"
                       intent={Intent.DANGER}
+                      disabled
                       onClick={() => dispatch(Action.requestDeleteColl(main.docname, s.collName))}
                     />
                   </ButtonGroup>

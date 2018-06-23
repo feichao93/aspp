@@ -4,6 +4,13 @@ const yaml = require('js-yaml')
 const mkdirp = require('mkdirp')
 const list = require('./list')
 
+function remove(array, item) {
+  const index = array.indexOf(item)
+  if (index !== -1) {
+    array.splice(index, 1)
+  }
+}
+
 function formatDate(d) {
   const YYYY = String(d.getFullYear())
   const MM = String(d.getMonth() + 1).padStart(2, '0')
@@ -12,6 +19,21 @@ function formatDate(d) {
   const mm = String(d.getMinutes()).padStart(2, '0')
   const ss = String(d.getSeconds()).padStart(2, '0')
   return `${YYYY}-${MM}-${DD}-${HH}_${mm}_${ss}`
+}
+
+function parseFulDocPath(fullDocPath) {
+  const split = fullDocPath.split('/')
+  const docPath = split.slice(0, split.length - 1)
+  const docname = split[split.length - 1]
+  return { docPath, docname }
+}
+
+function findDocInTree(items, fullDocPath) {
+  const { docPath, docname } = parseFulDocPath(fullDocPath)
+  for (const name of docPath) {
+    items = items.find(item => item.name === name).items
+  }
+  return items.find(item => item.name === docname)
 }
 
 module.exports = function asppService({ taskDir }) {
@@ -35,78 +57,74 @@ module.exports = function asppService({ taskDir }) {
         return status
       },
 
-      resolveCollFilename(docname, collName) {
-        return path.join(taskDir, 'annotations', `${docname}.${collName}.yaml`)
+      resolveDocFilename(fullDocPath) {
+        return path.join(taskDir, 'docs', fullDocPath)
       },
 
-      getDoc(docname) {
-        const filename = path.join(taskDir, 'docs', docname)
+      resolveCollFilename(fullDocPath, collname) {
+        return path.join(taskDir, 'annotations', `${fullDocPath}.${collname}.yaml`)
+      },
+
+      async getDoc(fullDocPath) {
+        const filename = this.resolveDocFilename(fullDocPath)
         if (!fs.existsSync(filename)) {
-          ctx.throw(404, `doc ${docname} not found`)
+          ctx.throw(404, `File ${fullDocPath} not found`)
         } else {
           const content = fs.readFileSync(filename, 'utf-8')
-          if (docname.endsWith('.json')) {
-            return JSON.parse(content)
+          if (fullDocPath.endsWith('.json')) {
+            ctx.body = JSON.parse(content)
           } else {
-            return [content]
+            ctx.body = [content]
           }
         }
       },
 
-      getDocStat(docname) {
-        const filename = path.join(taskDir, 'docs', docname)
+      async getDocStat(fullDocPath) {
+        const filename = this.resolveDocFilename(fullDocPath)
         if (!fs.existsSync(filename)) {
-          ctx.throw(404, `doc ${docname} not found`)
-        } else {
-          // TODO
-          const status = this.list()
-          const docStatus = status.docs.find(doc => doc.name === docname)
-          const stat = docStatus.annotations.map(collName => {
-            const filename = this.resolveCollFilename(docname, collName)
-            const fileStat = fs.statSync(filename)
-            const coll = yaml.safeLoad(fs.readFileSync(filename, 'utf-8'))
-            return {
-              collName,
-              // lastModified
-              fileStat,
-              annotationCount: coll.annotations.length,
-            }
-          })
-          return { docname, stat }
+          ctx.throw(404, `File ${fullDocPath} not found`)
         }
+        const doc = findDocInTree(this.list(), fullDocPath)
+        ctx.body = doc.collnames.map(collname => {
+          const filename = this.resolveCollFilename(fullDocPath, collname)
+          const fileStat = fs.statSync(filename)
+          const coll = yaml.safeLoad(fs.readFileSync(filename, 'utf-8'))
+          return { collname, fileStat, annotationCount: coll.annotations.length }
+        })
       },
 
-      getAnnotation(docname, collName) {
-        const filename = this.resolveCollFilename(docname, collName)
+      async getColl(fullDocPath, collName) {
+        const filename = this.resolveCollFilename(fullDocPath, collName)
         if (!fs.existsSync(filename)) {
-          ctx.throw(404, `annotation-set file ${filename} not found`)
+          ctx.throw(404, `File ${filename} not found`)
         }
-        return yaml.safeLoad(fs.readFileSync(filename, 'utf-8'))
+        ctx.body = yaml.safeLoad(fs.readFileSync(filename, 'utf-8'))
       },
 
-      deleteAnnotation(docname, collName) {
-        const status = this.list()
-        const doc = status.docs.find(doc => doc.name === docname)
-        doc.annotations.splice(doc.annotations.indexOf(collName), 1)
+      deleteColl(fullDocPath, collname) {
+        const doc = findDocInTree(this.list(), fullDocPath)
+        remove(doc.collnames, collname)
 
-        const filename = this.resolveCollFilename(docname, collName)
-        const nextFilename = path.join(
+        const collFilename = this.resolveCollFilename(fullDocPath, collname)
+        const { docname } = parseFulDocPath(fullDocPath)
+        const trash = path.join(
           taskDir,
           'deleted',
-          `${formatDate(new Date())}-${docname}.${collName}.yaml`,
+          `${formatDate(new Date())}-${docname}.${collname}.yaml`,
         )
-        mkdirp.sync(path.join(nextFilename, '..'))
-        fs.renameSync(filename, nextFilename)
+        mkdirp.sync(path.join(trash, '..'))
+        fs.renameSync(collFilename, trash)
+        ctx.status = 200
       },
 
-      saveAnnotation(docname, collName) {
-        const status = this.list()
-        const doc = status.docs.find(doc => doc.name === docname)
-        if (!doc.annotations.includes(collName)) {
-          doc.annotations.push(collName)
+      async saveAnnotation(fullDocPath, collname, content) {
+        const doc = findDocInTree(this.list(), fullDocPath)
+        if (!doc.collnames.includes(collname)) {
+          doc.collnames.push(collname)
         }
-        const filename = this.resolveCollFilename(doc.name, collName)
-        fs.writeFileSync(filename, yaml.safeDump(ctx.request.body), 'utf-8')
+        const filename = this.resolveCollFilename(fullDocPath, collname)
+        fs.writeFileSync(filename, yaml.safeDump(content), 'utf-8')
+        ctx.status = 200
       },
     }
 

@@ -3,10 +3,11 @@ import { Set } from 'immutable'
 import MainAction from '../actions/MainAction'
 import { CacheState } from '../reducers/cacheReducer'
 import { DocStatState } from '../reducers/docStatReducer'
-import { TreeState } from '../reducers/treeReducer'
+import { TreeItem } from '../reducers/treeReducer'
 import { TaskMap } from '../tasks'
 import TaskConstructor from '../tasks/TaskConstructor'
 import Decoration from '../types/Decoration'
+import FileInfo from '../types/FileInfo'
 import MainState from '../types/MainState'
 
 type Action = Action.ALL
@@ -140,31 +141,26 @@ namespace Action {
 
   export interface LoadTreeState {
     type: 'LOAD_TREE_STATE'
-    treeState: TreeState
+    treeState: TreeItem[]
   }
-  export function loadTreeData(treeState: TreeState): LoadTreeState {
+  export function loadTreeData(treeState: TreeItem[]): LoadTreeState {
     return { type: 'LOAD_TREE_STATE', treeState }
   }
 
   export interface RequestAddColl {
     type: 'REQUEST_ADD_COLL'
-    docname: string
+    fileInfo: FileInfo
   }
-  export function requestAddColl(docname: string): RequestAddColl {
-    return { type: 'REQUEST_ADD_COLL', docname }
+  export function requestAddColl(fileInfo: FileInfo): RequestAddColl {
+    return { type: 'REQUEST_ADD_COLL', fileInfo }
   }
 
   export interface RequestDeleteColl {
     type: 'REQUEST_DELETE_COLL'
-    docname: string
-    collName: string
+    fileInfo: FileInfo
   }
-  export function requestDeleteColl(docname: string, collName: string): RequestDeleteColl {
-    return {
-      type: 'REQUEST_DELETE_COLL',
-      docname,
-      collName,
-    }
+  export function requestDeleteColl(fileInfo: FileInfo): RequestDeleteColl {
+    return { type: 'REQUEST_DELETE_COLL', fileInfo }
   }
 
   export interface RequestCloseCurrentColl {
@@ -183,23 +179,18 @@ namespace Action {
 
   export interface RequestOpenDocStat {
     type: 'REQUEST_OPEN_DOC_STAT'
-    docname: string
+    fileInfo: FileInfo
   }
-  export function requestOpenDocStat(docname: string): RequestOpenDocStat {
-    return { type: 'REQUEST_OPEN_DOC_STAT', docname }
+  export function requestOpenDocStat(fileInfo: FileInfo): RequestOpenDocStat {
+    return { type: 'REQUEST_OPEN_DOC_STAT', fileInfo }
   }
 
   export interface RequestOpenColl {
     type: 'REQUEST_OPEN_COLL'
-    docname: string
-    collName: string
+    fileInfo: FileInfo
   }
-  export function requestOpenColl(docname: string, collName: string): RequestOpenColl {
-    return {
-      type: 'REQUEST_OPEN_COLL',
-      docname,
-      collName,
-    }
+  export function requestOpenColl(fileInfo: FileInfo): RequestOpenColl {
+    return { type: 'REQUEST_OPEN_COLL', fileInfo }
   }
   // endregion
 

@@ -1,24 +1,20 @@
 import Action from '../utils/actions'
 
-export type TreeItem = TreeDoc // TODO TreeFolder
+export type TreeItem = TreeDoc | TreeDirectory
 
 export interface TreeDoc {
-  // type: 'doc'
+  type: 'doc'
   name: string
-  annotations: string[]
+  collnames: string[]
 }
 
-export interface TreeFolder {
-  type: 'folder'
+export interface TreeDirectory {
+  type: 'directory'
   name: string
-  children: TreeItem[]
+  items: TreeItem[]
 }
 
-export interface TreeState {
-  docs: TreeItem[]
-}
-
-export default function treeReducer(state: TreeState = null, action: Action): TreeState {
+export default function treeReducer(state: TreeItem[] = null, action: Action): TreeItem[] {
   if (action.type === 'LOAD_TREE_STATE') {
     return action.treeState
   } else {

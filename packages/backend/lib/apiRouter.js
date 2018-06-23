@@ -5,25 +5,26 @@ module.exports = new Router('/api')
     const { reload } = ctx.query
     ctx.body = ctx.aspp.list(reload != null)
   })
-  .get('/doc/:docname', ctx => {
-    const { docname } = ctx.params
-    ctx.body = ctx.aspp.getDoc(docname)
+  .get('/doc/:fullDocPath+', async ctx => {
+    const { fullDocPath } = ctx.params
+    await ctx.aspp.getDoc(fullDocPath)
   })
-  .get('/doc-stat/:docname', ctx => {
-    const { docname } = ctx.params
-    ctx.body = ctx.aspp.getDocStat(docname)
+  .get('/doc-stat/:fullDocPath+', async ctx => {
+    const { fullDocPath } = ctx.params
+    await ctx.aspp.getDocStat(fullDocPath)
   })
-  .get('/annotation-set/:docname/:collName', ctx => {
-    const { docname, collName } = ctx.params
-    ctx.body = ctx.aspp.getAnnotation(docname, collName)
+  .get('/coll/:fullDocPath+', async ctx => {
+    const { fullDocPath } = ctx.params
+    const { collname } = ctx.query
+    await ctx.aspp.getColl(fullDocPath, collname)
   })
-  .delete('/annotation-set/:docname/:collName', ctx => {
-    const { docname, collName } = ctx.params
-    ctx.aspp.deleteAnnotation(docname, collName)
-    ctx.status = 200
+  .delete('/coll/:fullDocPath+', async ctx => {
+    const { fullDocPath } = ctx.params
+    const { collname } = ctx.query
+    await ctx.aspp.deleteColl(fullDocPath, collname)
   })
-  .put('/annotation-set/:docname/:collName', ctx => {
-    const { docname, collName } = ctx.params
-    ctx.aspp.saveAnnotation(docname, collName)
-    ctx.status = 200
+  .put('/coll/:fullDocPath+', async ctx => {
+    const { fullDocPath } = ctx.params
+    const { collname } = ctx.query
+    await ctx.aspp.saveAnnotation(fullDocPath, collname, ctx.request.body)
   })
