@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
 const mkdirp = require('mkdirp')
-const getStatus = require('./getStatus')
+const list = require('./list')
 
 function formatDate(d) {
   const YYYY = String(d.getFullYear())
@@ -28,9 +28,9 @@ module.exports = function asppService({ taskDir }) {
         return config
       },
 
-      getStatus(reload = false) {
+      list(reload = false) {
         if (reload || status == null) {
-          status = getStatus(taskDir)
+          status = list(taskDir)
         }
         return status
       },
@@ -59,7 +59,7 @@ module.exports = function asppService({ taskDir }) {
           ctx.throw(404, `doc ${docname} not found`)
         } else {
           // TODO
-          const status = this.getStatus()
+          const status = this.list()
           const docStatus = status.docs.find(doc => doc.name === docname)
           const stat = docStatus.annotations.map(collName => {
             const filename = this.resolveCollFilename(docname, collName)
@@ -85,7 +85,7 @@ module.exports = function asppService({ taskDir }) {
       },
 
       deleteAnnotation(docname, collName) {
-        const status = this.getStatus()
+        const status = this.list()
         const doc = status.docs.find(doc => doc.name === docname)
         doc.annotations.splice(doc.annotations.indexOf(collName), 1)
 
@@ -100,7 +100,7 @@ module.exports = function asppService({ taskDir }) {
       },
 
       saveAnnotation(docname, collName) {
-        const status = this.getStatus()
+        const status = this.list()
         const doc = status.docs.find(doc => doc.name === docname)
         if (!doc.annotations.includes(collName)) {
           doc.annotations.push(collName)

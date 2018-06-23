@@ -19,7 +19,7 @@ const e = encodeURIComponent
 /** 从后台加载文档树 */
 function* loadTreeState(reload: boolean) {
   try {
-    const res = yield fetch(`/api/list?reload=${reload ? 'true' : 'false'}`)
+    const res = yield fetch(`/api/list?${reload ? 'reload' : ''}`)
     if (res.ok) {
       const treeState: TreeState = yield res.json()
       yield put(Action.loadTreeData(treeState))

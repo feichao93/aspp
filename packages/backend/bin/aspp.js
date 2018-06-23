@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const yaml = require('js-yaml')
 const packageInfo = require('../package')
-const getStatus = require('../lib/getStatus')
+const list = require('../lib/list')
 
 function checkTaskDir(taskDir) {
   if (!fs.existsSync(path.join(taskDir, 'aspp.config.yaml'))) {
@@ -25,9 +25,9 @@ const commandHandlers = {
     console.log(`ASPP v${packageInfo.version}`)
     server({ port, taskDir })
   },
-  showStatus({ taskDir }) {
+  list({ taskDir }) {
     checkTaskDir(taskDir)
-    console.log(JSON.stringify(getStatus(taskDir), null, 2))
+    console.log(JSON.stringify(list(taskDir), null, 2))
   },
   showConfig({ taskDir }) {
     checkTaskDir(taskDir)
@@ -43,7 +43,7 @@ require('yargs')
     alias: 't',
     describe: 'Task directory',
   })
-  .command('status', 'Show status of the task', noop, commandHandlers.showStatus)
+  .command('list', 'List docs and annotation files of the task', noop, commandHandlers.list)
   .command('config', 'Show config of the task', noop, commandHandlers.showConfig)
   .command(
     'serve',
@@ -58,5 +58,8 @@ require('yargs')
     },
     commandHandlers.serve,
   )
-  .demandCommand(1, 'You need at least one command before moving on')
+  .command('*', false, noop, () => {
+    console.error('Invalid command. Run `aspp --help` for more detail.')
+    process.exit(1)
+  })
   .parse()

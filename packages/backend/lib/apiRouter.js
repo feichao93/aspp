@@ -3,7 +3,7 @@ const Router = require('koa-router')
 module.exports = new Router('/api')
   .get('/list', ctx => {
     const { reload } = ctx.query
-    ctx.body = ctx.aspp.getStatus(reload === 'true')
+    ctx.body = ctx.aspp.list(reload != null)
   })
   .get('/doc/:docname', ctx => {
     const { docname } = ctx.params
