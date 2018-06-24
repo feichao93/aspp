@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
-import { setSel } from '../../reducers/mainReducer'
+import { setSel } from '../../reducers/editorReducer'
 import Decoration from '../../types/Decoration'
-import MainState from '../../types/MainState'
+import EditorState from '../../types/EditorState'
 import Action from '../../utils/actions'
 import { shortenText, toIdSet } from '../../utils/common'
 import layout, { SpanInfo } from '../../utils/layout'
@@ -100,19 +100,19 @@ function DecorationSetPreview({
 type SelMode = 'empty' | 'text' | 'decoration' | 'decoration-set'
 
 interface DetailPanelProps {
-  main: MainState
+  editor: EditorState
   config: Config
   dispatch: Dispatch
 }
 
 class DetailPanel extends React.Component<DetailPanelProps> {
   resolveModes(): { mode: SelMode; subMode?: string } {
-    const { main } = this.props
-    if (main.sel.isEmpty()) {
-      return { mode: main.range == null ? 'empty' : 'text', subMode: null }
+    const { editor } = this.props
+    if (editor.sel.isEmpty()) {
+      return { mode: editor.range == null ? 'empty' : 'text', subMode: null }
     } else {
-      const mode = main.sel.count() > 1 ? 'decoration-set' : 'decoration'
-      const subMode = mode === 'decoration' ? main.gather().get(main.sel.first()).type : null
+      const mode = editor.sel.count() > 1 ? 'decoration-set' : 'decoration'
+      const subMode = mode === 'decoration' ? editor.gather().get(editor.sel.first()).type : null
       return { mode, subMode }
     }
   }
@@ -121,7 +121,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
     if (mode !== 'text') {
       return null
     }
-    const { main } = this.props
+    const { editor } = this.props
 
     return (
       <div>
@@ -129,13 +129,13 @@ class DetailPanel extends React.Component<DetailPanelProps> {
         <div className="code">
           <p>
             text:&nbsp;
-            {main.range
-              ? Rich.string(shortenText(14, main.getSelectedText()))
+            {editor.range
+              ? Rich.string(shortenText(14, editor.getSelectedText()))
               : Rich.reserved('[invalid-range]')}
           </p>
-          <p>blockIndex: {Rich.number(main.range ? main.range.blockIndex : 'N/A')}</p>
-          <p>startOffset: {Rich.number(main.range ? main.range.startOffset : 'N/A')}</p>
-          <p>endOffset: {Rich.number(main.range ? main.range.endOffset : 'N/A')}</p>
+          <p>blockIndex: {Rich.number(editor.range ? editor.range.blockIndex : 'N/A')}</p>
+          <p>startOffset: {Rich.number(editor.range ? editor.range.startOffset : 'N/A')}</p>
+          <p>endOffset: {Rich.number(editor.range ? editor.range.endOffset : 'N/A')}</p>
         </div>
       </div>
     )
@@ -145,10 +145,10 @@ class DetailPanel extends React.Component<DetailPanelProps> {
     if (mode !== 'text') {
       return null
     }
-    const { main, dispatch, config } = this.props
-    const intersected = main.range.intersected(main.gather())
-    const blockIndex = main.range.blockIndex
-    const block = main.blocks.get(blockIndex)
+    const { editor, dispatch, config } = this.props
+    const intersected = editor.range.intersected(editor.gather())
+    const blockIndex = editor.range.blockIndex
+    const block = editor.blocks.get(blockIndex)
     const intersectedHints = intersected.filter(Decoration.isHint)
 
     return (
@@ -161,7 +161,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
           block={block}
           blockIndex={blockIndex}
           set={intersected.toSet()}
-          sel={main.sel}
+          sel={editor.sel}
           visibleMap={config.visibleMap}
           dispatch={dispatch}
         />
@@ -197,8 +197,8 @@ class DetailPanel extends React.Component<DetailPanelProps> {
     if (mode !== 'decoration') {
       return null
     }
-    const { main, dispatch } = this.props
-    const decoration = main.gather().get(main.sel.first())
+    const { editor, dispatch } = this.props
+    const decoration = editor.gather().get(editor.sel.first())
     const { range } = decoration
 
     return (
@@ -206,7 +206,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
         <HorizontalLine />
         <div className="block preview">
           <Span
-            block={main.blocks.get(range.blockIndex)}
+            block={editor.blocks.get(range.blockIndex)}
             info={{ height: 0, decoration }}
             sel={Set()}
             shortenLongText
@@ -221,7 +221,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
                 entity:{' '}
                 {Rich.string(
                   shortenText(12, decoration.entity),
-                  range.substring(main.blocks.get(range.blockIndex)) !== decoration.entity,
+                  range.substring(editor.blocks.get(range.blockIndex)) !== decoration.entity,
                 )}
               </p>
             </React.Fragment>
@@ -255,13 +255,13 @@ class DetailPanel extends React.Component<DetailPanelProps> {
     if (mode !== 'decoration') {
       return null
     }
-    const { main, dispatch, config } = this.props
-    const decoration = main.gather().get(main.sel.first())
+    const { editor, dispatch, config } = this.props
+    const decoration = editor.gather().get(editor.sel.first())
 
     const blockIndex = decoration.range.blockIndex
-    const block = main.blocks.get(blockIndex)
+    const block = editor.blocks.get(blockIndex)
 
-    const decorationsInThisBlock = main
+    const decorationsInThisBlock = editor
       .gather()
       .filter(dec => dec.range.blockIndex === blockIndex)
       .toSet()
@@ -334,9 +334,9 @@ class DetailPanel extends React.Component<DetailPanelProps> {
     if (mode !== 'decoration-set') {
       return null
     }
-    const { main, dispatch, config } = this.props
-    const gathered = main.gather()
-    const set = main.sel.map(id => gathered.get(id))
+    const { editor, dispatch, config } = this.props
+    const gathered = editor.gather()
+    const set = editor.sel.map(id => gathered.get(id))
     const decorationsByBlockIndex = set
       .groupBy(dec => dec.range.blockIndex)
       .sortBy((v, blockIndex) => blockIndex)
@@ -351,7 +351,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
               <div key={blockIndex} style={{ marginTop: 4 }}>
                 <span>block: {blockIndex}</span>
                 <DecorationSetPreview
-                  block={main.blocks.get(blockIndex)}
+                  block={editor.blocks.get(blockIndex)}
                   blockIndex={blockIndex}
                   set={decorations.toSet()}
                   sel={Set()}
@@ -375,7 +375,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
             intent={Intent.DANGER}
             onClick={() => dispatch(Action.userDeleteCurrent())}
           >
-            删除(d:{main.sel.count()})
+            删除(d:{editor.sel.count()})
           </Button>
         </ButtonGroup>
       </div>
@@ -402,4 +402,4 @@ class DetailPanel extends React.Component<DetailPanelProps> {
   }
 }
 
-export default connect((s: State) => ({ main: s.main, config: s.config }))(DetailPanel)
+export default connect((s: State) => ({ editor: s.editor, config: s.config }))(DetailPanel)

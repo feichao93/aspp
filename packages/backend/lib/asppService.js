@@ -93,8 +93,8 @@ module.exports = function asppService({ taskDir }) {
         })
       },
 
-      async getColl(fullDocPath, collName) {
-        const filename = this.resolveCollFilename(fullDocPath, collName)
+      async getColl(fullDocPath, collname) {
+        const filename = this.resolveCollFilename(fullDocPath, collname)
         if (!fs.existsSync(filename)) {
           ctx.throw(404, `File ${filename} not found`)
         }

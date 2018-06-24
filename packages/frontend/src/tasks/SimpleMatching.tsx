@@ -2,11 +2,11 @@ import { is, List, Seq } from 'immutable'
 import { MulticastChannel, select, take } from 'little-saga/compat'
 import React from 'react'
 import AddHints from '../actions/AddHints'
-import { ActionCategory } from '../actions/MainAction'
+import { ActionCategory } from '../actions/EditorAction'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
-import { addAnnotations } from '../reducers/mainReducer'
-import { applyMainAction } from '../sagas/historyManager'
+import { addAnnotations } from '../reducers/editorReducer'
+import { applyEditorAction } from '../sagas/historyManager'
 import Annotation from '../types/Annotation'
 import { Hint } from '../types/Decoration'
 import { getNextId, keyed } from '../utils/common'
@@ -15,12 +15,12 @@ import { Interaction } from '../utils/InteractionCollector'
 
 function* handleUserAnnotateText({ range, tag }: Interaction.UserAnnotateText) {
   console.assert(range != null)
-  const { main }: State = yield select()
-  const text = range.substring(main.blocks.get(range.blockIndex))
-  const gathered = main.gather()
+  const { editor }: State = yield select()
+  const text = range.substring(editor.blocks.get(range.blockIndex))
+  const gathered = editor.gather()
   const existingRangeSet = gathered.map(decoration => decoration.range.normalize()).toSet()
 
-  const hints = Seq(main.blocks)
+  const hints = Seq(editor.blocks)
     .flatMap((block, blockIndex) => findMatch(block, blockIndex, gathered, text))
     .filterNot(r => is(r, range.normalize()))
     .filterNot(r => existingRangeSet.has(r.normalize()))
@@ -31,13 +31,15 @@ function* handleUserAnnotateText({ range, tag }: Interaction.UserAnnotateText) {
           id: getNextId('hint'),
           hint: `Apply ${tag}`,
           action: addAnnotations(
-            keyed(List.of(Annotation.annotateRange(tag, main.blocks.get(range.blockIndex), range))),
+            keyed(
+              List.of(Annotation.annotateRange(tag, editor.blocks.get(range.blockIndex), range)),
+            ),
           ),
         }),
     )
 
   if (!hints.isEmpty()) {
-    yield applyMainAction(
+    yield applyEditorAction(
       new AddHints(
         keyed(hints),
         <span>simple-matching 添加 {Rich.number(hints.count())} 个提示</span>,

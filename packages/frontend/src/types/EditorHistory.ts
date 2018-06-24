@@ -1,14 +1,14 @@
 import { List, Record } from 'immutable'
-import MainAction from '../actions/MainAction'
+import EditorAction from '../actions/EditorAction'
 
 export const emptyAction = Symbol('empty-action')
 
-const MainHistoryRecord = Record({
-  list: List<MainAction>(),
+const EditorHistoryRecord = Record({
+  list: List<EditorAction>(),
   count: 0,
 })
 
-export default class MainHistory extends MainHistoryRecord {
+export default class EditorHistory extends EditorHistoryRecord {
   pop() {
     return this.update('list', list => list.splice(this.count - 1, 1)).update('count', x => x - 1)
   }

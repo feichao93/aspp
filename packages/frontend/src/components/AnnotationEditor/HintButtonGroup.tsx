@@ -4,22 +4,22 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
-import { setSel } from '../../reducers/mainReducer'
+import { setSel } from '../../reducers/editorReducer'
 import Decoration from '../../types/Decoration'
-import MainState from '../../types/MainState'
+import EditorState from '../../types/EditorState'
 import Action from '../../utils/actions'
 import { compareArray, isElementVisible } from '../../utils/common'
 import './HintButtonGroup.styl'
 
 interface HintButtonGroupProps {
-  main: MainState
+  editor: EditorState
   dispatch: Dispatch
 }
 
 class HintButtonGroup extends React.Component<HintButtonGroupProps> {
-  static getSelectedHint({ main }: HintButtonGroupProps) {
-    if (main.sel.count() === 1) {
-      return main.hints.get(main.sel.first(), null)
+  static getSelectedHint({ editor }: HintButtonGroupProps) {
+    if (editor.sel.count() === 1) {
+      return editor.hints.get(editor.sel.first(), null)
     } else {
       return null
     }
@@ -37,10 +37,10 @@ class HintButtonGroup extends React.Component<HintButtonGroupProps> {
   }
 
   selectNextHint() {
-    const { main, dispatch } = this.props
+    const { editor, dispatch } = this.props
 
-    const hint = main.hints.get(main.sel.first())
-    const hintList = main.hints.toList().sortBy(Decoration.getPosition, compareArray)
+    const hint = editor.hints.get(editor.sel.first())
+    const hintList = editor.hints.toList().sortBy(Decoration.getPosition, compareArray)
     const index = hintList.indexOf(hint)
     let nextHint = hintList.get(index + 1)
     if (nextHint == null) {
@@ -68,12 +68,12 @@ class HintButtonGroup extends React.Component<HintButtonGroupProps> {
   }
 
   render() {
-    const { main, dispatch } = this.props
+    const { editor, dispatch } = this.props
 
-    const hintList = main.hints.toList().sortBy(Decoration.getPosition, compareArray)
+    const hintList = editor.hints.toList().sortBy(Decoration.getPosition, compareArray)
     let index = -1
-    if (main.sel.count() === 1) {
-      const hint = main.hints.get(main.sel.first())
+    if (editor.sel.count() === 1) {
+      const hint = editor.hints.get(editor.sel.first())
       if (hint != null) {
         index = hintList.indexOf(hint)
       }
@@ -109,4 +109,4 @@ class HintButtonGroup extends React.Component<HintButtonGroupProps> {
   }
 }
 
-export default connect((s: State) => ({ main: s.main }))(HintButtonGroup)
+export default connect((s: State) => ({ editor: s.editor }))(HintButtonGroup)

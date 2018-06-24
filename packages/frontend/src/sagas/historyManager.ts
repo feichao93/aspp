@@ -1,14 +1,14 @@
 import { put, select, takeEvery } from 'little-saga/compat'
-import MainAction, { ActionCategory } from '../actions/MainAction'
+import EditorAction, { ActionCategory } from '../actions/EditorAction'
 import { State } from '../reducers'
-import { emptyAction } from '../types/MainHistory'
+import { emptyAction } from '../types/EditorHistory'
 import Action from '../utils/actions'
 import { a } from '../utils/common'
 
-export function* applyMainAction(mainAction: MainAction) {
-  yield* mainAction.prepare()
-  yield* mainAction.next()
-  yield put(Action.historyPush(mainAction))
+export function* applyEditorAction(editorAction: EditorAction) {
+  yield* editorAction.prepare()
+  yield* editorAction.next()
+  yield put(Action.historyPush(editorAction))
 }
 
 function* handleRevert() {

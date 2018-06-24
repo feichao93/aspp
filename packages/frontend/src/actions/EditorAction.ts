@@ -4,7 +4,7 @@ export enum ActionCategory {
   sideEffects = 'sideEffects',
 }
 
-export default abstract class MainAction {
+export default abstract class EditorAction {
   time = new Date()
   category = ActionCategory.interaction
 

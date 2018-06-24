@@ -10,6 +10,7 @@ import {
 } from '@blueprintjs/core'
 import classNames from 'classnames'
 import { saveAs } from 'file-saver'
+import { is } from 'immutable'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
@@ -18,12 +19,12 @@ import { Config } from '../../reducers/configReducer'
 import { TreeItem } from '../../reducers/treeReducer'
 import FileInfo from '../../types/FileInfo'
 import Action from '../../utils/actions'
+import { DOC_STAT_NAME } from '../../utils/constants'
 import server from '../../utils/server'
 import './TaskTree.styl'
 
 export interface TaskTreeProps {
-  docname: string
-  collName: string
+  fileInfo: FileInfo
   config: Config
   tree: TreeItem[]
   dispatch: Dispatch
@@ -32,8 +33,7 @@ export interface TaskTreeProps {
 export interface TaskTreeState {
   contents: Array<ITreeNode<FileInfo>>
   treeState: TreeItem[]
-  docname: string
-  collName: string
+  fileInfo: FileInfo
 }
 
 function forEachNode<T>(nodes: Array<ITreeNode<T>>, callback: (node: ITreeNode<T>) => void) {
@@ -80,7 +80,7 @@ function genTreeNodes(
     let childNodes: Array<ITreeNode<FileInfo>>
     if (item.type === 'doc') {
       nodeData = parentInfo.set('docname', item.name)
-      childNodes = item.collnames.map(collName => genCollTreeNode(collName, nodeData))
+      childNodes = item.collnames.map(collname => genCollTreeNode(collname, nodeData))
     } else {
       nodeData = parentInfo.update('docPath', path => path.push(item.name))
       childNodes = item.items.map(item => genItemTreeNode(item, nodeData))
@@ -95,12 +95,12 @@ function genTreeNodes(
     }
   }
 
-  function genCollTreeNode(collName: string, parentInfo: FileInfo): ITreeNode<FileInfo> {
+  function genCollTreeNode(collname: string, parentInfo: FileInfo): ITreeNode<FileInfo> {
     return {
-      id: `${collName}`,
+      id: `${collname}`,
       icon: 'annotation',
-      label: collName,
-      nodeData: parentInfo.set('collName', collName),
+      label: collname,
+      nodeData: parentInfo.set('collname', collname),
       // TODO secondaryLabel: '<someone> is editing...',
     }
   }
@@ -111,46 +111,39 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
     nextProps: TaskTreeProps,
     prevState: TaskTreeState,
   ): Partial<TaskTreeState> {
+    const partial: Partial<TaskTreeState> = {}
     // 文档列表发生了更新
     if (prevState.treeState !== nextProps.tree) {
-      return {
+      Object.assign(partial, {
         contents: genTreeNodes(nextProps.tree, prevState.contents),
         treeState: nextProps.tree,
-      }
-    }
-    // TODO 如果用户新建了文件，应该选中该文件
-    if (nextProps.docname !== prevState.docname || nextProps.collName !== prevState.collName) {
-      const docname = nextProps.docname
-      const collName = nextProps.collName
-
-      forEachNode(prevState.contents, node => {
-        node.isSelected = node.id === `${docname}-${collName}`
       })
-      for (const node of prevState.contents) {
-        if (node.id === docname) {
+    }
+
+    // 如果用户改变了当前打开的文件，应该选中该文件
+    if (!is(nextProps.fileInfo, prevState.fileInfo)) {
+      forEachNode(prevState.contents, node => {
+        if (node.nodeData.isAncestorOf(nextProps.fileInfo)) {
           node.isExpanded = true
         }
-      }
-      return {
-        docname,
-        collName,
-        contents: prevState.contents,
-      }
+        node.isSelected = is(node.nodeData, nextProps.fileInfo)
+      })
+      Object.assign(partial, { fileInfo: nextProps.fileInfo })
     }
-    return null
+
+    return partial
   }
 
   state = {
     contents: [] as Array<ITreeNode<FileInfo>>,
     treeState: null as TreeItem[],
-    docname: '',
-    collName: '',
+    fileInfo: null as FileInfo,
   }
 
   onDownloadResultJSON = async (info: FileInfo) => {
     try {
       const coll = await server.getColl(info)
-      saveAs(new Blob([JSON.stringify(coll)]), `${info.docname}.${info.collName}.json`)
+      saveAs(new Blob([JSON.stringify(coll)]), `${info.docname}.${info.collname}.json`)
     } catch (e) {
       this.props.dispatch(Action.toast(e.message, Intent.DANGER))
     }
@@ -176,15 +169,13 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
   }
 
   onLocate = () => {
-    const { docname, collName } = this.props
+    const { fileInfo } = this.props
     forEachNode(this.state.contents, node => {
-      node.isSelected = node.id === `${docname}-${collName}`
-    })
-    for (const node of this.state.contents) {
-      if (node.id === docname) {
+      if (node.nodeData.isAncestorOf(fileInfo)) {
         node.isExpanded = true
       }
-    }
+      node.isSelected = is(node.nodeData, fileInfo)
+    })
     this.forceUpdate()
   }
 
@@ -200,11 +191,11 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
     const fileInfoType = info.getType()
     if (fileInfoType === 'directory' || fileInfoType === 'doc') {
       node.isExpanded = true
+      this.forceUpdate()
     }
-    this.forceUpdate()
 
     if (fileInfoType === 'doc') {
-      dispatch(Action.requestOpenDocStat(info))
+      dispatch(Action.requestOpenDocStat(info.set('collname', DOC_STAT_NAME)))
     } else if (fileInfoType === 'coll') {
       dispatch(Action.requestOpenColl(info))
     }
@@ -295,8 +286,12 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
   }
 }
 
-function mapStateToProps({ main: { docname, collName }, config, tree }: State) {
-  return { docname, collName, config, tree }
+function mapStateToProps(state: State) {
+  return {
+    fileInfo: state.fileInfo,
+    config: state.config,
+    tree: state.tree,
+  }
 }
 
 export default connect(mapStateToProps)(TaskTree)

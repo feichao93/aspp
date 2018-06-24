@@ -1,13 +1,10 @@
 import { List, Map, merge, Record, Seq, Set } from 'immutable'
 import DecorationRange from '../types/DecorationRange'
 import { keyed } from '../utils/common'
-import { DOC_STAT_NAME } from '../utils/constants'
 import Annotation from './Annotation'
 import Decoration, { Hint, Slot } from './Decoration'
 
-const MainStateRecord = Record({
-  docname: '',
-  collName: '',
+const EditorStateRecord = Record({
   blocks: List<string>(),
   range: null as DecorationRange,
   sel: Set<string>(),
@@ -16,27 +13,15 @@ const MainStateRecord = Record({
   hints: Map<string, Hint>(),
 })
 
-export type MainStateStatus = 'closed' | 'doc-stat' | 'coll'
-
-export default class MainState extends MainStateRecord {
+export default class EditorState extends EditorStateRecord {
   static fromJS(object: any) {
-    return new MainState(object)
+    return new EditorState(object)
       .update('blocks', List)
       .update('range', DecorationRange.fromJS)
       .update('sel', Set)
       .update('annotations', annotations => keyed(Seq(annotations).map(Annotation.fromJS)))
       .update('slots', slots => keyed(Seq(slots).map(Slot.fromJS)))
       .update('hints', hints => keyed(Seq(hints).map(Hint.fromJS)))
-  }
-
-  getStatus(): MainStateStatus {
-    if (this.docname === '' && this.collName === '') {
-      return 'closed'
-    } else if (this.collName === DOC_STAT_NAME) {
-      return 'doc-stat'
-    } else {
-      return 'coll'
-    }
   }
 
   /** 将 Annotation/Slot/Hint 收集到同一个 Map 中 */

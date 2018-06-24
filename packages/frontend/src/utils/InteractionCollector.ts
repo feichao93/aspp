@@ -2,6 +2,7 @@ import { Set } from 'immutable'
 import { channel as makeChannel } from 'little-saga/compat'
 import Decoration, { Hint } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
+import FileInfo from '../types/FileInfo'
 
 export type Interaction = Interaction.ALL
 
@@ -40,8 +41,7 @@ export namespace Interaction {
 
   export interface CollOpened {
     type: 'COLL_OPENED'
-    docname: string
-    collName: string
+    fileInfo: FileInfo
   }
 
   export interface UserChangeRange {
@@ -51,7 +51,7 @@ export namespace Interaction {
 }
 
 export default class InteractionCollector {
-  readonly channel = makeChannel()
+  readonly channel = makeChannel<Interaction>()
 
   userAnnotateText(range: DecorationRange, tag: string) {
     this.channel.put({ type: 'USER_ANNOTATE_TEXT', range, tag })
@@ -69,8 +69,8 @@ export default class InteractionCollector {
     this.channel.put({ type: 'USER_ACCEPT_HINTS', set })
   }
 
-  collOpened(docname: string, collName: string) {
-    this.channel.put({ type: 'COLL_OPENED', docname, collName })
+  collOpened(fileInfo: FileInfo) {
+    this.channel.put({ type: 'COLL_OPENED', fileInfo })
   }
 
   userChangeRange(range: DecorationRange) {

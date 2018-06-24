@@ -1,6 +1,6 @@
-import MainAction from './MainAction'
+import EditorAction from './EditorAction'
 
-export default class EmptyMainAction extends MainAction {
+export default class EmptyEditorAction extends EditorAction {
   constructor(readonly message: string | JSX.Element) {
     super()
   }

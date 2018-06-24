@@ -55,7 +55,7 @@ class HelpOverlay extends React.PureComponent<HelpOverlayProps> {
             <Shortcut code="d" desc="删除当前的修饰对象" />
             <Shortcut code="a" desc="接受当前的提示" />
             <Shortcut code="Escape" desc="清空选择" />
-            <h4>自定快捷键</h4>
+            <h4>自定义快捷键</h4>
             <p>
               {ASPP_CONFIG.shortcutMap
                 .map((name, key) => (

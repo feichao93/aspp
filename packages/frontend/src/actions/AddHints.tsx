@@ -1,12 +1,12 @@
 import { Map } from 'immutable'
 import { put } from 'little-saga/compat'
 import React from 'react'
-import { addHints, deleteDecorations } from '../reducers/mainReducer'
+import { addHints, deleteDecorations } from '../reducers/editorReducer'
 import { Hint } from '../types/Decoration'
 import { toIdSet } from '../utils/common'
-import MainAction from './MainAction'
+import EditorAction from './EditorAction'
 
-export default class AddHints extends MainAction {
+export default class AddHints extends EditorAction {
   constructor(readonly hints: Map<string, Hint>, readonly message: string | JSX.Element) {
     super()
   }

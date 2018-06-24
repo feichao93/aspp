@@ -5,12 +5,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
-import MainHistory from '../../types/MainHistory'
+import EditorHistory from '../../types/EditorHistory'
 import Action from '../../utils/actions'
 import './HistoryPanel.styl'
 
 export interface HistoryPanelProps {
-  history: MainHistory
+  history: EditorHistory
   dispatch: Dispatch<Action>
 }
 

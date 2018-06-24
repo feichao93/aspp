@@ -1,20 +1,22 @@
 import { Intent } from '@blueprintjs/core'
 import { is, List, Map, Seq } from 'immutable'
 import { getContext, put, select, takeEvery, takeLatest } from 'little-saga/compat'
-import EmptyMainAction from '../actions/EmptyMainAction'
-import { ActionCategory } from '../actions/MainAction'
+import { ActionCategory } from '../actions/EditorAction'
+import EmptyEditorAction from '../actions/EmptyEditorAction'
 import { State } from '../reducers'
 import { setCachedAnnotations } from '../reducers/cacheReducer'
-import { DocStatState, updateDocStat } from '../reducers/docStatReducer'
+import { DocStatState, setDocStat } from '../reducers/docStatReducer'
+import { setEditorState } from '../reducers/editorReducer'
+import { setFileInfo } from '../reducers/fileInfoReducer'
 import { TreeDirectory, TreeDoc, TreeItem } from '../reducers/treeReducer'
 import Annotation from '../types/Annotation'
+import EditorState from '../types/EditorState'
 import FileInfo from '../types/FileInfo'
-import MainState from '../types/MainState'
 import Action from '../utils/actions'
 import { a, keyed, updateAnnotationNextId } from '../utils/common'
-import { DOC_STAT_NAME } from '../utils/constants'
+import InteractionCollector from '../utils/InteractionCollector'
 import server from '../utils/server'
-import { applyMainAction } from './historyManager'
+import { applyEditorAction } from './historyManager'
 
 /** 从后台加载文档树 */
 function* loadTreeState(reload: boolean) {
@@ -34,15 +36,16 @@ function* loadTreeState(reload: boolean) {
   }
 }
 
-function* handleRequestDiffColls({ docname, collNames }: Action.RequestDiffColls) {
-  if (collNames.length < 2) {
+function* diffColls({ docname, collnames }: Action.RequestDiffColls) {
+  if (collnames.length < 2) {
     yield put(Action.toast('请选择两个以上的标注文件', Intent.WARNING))
     return
   }
-  yield put(Action.toast('diff 功能仍在开发中', Intent.WARNING)) // TODO
+  yield put(Action.toast('diff 功能仍在开发中', Intent.WARNING))
+  // TODO WIP
   // const colls: RawColl[] = yield all(
-  //   collNames.map(collName =>
-  //     fetch(`/api/annotation-set/${e(docname)}/${e(collName)}`).then(res => res.json()),
+  //   collnames.map(collname =>
+  //     fetch(`/api/annotation-set/${e(docname)}/${e(collname)}`).then(res => res.json()),
   //   ),
   // )
   // const text = yield fetch(`/api/doc/${e(docname)}`).then(res => res.text())
@@ -50,12 +53,9 @@ function* handleRequestDiffColls({ docname, collNames }: Action.RequestDiffColls
 }
 
 function* closeCurrentColl() {
-  const { main, cache }: State = yield select()
-  if (main.getStatus() === 'closed') {
-    return
-  }
+  const { editor, cache }: State = yield select()
 
-  if (!is(cache.annotations, main.annotations)) {
+  if (!is(cache.annotations, editor.annotations)) {
     yield put(Action.toast('关闭文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
@@ -63,48 +63,28 @@ function* closeCurrentColl() {
   // 清空缓存
   yield put(setCachedAnnotations(Map()))
   // 清空当前编辑器状态
-  yield put(Action.setMainState(new MainState()))
+  yield put(setEditorState(new EditorState()))
+  // 清空当前打开文件信息
+  yield put(setFileInfo(new FileInfo()))
   // 清空历史记录
   yield put(Action.historyClear())
 }
 
-// TODO 去掉该函数
-function findDocInItemsStupidly(rootItems: TreeItem[], docname: string) {
-  return dfs(List(), rootItems)
-
-  function dfs(docPath: List<string>, items: TreeItem[]): List<string> {
-    for (const item of items) {
-      if (item.type === 'doc') {
-        if (item.name === docname) {
-          return docPath
-        }
-      } else {
-        const subResult = dfs(docPath.push(item.name), item.items)
-        if (subResult) {
-          return subResult
-        }
-      }
-    }
-    return null
-  }
-}
-
 /** 保存当前的标注工作进度 */
 function* saveCurrentColl() {
-  const { main, cache, tree }: State = yield select()
-  if (is(cache.annotations, main.annotations)) {
+  const { fileInfo, editor, cache }: State = yield select()
+  if (is(cache.annotations, editor.annotations)) {
     return
   }
 
-  const { docname, collName } = main
-  const docPath = findDocInItemsStupidly(tree, docname)
-  const fileInfo = new FileInfo({ docPath, docname, collName })
   try {
     yield server.putColl(fileInfo, {
-      annotations: main.annotations.valueSeq().toArray(),
+      annotations: editor.annotations.valueSeq().toArray(),
     })
-    yield put(setCachedAnnotations(main.annotations))
-    yield applyMainAction(new EmptyMainAction('保存文件').withCategory(ActionCategory.sideEffects))
+    yield put(setCachedAnnotations(editor.annotations))
+    yield applyEditorAction(
+      new EmptyEditorAction('保存文件').withCategory(ActionCategory.sideEffects),
+    )
     yield put(Action.toast('保存成功'))
   } catch (e) {
     console.error(e)
@@ -112,36 +92,25 @@ function* saveCurrentColl() {
   }
 }
 
-function* handleRequestOpenDocStat({ fileInfo }: Action.RequestOpenDocStat) {
-  const { main, cache }: State = yield select()
+function* openDocStat({ fileInfo }: Action.RequestOpenDocStat) {
+  const { fileInfo: cntFileInfo, editor, cache }: State = yield select()
 
-  if (main.getStatus() === 'coll' && !is(cache.annotations, main.annotations)) {
+  if (cntFileInfo.getType() === 'coll' && !is(cache.annotations, editor.annotations)) {
     yield put(Action.toast('打开统计信息之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
 
   try {
-    const stat = yield server.getDocStat(fileInfo)
-    const mainState = new MainState({
+    const statItems = yield server.getDocStat(fileInfo)
+
+    const docStat = new DocStatState({
       docname: fileInfo.docname,
-      collName: DOC_STAT_NAME,
-      blocks: List(),
-      range: null,
+      items: List(statItems),
     })
-    yield put(Action.setMainState(mainState))
-    // TODO 还需要 UPDATE_DOC_STAT
-    yield put(
-      updateDocStat(
-        () =>
-          new DocStatState({
-            docname: fileInfo.docname,
-            stat: List(stat),
-          }),
-      ),
-    )
+    yield put(setDocStat(docStat))
     yield put(Action.historyClear())
-    yield applyMainAction(
-      new EmptyMainAction(`打开文档 ${fileInfo.docname} 的统计信息`).withCategory(
+    yield applyEditorAction(
+      new EmptyEditorAction(`打开文档 ${fileInfo.docname} 的统计信息`).withCategory(
         ActionCategory.sideEffects,
       ),
     )
@@ -151,22 +120,20 @@ function* handleRequestOpenDocStat({ fileInfo }: Action.RequestOpenDocStat) {
   }
 }
 
-function* handleRequestOpenColl({ fileInfo }: Action.RequestOpenColl) {
-  const collector = yield getContext('collector')
-  const { main, cache }: State = yield select()
-  if (main.getStatus() === 'coll' && !is(cache.annotations, main.annotations)) {
+function* openColl({ fileInfo: opening }: Action.RequestOpenColl) {
+  const collector: InteractionCollector = yield getContext('collector')
+  const { fileInfo: cntFileInfo, editor, cache }: State = yield select()
+  if (cntFileInfo.getType() === 'coll' && !is(cache.annotations, editor.annotations)) {
     yield put(Action.toast('打开文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
 
   try {
-    const blocks: string[] = yield server.getDoc(fileInfo)
-    const coll = yield server.getColl(fileInfo)
+    const blocks: string[] = yield server.getDoc(opening)
+    const coll = yield server.getColl(opening)
 
     const annotations = keyed<Annotation>(Seq(coll.annotations).map(Annotation.fromJS))
-    const mainState = new MainState({
-      docname: fileInfo.docname,
-      collName: fileInfo.collName,
+    const editorState = new EditorState({
       blocks: List(blocks),
       annotations,
       range: null,
@@ -174,12 +141,13 @@ function* handleRequestOpenColl({ fileInfo }: Action.RequestOpenColl) {
     })
 
     updateAnnotationNextId(annotations)
-    collector.collOpened(fileInfo.docname, fileInfo.collName)
-    yield put(Action.setMainState(mainState))
-    yield put(setCachedAnnotations(mainState.annotations))
+    collector.collOpened(opening)
+    yield put(setEditorState(editorState))
+    yield put(setCachedAnnotations(editorState.annotations))
+    yield put(setFileInfo(opening))
     yield put(Action.historyClear())
-    yield applyMainAction(
-      new EmptyMainAction(`打开文件 ${fileInfo.docname} - ${fileInfo.collName}`).withCategory(
+    yield applyEditorAction(
+      new EmptyEditorAction(`打开文件 ${opening.docname} - ${opening.collname}`).withCategory(
         ActionCategory.sideEffects,
       ),
     )
@@ -215,12 +183,12 @@ function findDocInItems(items: TreeItem[], fileInfo: FileInfo): TreeDoc {
   return items.find(item => item.type === 'doc' && item.name === fileInfo.docname) as TreeDoc
 }
 
-function* handleRequestAddColl({ fileInfo }: Action.RequestAddColl) {
+function* addColl({ fileInfo }: Action.RequestAddColl) {
   if (DEV.ASSERT) {
     console.assert(fileInfo.getType() === 'doc')
   }
-  const { config, tree, main, cache }: State = yield select()
-  if (!is(main.annotations, cache.annotations)) {
+  const { config, tree, editor, cache }: State = yield select()
+  if (!is(editor.annotations, cache.annotations)) {
     yield put(Action.toast('创建新文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
@@ -229,36 +197,35 @@ function* handleRequestAddColl({ fileInfo }: Action.RequestAddColl) {
   if (DEV.ASSERT) {
     console.assert(doc != null)
   }
-  const collName = getNextCollname(doc, config.username)
+  const collname = getNextCollname(doc, config.username)
 
   try {
-    const newCollInfo = fileInfo.set('collName', collName)
-    yield server.putColl(newCollInfo, { annotations: [] })
+    const adding = fileInfo.set('collname', collname)
+    yield server.putColl(adding, { annotations: [] })
     yield loadTreeState(false)
-    yield put(Action.toast(`Created ${collName}`))
-    yield put(Action.requestOpenColl(newCollInfo))
+    yield put(Action.toast(`已添加 ${collname}`))
+    yield put(Action.requestOpenColl(adding))
   } catch (e) {
     console.error(e)
     yield put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
-function* handleRequestDeleteColl({ fileInfo }: Action.RequestDeleteColl) {
-  const { docname, collName } = fileInfo
-  const { main }: State = yield select()
-  if (main.docname === docname && collName === main.collName) {
+function* deleteColl({ fileInfo: deleting }: Action.RequestDeleteColl) {
+  const { fileInfo: cntFileInfo }: State = yield select()
+  if (is(deleting, cntFileInfo)) {
     yield put(Action.toast('不能删除当前打开的文件'))
     return
   }
 
-  if (!window.confirm(`确认要删除 ${docname}-${collName} 吗？`)) {
+  if (!window.confirm(`确认要删除 ${deleting.getFullName()} 吗？`)) {
     return
   }
 
   try {
-    yield server.deleteColl(fileInfo)
+    yield server.deleteColl(deleting)
     yield loadTreeState(false)
-    yield put(Action.toast(`Deleted. ${docname}/${collName}.`))
+    yield put(Action.toast(`已删除 ${deleting.getFullName()}`))
   } catch (e) {
     console.error(e)
     yield put(Action.toast(e.message, Intent.DANGER))
@@ -266,13 +233,13 @@ function* handleRequestDeleteColl({ fileInfo }: Action.RequestDeleteColl) {
 }
 
 export default function* fileSaga() {
-  yield takeEvery(a('REQUEST_DIFF_COLLS'), handleRequestDiffColls)
-  yield takeEvery(a('REQUEST_ADD_COLL'), handleRequestAddColl)
-  yield takeEvery(a('REQUEST_DELETE_COLL'), handleRequestDeleteColl)
+  yield takeEvery(a('REQUEST_DIFF_COLLS'), diffColls)
+  yield takeEvery(a('REQUEST_ADD_COLL'), addColl)
+  yield takeEvery(a('REQUEST_DELETE_COLL'), deleteColl)
   yield takeEvery(a('REQUEST_CLOSE_CURRENT_COLL'), closeCurrentColl)
   yield takeEvery(a('REQUEST_SAVE_CURRENT_COLL'), saveCurrentColl)
-  yield takeEvery(a('REQUEST_OPEN_DOC_STAT'), handleRequestOpenDocStat)
-  yield takeEvery(a('REQUEST_OPEN_COLL'), handleRequestOpenColl)
+  yield takeEvery(a('REQUEST_OPEN_DOC_STAT'), openDocStat)
+  yield takeEvery(a('REQUEST_OPEN_COLL'), openColl)
 
   yield takeLatest(a('REQUEST_LOAD_TREE'), ({ reload }: Action.RequestLoadTree) =>
     loadTreeState(reload),

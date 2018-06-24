@@ -1,9 +1,12 @@
 import { is, Set } from 'immutable'
 import React from 'react'
+import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
+import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
 import Decoration from '../../types/Decoration'
-import MainState from '../../types/MainState'
+import EditorState from '../../types/EditorState'
+import FileInfo from '../../types/FileInfo'
 import SelectionUtils from '../../utils/SelectionUtils'
 import AnnotationButtonGroup from './AnnotationButtonGroup'
 import './AnnotationEditor.styl'
@@ -13,38 +16,39 @@ import EditHistoryButtonGroup from './EditHistoryButtonGroup'
 import HintButtonGroup from './HintButtonGroup'
 
 interface AnnotationEditorProps {
-  main: MainState
+  editor: EditorState
+  fileInfo: FileInfo
   config: Config
   dispatch: Dispatch
 }
 
-export default class AnnotationEditor extends React.Component<AnnotationEditorProps> {
+class AnnotationEditor extends React.Component<AnnotationEditorProps> {
   componentDidUpdate(prevProps: AnnotationEditorProps) {
     const currentRange = SelectionUtils.getCurrentRange()
-    const { main } = this.props
+    const { editor, fileInfo } = this.props
     // Synchronize native selection if necessary
     if (
-      prevProps.main.docname === main.docname &&
-      prevProps.main.collName === main.collName &&
-      !is(currentRange, main.range)
+      prevProps.fileInfo.docname === fileInfo.docname &&
+      prevProps.fileInfo.collname === fileInfo.collname &&
+      !is(currentRange, editor.range)
     ) {
       if (DEV.LOG_RANGE) {
         console.log(
           '%cDEV.LOG_RANGE',
           'background: #fedcd4;',
-          `sync native-selection ${currentRange} -> ${main.range}`,
+          `sync native-selection ${currentRange} -> ${editor.range}`,
         )
       }
-      SelectionUtils.setCurrentRange(main.range)
+      SelectionUtils.setCurrentRange(editor.range)
     }
   }
 
   render() {
-    const { dispatch, main, config } = this.props
+    const { dispatch, editor, config } = this.props
 
-    const decorations = main.gather()
+    const decorations = editor.gather()
     const decorationsByBlockIndex = decorations.groupBy(dec => dec.range.blockIndex)
-    const selByBlockIndex = main.sel
+    const selByBlockIndex = editor.sel
       .map(id => decorations.get(id))
       .groupBy(dec => dec.range.blockIndex)
     const hintCountMap = decorationsByBlockIndex.map(decSet => decSet.count(Decoration.isHint))
@@ -57,7 +61,7 @@ export default class AnnotationEditor extends React.Component<AnnotationEditorPr
           <HintButtonGroup />
         </div>
         <div className="editor">
-          {main.blocks.map((block, blockIndex) => (
+          {editor.blocks.map((block, blockIndex) => (
             <Block
               key={blockIndex}
               block={block}
@@ -77,3 +81,7 @@ export default class AnnotationEditor extends React.Component<AnnotationEditorPr
     )
   }
 }
+
+const mapStateToProps = ({ editor, config, fileInfo }: State) => ({ editor, config, fileInfo })
+
+export default connect(mapStateToProps)(AnnotationEditor)

@@ -17,14 +17,14 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
+import FileInfo from '../../types/FileInfo'
 import Action from '../../utils/actions'
 import HelpOverlay from '../HelpOverlay/HelpOverlay'
 import './Menubar.styl'
 
 export interface MenubarProps {
   config: Config
-  docname: string
-  collName: string
+  fileInfo: FileInfo
   dispatch: Dispatch
 }
 
@@ -38,7 +38,7 @@ class Menubar extends React.Component<MenubarProps> {
   }
 
   render() {
-    const { config, docname, collName, dispatch } = this.props
+    const { config, fileInfo, dispatch } = this.props
     return (
       <Navbar className={classNames('menubar')}>
         <NavbarGroup align={Alignment.LEFT}>
@@ -68,9 +68,7 @@ class Menubar extends React.Component<MenubarProps> {
             onClick={() => dispatch(Action.toggleHelpOverlay())}
           />
           <HelpOverlay />
-          <div style={{ marginLeft: 24 }}>
-            当前文件名: {docname} {collName}
-          </div>
+          <div style={{ marginLeft: 24 }}>当前打开: {fileInfo.getFullName()}</div>
         </NavbarGroup>
         <NavbarGroup align={Alignment.RIGHT}>
           {/*<Switch*/}
@@ -91,8 +89,11 @@ class Menubar extends React.Component<MenubarProps> {
   }
 }
 
-export default connect((s: State) => ({
-  config: s.config,
-  docname: s.main.docname,
-  collName: s.main.collName,
-}))(Menubar)
+function mapStateToProps(state: State) {
+  return {
+    config: state.config,
+    fileInfo: state.fileInfo,
+  }
+}
+
+export default connect(mapStateToProps)(Menubar)

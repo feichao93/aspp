@@ -44,7 +44,7 @@ function makeDocStatUrl(info: FileInfo) {
 }
 
 function makeCollUrl(info: FileInfo) {
-  return `/coll${makeDocPath(info)}?collname=${encode(info.collName)}`
+  return `/coll${makeDocPath(info)}?collname=${encode(info.collname)}`
 }
 
 const asppFetch = withPrefix('/api')(guardOK(fetch))
@@ -65,7 +65,7 @@ export default {
     info: FileInfo,
   ): Promise<{
     // TODO 和已有的类型定义进行合并
-    collName: string
+    collname: string
     annotationCount: number
     fileStat: fs.Stats
   }> {

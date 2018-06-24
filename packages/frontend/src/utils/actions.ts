@@ -1,14 +1,14 @@
 import { Intent } from '@blueprintjs/core'
 import { Set } from 'immutable'
-import MainAction from '../actions/MainAction'
+import EditorAction from '../actions/EditorAction'
 import { CacheState } from '../reducers/cacheReducer'
 import { DocStatState } from '../reducers/docStatReducer'
 import { TreeItem } from '../reducers/treeReducer'
 import { TaskMap } from '../tasks'
 import TaskConstructor from '../tasks/TaskConstructor'
 import Decoration from '../types/Decoration'
+import EditorState from '../types/EditorState'
 import FileInfo from '../types/FileInfo'
-import MainState from '../types/MainState'
 
 type Action = Action.ALL
 
@@ -125,10 +125,10 @@ namespace Action {
   export interface RequestDiffColls {
     type: 'REQUEST_DIFF_COLLS'
     docname: string
-    collNames: string[]
+    collnames: string[]
   }
-  export function requestDiffColls(docname: string, collNames: string[]): RequestDiffColls {
-    return { type: 'REQUEST_DIFF_COLLS', docname, collNames }
+  export function requestDiffColls(docname: string, collnames: string[]): RequestDiffColls {
+    return { type: 'REQUEST_DIFF_COLLS', docname, collnames }
   }
 
   export interface RequestLoadTree {
@@ -322,15 +322,21 @@ namespace Action {
   // endregion
 
   // region StateUpdateTypes
-  type StateUpdateTypes = UpdateMain | UpdateTaskMap | UpdateCache | UpdateDocStat
+  type StateUpdateTypes =
+    | UpdateFileInfo
+    | UpdateEditorState
+    | UpdateTaskMap
+    | UpdateCache
+    | UpdateDocStat
 
-  export interface UpdateMain {
-    type: 'UPDATE_MAIN'
-    updater(s: MainState): MainState
+  export interface UpdateFileInfo {
+    type: 'UPDATE_FILE_INFO'
+    updater(fileInfo: FileInfo): FileInfo
   }
 
-  export function setMainState(mainState: MainState): UpdateMain {
-    return { type: 'UPDATE_MAIN', updater: () => mainState }
+  export interface UpdateEditorState {
+    type: 'UPDATE_EDITOR_STATE'
+    updater(editor: EditorState): EditorState
   }
 
   export interface UpdateTaskMap {
@@ -368,9 +374,9 @@ namespace Action {
 
   export interface HistoryPush {
     type: 'HISTORY_PUSH'
-    action: MainAction
+    action: EditorAction
   }
-  export function historyPush(action: MainAction): HistoryPush {
+  export function historyPush(action: EditorAction): HistoryPush {
     return { type: 'HISTORY_PUSH', action }
   }
 

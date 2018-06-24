@@ -38,7 +38,7 @@ tags:
 
   - name: 百分比
     label: 百分比
-    abbr: PERCENTAGE
+    abbr: PERC
     shortcut: '6'
     theme:
       background: 'linear-gradient(rgb(223, 243, 201), rgb(78, 202, 78) 70%, rgb(122, 177, 124))'

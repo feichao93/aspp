@@ -1,7 +1,7 @@
 import { Map, Seq } from 'immutable'
 import { io } from 'little-saga/compat'
 import { State } from '../reducers'
-import { addAnnotations } from '../reducers/mainReducer'
+import { addAnnotations } from '../reducers/editorReducer'
 import Annotation from '../types/Annotation'
 import Action from '../utils/actions'
 import { keyed, updateAnnotationNextId } from '../utils/common'
@@ -30,9 +30,9 @@ export default class StanfordNLP {
   constructor(readonly config = defaultConfig) {}
 
   *saga() {
-    const { main }: State = yield io.select()
-    if (main.annotations.isEmpty()) {
-      const block = main.blocks.get(0)
+    const { editor }: State = yield io.select()
+    if (editor.annotations.isEmpty()) {
+      const block = editor.blocks.get(0)
       try {
         const res = yield fetch(this.config.addr, {
           method: 'POST',

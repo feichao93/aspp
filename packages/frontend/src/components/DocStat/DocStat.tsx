@@ -6,40 +6,40 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { DocStatState } from '../../reducers/docStatReducer'
-import MainState from '../../types/MainState'
+import FileInfo from '../../types/FileInfo'
 import Action from '../../utils/actions'
 import { toggle } from '../../utils/common'
 
 interface DocStatProps {
-  main: MainState
+  fileInfo: FileInfo
   docStat: DocStatState
   dispatch: Dispatch
 }
 
 class DocStat extends React.Component<DocStatProps> {
   state = {
-    checkedCollNames: Set<string>(),
+    checkedCollnames: Set<string>(),
   }
 
-  toggle = (collName: string) => {
+  toggle = (collname: string) => {
     this.setState({
-      checkedCollNames: toggle(this.state.checkedCollNames, collName),
+      checkedCollnames: toggle(this.state.checkedCollnames, collname),
     })
   }
 
   reqDiff = () => {
-    const { main, dispatch } = this.props
-    const { checkedCollNames } = this.state
-    dispatch(Action.requestDiffColls(main.docname, checkedCollNames.toArray()))
+    const { dispatch, fileInfo } = this.props
+    const { checkedCollnames } = this.state
+    dispatch(Action.requestDiffColls(fileInfo.docname, checkedCollnames.toArray()))
   }
 
   render() {
-    const { main, docStat, dispatch } = this.props
-    const { checkedCollNames } = this.state
+    const { fileInfo, docStat, dispatch } = this.props
+    const { checkedCollnames } = this.state
 
     return (
       <div>
-        <h2>{main.docname}</h2>
+        <h2>{fileInfo.docname}</h2>
         <table className={Classes.HTML_TABLE}>
           <thead>
             <tr>
@@ -51,33 +51,35 @@ class DocStat extends React.Component<DocStatProps> {
             </tr>
           </thead>
           <tbody>
-            {docStat.stat.map(s => (
-              <tr key={s.collname}>
+            {docStat.items.map(item => (
+              <tr key={item.collname}>
                 <td>
                   <Checkbox
-                    checked={checkedCollNames.has(s.collname)}
-                    onClick={() => this.toggle(s.collname)}
+                    checked={checkedCollnames.has(item.collname)}
+                    onClick={() => this.toggle(item.collname)}
                   />
                 </td>
-                <td>{s.collname}</td>
-                <td>{moment(s.fileStat.mtimeMs).format('YYYY-MM-DD HH:mm:ss')}</td>
-                <td>{s.annotationCount}</td>
+                <td>{item.collname}</td>
+                <td>{moment(item.fileStat.mtimeMs).format('YYYY-MM-DD HH:mm:ss')}</td>
+                <td>{item.annotationCount}</td>
                 <td style={{ padding: 8 }}>
                   <ButtonGroup>
                     <Button
                       small
                       text="打开"
                       icon="document-open"
-                      disabled
-                      onClick={() => dispatch(Action.requestOpenColl(main.docname, s.collName))}
+                      onClick={() =>
+                        dispatch(Action.requestOpenColl(fileInfo.set('collname', item.collname)))
+                      }
                     />
                     <Button
                       small
                       text="删除"
                       icon="trash"
                       intent={Intent.DANGER}
-                      disabled
-                      onClick={() => dispatch(Action.requestDeleteColl(main.docname, s.collName))}
+                      onClick={() =>
+                        dispatch(Action.requestDeleteColl(fileInfo.set('collname', item.collname)))
+                      }
                     />
                   </ButtonGroup>
                 </td>
@@ -91,4 +93,6 @@ class DocStat extends React.Component<DocStatProps> {
   }
 }
 
-export default connect(({ main, docStat }: State) => ({ main, docStat }))(DocStat)
+const mapStateToProps = ({ fileInfo, docStat }: State) => ({ fileInfo, docStat })
+
+export default connect(mapStateToProps)(DocStat)

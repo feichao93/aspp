@@ -1,9 +1,9 @@
 import { Set } from 'immutable'
 import { put, select } from 'little-saga/compat'
 import { State } from '../reducers'
-import { setSel } from '../reducers/mainReducer'
+import { setSel } from '../reducers/editorReducer'
 import Action from '../utils/actions'
-import MainAction from './MainAction'
+import EditorAction from './EditorAction'
 
 export enum SetSelMethod {
   select = 'select',
@@ -13,7 +13,7 @@ export enum SetSelMethod {
   manualClear = 'manualClear',
 }
 
-export default class SetSel extends MainAction {
+export default class SetSel extends EditorAction {
   prevSel: Set<string>
 
   constructor(readonly nextSel: Set<string>, readonly method: SetSelMethod) {
@@ -29,7 +29,7 @@ export default class SetSel extends MainAction {
   }
 
   *prepare() {
-    const { main, history }: State = yield select()
+    const { editor, history }: State = yield select()
     const last = history.getLastAction()
     if (last instanceof SetSel) {
       const { intersection, autoClear, select, toggle } = SetSelMethod
@@ -43,7 +43,7 @@ export default class SetSel extends MainAction {
       }
     }
 
-    this.prevSel = main.sel
+    this.prevSel = editor.sel
   }
 
   *prev() {

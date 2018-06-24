@@ -2,11 +2,11 @@ import { Button, Checkbox, Classes, Intent, Label } from '@blueprintjs/core'
 import { is, Seq } from 'immutable'
 import { MulticastChannel, put, select, take } from 'little-saga/compat'
 import React from 'react'
-import { ActionCategory } from '../actions/MainAction'
-import SetMainState from '../actions/SetMainState'
+import { ActionCategory } from '../actions/EditorAction'
+import SetEditorState from '../actions/SetEditorState'
 import { State } from '../reducers'
 import adjustOffsets from '../sagas/adjustOffsets'
-import { applyMainAction } from '../sagas/historyManager'
+import { applyEditorAction } from '../sagas/historyManager'
 import Decoration from '../types/Decoration'
 import Action from '../utils/actions'
 import { compareArray, keyed } from '../utils/common'
@@ -129,9 +129,9 @@ export default class SimpleOffsetAdjusting {
 
   *run() {
     const name = this.task.name
-    const { main }: State = yield select()
-    const block = main.blocks.first()
-    const annotations = main.annotations
+    const { editor }: State = yield select()
+    const block = editor.blocks.first()
+    const annotations = editor.annotations
       .valueSeq()
       .sortBy(Decoration.getPosition, compareArray)
       .toArray()
@@ -144,15 +144,15 @@ export default class SimpleOffsetAdjusting {
     }
 
     const nextAnnotations = keyed(Seq(adjusted))
-    if (is(main.annotations, nextAnnotations)) {
+    if (is(editor.annotations, nextAnnotations)) {
       yield put(Action.toast(`${name} 没有发现需要进行修复的标注`, Intent.PRIMARY))
       return
     }
-    const mainAction = new SetMainState(
-      main.set('annotations', nextAnnotations),
+    const edit = new SetEditorState(
+      editor.set('annotations', nextAnnotations),
       `${name} 更新标注数据`,
     ).withCategory(ActionCategory.task)
-    yield applyMainAction(mainAction)
+    yield applyEditorAction(edit)
     yield put(Action.toast(`${name} 修复完成`, Intent.PRIMARY))
   }
 }

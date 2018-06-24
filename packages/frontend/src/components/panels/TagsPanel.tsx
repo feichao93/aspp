@@ -7,7 +7,7 @@ import ASPP_CONFIG from '../../aspp-config'
 import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
 import AsppConfig from '../../types/AsppConfig'
-import MainState from '../../types/MainState'
+import EditorState from '../../types/EditorState'
 import Action from '../../utils/actions'
 import { toIdSet } from '../../utils/common'
 import './TagsPanel.styl'
@@ -92,7 +92,7 @@ function TagGroupPreview({
 }
 
 export interface TagsPanelProps {
-  main: MainState
+  editor: EditorState
   config: Config
   dispatch: Dispatch
 }
@@ -112,8 +112,8 @@ class TagsPanel extends React.Component<TagsPanelProps, TagsPanelState> {
   }
 
   onSelectTag = (tagName: string) => {
-    const { dispatch, main } = this.props
-    const idSet = toIdSet(main.annotations.filter(annotation => annotation.tag === tagName))
+    const { dispatch, editor } = this.props
+    const idSet = toIdSet(editor.annotations.filter(annotation => annotation.tag === tagName))
     dispatch(Action.userSetSel(idSet))
   }
 
@@ -155,7 +155,4 @@ class TagsPanel extends React.Component<TagsPanelProps, TagsPanelState> {
   }
 }
 
-export default connect((s: State) => ({
-  main: s.main,
-  config: s.config,
-}))(TagsPanel)
+export default connect((s: State) => ({ editor: s.editor, config: s.config }))(TagsPanel)

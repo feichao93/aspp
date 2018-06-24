@@ -3,12 +3,12 @@ import { put, select } from 'little-saga/compat'
 import React from 'react'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
-import { addAnnotations, addHints, addSlots, deleteDecorations } from '../reducers/mainReducer'
+import { addAnnotations, addHints, addSlots, deleteDecorations } from '../reducers/editorReducer'
 import Decoration from '../types/Decoration'
 import { shortenText, toIdSet } from '../utils/common'
-import MainAction from './MainAction'
+import EditorAction from './EditorAction'
 
-export default class DeleteDecorations extends MainAction {
+export default class DeleteDecorations extends EditorAction {
   message: JSX.Element
 
   constructor(readonly removing: Map<string, Decoration>) {
@@ -20,13 +20,13 @@ export default class DeleteDecorations extends MainAction {
   }
 
   *prepare() {
-    const { main }: State = yield select()
+    const { editor }: State = yield select()
     this.message = (
       <span>
         删除{' '}
         {this.removing
           .valueSeq()
-          .map(({ range }) => range.substring(main.blocks.get(range.blockIndex)))
+          .map(({ range }) => range.substring(editor.blocks.get(range.blockIndex)))
           .map((text, index) => <span key={index}>{Rich.string(shortenText(15, text))}</span>)
           .toArray()}
         等 {Rich.number(this.removing.count())} 个对象

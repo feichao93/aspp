@@ -2,10 +2,10 @@ import { Intent } from '@blueprintjs/core'
 import { Set } from 'immutable'
 import { delay, io, MulticastChannel } from 'little-saga/compat'
 import Annotate from '../actions/Annotate'
-import { ActionCategory } from '../actions/MainAction'
+import { ActionCategory } from '../actions/EditorAction'
 import ASPP_CONFIG from '../aspp-config'
 import { State } from '../reducers'
-import { applyMainAction } from '../sagas/historyManager'
+import { applyEditorAction } from '../sagas/historyManager'
 import Annotation from '../types/Annotation'
 import DecorationRange from '../types/DecorationRange'
 import Action from '../utils/actions'
@@ -44,10 +44,10 @@ export default class AutoAnnotate {
 
 function* autoTag({ range }: Interaction.UserChangeRange) {
   if (range != null) {
-    const { main }: State = yield io.select()
-    const gathered = main.gather()
+    const { editor }: State = yield io.select()
+    const gathered = editor.gather()
     const annotating = Set.of(
-      Annotation.annotateRange(DEFAULT_TAG, main.blocks.get(range.blockIndex), range),
+      Annotation.annotateRange(DEFAULT_TAG, editor.blocks.get(range.blockIndex), range),
     )
     const overlapped = annotating.some(dec1 =>
       gathered.some(dec2 => DecorationRange.isOverlapped(dec1.range, dec2.range)),
@@ -56,7 +56,7 @@ function* autoTag({ range }: Interaction.UserChangeRange) {
       yield io.put(Action.toast('Overlap', Intent.WARNING))
       return
     }
-    yield applyMainAction(
+    yield applyEditorAction(
       new Annotate(keyed(annotating), DEFAULT_TAG, 'auto-annotate').withCategory(
         ActionCategory.task,
       ),

@@ -3,16 +3,20 @@ import { put, select } from 'little-saga/compat'
 import React from 'react'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
-import { addAnnotations, deleteDecorations, setSel } from '../reducers/mainReducer'
+import {
+  addAnnotations,
+  deleteDecorations,
+  setEditorState,
+  setSel,
+} from '../reducers/editorReducer'
 import Annotation from '../types/Annotation'
 import Decoration from '../types/Decoration'
-import MainState from '../types/MainState'
-import Action from '../utils/actions'
+import EditorState from '../types/EditorState'
 import { shortenText, toIdSet } from '../utils/common'
-import MainAction from './MainAction'
+import EditorAction from './EditorAction'
 
-export default class Annotate extends MainAction {
-  oldState: MainState
+export default class Annotate extends EditorAction {
+  oldState: EditorState
 
   constructor(
     readonly annotating: Map<string, Annotation>,
@@ -38,18 +42,18 @@ export default class Annotate extends MainAction {
   }
 
   *prepare() {
-    const { main }: State = yield select()
-    this.oldState = main
+    const { editor }: State = yield select()
+    this.oldState = editor
   }
 
   *prev() {
-    yield put(Action.setMainState(this.oldState))
+    yield put(setEditorState(this.oldState))
   }
 
   *next() {
-    const { main }: State = yield select()
-    const gathered = main.gather()
-    const selection = main.sel.map(id => gathered.get(id))
+    const { editor }: State = yield select()
+    const gathered = editor.gather()
+    const selection = editor.sel.map(id => gathered.get(id))
     yield put(deleteDecorations(toIdSet(selection.filterNot(Decoration.isAnnotation))))
     yield put(addAnnotations(this.annotating))
     yield put(setSel(toIdSet(this.annotating)))

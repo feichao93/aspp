@@ -1,25 +1,21 @@
 import { NonIdealState } from '@blueprintjs/core'
 import React from 'react'
 import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
 import { State } from '../../reducers'
-import { Config } from '../../reducers/configReducer'
-import MainState from '../../types/MainState'
+import FileInfo from '../../types/FileInfo'
 import AnnotationEditor from '../AnnotationEditor/AnnotationEditor'
 import DocStat from '../DocStat/DocStat'
 import './ViewContainer.styl'
 
 interface ViewContainerProps {
-  main: MainState
-  config: Config
-  dispatch: Dispatch
+  fileInfo: FileInfo
 }
 
 class ViewContainer extends React.Component<ViewContainerProps> {
   render() {
-    const { main } = this.props
+    const { fileInfo } = this.props
     let content: JSX.Element
-    if (main.getStatus() === 'closed') {
+    if (fileInfo.getType() === 'empty') {
       content = (
         <NonIdealState
           visual="folder-shared-open"
@@ -27,14 +23,16 @@ class ViewContainer extends React.Component<ViewContainerProps> {
           description="请在左侧打开或新建标注文件"
         />
       )
-    } else if (main.getStatus() === 'doc-stat') {
+    } else if (fileInfo.getType() === 'doc-stat') {
       content = <DocStat />
+    } else if (fileInfo.getType() === 'coll') {
+      content = <AnnotationEditor />
     } else {
-      content = <AnnotationEditor {...this.props} />
+      throw new Error('Invalid fileInfo type')
     }
 
     return <div className="view-container">{content}</div>
   }
 }
 
-export default connect(({ main, config }: State) => ({ main, config }))(ViewContainer)
+export default connect((s: State) => ({ fileInfo: s.fileInfo }))(ViewContainer)

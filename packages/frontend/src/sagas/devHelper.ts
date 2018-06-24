@@ -1,16 +1,18 @@
 import { put, take } from 'little-saga/compat'
 import DecorationRange from '../types/DecorationRange'
 import Action from '../utils/actions'
+import { a } from '../utils/common'
 import SelectionUtils from '../utils/SelectionUtils'
 
 export default function* devHelper() {
   if (process.env.NODE_ENV === 'development') {
-    const { treeState }: Action.LoadTreeState = yield take('LOAD_DATA')
-    const firstDoc = treeState.docs[0]
+    // TODO
+    const { treeState }: Action.LoadTreeState = yield take(a('LOAD_TREE_STATE'))
+    // const firstDoc = treeState.docs[0]
     // if (firstDoc && firstDoc.annotations.length > 0) {
     //   yield put(requestOpenColl(firstDoc.name, firstDoc.annotations[0]))
     // }
-    yield put(Action.requestOpenDocStat(firstDoc.name))
+    // yield put(Action.requestOpenDocStat(firstDoc.name))
   }
 }
 

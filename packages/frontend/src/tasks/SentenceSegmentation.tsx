@@ -3,10 +3,10 @@ import { Seq } from 'immutable'
 import { put, select } from 'little-saga/compat'
 import React from 'react'
 import AddSlots from '../actions/AddSlots'
-import { ActionCategory } from '../actions/MainAction'
+import { ActionCategory } from '../actions/EditorAction'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
-import { applyMainAction } from '../sagas/historyManager'
+import { applyEditorAction } from '../sagas/historyManager'
 import { Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import Action from '../utils/actions'
@@ -97,8 +97,8 @@ export default class SentenceSegmentation {
   *run() {
     const reg = new RegExp(`[${this.options.cutList}]`, 'g')
     const rawRanges: DecorationRange[] = []
-    const { main }: State = yield select()
-    main.blocks.forEach((block, blockIndex) => {
+    const { editor }: State = yield select()
+    editor.blocks.forEach((block, blockIndex) => {
       let startOffset = 0
       reg.lastIndex = 0
       while (true) {
@@ -112,13 +112,13 @@ export default class SentenceSegmentation {
         }
       }
     })
-    const existedRanges = main.gather().map(d => d.range)
+    const existedRanges = editor.gather().map(d => d.range)
     const isOverlappedWithExisted = (range: DecorationRange) =>
       existedRanges.some(existed => DecorationRange.isOverlapped(range, existed))
 
     const slots = Seq(rawRanges)
       .map(range => {
-        const block = main.blocks.get(range.blockIndex)
+        const block = editor.blocks.get(range.blockIndex)
         const text = range.substring(block)
         let dropCount = 0
         while (dropCount < text.length && text[dropCount].match(/\s/)) {
@@ -134,7 +134,7 @@ export default class SentenceSegmentation {
       .filterNot(isOverlappedWithExisted)
       .map(range => new Slot({ range, id: getNextId('slot'), slotType: 'sentence' }))
 
-    const mainAction = new AddSlots(
+    const editorAction = new AddSlots(
       keyed(slots),
       (
         <span>
@@ -142,7 +142,7 @@ export default class SentenceSegmentation {
         </span>
       ),
     ).withCategory(ActionCategory.task)
-    yield applyMainAction(mainAction)
+    yield applyEditorAction(editorAction)
     yield put(Action.toast('分句完成', Intent.PRIMARY))
   }
 }

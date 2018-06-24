@@ -13,39 +13,41 @@ import Action from '../utils/actions'
 import { a, keyed, toggle, toIdSet } from '../utils/common'
 import InteractionCollector from '../utils/InteractionCollector'
 import SelectionUtils from '../utils/SelectionUtils'
-import { applyMainAction } from './historyManager'
+import { applyEditorAction } from './historyManager'
 
 function* handleUserSelectCurrent() {
-  const { main }: State = yield select()
-  if (main.range) {
-    const intersected = main.range.intersected(main.gather())
-    yield applyMainAction(new SetSel(toIdSet(intersected), SetSelMethod.intersection))
+  const { editor }: State = yield select()
+  if (editor.range) {
+    const intersected = editor.range.intersected(editor.gather())
+    yield applyEditorAction(new SetSel(toIdSet(intersected), SetSelMethod.intersection))
   }
 }
 
 function* handleUserSetSel({ sel }: Action.UserSetSel) {
-  yield applyMainAction(new SetSel(sel, SetSelMethod.select))
+  yield applyEditorAction(new SetSel(sel, SetSelMethod.select))
 }
 
 function* handleUserClearSel({ method }: Action.UserClearSel) {
-  const { main }: State = yield select()
-  if (!main.sel.isEmpty()) {
+  const { editor }: State = yield select()
+  if (!editor.sel.isEmpty()) {
     const setSelMethod = method === 'auto' ? SetSelMethod.autoClear : SetSelMethod.manualClear
-    yield applyMainAction(new SetSel(Set(), setSelMethod))
+    yield applyEditorAction(new SetSel(Set(), setSelMethod))
   }
 }
 
 function* handleUserAnnotateCurrent({ tag }: Action.UserAnnotateCurrent) {
-  const { main }: State = yield select()
-  if (main.sel.isEmpty() && main.range == null) {
+  const { editor }: State = yield select()
+  if (editor.sel.isEmpty() && editor.range == null) {
     yield put(Action.toast('Invalid selection'))
     return
   }
-  const gathered = main.gather()
-  const selection = main.sel.map(id => gathered.get(id))
-  const annotating = main.sel.isEmpty()
-    ? Set.of(Annotation.annotateRange(tag, main.blocks.get(main.range.blockIndex), main.range))
-    : Annotation.annotateSet(tag, main.blocks, selection)
+  const gathered = editor.gather()
+  const selection = editor.sel.map(id => gathered.get(id))
+  const annotating = editor.sel.isEmpty()
+    ? Set.of(
+        Annotation.annotateRange(tag, editor.blocks.get(editor.range.blockIndex), editor.range),
+      )
+    : Annotation.annotateSet(tag, editor.blocks, selection)
   const overlapped = annotating.some(dec1 =>
     gathered.some(dec2 => DecorationRange.isOverlapped(dec1.range, dec2.range)),
   )
@@ -55,49 +57,49 @@ function* handleUserAnnotateCurrent({ tag }: Action.UserAnnotateCurrent) {
     return
   }
   const collector: InteractionCollector = yield getContext('collector')
-  if (main.range) {
-    collector.userAnnotateText(main.range, tag)
+  if (editor.range) {
+    collector.userAnnotateText(editor.range, tag)
   } else {
-    collector.userAnnotateSel(main.sel, tag)
+    collector.userAnnotateSel(editor.sel, tag)
   }
-  yield applyMainAction(new Annotate(keyed(annotating), tag))
+  yield applyEditorAction(new Annotate(keyed(annotating), tag))
 }
 
 function* handleUserDeleteCurrent() {
   const collector: InteractionCollector = yield getContext('collector')
-  const { main }: State = yield select()
-  const gathered = main.gather()
+  const { editor }: State = yield select()
+  const gathered = editor.gather()
   let removing: Map<string, Decoration>
-  if (main.sel.isEmpty()) {
-    if (main.range == null) {
+  if (editor.sel.isEmpty()) {
+    if (editor.range == null) {
       yield put(Action.toast('invalid range'))
       return
     }
-    removing = main.range.intersected(gathered)
+    removing = editor.range.intersected(gathered)
   } else {
-    const gathered = main.gather()
-    removing = keyed(main.sel.map(id => gathered.get(id)))
+    const gathered = editor.gather()
+    removing = keyed(editor.sel.map(id => gathered.get(id)))
   }
   if (removing.isEmpty()) {
     return
   }
   collector.userDeleteDecoration(removing.toSet())
-  yield applyMainAction(new DeleteDecorations(removing))
+  yield applyEditorAction(new DeleteDecorations(removing))
 }
 
 function* handleUserAcceptCurrent() {
   const collector: InteractionCollector = yield getContext('collector')
-  const { main }: State = yield select()
-  const gathered = main.gather()
+  const { editor }: State = yield select()
+  const gathered = editor.gather()
   let accepting: Map<string, Hint>
-  if (main.sel.isEmpty()) {
-    if (main.range == null) {
+  if (editor.sel.isEmpty()) {
+    if (editor.range == null) {
       accepting = Map()
     } else {
-      accepting = main.range.intersected(gathered).filter(Decoration.isHint)
+      accepting = editor.range.intersected(gathered).filter(Decoration.isHint)
     }
   } else {
-    accepting = keyed(main.sel.map(id => gathered.get(id)).filter(Decoration.isHint))
+    accepting = keyed(editor.sel.map(id => gathered.get(id)).filter(Decoration.isHint))
   }
 
   if (accepting.isEmpty()) {
@@ -106,26 +108,26 @@ function* handleUserAcceptCurrent() {
   }
 
   collector.userAcceptHints(accepting.toSet())
-  yield applyMainAction(new AcceptHints(accepting))
+  yield applyEditorAction(new AcceptHints(accepting))
 }
 
 function* handleUserClickDecoration({ decoration, ctrlKey }: Action.UserClickDecoration) {
-  const { main }: State = yield select()
-  const nextSel = ctrlKey ? toggle(main.sel, decoration.id) : Set.of(decoration.id)
-  yield applyMainAction(new SetSel(nextSel, ctrlKey ? SetSelMethod.toggle : SetSelMethod.select))
+  const { editor }: State = yield select()
+  const nextSel = ctrlKey ? toggle(editor.sel, decoration.id) : Set.of(decoration.id)
+  yield applyEditorAction(new SetSel(nextSel, ctrlKey ? SetSelMethod.toggle : SetSelMethod.select))
 }
 
 function* handleUserSelectBlockHints({ blockIndex }: Action.UserSelectBlockHints) {
-  const { main }: State = yield select()
-  const selecting = main.hints.filter(hint => hint.range.blockIndex === blockIndex)
+  const { editor }: State = yield select()
+  const selecting = editor.hints.filter(hint => hint.range.blockIndex === blockIndex)
   if (!selecting.isEmpty()) {
-    yield applyMainAction(new SetSel(toIdSet(selecting), SetSelMethod.select))
+    yield applyEditorAction(new SetSel(toIdSet(selecting), SetSelMethod.select))
   }
 }
 
 function* handleUserSelectBlockText({ blockIndex }: Action.UserSelectBlockHints) {
-  const { main }: State = yield select()
-  const block = main.blocks.get(blockIndex)
+  const { editor }: State = yield select()
+  const block = editor.blocks.get(blockIndex)
   SelectionUtils.setCurrentRange(
     new DecorationRange({
       blockIndex,

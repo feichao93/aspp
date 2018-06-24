@@ -3,15 +3,14 @@ import { put, select } from 'little-saga/compat'
 import React from 'react'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
-import { deleteDecorations } from '../reducers/mainReducer'
+import { deleteDecorations, setEditorState } from '../reducers/editorReducer'
 import { Hint } from '../types/Decoration'
-import MainState from '../types/MainState'
-import Action from '../utils/actions'
+import EditorState from '../types/EditorState'
 import { toIdSet } from '../utils/common'
-import MainAction from './MainAction'
+import EditorAction from './EditorAction'
 
-export default class AcceptHints extends MainAction {
-  oldState: MainState
+export default class AcceptHints extends EditorAction {
+  oldState: EditorState
 
   constructor(readonly accepting: Map<string, Hint>) {
     super()
@@ -30,12 +29,12 @@ export default class AcceptHints extends MainAction {
   }
 
   *prepare() {
-    const { main }: State = yield select()
-    this.oldState = main
+    const { editor }: State = yield select()
+    this.oldState = editor
   }
 
   *prev() {
-    yield put(Action.setMainState(this.oldState))
+    yield put(setEditorState(this.oldState))
   }
 
   *next() {

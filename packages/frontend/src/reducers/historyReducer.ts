@@ -1,7 +1,7 @@
-import MainHistory from '../types/MainHistory'
+import EditorHistory from '../types/EditorHistory'
 import Action from '../utils/actions'
 
-export default function historyReducer(state = new MainHistory(), action: Action) {
+export default function historyReducer(state = new EditorHistory(), action: Action) {
   if (action.type === 'HISTORY_PUSH') {
     return state
       .update('list', list => list.setSize(state.count).push(action.action))

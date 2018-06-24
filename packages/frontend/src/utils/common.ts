@@ -141,3 +141,5 @@ export function updateAnnotationNextId(annotations: IMap<string, Annotation>) {
     .max()
   setNextId('annotation', maxAnnotationId || 1)
 }
+
+export const prepend = (prefix: string) => (s: string) => prefix + s

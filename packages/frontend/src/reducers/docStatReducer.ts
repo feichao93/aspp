@@ -4,7 +4,7 @@ import Action from '../utils/actions'
 
 const DocStatRecord = Record({
   docname: '',
-  stat: List<{
+  items: List<{
     collname: string
     annotationCount: number
     fileStat: fs.Stats
@@ -23,4 +23,8 @@ export default function docStatReducer(state = new DocStatState(), action: Actio
 
 export function updateDocStat(updater: (ds: DocStatState) => DocStatState): Action.UpdateDocStat {
   return { type: 'UPDATE_DOC_STAT', updater }
+}
+
+export function setDocStat(ds: DocStatState) {
+  return updateDocStat(() => ds)
 }

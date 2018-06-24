@@ -4,11 +4,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
-import { MainStateStatus } from '../../types/MainState'
+import FileInfo from '../../types/FileInfo'
 import Action from '../../utils/actions'
 
 export interface EditHistoryGroupProps {
-  mainStatus: MainStateStatus
+  fileInfo: FileInfo
   annotationsNoChange: boolean
   disableUndo: boolean
   disableRedo: boolean
@@ -17,7 +17,7 @@ export interface EditHistoryGroupProps {
 
 class EditHistoryButtonGroup extends React.PureComponent<EditHistoryGroupProps> {
   render() {
-    const { mainStatus, annotationsNoChange, disableRedo, disableUndo, dispatch } = this.props
+    const { fileInfo, annotationsNoChange, disableRedo, disableUndo, dispatch } = this.props
 
     return (
       <ButtonGroup>
@@ -31,7 +31,7 @@ class EditHistoryButtonGroup extends React.PureComponent<EditHistoryGroupProps> 
         </Tooltip>
         <Tooltip content="关闭当前文件">
           <AnchorButton
-            disabled={mainStatus === 'closed'}
+            disabled={fileInfo.getType() === 'empty'}
             icon="cross"
             onClick={() => dispatch(Action.requestCloseCurrentColl())}
           />
@@ -62,10 +62,10 @@ class EditHistoryButtonGroup extends React.PureComponent<EditHistoryGroupProps> 
   }
 }
 
-function mapStateToProps({ main, cache, history }: State) {
+function mapStateToProps({ fileInfo, editor, cache, history }: State) {
   return {
-    mainStatus: main.getStatus(),
-    annotationsNoChange: is(cache.annotations, main.annotations),
+    fileInfo,
+    annotationsNoChange: is(cache.annotations, editor.annotations),
     disableUndo: history.count === 0,
     disableRedo: history.count === history.list.size,
   }
