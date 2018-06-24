@@ -33,7 +33,7 @@ function makeDocPath({ docPath, docname }: FileInfo) {
   const path = docPath
     .map(encode)
     .map(prepend('/'))
-    .join()
+    .join('')
   return `${path}/${encode(docname)}`
 }
 

@@ -23,7 +23,6 @@ export default class FileInfo extends Record({
     }
   }
 
-  // TODO 还需要再考虑这个实现是否正确
   isAncestorOf(other: FileInfo) {
     if (this.docPath.size >= other.docPath.size) {
       return false
@@ -41,7 +40,7 @@ export default class FileInfo extends Record({
   }
 
   getDirStr() {
-    return this.docPath.map(prepend('/')).join()
+    return this.docPath.map(prepend('/')).join('')
   }
 
   getFullName() {
