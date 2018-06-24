@@ -32,11 +32,11 @@ class AnnotationEditor extends React.Component<AnnotationEditorProps> {
       prevProps.fileInfo.collname === fileInfo.collname &&
       !is(currentRange, editor.range)
     ) {
-      if (DEV.LOG_RANGE) {
+      if (DEV.VERBOSE) {
         console.log(
-          '%cDEV.LOG_RANGE',
+          '%cSYNC_NATIVE_SELECTION',
           'background: #fedcd4;',
-          `sync native-selection ${currentRange} -> ${editor.range}`,
+          `${currentRange} -> ${editor.range}`,
         )
       }
       SelectionUtils.setCurrentRange(editor.range)

@@ -1,11 +1,13 @@
 import {
-  Button,
+  AnchorButton,
   ButtonGroup,
   ContextMenu,
   Intent,
   ITreeNode,
   Menu,
   MenuItem,
+  Position,
+  Tooltip,
   Tree,
 } from '@blueprintjs/core'
 import classNames from 'classnames'
@@ -106,6 +108,68 @@ function genTreeNodes(
   }
 }
 
+interface CustomMenuProps {
+  fileInfo: FileInfo
+  dispatch: Dispatch
+}
+
+const customMenus = {
+  Doc({ fileInfo, dispatch }: CustomMenuProps) {
+    return (
+      <Menu>
+        <MenuItem
+          icon="folder-open"
+          text="打开统计"
+          onClick={() =>
+            dispatch(Action.requestOpenDocStat(fileInfo.set('collname', DOC_STAT_NAME)))
+          }
+        />
+        <MenuItem
+          icon="new-object"
+          text="新增标注文件"
+          onClick={() => dispatch(Action.requestAddColl(fileInfo))}
+        />
+        <MenuItem icon="trash" text="删除语料（开发中)" intent={Intent.DANGER} />
+      </Menu>
+    )
+  },
+
+  Coll({ fileInfo, dispatch }: CustomMenuProps) {
+    return (
+      <Menu>
+        <MenuItem
+          text="打开"
+          icon="document-open"
+          onClick={() => dispatch(Action.requestOpenColl(fileInfo))}
+        />
+        <MenuItem
+          icon="download"
+          text="下载（JSON）"
+          onClick={() => this.onDownloadResultJSON(fileInfo)}
+        />
+        <MenuItem icon="edit" text="重命名（开发中）" />
+        <MenuItem
+          icon="trash"
+          text="删除"
+          onClick={() => dispatch(Action.requestDeleteColl(fileInfo))}
+          intent={Intent.DANGER}
+        />
+      </Menu>
+    )
+  },
+
+  Directory({ fileInfo, dispatch }: CustomMenuProps) {
+    return (
+      <Menu>
+        <MenuItem text="上传新的语料（开发中）" icon="upload" />
+        <MenuItem text="添加子文件夹（开发中）" icon="folder-new" />
+        <MenuItem text="重命名（开发中）" icon="edit" />
+        <MenuItem text="删除（开发中）" icon="trash" intent={Intent.DANGER} />
+      </Menu>
+    )
+  },
+}
+
 class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
   static getDerivedStateFromProps(
     nextProps: TaskTreeProps,
@@ -122,11 +186,16 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
 
     // 如果用户改变了当前打开的文件，应该选中该文件
     if (!is(nextProps.fileInfo, prevState.fileInfo)) {
+      // 如果是打开语料文件统计的话，则定位到语料文件
+      const target =
+        nextProps.fileInfo.getType() === 'doc-stat'
+          ? nextProps.fileInfo.set('collname', '')
+          : nextProps.fileInfo
       forEachNode(prevState.contents, node => {
-        if (node.nodeData.isAncestorOf(nextProps.fileInfo)) {
+        if (node.nodeData.isAncestorOf(target)) {
           node.isExpanded = true
         }
-        node.isSelected = is(node.nodeData, nextProps.fileInfo)
+        node.isSelected = is(node.nodeData, target)
       })
       Object.assign(partial, { fileInfo: nextProps.fileInfo })
     }
@@ -170,11 +239,13 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
 
   onLocate = () => {
     const { fileInfo } = this.props
+    // 如果是打开语料文件统计的话，则定位到语料文件
+    const target = fileInfo.getType() === 'doc-stat' ? fileInfo.set('collname', '') : fileInfo
     forEachNode(this.state.contents, node => {
-      if (node.nodeData.isAncestorOf(fileInfo)) {
+      if (node.nodeData.isAncestorOf(target)) {
         node.isExpanded = true
       }
-      node.isSelected = is(node.nodeData, fileInfo)
+      node.isSelected = is(node.nodeData, target)
     })
     this.forceUpdate()
   }
@@ -224,38 +295,25 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
     }
 
     const { dispatch } = this.props
-    const info = node.nodeData
-    const fileInfoType = info.getType()
+    const fileInfo = node.nodeData
+    const fileInfoType = fileInfo.getType()
 
+    const offset = {
+      left: e.clientX,
+      top: e.clientY,
+    }
+
+    let customMenuComponent: typeof customMenus.Doc
     if (fileInfoType === 'doc') {
-      ContextMenu.show(
-        <Menu>
-          <MenuItem
-            icon="new-object"
-            text="New Annotation Set"
-            onClick={() => dispatch(Action.requestAddColl(info))}
-          />
-          <MenuItem icon="comparison" text="Compare" disabled />
-          <MenuItem icon="download" text="Download Result" disabled />
-        </Menu>,
-        { left: e.clientX, top: e.clientY },
-      )
+      customMenuComponent = customMenus.Doc
     } else if (fileInfoType === 'coll') {
-      ContextMenu.show(
-        <Menu>
-          <MenuItem
-            icon="trash"
-            text="Delete"
-            onClick={() => dispatch(Action.requestDeleteColl(info))}
-          />
-          <MenuItem
-            icon="download"
-            text="Download JSON"
-            onClick={() => this.onDownloadResultJSON(info)}
-          />
-        </Menu>,
-        { left: e.clientX, top: e.clientY },
-      )
+      customMenuComponent = customMenus.Coll
+    } else if (fileInfoType === 'directory') {
+      customMenuComponent = customMenus.Directory
+    }
+    if (customMenuComponent) {
+      const element = React.createElement(customMenuComponent, { fileInfo, dispatch })
+      ContextMenu.show(element, offset)
     }
   }
 
@@ -264,12 +322,28 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
     return (
       <div className={classNames('task-tree', { hide: config.hideTaskTree })}>
         <header>
-          <div>Task Tree</div>
+          <div>文档树</div>
           <ButtonGroup className="button-group">
-            <Button icon="refresh" minimal onClick={this.onRefresh} />
-            <Button icon="expand-all" minimal onClick={this.onExpandAll} />
-            <Button icon="collapse-all" minimal onClick={this.onCollapseAll} />
-            <Button icon="locate" minimal onClick={this.onLocate} />
+            <Tooltip content="根目录：上传新的语料（开发中）" position={Position.BOTTOM_LEFT}>
+              <AnchorButton icon="upload" minimal title={null} />
+            </Tooltip>
+            <Tooltip content="根目录：添加子文件夹（开发中）" position={Position.BOTTOM_LEFT}>
+              <AnchorButton icon="folder-new" minimal title={null} />
+            </Tooltip>
+          </ButtonGroup>
+          <ButtonGroup className="button-group" style={{ marginLeft: 'auto' }}>
+            <Tooltip content="更新文档树" position={Position.BOTTOM}>
+              <AnchorButton icon="refresh" minimal onClick={this.onRefresh} title={null} />
+            </Tooltip>
+            <Tooltip content="展开所有" position={Position.BOTTOM}>
+              <AnchorButton icon="expand-all" minimal onClick={this.onExpandAll} title={null} />
+            </Tooltip>
+            <Tooltip content="折叠所有" position={Position.BOTTOM}>
+              <AnchorButton icon="collapse-all" minimal onClick={this.onCollapseAll} title={null} />
+            </Tooltip>
+            <Tooltip content="定位当前文件" position={Position.BOTTOM}>
+              <AnchorButton icon="locate" minimal onClick={this.onLocate} title={null} />
+            </Tooltip>
           </ButtonGroup>
         </header>
         <Tree

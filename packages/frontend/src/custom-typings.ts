@@ -1,5 +1,5 @@
 declare const DEV: {
-  LOG_RANGE: boolean
+  VERBOSE: boolean
   ASSERT: boolean
 }
 

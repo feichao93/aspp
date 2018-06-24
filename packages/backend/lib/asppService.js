@@ -123,6 +123,7 @@ module.exports = function asppService({ taskDir }) {
           doc.collnames.push(collname)
         }
         const filename = this.resolveCollFilename(fullDocPath, collname)
+        mkdirp.sync(path.resolve(filename, '..'))
         fs.writeFileSync(filename, yaml.safeDump(content), 'utf-8')
         ctx.status = 200
       },

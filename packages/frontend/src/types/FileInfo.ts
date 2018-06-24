@@ -1,4 +1,4 @@
-import { List, Range, Record } from 'immutable'
+import { is, List, Record } from 'immutable'
 import { prepend } from '../utils/common'
 import { DOC_STAT_NAME } from '../utils/constants'
 
@@ -23,20 +23,26 @@ export default class FileInfo extends Record({
     }
   }
 
+  /** 判断当前 FileInfo 是否为另一个 FileInfo 对象的祖先
+   * 注意：自己**不是**自己的祖先 */
   isAncestorOf(other: FileInfo) {
-    if (this.docPath.size >= other.docPath.size) {
+    const type = this.getType()
+    if (type === 'directory') {
+      return (
+        this.docPath.size <= other.docPath.size &&
+        is(this.docPath, other.docPath.take(this.docPath.size)) &&
+        !is(this, other)
+      )
+    } else if (type === 'doc') {
+      const otherType = other.getType()
+      return (
+        is(this.docPath, other.docPath) &&
+        this.docname === other.docname &&
+        (otherType === 'coll' || otherType === 'doc-stat')
+      )
+    } else {
       return false
     }
-    if (!Range(0, this.docPath.size).every(i => other.docPath.get(i) === this.docPath.get(i))) {
-      return false
-    }
-    if (this.getType() === 'directory') {
-      return true
-    }
-    if (this.getType() === 'doc') {
-      return other.docname === this.docname && other.getType() === 'coll'
-    }
-    return false
   }
 
   getDirStr() {
@@ -50,9 +56,9 @@ export default class FileInfo extends Record({
     } else if (type === 'directory') {
       return `目录 ${this.getDirStr()}/`
     } else if (type === 'doc') {
-      return `文本文件 ${this.getDirStr()}/${this.docname}`
+      return `语料文件 ${this.getDirStr()}/${this.docname}`
     } else if (type === 'coll') {
-      return `标注文件 ${this.getDirStr()}/${this.docname}-${this.collname}`
+      return `标注文件 ${this.getDirStr()}/${this.docname}.${this.collname}.yaml`
     } else {
       return `统计 ${this.getDirStr()}/${this.docname}`
     }

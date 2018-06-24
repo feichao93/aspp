@@ -52,6 +52,8 @@ tags:
     label: 机构名
     abbr: ORG
     shortcut: '7'
+    theme:
+      color: steelblue
 
   - group: 机构名
     name: 公司
