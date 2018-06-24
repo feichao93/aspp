@@ -92,7 +92,7 @@ function* saveCurrentColl() {
   }
 }
 
-function* openDocStat({ fileInfo }: Action.RequestOpenDocStat) {
+function* openDocStat({ fileInfo: opening }: Action.RequestOpenDocStat) {
   const { fileInfo: cntFileInfo, editor, cache }: State = yield select()
 
   if (cntFileInfo.getType() === 'coll' && !is(cache.annotations, editor.annotations)) {
@@ -101,16 +101,17 @@ function* openDocStat({ fileInfo }: Action.RequestOpenDocStat) {
   }
 
   try {
-    const statItems = yield server.getDocStat(fileInfo)
+    const statItems = yield server.getDocStat(opening)
 
     const docStat = new DocStatState({
-      docname: fileInfo.docname,
+      docname: opening.docname,
       items: List(statItems),
     })
     yield put(setDocStat(docStat))
+    yield put(setFileInfo(opening))
     yield put(Action.historyClear())
     yield applyEditorAction(
-      new EmptyEditorAction(`打开文档 ${fileInfo.docname} 的统计信息`).withCategory(
+      new EmptyEditorAction(`打开文档 ${opening.docname} 的统计信息`).withCategory(
         ActionCategory.sideEffects,
       ),
     )

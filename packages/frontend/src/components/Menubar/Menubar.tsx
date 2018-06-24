@@ -64,11 +64,13 @@ class Menubar extends React.Component<MenubarProps> {
           <Button
             minimal
             icon="help"
-            text="help"
+            text="Help"
             onClick={() => dispatch(Action.toggleHelpOverlay())}
           />
           <HelpOverlay />
-          <div style={{ marginLeft: 24 }}>当前打开: {fileInfo.getFullName()}</div>
+          <div style={{ marginLeft: 24 }}>
+            当前打开: <b>{fileInfo.getFullName()}</b>
+          </div>
         </NavbarGroup>
         <NavbarGroup align={Alignment.RIGHT}>
           {/*<Switch*/}
