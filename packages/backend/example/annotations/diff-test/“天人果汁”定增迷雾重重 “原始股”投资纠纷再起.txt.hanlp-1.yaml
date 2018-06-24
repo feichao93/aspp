@@ -1,0 +1,606 @@
+annotations:
+- entity: "\u5B9A\u589E"
+  id: annotation-1
+  range: {blockIndex: 0, endOffset: 8, startOffset: 6}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-2
+  range: {blockIndex: 0, endOffset: 131, startOffset: 129}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u674E\u5148\u751F"
+  id: annotation-3
+  range: {blockIndex: 0, endOffset: 241, startOffset: 238}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-4
+  range: {blockIndex: 0, endOffset: 245, startOffset: 243}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u63A7\u80A1\u96C6\u56E2\u6709\u9650\u516C\u53F8"
+  id: annotation-5
+  range: {blockIndex: 0, endOffset: 286, startOffset: 278}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77"
+  id: annotation-6
+  range: {blockIndex: 0, endOffset: 306, startOffset: 304}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77"
+  id: annotation-7
+  range: {blockIndex: 0, endOffset: 338, startOffset: 336}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u8861\u5FAA"
+  id: annotation-8
+  range: {blockIndex: 0, endOffset: 340, startOffset: 338}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u7BA1\u7406\u516C\u53F8"
+  id: annotation-9
+  range: {blockIndex: 0, endOffset: 348, startOffset: 344}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77"
+  id: annotation-10
+  range: {blockIndex: 0, endOffset: 351, startOffset: 349}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77\u6D66\u4E1C"
+  id: annotation-11
+  range: {blockIndex: 0, endOffset: 362, startOffset: 358}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u7F8E\u56FD\u4E0A\u5E02\u516C\u53F8"
+  id: annotation-12
+  range: {blockIndex: 0, endOffset: 390, startOffset: 384}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E2D\u7CAE\u96C6\u56E2"
+  id: annotation-13
+  range: {blockIndex: 0, endOffset: 426, startOffset: 422}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-14
+  range: {blockIndex: 0, endOffset: 429, startOffset: 427}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u674E\u5148\u751F"
+  id: annotation-15
+  range: {blockIndex: 0, endOffset: 497, startOffset: 494}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u897F\u5B89"
+  id: annotation-16
+  range: {blockIndex: 0, endOffset: 618, startOffset: 616}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u5206\u884C\u89E3\u653E\u8DEF\u652F\u884C"
+  id: annotation-17
+  range: {blockIndex: 0, endOffset: 625, startOffset: 618}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u674E\u5148\u751F"
+  id: annotation-18
+  range: {blockIndex: 0, endOffset: 629, startOffset: 626}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-19
+  range: {blockIndex: 0, endOffset: 634, startOffset: 632}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77"
+  id: annotation-20
+  range: {blockIndex: 0, endOffset: 655, startOffset: 653}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802"
+  id: annotation-21
+  range: {blockIndex: 0, endOffset: 980, startOffset: 977}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-22
+  range: {blockIndex: 0, endOffset: 991, startOffset: 989}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-23
+  range: {blockIndex: 0, endOffset: 1015, startOffset: 1013}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u6DF1\u5733"
+  id: annotation-24
+  range: {blockIndex: 0, endOffset: 1082, startOffset: 1080}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u7BA1\u7406\u6709\u9650\u516C\u53F8"
+  id: annotation-25
+  range: {blockIndex: 0, endOffset: 1097, startOffset: 1091}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u859B\u7EA2\u79D1"
+  id: annotation-26
+  range: {blockIndex: 0, endOffset: 1109, startOffset: 1106}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u897F\u5B89\u5E02"
+  id: annotation-27
+  range: {blockIndex: 0, endOffset: 1127, startOffset: 1124}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u679C\u6C41\u56FD\u9645\u63A7\u80A1(\u9999\u6E2F)\u6709\u9650\u516C\u53F8"
+  id: annotation-28
+  range: {blockIndex: 0, endOffset: 1157, startOffset: 1143}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E3A\u79C1\u4EBA\u80A1\u4EFD\u6709\u9650\u516C\u53F8"
+  id: annotation-29
+  range: {blockIndex: 0, endOffset: 1184, startOffset: 1175}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-30
+  range: {blockIndex: 0, endOffset: 1241, startOffset: 1239}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u738B\u679C\u6709\u9650\u516C\u53F8"
+  id: annotation-31
+  range: {blockIndex: 0, endOffset: 1249, startOffset: 1243}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u679C\u6C41\u56FD\u9645\u63A7\u80A1(\u9999\u6E2F)\u6709\u9650\u516C\u53F8"
+  id: annotation-32
+  range: {blockIndex: 0, endOffset: 1278, startOffset: 1264}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802\u63A7\u80A1(\u9999\u6E2F)\u6709\u9650\u516C\u53F8"
+  id: annotation-33
+  range: {blockIndex: 0, endOffset: 1302, startOffset: 1289}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u679C\u6C41\u56FD\u9645\u63A7\u80A1(\u9999\u6E2F)\u6709\u9650\u516C\u53F8"
+  id: annotation-34
+  range: {blockIndex: 0, endOffset: 1328, startOffset: 1314}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u6709\u4E2D\u7CAE\u96C6\u56E2"
+  id: annotation-35
+  range: {blockIndex: 0, endOffset: 1356, startOffset: 1351}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802\u63A7\u80A1\u96C6\u56E2\u6709\u9650\u516C\u53F8"
+  id: annotation-36
+  range: {blockIndex: 0, endOffset: 1372, startOffset: 1361}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77"
+  id: annotation-37
+  range: {blockIndex: 0, endOffset: 1441, startOffset: 1439}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u8861\u5FAA"
+  id: annotation-38
+  range: {blockIndex: 0, endOffset: 1443, startOffset: 1441}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u7BA1\u7406\u516C\u53F8"
+  id: annotation-39
+  range: {blockIndex: 0, endOffset: 1451, startOffset: 1447}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77\u5929\u6653\u57FA\u91D1"
+  id: annotation-40
+  range: {blockIndex: 0, endOffset: 1458, startOffset: 1452}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-41
+  range: {blockIndex: 0, endOffset: 1480, startOffset: 1478}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u859B\u6C38\u79D1"
+  id: annotation-42
+  range: {blockIndex: 0, endOffset: 1556, startOffset: 1553}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u859B\u6CFD\u5C27"
+  id: annotation-43
+  range: {blockIndex: 0, endOffset: 1570, startOffset: 1567}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u897F\u5B89"
+  id: annotation-44
+  range: {blockIndex: 0, endOffset: 1587, startOffset: 1585}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u859B\u7EA2\u79D1"
+  id: annotation-45
+  range: {blockIndex: 0, endOffset: 1597, startOffset: 1594}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u859B\u6CFD\u5C27"
+  id: annotation-46
+  range: {blockIndex: 0, endOffset: 1639, startOffset: 1636}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u6DF1\u5733"
+  id: annotation-47
+  range: {blockIndex: 0, endOffset: 1661, startOffset: 1659}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802\u5B9E\u4E1A\u6709\u9650\u516C\u53F8"
+  id: annotation-48
+  range: {blockIndex: 0, endOffset: 1670, startOffset: 1661}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u6DF1\u5733"
+  id: annotation-49
+  range: {blockIndex: 0, endOffset: 1676, startOffset: 1674}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802"
+  id: annotation-50
+  range: {blockIndex: 0, endOffset: 1679, startOffset: 1676}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-51
+  range: {blockIndex: 0, endOffset: 1698, startOffset: 1696}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u6DF1\u5733"
+  id: annotation-52
+  range: {blockIndex: 0, endOffset: 1722, startOffset: 1720}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802"
+  id: annotation-53
+  range: {blockIndex: 0, endOffset: 1725, startOffset: 1722}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-54
+  range: {blockIndex: 0, endOffset: 1737, startOffset: 1735}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u6DF1\u5733"
+  id: annotation-55
+  range: {blockIndex: 0, endOffset: 1751, startOffset: 1749}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802"
+  id: annotation-56
+  range: {blockIndex: 0, endOffset: 1754, startOffset: 1751}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-57
+  range: {blockIndex: 0, endOffset: 1759, startOffset: 1757}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-58
+  range: {blockIndex: 0, endOffset: 1770, startOffset: 1768}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u859B\u6CFD\u5C27"
+  id: annotation-59
+  range: {blockIndex: 0, endOffset: 1790, startOffset: 1787}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-60
+  range: {blockIndex: 0, endOffset: 1794, startOffset: 1792}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u6DF1\u5733"
+  id: annotation-61
+  range: {blockIndex: 0, endOffset: 1804, startOffset: 1802}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802"
+  id: annotation-62
+  range: {blockIndex: 0, endOffset: 1807, startOffset: 1804}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-63
+  range: {blockIndex: 0, endOffset: 1975, startOffset: 1973}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-64
+  range: {blockIndex: 0, endOffset: 1996, startOffset: 1994}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-65
+  range: {blockIndex: 0, endOffset: 2011, startOffset: 2009}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-66
+  range: {blockIndex: 0, endOffset: 2037, startOffset: 2035}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u6DF1\u5733"
+  id: annotation-67
+  range: {blockIndex: 0, endOffset: 2050, startOffset: 2048}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802"
+  id: annotation-68
+  range: {blockIndex: 0, endOffset: 2053, startOffset: 2050}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u63A7\u80A1\u96C6\u56E2\u6709\u9650\u516C\u53F8"
+  id: annotation-69
+  range: {blockIndex: 0, endOffset: 2066, startOffset: 2058}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u63A7\u80A1\u96C6\u56E2\u6709\u9650\u516C\u53F8"
+  id: annotation-70
+  range: {blockIndex: 0, endOffset: 2085, startOffset: 2077}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802\u63A7\u80A1(\u9999\u6E2F)\u6709\u9650\u516C\u53F8"
+  id: annotation-71
+  range: {blockIndex: 0, endOffset: 2100, startOffset: 2087}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u6DF1\u5733"
+  id: annotation-72
+  range: {blockIndex: 0, endOffset: 2125, startOffset: 2123}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802"
+  id: annotation-73
+  range: {blockIndex: 0, endOffset: 2128, startOffset: 2125}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u897F\u5B89"
+  id: annotation-74
+  range: {blockIndex: 0, endOffset: 2135, startOffset: 2133}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-75
+  range: {blockIndex: 0, endOffset: 2164, startOffset: 2162}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-76
+  range: {blockIndex: 0, endOffset: 2223, startOffset: 2221}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u679C\u6C41\u4F1A"
+  id: annotation-77
+  range: {blockIndex: 0, endOffset: 2233, startOffset: 2230}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-78
+  range: {blockIndex: 0, endOffset: 2238, startOffset: 2236}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-79
+  range: {blockIndex: 0, endOffset: 2276, startOffset: 2274}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-80
+  range: {blockIndex: 0, endOffset: 2293, startOffset: 2291}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u827E\u5BA2"
+  id: annotation-81
+  range: {blockIndex: 0, endOffset: 2357, startOffset: 2355}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u4E24\u70B9"
+  id: annotation-82
+  range: {blockIndex: 0, endOffset: 2387, startOffset: 2385}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u7F8E\u56FD\u4E0A\u5E02\u516C\u53F8"
+  id: annotation-83
+  range: {blockIndex: 0, endOffset: 2477, startOffset: 2471}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u6DF1\u5733"
+  id: annotation-84
+  range: {blockIndex: 0, endOffset: 2503, startOffset: 2501}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u5408\u5FB7\u5802"
+  id: annotation-85
+  range: {blockIndex: 0, endOffset: 2506, startOffset: 2503}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u65E5\u9655\u897F\u7701\u5546\u52A1\u5385"
+  id: annotation-86
+  range: {blockIndex: 0, endOffset: 2538, startOffset: 2531}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u6DF1\u5733"
+  id: annotation-87
+  range: {blockIndex: 0, endOffset: 2658, startOffset: 2656}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u7BA1\u7406\u6709\u9650\u516C\u53F8"
+  id: annotation-88
+  range: {blockIndex: 0, endOffset: 2672, startOffset: 2666}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u679C\u6C41\u96C6\u56E2"
+  id: annotation-89
+  range: {blockIndex: 0, endOffset: 2756, startOffset: 2752}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u859B\u6C0F"
+  id: annotation-90
+  range: {blockIndex: 0, endOffset: 2759, startOffset: 2757}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u5F52\u6BCD"
+  id: annotation-91
+  range: {blockIndex: 0, endOffset: 2934, startOffset: 2932}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u624D\u4F1A"
+  id: annotation-92
+  range: {blockIndex: 0, endOffset: 3063, startOffset: 3061}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77"
+  id: annotation-93
+  range: {blockIndex: 0, endOffset: 3137, startOffset: 3135}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u897F\u5B89"
+  id: annotation-94
+  range: {blockIndex: 0, endOffset: 3154, startOffset: 3152}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u897F\u5B89"
+  id: annotation-95
+  range: {blockIndex: 0, endOffset: 3160, startOffset: 3158}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u897F\u5B89"
+  id: annotation-96
+  range: {blockIndex: 0, endOffset: 3172, startOffset: 3170}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u897F\u5B89"
+  id: annotation-97
+  range: {blockIndex: 0, endOffset: 3177, startOffset: 3175}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77"
+  id: annotation-98
+  range: {blockIndex: 0, endOffset: 3187, startOffset: 3185}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77\u529E"
+  id: annotation-99
+  range: {blockIndex: 0, endOffset: 3194, startOffset: 3191}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u534E\u4E1C\u653F\u6CD5\u5927\u5B66"
+  id: annotation-100
+  range: {blockIndex: 0, endOffset: 3203, startOffset: 3197}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u677E\u6559\u6388"
+  id: annotation-101
+  range: {blockIndex: 0, endOffset: 3208, startOffset: 3205}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u4E2D\u7CAE\u96C6\u56E2"
+  id: annotation-102
+  range: {blockIndex: 0, endOffset: 3234, startOffset: 3230}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u5EFA\u8BBE\u94F6\u884C"
+  id: annotation-103
+  range: {blockIndex: 0, endOffset: 3239, startOffset: 3235}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u79C1\u52DF\u4EA7\u54C1"
+  id: annotation-104
+  range: {blockIndex: 0, endOffset: 3349, startOffset: 3345}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u56FD\u52A1\u9662\u529E\u516C\u5385"
+  id: annotation-105
+  range: {blockIndex: 0, endOffset: 3476, startOffset: 3470}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4F01\u4E1A\u79C1\u52DF\u8BC1\u5238"
+  id: annotation-106
+  range: {blockIndex: 0, endOffset: 3529, startOffset: 3523}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u7701\u7EA7\u4EBA\u6C11\u653F\u5E9C"
+  id: annotation-107
+  range: {blockIndex: 0, endOffset: 3566, startOffset: 3560}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77\u5E02"
+  id: annotation-108
+  range: {blockIndex: 0, endOffset: 3599, startOffset: 3596}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77\u5E02"
+  id: annotation-109
+  range: {blockIndex: 0, endOffset: 3649, startOffset: 3646}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u4E0A\u6D77\u8BC1\u76D1\u5C40"
+  id: annotation-110
+  range: {blockIndex: 0, endOffset: 3664, startOffset: 3659}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u5462?"
+  id: annotation-111
+  range: {blockIndex: 0, endOffset: 3753, startOffset: 3751}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-112
+  range: {blockIndex: 0, endOffset: 3841, startOffset: 3839}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-113
+  range: {blockIndex: 0, endOffset: 3874, startOffset: 3872}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-114
+  range: {blockIndex: 0, endOffset: 3900, startOffset: 3898}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u4E2D\u56FD"
+  id: annotation-115
+  range: {blockIndex: 0, endOffset: 4151, startOffset: 4149}
+  tag: "\u5730\u540D"
+  type: annotation
+- entity: "\u9648\u5CB1"
+  id: annotation-116
+  range: {blockIndex: 0, endOffset: 4189, startOffset: 4187}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u677E\u6559\u6388"
+  id: annotation-117
+  range: {blockIndex: 0, endOffset: 4192, startOffset: 4189}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u4E0A\u5E02\u516C\u53F8"
+  id: annotation-118
+  range: {blockIndex: 0, endOffset: 4251, startOffset: 4247}
+  tag: "\u673A\u6784\u540D"
+  type: annotation
+- entity: "\u9648\u5CB1"
+  id: annotation-119
+  range: {blockIndex: 0, endOffset: 4310, startOffset: 4308}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u677E\u6559\u6388"
+  id: annotation-120
+  range: {blockIndex: 0, endOffset: 4313, startOffset: 4310}
+  tag: "\u4EBA\u540D"
+  type: annotation
+- entity: "\u5B9A\u589E"
+  id: annotation-121
+  range: {blockIndex: 0, endOffset: 4329, startOffset: 4327}
+  tag: "\u4EBA\u540D"
+  type: annotation

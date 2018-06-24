@@ -101,7 +101,7 @@ module.exports = function asppService({ taskDir }) {
         ctx.body = yaml.safeLoad(fs.readFileSync(filename, 'utf-8'))
       },
 
-      deleteColl(fullDocPath, collname) {
+      async deleteColl(fullDocPath, collname) {
         const doc = findDocInTree(this.list(), fullDocPath)
         remove(doc.collnames, collname)
 
@@ -117,7 +117,7 @@ module.exports = function asppService({ taskDir }) {
         ctx.status = 200
       },
 
-      async saveAnnotation(fullDocPath, collname, content) {
+      async putColl(fullDocPath, collname, content) {
         const doc = findDocInTree(this.list(), fullDocPath)
         if (!doc.collnames.includes(collname)) {
           doc.collnames.push(collname)

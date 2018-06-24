@@ -1,0 +1,1617 @@
+annotations:
+  - id: annotation-905
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1787
+      endOffset: 1790
+    tag: 人名
+    entity: 薛泽尧
+  - id: annotation-1014
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2891
+      endOffset: 2897
+    tag: 货币
+    entity: 2.36美元
+  - id: annotation-1025
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3017
+      endOffset: 3024
+    tag: 日期
+    entity: 2016年3月
+  - id: annotation-806
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 447
+      endOffset: 449
+    tag: 货币
+    entity: 5元
+  - id: annotation-927
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2241
+      endOffset: 2245
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-817
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 578
+      endOffset: 589
+    tag: 日期
+    entity: 2015年12月29日
+  - id: annotation-938
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4322
+      endOffset: 4326
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-1047
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3203
+      endOffset: 3206
+    tag: 人名
+    entity: 陈岱松
+  - id: annotation-828
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 846
+      endOffset: 858
+    tag: 机构名
+    entity: 天人果汁集团股份有限公司
+  - id: annotation-949
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2048
+      endOffset: 2053
+    tag: 机构名
+    entity: 深圳合德堂
+  - id: annotation-906
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1585
+      endOffset: 1587
+    tag: 地名
+    entity: 西安
+  - id: annotation-1015
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2898
+      endOffset: 2903
+    tag: 日期
+    entity: 2018年
+  - id: annotation-1026
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3070
+      endOffset: 3072
+    tag: 地名
+    entity: 香港
+  - id: annotation-807
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 464
+      endOffset: 469
+    tag: 日期
+    entity: 2016年
+  - id: annotation-928
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2374
+      endOffset: 2378
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-818
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 591
+      endOffset: 595
+    tag: 货币
+    entity: 30万元
+  - id: annotation-939
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1594
+      endOffset: 1597
+    tag: 人名
+    entity: 薛红科
+  - id: annotation-708
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 934
+      endOffset: 938
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-929
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2418
+      endOffset: 2422
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-819
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 600
+      endOffset: 612
+    tag: 机构名
+    entity: 天人果汁集团股份有限公司
+  - id: annotation-1049
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4187
+      endOffset: 4190
+    tag: 人名
+    entity: 陈岱松
+  - id: annotation-709
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1004
+      endOffset: 1008
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-1006
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2585
+      endOffset: 2592
+    tag: 日期
+    entity: 2016年2月
+  - id: annotation-1007
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2656
+      endOffset: 2672
+    tag: 机构名
+    entity: 深圳天顺股权投资基金管理有限公司
+  - id: annotation-1018
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4174
+      endOffset: 4179
+    tag: 日期
+    entity: 2018年
+  - id: annotation-1008
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2750
+      endOffset: 2756
+    tag: 机构名
+    entity: 天人果汁集团
+  - id: annotation-1019
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2915
+      endOffset: 2918
+    tag: 百分比
+    entity: 30%
+  - id: annotation-890
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2848
+      endOffset: 2856
+    tag: 机构名
+    entity: 纳斯达克上市公司
+  - id: annotation-791
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 314
+      endOffset: 325
+    tag: 日期
+    entity: 2015年12月23日
+  - id: annotation-990
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2066
+      endOffset: 2070
+    tag: 百分比
+    entity: 100%
+  - id: annotation-880
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1250
+      endOffset: 1258
+    tag: 日期
+    entity: 2011年11月
+  - id: annotation-891
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1500
+      endOffset: 1504
+    tag: 机构名
+    entity: FTFT
+  - id: annotation-792
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 336
+      endOffset: 348
+    tag: 机构名
+    entity: 上海衡循股权投资管理公司
+  - id: annotation-693
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1
+      endOffset: 5
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-980
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1888
+      endOffset: 1894
+    tag: 货币
+    entity: 1000万元
+  - id: annotation-870
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1073
+      endOffset: 1079
+    tag: 百分比
+    entity: 73.41%
+  - id: annotation-881
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1279
+      endOffset: 1286
+    tag: 日期
+    entity: 2015年3月
+  - id: annotation-782
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 653
+      endOffset: 655
+    tag: 地名
+    entity: 上海
+  - id: annotation-970
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2235
+      endOffset: 2238
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-871
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1080
+      endOffset: 1097
+    tag: 机构名
+    entity: 深圳天顺达股权投资基金管理有限公司
+  - id: annotation-992
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2113
+      endOffset: 2117
+    tag: 百分比
+    entity: 100%
+  - id: annotation-882
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1289
+      endOffset: 1302
+    tag: 机构名
+    entity: 合德堂控股(香港)有限公司
+  - id: annotation-893
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2457
+      endOffset: 2461
+    tag: 机构名
+    entity: FTFT
+  - id: annotation-794
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1439
+      endOffset: 1451
+    tag: 机构名
+    entity: 上海衡循股权投资管理公司
+  - id: annotation-960
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1695
+      endOffset: 1698
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-971
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2273
+      endOffset: 2276
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-1080
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3952
+      endOffset: 3955
+    tag: 百分比
+    entity: 80%
+  - id: annotation-740
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 482
+      endOffset: 487
+    tag: 日期
+    entity: 2017年
+  - id: annotation-982
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1946
+      endOffset: 1952
+    tag: 货币
+    entity: 1000万元
+  - id: annotation-872
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1099
+      endOffset: 1105
+    tag: 百分比
+    entity: 26.36%
+  - id: annotation-993
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2087
+      endOffset: 2100
+    tag: 机构名
+    entity: 合德堂控股(香港)有限公司
+  - id: annotation-762
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 331
+      endOffset: 335
+    tag: 机构名
+    entity: 天人国际
+  - id: annotation-894
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2863
+      endOffset: 2867
+    tag: 机构名
+    entity: FTFT
+  - id: annotation-795
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 349
+      endOffset: 355
+    tag: 机构名
+    entity: 上海天晓基金
+  - id: annotation-950
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2123
+      endOffset: 2128
+    tag: 机构名
+    entity: 深圳合德堂
+  - id: annotation-972
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2290
+      endOffset: 2293
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-1081
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4046
+      endOffset: 4051
+    tag: 日期
+    entity: 2013年
+  - id: annotation-983
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1899
+      endOffset: 1907
+    tag: 货币
+    entity: 247.47万元
+  - id: annotation-1092
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4094
+      endOffset: 4099
+    tag: 日期
+    entity: 2016年
+  - id: annotation-752
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 158
+      endOffset: 162
+    tag: 机构名
+    entity: 监管部门
+  - id: annotation-873
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1111
+      endOffset: 1116
+    tag: 百分比
+    entity: 0.23%
+  - id: annotation-994
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2109
+      endOffset: 2113
+    tag: 机构名
+    entity: 天人国际
+  - id: annotation-763
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 826
+      endOffset: 830
+    tag: 机构名
+    entity: 天人国际
+  - id: annotation-895
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1509
+      endOffset: 1531
+    tag: 机构名
+    entity: SkyPeopleFruitJuiceInc
+  - id: annotation-697
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 267
+      endOffset: 271
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-940
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1599
+      endOffset: 1609
+    tag: 日期
+    entity: 2013年2月18日
+  - id: annotation-830
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1262
+      endOffset: 1278
+    tag: 机构名
+    entity: 天人果汁国际控股(香港)有限公司
+  - id: annotation-951
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2501
+      endOffset: 2506
+    tag: 机构名
+    entity: 深圳合德堂
+  - id: annotation-1060
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3646
+      endOffset: 3649
+    tag: 地名
+    entity: 上海市
+  - id: annotation-962
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1734
+      endOffset: 1737
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-973
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2354
+      endOffset: 2357
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-753
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 225
+      endOffset: 229
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-874
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1124
+      endOffset: 1130
+    tag: 地名
+    entity: 西安市高新区
+  - id: annotation-764
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 950
+      endOffset: 954
+    tag: 机构名
+    entity: 天人国际
+  - id: annotation-885
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1312
+      endOffset: 1328
+    tag: 机构名
+    entity: 天人果汁国际控股(香港)有限公司
+  - id: annotation-896
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1196
+      endOffset: 1221
+    tag: 机构名
+    entity: PEAKWINGENTERPRISELIMITED
+  - id: annotation-797
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1452
+      endOffset: 1458
+    tag: 机构名
+    entity: 上海天晓基金
+  - id: annotation-698
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 326
+      endOffset: 330
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-930
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2464
+      endOffset: 2468
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-820
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 616
+      endOffset: 625
+    tag: 机构名
+    entity: 西安分行解放路支行
+  - id: annotation-941
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1628
+      endOffset: 1633
+    tag: 日期
+    entity: 1995年
+  - id: annotation-1050
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4308
+      endOffset: 4311
+    tag: 人名
+    entity: 陈岱松
+  - id: annotation-710
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1032
+      endOffset: 1036
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-952
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1706
+      endOffset: 1714
+    tag: 日期
+    entity: 2017年12月
+  - id: annotation-1061
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3659
+      endOffset: 3664
+    tag: 机构名
+    entity: 上海证监局
+  - id: annotation-974
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1808
+      endOffset: 1818
+    tag: 日期
+    entity: 2017年9月29日
+  - id: annotation-864
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1039
+      endOffset: 1044
+    tag: 时间
+    entity: 2001年
+  - id: annotation-985
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1916
+      endOffset: 1924
+    tag: 货币
+    entity: 247.47万元
+  - id: annotation-754
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 251
+      endOffset: 263
+    tag: 日期
+    entity: 天人果汁集团股份有限公司
+  - id: annotation-875
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1141
+      endOffset: 1157
+    tag: 机构名
+    entity: 天人果汁国际控股(香港)有限公司
+  - id: annotation-765
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1067
+      endOffset: 1071
+    tag: 机构名
+    entity: 天人国际
+  - id: annotation-886
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1361
+      endOffset: 1372
+    tag: 机构名
+    entity: 合德堂控股集团有限公司
+  - id: annotation-897
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1536
+      endOffset: 1547
+    tag: 日期
+    entity: 2017年10月31日
+  - id: annotation-798
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 358
+      endOffset: 362
+    tag: 地名
+    entity: 上海浦东
+  - id: annotation-699
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 379
+      endOffset: 383
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-931
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2481
+      endOffset: 2485
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-700
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 434
+      endOffset: 438
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-821
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 662
+      endOffset: 667
+    tag: 货币
+    entity: 1.3亿元
+  - id: annotation-942
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1659
+      endOffset: 1670
+    tag: 机构名
+    entity: 深圳合德堂实业有限公司
+  - id: annotation-1051
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3230
+      endOffset: 3234
+    tag: 机构名
+    entity: 中粮集团
+  - id: annotation-711
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1131
+      endOffset: 1135
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-1062
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3872
+      endOffset: 3874
+    tag: 地名
+    entity: 中国
+  - id: annotation-964
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1767
+      endOffset: 1770
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-975
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1839
+      endOffset: 1850
+    tag: 日期
+    entity: 2017年11月30日
+  - id: annotation-1084
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4059
+      endOffset: 4064
+    tag: 日期
+    entity: 2014年
+  - id: annotation-865
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1049
+      endOffset: 1055
+    tag: 货币
+    entity: 4.28亿元
+  - id: annotation-986
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1930
+      endOffset: 1938
+    tag: 货币
+    entity: 999.86万元
+  - id: annotation-876
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1167
+      endOffset: 1174
+    tag: 日期
+    entity: 2007年8月
+  - id: annotation-997
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3219
+      endOffset: 3223
+    tag: 机构名
+    entity: 天人国际
+  - id: annotation-766
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1159
+      endOffset: 1163
+    tag: 机构名
+    entity: 天人国际
+  - id: annotation-887
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1491
+      endOffset: 1499
+    tag: 机构名
+    entity: 纳斯达克上市公司
+  - id: annotation-777
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 304
+      endOffset: 306
+    tag: 地名
+    entity: 上海
+  - id: annotation-898
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1553
+      endOffset: 1556
+    tag: 人名
+    entity: 薛永科
+  - id: annotation-799
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 384
+      endOffset: 386
+    tag: 地名
+    entity: 美国
+  - id: annotation-910
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2133
+      endOffset: 2135
+    tag: 地名
+    entity: 西安
+  - id: annotation-932
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2494
+      endOffset: 2498
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-701
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 460
+      endOffset: 464
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-822
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 712
+      endOffset: 723
+    tag: 日期
+    entity: 2017年12月31日
+  - id: annotation-943
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1674
+      endOffset: 1679
+    tag: 机构名
+    entity: 深圳合德堂
+  - id: annotation-1052
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3235
+      endOffset: 3239
+    tag: 机构名
+    entity: 建设银行
+  - id: annotation-965
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1791
+      endOffset: 1794
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-1074
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3898
+      endOffset: 3900
+    tag: 地名
+    entity: 中国
+  - id: annotation-734
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 100
+      endOffset: 105
+    tag: 日期
+    entity: 2013年
+  - id: annotation-976
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1857
+      endOffset: 1866
+    tag: 货币
+    entity: 1247.33万元
+  - id: annotation-1085
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4075
+      endOffset: 4080
+    tag: 日期
+    entity: 2015年
+  - id: annotation-866
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1063
+      endOffset: 1066
+    tag: 人名
+    entity: 薛红科
+  - id: annotation-987
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2054
+      endOffset: 2066
+    tag: 机构名
+    entity: 合德家传控股集团有限公司
+  - id: annotation-877
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1187
+      endOffset: 1195
+    tag: 机构名
+    entity: 鼎翔企业有限公司
+  - id: annotation-998
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2471
+      endOffset: 2473
+    tag: 地名
+    entity: 美国
+  - id: annotation-899
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1559
+      endOffset: 1565
+    tag: 百分比
+    entity: 45.20%
+  - id: annotation-911
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3152
+      endOffset: 3154
+    tag: 地名
+    entity: 西安
+  - id: annotation-1020
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2921
+      endOffset: 2931
+    tag: 日期
+    entity: 2017年9月30日
+  - id: annotation-933
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2702
+      endOffset: 2706
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-1042
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3191
+      endOffset: 3193
+    tag: 地名
+    entity: 上海
+  - id: annotation-702
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 500
+      endOffset: 504
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-1053
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3459
+      endOffset: 3469
+    tag: 日期
+    entity: 2017年1月20日
+  - id: annotation-834
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 966
+      endOffset: 977
+    tag: 日期
+    entity: 2017年12月21日
+  - id: annotation-966
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1972
+      endOffset: 1975
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-977
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1874
+      endOffset: 1882
+    tag: 货币
+    entity: 247.33万元
+  - id: annotation-878
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1239
+      endOffset: 1249
+    tag: 机构名
+    entity: 中国奇异王果有限公司
+  - id: annotation-999
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2523
+      endOffset: 2532
+    tag: 日期
+    entity: 2016年5月5日
+  - id: annotation-889
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1642
+      endOffset: 1650
+    tag: 机构名
+    entity: 纳斯达克上市公司
+  - id: annotation-901
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1573
+      endOffset: 1579
+    tag: 百分比
+    entity: 45.20%
+  - id: annotation-912
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3158
+      endOffset: 3160
+    tag: 地名
+    entity: 西安
+  - id: annotation-1021
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2938
+      endOffset: 2949
+    tag: 货币
+    entity: '-1446.04万美元'
+  - id: annotation-802
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 422
+      endOffset: 426
+    tag: 机构名
+    entity: 中粮集团
+  - id: annotation-923
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1962
+      endOffset: 1966
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-703
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 550
+      endOffset: 554
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-1054
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3470
+      endOffset: 3476
+    tag: 机构名
+    entity: 国务院办公厅
+  - id: annotation-835
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 917
+      endOffset: 928
+    tag: 日期
+    entity: 2017年12月31日
+  - id: annotation-967
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1993
+      endOffset: 1996
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-1076
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3929
+      endOffset: 3932
+    tag: 百分比
+    entity: 20%
+  - id: annotation-868
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1106
+      endOffset: 1109
+    tag: 人名
+    entity: 薛红科
+  - id: annotation-989
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2073
+      endOffset: 2085
+    tag: 机构名
+    entity: 合德家传控股集团有限公司
+  - id: annotation-1098
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4113
+      endOffset: 4118
+    tag: 日期
+    entity: 2017年
+  - id: annotation-758
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 274
+      endOffset: 286
+    tag: 机构名
+    entity: 天人国际控股集团有限公司
+  - id: annotation-879
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1229
+      endOffset: 1236
+    tag: 日期
+    entity: 2011年2月
+  - id: annotation-769
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 296
+      endOffset: 301
+    tag: 日期
+    entity: 2015年
+  - id: annotation-1110
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4119
+      endOffset: 4124
+    tag: 日期
+    entity: 2016年
+  - id: annotation-1000
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2532
+      endOffset: 2538
+    tag: 机构名
+    entity: 陕西省商务厅
+  - id: annotation-902
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1567
+      endOffset: 1570
+    tag: 人名
+    entity: 薛泽尧
+  - id: annotation-913
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3170
+      endOffset: 3172
+    tag: 地名
+    entity: 西安
+  - id: annotation-1022
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2954
+      endOffset: 2962
+    tag: 百分比
+    entity: 1212.34%
+  - id: annotation-924
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2136
+      endOffset: 2140
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-1033
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3124
+      endOffset: 3131
+    tag: 日期
+    entity: 2018年1月
+  - id: annotation-814
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 541
+      endOffset: 545
+    tag: 货币
+    entity: 50万元
+  - id: annotation-935
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2793
+      endOffset: 2797
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-1055
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3588
+      endOffset: 3590
+    tag: 日期
+    entity: 今年
+  - id: annotation-715
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1383
+      endOffset: 1387
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-836
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 977
+      endOffset: 980
+    tag: 机构名
+    entity: 合德堂
+  - id: annotation-968
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2008
+      endOffset: 2011
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-759
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 290
+      endOffset: 294
+    tag: 机构名
+    entity: 天人国际
+  - id: annotation-1111
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4149
+      endOffset: 4151
+    tag: 地名
+    entity: 中国
+  - id: annotation-1001
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2576
+      endOffset: 2584
+    tag: 日期
+    entity: 2015年12月
+  - id: annotation-914
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3175
+      endOffset: 3177
+    tag: 地名
+    entity: 西安
+  - id: annotation-1023
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2976
+      endOffset: 2983
+    tag: 日期
+    entity: 2008年6月
+  - id: annotation-804
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1352
+      endOffset: 1356
+    tag: 机构名
+    entity: 中粮集团
+  - id: annotation-925
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2152
+      endOffset: 2156
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-1034
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3185
+      endOffset: 3187
+    tag: 地名
+    entity: 上海
+  - id: annotation-815
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 559
+      endOffset: 570
+    tag: 日期
+    entity: 2015年12月28日
+  - id: annotation-936
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3105
+      endOffset: 3109
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-705
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 705
+      endOffset: 709
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-826
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 778
+      endOffset: 789
+    tag: 日期
+    entity: 2017年12月31日
+  - id: annotation-947
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1749
+      endOffset: 1754
+    tag: 机构名
+    entity: 深圳合德堂
+  - id: annotation-1056
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3590
+      endOffset: 3594
+    tag: 日期
+    entity: 3月1日
+  - id: annotation-716
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1463
+      endOffset: 1467
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-958
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1720
+      endOffset: 1725
+    tag: 机构名
+    entity: 深圳合德堂
+  - id: annotation-969
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2220
+      endOffset: 2223
+    tag: 机构名
+    entity: 摩艾客
+  - id: annotation-738
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 113
+      endOffset: 118
+    tag: 日期
+    entity: 2017年
+  - id: annotation-904
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1636
+      endOffset: 1639
+    tag: 人名
+    entity: 薛泽尧
+  - id: annotation-1013
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2881
+      endOffset: 2886
+    tag: 日期
+    entity: 3月26日
+  - id: annotation-915
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1588
+      endOffset: 1592
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-1024
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3000
+      endOffset: 3008
+    tag: 日期
+    entity: 2009年10月
+  - id: annotation-926
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2228
+      endOffset: 2232
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-816
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 572
+      endOffset: 576
+    tag: 货币
+    entity: 20万元
+  - id: annotation-937
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3279
+      endOffset: 3283
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-1046
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3197
+      endOffset: 3203
+    tag: 机构名
+    entity: 华东政法大学
+  - id: annotation-706
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 770
+      endOffset: 774
+    tag: 机构名
+    entity: 天人果汁
+  - id: annotation-948
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1802
+      endOffset: 1807
+    tag: 机构名
+    entity: 深圳合德堂
+  - id: annotation-1057
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3596
+      endOffset: 3599
+    tag: 地名
+    entity: 上海市
+  - id: annotation-959
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1759
+      endOffset: 1762
+    tag: 百分比
+    entity: 90%
+  - id: annotation-849
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 988
+      endOffset: 991
+    tag: 机构名
+    entity: 摩艾客

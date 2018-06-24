@@ -1,7 +1,9 @@
 import fs from 'fs'
 import { TreeItem } from '../reducers/treeReducer'
 import { RawAnnotation } from '../types/Annotation'
+import Decoration from '../types/Decoration'
 import FileInfo from '../types/FileInfo'
+import { compareArray } from './common'
 
 type FetchLike = (url?: string, init?: RequestInit) => Promise<Response>
 
@@ -84,6 +86,9 @@ export default {
   },
 
   async putColl(info: FileInfo, coll: Coll): Promise<void> {
+    coll.annotations.sort((a, b) =>
+      compareArray(Decoration.getPosition(a), Decoration.getPosition(b)),
+    )
     await asppFetch(makeCollUrl(info), {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },

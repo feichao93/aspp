@@ -2,7 +2,7 @@ import { Record } from 'immutable'
 import Action from '../utils/actions'
 import { getNextId } from '../utils/common'
 import Annotation from './Annotation'
-import DecorationRange from './DecorationRange'
+import DecorationRange, { RawRange } from './DecorationRange'
 
 export class Text extends Record({
   id: '',
@@ -76,7 +76,11 @@ namespace Decoration {
     return decoration.type === 'slot' && decoration.slotType === 'plain'
   }
 
-  export function getPosition({ range: { blockIndex, startOffset, endOffset } }: Decoration) {
+  export function getPosition({
+    range: { blockIndex, startOffset, endOffset },
+  }: {
+    range: RawRange
+  }) {
     return [blockIndex, startOffset, -endOffset]
   }
 }

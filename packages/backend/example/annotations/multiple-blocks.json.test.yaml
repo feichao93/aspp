@@ -1,0 +1,761 @@
+annotations:
+  - id: annotation-432
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 国家电网
+  - id: annotation-433
+    type: annotation
+    range:
+      blockIndex: 1
+      startOffset: 0
+      endOffset: 1
+    tag: 简称
+    entity: 中
+  - id: annotation-434
+    type: annotation
+    range:
+      blockIndex: 1
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 石
+  - id: annotation-435
+    type: annotation
+    range:
+      blockIndex: 1
+      startOffset: 4
+      endOffset: 5
+    tag: 简称
+    entity: 化
+  - id: annotation-436
+    type: annotation
+    range:
+      blockIndex: 2
+      startOffset: 0
+      endOffset: 1
+    tag: 简称
+    entity: 中
+  - id: annotation-437
+    type: annotation
+    range:
+      blockIndex: 2
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 石
+  - id: annotation-438
+    type: annotation
+    range:
+      blockIndex: 2
+      startOffset: 3
+      endOffset: 4
+    tag: 简称
+    entity: 油
+  - id: annotation-439
+    type: annotation
+    range:
+      blockIndex: 3
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 工
+  - id: annotation-440
+    type: annotation
+    range:
+      blockIndex: 3
+      startOffset: 5
+      endOffset: 6
+    tag: 简称
+    entity: 行
+  - id: annotation-441
+    type: annotation
+    range:
+      blockIndex: 4
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 中国建筑
+  - id: annotation-442
+    type: annotation
+    range:
+      blockIndex: 5
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 建
+  - id: annotation-443
+    type: annotation
+    range:
+      blockIndex: 5
+      startOffset: 5
+      endOffset: 6
+    tag: 简称
+    entity: 行
+  - id: annotation-444
+    type: annotation
+    range:
+      blockIndex: 6
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 农
+  - id: annotation-445
+    type: annotation
+    range:
+      blockIndex: 6
+      startOffset: 5
+      endOffset: 6
+    tag: 简称
+    entity: 行
+  - id: annotation-446
+    type: annotation
+    range:
+      blockIndex: 7
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 中国平安
+  - id: annotation-447
+    type: annotation
+    range:
+      blockIndex: 8
+      startOffset: 0
+      endOffset: 1
+    tag: 简称
+    entity: 上
+  - id: annotation-448
+    type: annotation
+    range:
+      blockIndex: 8
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 汽
+  - id: annotation-449
+    type: annotation
+    range:
+      blockIndex: 8
+      startOffset: 4
+      endOffset: 6
+    tag: 简称
+    entity: 集团
+  - id: annotation-450
+    type: annotation
+    range:
+      blockIndex: 9
+      startOffset: 0
+      endOffset: 1
+    tag: 简称
+    entity: 中
+  - id: annotation-451
+    type: annotation
+    range:
+      blockIndex: 9
+      startOffset: 3
+      endOffset: 4
+    tag: 简称
+    entity: 行
+  - id: annotation-452
+    type: annotation
+    range:
+      blockIndex: 10
+      startOffset: 0
+      endOffset: 3
+    tag: 简称
+    entity: 中国移
+  - id: annotation-453
+    type: annotation
+    range:
+      blockIndex: 10
+      startOffset: 3
+      endOffset: 4
+    tag: 简称
+    entity: 动
+  - id: annotation-454
+    type: annotation
+    range:
+      blockIndex: 11
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 中国人寿
+  - id: annotation-457
+    type: annotation
+    range:
+      blockIndex: 12
+      startOffset: 0
+      endOffset: 1
+    tag: 简称
+    entity: 中
+  - id: annotation-458
+    type: annotation
+    range:
+      blockIndex: 12
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 铁
+  - id: annotation-459
+    type: annotation
+    range:
+      blockIndex: 13
+      startOffset: 0
+      endOffset: 3
+    tag: 简称
+    entity: 中国铁
+  - id: annotation-460
+    type: annotation
+    range:
+      blockIndex: 13
+      startOffset: 4
+      endOffset: 5
+    tag: 简称
+    entity: 建
+  - id: annotation-461
+    type: annotation
+    range:
+      blockIndex: 14
+      startOffset: 0
+      endOffset: 6
+    tag: 简称
+    entity: 国家开发银行
+  - id: annotation-462
+    type: annotation
+    range:
+      blockIndex: 15
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 东风汽车
+  - id: annotation-463
+    type: annotation
+    range:
+      blockIndex: 16
+      startOffset: 0
+      endOffset: 2
+    tag: 简称
+    entity: 华为
+  - id: annotation-464
+    type: annotation
+    range:
+      blockIndex: 17
+      startOffset: 0
+      endOffset: 2
+    tag: 简称
+    entity: 华润
+  - id: annotation-465
+    type: annotation
+    range:
+      blockIndex: 17
+      startOffset: 3
+      endOffset: 4
+    tag: 简称
+    entity: 集
+  - id: annotation-466
+    type: annotation
+    range:
+      blockIndex: 17
+      startOffset: 4
+      endOffset: 5
+    tag: 简称
+    entity: 团
+  - id: annotation-467
+    type: annotation
+    range:
+      blockIndex: 18
+      startOffset: 0
+      endOffset: 5
+    tag: 简称
+    entity: 太平洋建设
+  - id: annotation-468
+    type: annotation
+    range:
+      blockIndex: 19
+      startOffset: 0
+      endOffset: 6
+    tag: 简称
+    entity: 中国南方电网
+  - id: annotation-469
+    type: annotation
+    range:
+      blockIndex: 20
+      startOffset: 0
+      endOffset: 2
+    tag: 简称
+    entity: 中国
+  - id: annotation-470
+    type: annotation
+    range:
+      blockIndex: 20
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 兵
+  - id: annotation-471
+    type: annotation
+    range:
+      blockIndex: 20
+      startOffset: 4
+      endOffset: 5
+    tag: 简称
+    entity: 装
+  - id: annotation-472
+    type: annotation
+    range:
+      blockIndex: 21
+      startOffset: 0
+      endOffset: 1
+    tag: 简称
+    entity: 中
+  - id: annotation-473
+    type: annotation
+    range:
+      blockIndex: 21
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 交
+  - id: annotation-474
+    type: annotation
+    range:
+      blockIndex: 21
+      startOffset: 6
+      endOffset: 8
+    tag: 简称
+    entity: 集团
+  - id: annotation-475
+    type: annotation
+    range:
+      blockIndex: 22
+      startOffset: 0
+      endOffset: 2
+    tag: 简称
+    entity: 中国
+  - id: annotation-478
+    type: annotation
+    range:
+      blockIndex: 22
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 人
+  - id: annotation-477
+    type: annotation
+    range:
+      blockIndex: 22
+      startOffset: 4
+      endOffset: 5
+    tag: 简称
+    entity: 保
+  - id: annotation-479
+    type: annotation
+    range:
+      blockIndex: 23
+      startOffset: 0
+      endOffset: 1
+    tag: 简称
+    entity: 中
+  - id: annotation-480
+    type: annotation
+    range:
+      blockIndex: 23
+      startOffset: 4
+      endOffset: 6
+    tag: 简称
+    entity: 石油
+  - id: annotation-481
+    type: annotation
+    range:
+      blockIndex: 24
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 中国邮政
+  - id: annotation-482
+    type: annotation
+    range:
+      blockIndex: 25
+      startOffset: 0
+      endOffset: 3
+    tag: 简称
+    entity: 中国五
+  - id: annotation-483
+    type: annotation
+    range:
+      blockIndex: 25
+      startOffset: 3
+      endOffset: 4
+    tag: 简称
+    entity: 矿
+  - id: annotation-484
+    type: annotation
+    range:
+      blockIndex: 26
+      startOffset: 0
+      endOffset: 2
+    tag: 简称
+    entity: 中国
+  - id: annotation-485
+    type: annotation
+    range:
+      blockIndex: 26
+      startOffset: 3
+      endOffset: 5
+    tag: 简称
+    entity: 一汽
+  - id: annotation-486
+    type: annotation
+    range:
+      blockIndex: 27
+      startOffset: 0
+      endOffset: 3
+    tag: 简称
+    entity: 天津物
+  - id: annotation-487
+    type: annotation
+    range:
+      blockIndex: 27
+      startOffset: 3
+      endOffset: 4
+    tag: 简称
+    entity: 产
+  - id: annotation-488
+    type: annotation
+    range:
+      blockIndex: 28
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 中国电信
+  - id: annotation-489
+    type: annotation
+    range:
+      blockIndex: 29
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 安邦保险
+  - id: annotation-490
+    type: annotation
+    range:
+      blockIndex: 30
+      startOffset: 0
+      endOffset: 2
+    tag: 简称
+    entity: 苏宁
+  - id: annotation-491
+    type: annotation
+    range:
+      blockIndex: 31
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 中国兵器
+  - id: annotation-492
+    type: annotation
+    range:
+      blockIndex: 32
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 中粮集团
+  - id: annotation-556
+    type: annotation
+    range:
+      blockIndex: 45
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 中国化工
+  - id: annotation-557
+    type: annotation
+    range:
+      blockIndex: 46
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 招商银行
+  - id: annotation-558
+    type: annotation
+    range:
+      blockIndex: 47
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 中国华信
+  - id: annotation-559
+    type: annotation
+    range:
+      blockIndex: 48
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 河钢集团
+  - id: annotation-560
+    type: annotation
+    range:
+      blockIndex: 49
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 兴业银行
+  - id: annotation-561
+    type: annotation
+    range:
+      blockIndex: 50
+      startOffset: 0
+      endOffset: 1
+    tag: 简称
+    entity: 中
+  - id: annotation-562
+    type: annotation
+    range:
+      blockIndex: 50
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 船
+  - id: annotation-563
+    type: annotation
+    range:
+      blockIndex: 50
+      startOffset: 4
+      endOffset: 6
+    tag: 简称
+    entity: 重工
+  - id: annotation-564
+    type: annotation
+    range:
+      blockIndex: 51
+      startOffset: 0
+      endOffset: 1
+    tag: 简称
+    entity: 广
+  - id: annotation-565
+    type: annotation
+    range:
+      blockIndex: 51
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 汽
+  - id: annotation-566
+    type: annotation
+    range:
+      blockIndex: 51
+      startOffset: 6
+      endOffset: 8
+    tag: 简称
+    entity: 集团
+  - id: annotation-567
+    type: annotation
+    range:
+      blockIndex: 52
+      startOffset: 0
+      endOffset: 2
+    tag: 简称
+    entity: 中国
+  - id: annotation-568
+    type: annotation
+    range:
+      blockIndex: 52
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 联
+  - id: annotation-569
+    type: annotation
+    range:
+      blockIndex: 52
+      startOffset: 6
+      endOffset: 7
+    tag: 简称
+    entity: 通
+  - id: annotation-570
+    type: annotation
+    range:
+      blockIndex: 53
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 浦
+  - id: annotation-571
+    type: annotation
+    range:
+      blockIndex: 53
+      startOffset: 4
+      endOffset: 5
+    tag: 简称
+    entity: 发
+  - id: annotation-1
+    type: annotation
+    range:
+      blockIndex: 86
+      startOffset: 0
+      endOffset: 6
+    tag: 简称
+    entity: 山东能源集团
+  - id: annotation-2
+    type: annotation
+    range:
+      blockIndex: 87
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 金川集团
+  - id: annotation-3
+    type: annotation
+    range:
+      blockIndex: 88
+      startOffset: 2
+      endOffset: 6
+    tag: 简称
+    entity: 万达集团
+  - id: annotation-4
+    type: annotation
+    range:
+      blockIndex: 89
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 中国华电
+  - id: annotation-5
+    type: annotation
+    range:
+      blockIndex: 90
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 国美电器
+  - id: annotation-7
+    type: annotation
+    range:
+      blockIndex: 91
+      startOffset: 0
+      endOffset: 3
+    tag: 简称
+    entity: 中国电
+  - id: annotation-8
+    type: annotation
+    range:
+      blockIndex: 91
+      startOffset: 4
+      endOffset: 5
+    tag: 简称
+    entity: 科
+  - id: annotation-9
+    type: annotation
+    range:
+      blockIndex: 92
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 中国国电
+  - id: annotation-10
+    type: annotation
+    range:
+      blockIndex: 93
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 华晨汽车
+  - id: annotation-11
+    type: annotation
+    range:
+      blockIndex: 94
+      startOffset: 1
+      endOffset: 3
+    tag: 简称
+    entity: 同煤
+  - id: annotation-12
+    type: annotation
+    range:
+      blockIndex: 94
+      startOffset: 4
+      endOffset: 6
+    tag: 简称
+    entity: 集团
+  - id: annotation-13
+    type: annotation
+    range:
+      blockIndex: 95
+      startOffset: 0
+      endOffset: 4
+    tag: 简称
+    entity: 山西焦煤
+  - id: annotation-14
+    type: annotation
+    range:
+      blockIndex: 96
+      startOffset: 0
+      endOffset: 3
+    tag: 简称
+    entity: 中国航
+  - id: annotation-15
+    type: annotation
+    range:
+      blockIndex: 96
+      startOffset: 4
+      endOffset: 5
+    tag: 简称
+    entity: 油
+  - id: annotation-16
+    type: annotation
+    range:
+      blockIndex: 97
+      startOffset: 0
+      endOffset: 2
+    tag: 简称
+    entity: 开滦
+  - id: annotation-17
+    type: annotation
+    range:
+      blockIndex: 97
+      startOffset: 3
+      endOffset: 5
+    tag: 简称
+    entity: 集团
+  - id: annotation-18
+    type: annotation
+    range:
+      blockIndex: 98
+      startOffset: 0
+      endOffset: 1
+    tag: 简称
+    entity: 阳
+  - id: annotation-19
+    type: annotation
+    range:
+      blockIndex: 98
+      startOffset: 2
+      endOffset: 3
+    tag: 简称
+    entity: 煤
+  - id: annotation-20
+    type: annotation
+    range:
+      blockIndex: 98
+      startOffset: 5
+      endOffset: 7
+    tag: 简称
+    entity: 集团
+  - id: annotation-21
+    type: annotation
+    range:
+      blockIndex: 99
+      startOffset: 2
+      endOffset: 4
+    tag: 简称
+    entity: 潞安
+  - id: annotation-22
+    type: annotation
+    range:
+      blockIndex: 99
+      startOffset: 7
+      endOffset: 9
+    tag: 简称
+    entity: 集团

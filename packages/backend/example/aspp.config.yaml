@@ -1,6 +1,11 @@
 name: test-task
 
 tags:
+  - name: 简称
+    label: 简称
+    theme:
+      background: '#91d5ff'
+
   - name: 人名
     label: 人名
     shortcut: '1'
@@ -42,6 +47,11 @@ tags:
     shortcut: '6'
     theme:
       background: 'linear-gradient(rgb(223, 243, 201), rgb(78, 202, 78) 70%, rgb(122, 177, 124))'
+
+  - name: 机构名
+    label: 机构名
+    abbr: ORG
+    shortcut: '7'
 
   - group: 机构名
     name: 公司

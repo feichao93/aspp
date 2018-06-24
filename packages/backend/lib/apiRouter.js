@@ -26,5 +26,5 @@ module.exports = new Router('/api')
   .put('/coll/:fullDocPath+', async ctx => {
     const { fullDocPath } = ctx.params
     const { collname } = ctx.query
-    await ctx.aspp.saveAnnotation(fullDocPath, collname, ctx.request.body)
+    await ctx.aspp.putColl(fullDocPath, collname, ctx.request.body)
   })
