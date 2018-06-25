@@ -1,4 +1,4 @@
 module.exports = dev => ({
-  'DEV.ASSERT': dev,
-  'DEV.VERBOSE': dev,
+  DEV_ASSERT: dev,
+  DEV_VERBOSE: dev,
 })

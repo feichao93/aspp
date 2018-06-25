@@ -19,7 +19,7 @@ ASPP 中文标注工具，提供基于网页的标注前端，用来方便地对
 aspp 的工作在*标注工程文件夹*中，该文件夹需要具有下列结构。文件夹可以参考 [_example/_](/packages/example/)。
 
 ```
-<task-dir>:
+<标注工程文件夹>:
   - aspp.config.yaml
   - docs/
     - folder/
@@ -35,7 +35,7 @@ aspp 的工作在*标注工程文件夹*中，该文件夹需要具有下列结�
     - some-deleted-file.yaml
 ```
 
-_aspp.config.yaml_ 存放了该标注任务的配置：标签的种类、快捷键、标注样式等.
+_aspp.config.yaml_ 存放了该标注工程的配置：标签的种类、快捷键、标注样式等.
 
 _docs/_ 文件夹下存放需要进行标注的文本文档。_docs/_ 支持嵌套的目录结构。
 

@@ -49,7 +49,7 @@ function* diffColls({ docname, collnames }: Action.RequestDiffColls) {
   //   ),
   // )
   // const text = yield fetch(`/api/doc/${e(docname)}`).then(res => res.text())
-  // diffColls(text, colls)
+  // calculateDiffs(text, colls)
 }
 
 function* closeCurrentColl() {
@@ -176,7 +176,7 @@ function findDocInItems(items: TreeItem[], fileInfo: FileInfo): TreeDoc {
     const subDir = items.find(
       item => item.type === 'directory' && item.name === dirname,
     ) as TreeDirectory
-    if (DEV.ASSERT) {
+    if (DEV_ASSERT) {
       console.assert(subDir != null)
     }
     items = subDir.items
@@ -185,7 +185,7 @@ function findDocInItems(items: TreeItem[], fileInfo: FileInfo): TreeDoc {
 }
 
 function* addColl({ fileInfo }: Action.RequestAddColl) {
-  if (DEV.ASSERT) {
+  if (DEV_ASSERT) {
     console.assert(fileInfo.getType() === 'doc')
   }
   const { config, tree, editor, cache }: State = yield select()
@@ -195,7 +195,7 @@ function* addColl({ fileInfo }: Action.RequestAddColl) {
   }
 
   const doc = findDocInItems(tree, fileInfo)
-  if (DEV.ASSERT) {
+  if (DEV_ASSERT) {
     console.assert(doc != null)
   }
   const collname = getNextCollname(doc, config.username)
