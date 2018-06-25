@@ -20,8 +20,6 @@
     "bin/",
     "lib/",
     "public/",
-    ".editorconfig",
-    ".gitignore",
     "package.json",
     "readme.md"
   ],
