@@ -6,7 +6,7 @@
     "aspp": "bin/aspp.js"
   },
   "scripts": {
-    "start": "supervisor --watch lib/ -- ./bin/aspp.js serve --task-dir example"
+    "start": "supervisor --watch lib/ -- ./bin/aspp.js serve --task-dir ../example"
   },
   "repository": {
     "type": "git",
