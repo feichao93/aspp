@@ -2,6 +2,7 @@ import { RawAnnotation } from '../types/Annotation'
 import Decoration from '../types/Decoration'
 import { RawRange } from '../types/DecorationRange'
 import { compareArray } from './common'
+import { RawColl } from './server'
 
 export type Diff = DiffConsistent | DiffPartial | DiffConflict
 
@@ -30,7 +31,8 @@ function compareItem(x: Item, y: Item) {
   return compareArray(Decoration.getPosition(x.annotation), Decoration.getPosition(y.annotation))
 }
 
-function isSameRange(r1: RawRange, r2: RawRange) {
+// TODO 其他应该已经过类似的函数了
+export function isSameRange(r1: RawRange, r2: RawRange) {
   return (
     r1.blockIndex === r2.blockIndex &&
     r1.startOffset === r2.startOffset &&
@@ -45,10 +47,10 @@ function remove<T>(array: T[], item: T) {
   }
 }
 
-function generateItems(annotationsMap: Map<string, RawAnnotation[]>) {
+function generateItems(collMap: Map<string, RawColl>) {
   const items: Item[] = []
-  for (const [key, annotations] of annotationsMap) {
-    for (const annotation of annotations) {
+  for (const [key, coll] of collMap) {
+    for (const annotation of coll.annotations) {
       items.push({ key, annotation })
     }
   }
@@ -66,11 +68,11 @@ function mergeRange(target: RawRange, source: RawRange) {
   target.endOffset = Math.max(target.endOffset, source.endOffset)
 }
 
-export default function calculateDiffs(annotationsMap: Map<string, RawAnnotation[]>): Diff[] {
+export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
   if (DEV_ASSERT) {
-    console.assert(annotationsMap.size >= 2)
+    console.assert(collMap.size >= 2)
   }
-  const items = generateItems(annotationsMap)
+  const items = generateItems(collMap)
 
   const diffs: Diff[] = []
   let currentDiff: Diff = null
@@ -88,7 +90,7 @@ export default function calculateDiffs(annotationsMap: Map<string, RawAnnotation
         type: 'partial',
         range: currentRange,
         // 将所有的 key 都放入 lack 数组中
-        lack: Array.from(annotationsMap.keys()),
+        lack: Array.from(collMap.keys()),
       }
     }
 

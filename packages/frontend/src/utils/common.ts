@@ -143,3 +143,15 @@ export function updateAnnotationNextId(annotations: IMap<string, Annotation>) {
 }
 
 export const prepend = (prefix: string) => (s: string) => prefix + s
+
+export function zip<A, B>(as: A[], bs: B[]): Array<[A, B]> {
+  if (DEV_ASSERT) {
+    console.assert(as.length === bs.length)
+  }
+  const result: Array<[A, B]> = []
+  const size = as.length
+  for (let i = 0; i < size; i++) {
+    result.push([as[i], bs[i]])
+  }
+  return result
+}

@@ -30,7 +30,7 @@ class DocStat extends React.Component<DocStatProps> {
   reqDiff = () => {
     const { dispatch, fileInfo } = this.props
     const { checkedCollnames } = this.state
-    dispatch(Action.requestDiffColls(fileInfo.docname, checkedCollnames.toArray()))
+    dispatch(Action.reqDiffColls(fileInfo.set('collname', ''), checkedCollnames.toArray()))
   }
 
   render() {
@@ -69,7 +69,7 @@ class DocStat extends React.Component<DocStatProps> {
                       text="打开"
                       icon="document-open"
                       onClick={() =>
-                        dispatch(Action.requestOpenColl(fileInfo.set('collname', item.collname)))
+                        dispatch(Action.reqOpenColl(fileInfo.set('collname', item.collname)))
                       }
                     />
                     <Button
@@ -78,7 +78,7 @@ class DocStat extends React.Component<DocStatProps> {
                       icon="trash"
                       intent={Intent.DANGER}
                       onClick={() =>
-                        dispatch(Action.requestDeleteColl(fileInfo.set('collname', item.collname)))
+                        dispatch(Action.reqDeleteColl(fileInfo.set('collname', item.collname)))
                       }
                     />
                   </ButtonGroup>

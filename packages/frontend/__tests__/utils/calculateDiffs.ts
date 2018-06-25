@@ -1,6 +1,8 @@
+import { RawAnnotation } from '../../src/types/Annotation'
 import { RawRange } from '../../src/types/DecorationRange'
 import calculateDiffs, { Diff } from '../../src/utils/calculateDiffs'
 import { parseInlineAnnotations as parse } from '../../src/utils/parseInlineAnnotations'
+import { RawColl } from '../../src/utils/server'
 
 function consistent(str: string, startOffset: number): Diff {
   const { entity } = parse(str).annotations[0]
@@ -34,6 +36,14 @@ function getRange(text: string, entity: string) {
   }
 }
 
+function simpleColl(annotations: RawAnnotation[]): RawColl {
+  return {
+    name: '',
+    annotations,
+    slots: [],
+  }
+}
+
 test('所有标注均一致的情况', () => {
   const text = '2017年第四季度净收入为146.08亿元，同比增加20.7%；净利润为12.86亿元'
   const a = '[DATE/2017年]第四季度净收入为[$/146.08亿元]，同比[P/增加20.7%]；净利润为[$/12.86亿元]'
@@ -43,9 +53,9 @@ test('所有标注均一致的情况', () => {
   expect(
     calculateDiffs(
       new Map([
-        ['a', parse(a).annotations],
-        ['b', parse(b).annotations],
-        ['c', parse(c).annotations],
+        ['a', simpleColl(parse(a).annotations)],
+        ['b', simpleColl(parse(b).annotations)],
+        ['c', simpleColl(parse(c).annotations)],
       ]),
     ),
   ).toEqual([
@@ -69,9 +79,9 @@ test('部分缺失，但标注一致的情况', () => {
   expect(
     calculateDiffs(
       new Map([
-        ['a', parse(a).annotations],
-        ['b', parse(b).annotations],
-        ['c', parse(c).annotations],
+        ['a', simpleColl(parse(a).annotations)],
+        ['b', simpleColl(parse(b).annotations)],
+        ['c', simpleColl(parse(c).annotations)],
       ]),
     ),
   ).toEqual([
@@ -91,9 +101,9 @@ test('简单的冲突的情况', () => {
   expect(
     calculateDiffs(
       new Map([
-        ['a', parse(a).annotations],
-        ['b', parse(b).annotations],
-        ['c', parse(c).annotations],
+        ['a', simpleColl(parse(a).annotations)],
+        ['b', simpleColl(parse(b).annotations)],
+        ['c', simpleColl(parse(c).annotations)],
       ]),
     ),
   ).toEqual([

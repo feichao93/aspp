@@ -30,21 +30,17 @@ export default class DecorationRange extends DecorationRangeRecord {
     )
   }
 
-  static contains(r1: DecorationRange, r2: DecorationRange) {
-    r1 = r1.normalize()
-    r2 = r2.normalize()
+  static isOverlapped(r1: DecorationRange, r2: DecorationRange) {
+    return DecorationRange.isIntersected(r1, r2) && !r1.containsRange(r2) && !r2.containsRange(r1)
+  }
+
+  containsRange(other: DecorationRange) {
+    const r1 = this.normalize()
+    const r2 = other.normalize()
     return (
       r1.blockIndex === r2.blockIndex &&
       r1.startOffset <= r2.startOffset &&
       r1.endOffset >= r2.endOffset
-    )
-  }
-
-  static isOverlapped(r1: DecorationRange, r2: DecorationRange) {
-    return (
-      DecorationRange.isIntersected(r1, r2) &&
-      !DecorationRange.contains(r1, r2) &&
-      !DecorationRange.contains(r2, r1)
     )
   }
 

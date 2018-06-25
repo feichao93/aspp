@@ -26,35 +26,35 @@ class EditHistoryButtonGroup extends React.PureComponent<EditHistoryGroupProps> 
             style={{ marginLeft: 16 }}
             icon="cloud-upload"
             disabled={annotationsNoChange}
-            onClick={() => dispatch(Action.requestSaveCurrentColl())}
+            onClick={() => dispatch(Action.reqSaveCurrentColl())}
           />
         </Tooltip>
         <Tooltip content="关闭当前文件">
           <AnchorButton
             disabled={fileInfo.getType() === 'empty'}
             icon="cross"
-            onClick={() => dispatch(Action.requestCloseCurrentColl())}
+            onClick={() => dispatch(Action.reqCloseCurrentColl())}
           />
         </Tooltip>
         <Tooltip content="回滚操作记录到上一次保存文件前的状态">
           <AnchorButton
             icon="double-chevron-up"
             disabled={disableUndo}
-            onClick={() => dispatch(Action.userRequestRevert())}
+            onClick={() => dispatch(Action.userReqRevert())}
           />
         </Tooltip>
         <Tooltip content="撤销">
           <AnchorButton
             icon="undo"
             disabled={disableUndo}
-            onClick={() => dispatch(Action.userRequestUndo())}
+            onClick={() => dispatch(Action.userReqUndo())}
           />
         </Tooltip>
         <Tooltip content="重做">
           <AnchorButton
             icon="redo"
             disabled={disableRedo}
-            onClick={() => dispatch(Action.userRequestRedo())}
+            onClick={() => dispatch(Action.userReqRedo())}
           />
         </Tooltip>
       </ButtonGroup>

@@ -120,14 +120,12 @@ const customMenus = {
         <MenuItem
           icon="folder-open"
           text="打开统计"
-          onClick={() =>
-            dispatch(Action.requestOpenDocStat(fileInfo.set('collname', DOC_STAT_NAME)))
-          }
+          onClick={() => dispatch(Action.reqOpenDocStat(fileInfo.set('collname', DOC_STAT_NAME)))}
         />
         <MenuItem
           icon="new-object"
           text="新增标注文件"
-          onClick={() => dispatch(Action.requestAddColl(fileInfo))}
+          onClick={() => dispatch(Action.reqAddColl(fileInfo))}
         />
         <MenuItem icon="trash" text="删除语料（开发中)" intent={Intent.DANGER} />
       </Menu>
@@ -140,7 +138,7 @@ const customMenus = {
         <MenuItem
           text="打开"
           icon="document-open"
-          onClick={() => dispatch(Action.requestOpenColl(fileInfo))}
+          onClick={() => dispatch(Action.reqOpenColl(fileInfo))}
         />
         <MenuItem
           icon="download"
@@ -151,7 +149,7 @@ const customMenus = {
         <MenuItem
           icon="trash"
           text="删除"
-          onClick={() => dispatch(Action.requestDeleteColl(fileInfo))}
+          onClick={() => dispatch(Action.reqDeleteColl(fileInfo))}
           intent={Intent.DANGER}
         />
       </Menu>
@@ -220,7 +218,7 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
 
   onRefresh = () => {
     const { dispatch } = this.props
-    dispatch(Action.requestLoadTree(true))
+    dispatch(Action.reqLoadTree(true))
   }
 
   onExpandAll = () => {
@@ -266,9 +264,9 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
     }
 
     if (fileInfoType === 'doc') {
-      dispatch(Action.requestOpenDocStat(info.set('collname', DOC_STAT_NAME)))
+      dispatch(Action.reqOpenDocStat(info.set('collname', DOC_STAT_NAME)))
     } else if (fileInfoType === 'coll') {
-      dispatch(Action.requestOpenColl(info))
+      dispatch(Action.reqOpenColl(info))
     }
   }
 

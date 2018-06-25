@@ -1,6 +1,6 @@
 import { Intent } from '@blueprintjs/core'
-import { is, List, Map, Seq } from 'immutable'
-import { getContext, put, select, takeEvery, takeLatest } from 'little-saga/compat'
+import { is, List, Map as IMap, Seq } from 'immutable'
+import { getContext, io, put, select, takeEvery, takeLatest } from 'little-saga/compat'
 import { ActionCategory } from '../actions/EditorAction'
 import EmptyEditorAction from '../actions/EmptyEditorAction'
 import { State } from '../reducers'
@@ -10,12 +10,15 @@ import { setEditorState } from '../reducers/editorReducer'
 import { setFileInfo } from '../reducers/fileInfoReducer'
 import { TreeDirectory, TreeDoc, TreeItem } from '../reducers/treeReducer'
 import Annotation from '../types/Annotation'
+import { Slot } from '../types/Decoration'
 import EditorState from '../types/EditorState'
 import FileInfo from '../types/FileInfo'
 import Action from '../utils/actions'
-import { a, keyed, updateAnnotationNextId } from '../utils/common'
+import calculateDiffs from '../utils/calculateDiffs'
+import { a, keyed, updateAnnotationNextId, zip } from '../utils/common'
 import InteractionCollector from '../utils/InteractionCollector'
-import server from '../utils/server'
+import makeDiffCollFromDiffs from '../utils/makeDiffCollFromDiffs'
+import server, { RawColl } from '../utils/server'
 import { applyEditorAction } from './historyManager'
 
 /** 从后台加载文档树 */
@@ -36,20 +39,28 @@ function* loadTreeState(reload: boolean) {
   }
 }
 
-function* diffColls({ docname, collnames }: Action.RequestDiffColls) {
+function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
   if (collnames.length < 2) {
     yield put(Action.toast('请选择两个以上的标注文件', Intent.WARNING))
     return
   }
-  yield put(Action.toast('diff 功能仍在开发中', Intent.WARNING))
-  // TODO WIP
-  // const colls: RawColl[] = yield all(
-  //   collnames.map(collname =>
-  //     fetch(`/api/annotation-set/${e(docname)}/${e(collname)}`).then(res => res.json()),
-  //   ),
-  // )
-  // const text = yield fetch(`/api/doc/${e(docname)}`).then(res => res.text())
-  // calculateDiffs(text, colls)
+  try {
+    const colls: RawColl[] = yield io.all(
+      collnames.map(collname => server.getColl(docFileInfo.set('collname', collname))),
+    )
+    const collMap = new Map(zip(collnames, colls))
+    const diffs = calculateDiffs(collMap)
+    const diffColl = makeDiffCollFromDiffs(diffs, collMap)
+
+    const diffFileInfo = docFileInfo.set('collname', `diff-of-${collnames.join('_')}`)
+    yield server.putColl(diffFileInfo, diffColl)
+    yield loadTreeState(false)
+    yield put(Action.toast(`已生成 ${diffFileInfo.collname}`))
+    // TODO 优化写法
+    // yield put(Action.reqOpenColl(diffFileInfo))
+  } catch (e) {
+    yield put(Action.toast(e.message, Intent.DANGER))
+  }
 }
 
 function* closeCurrentColl() {
@@ -61,7 +72,7 @@ function* closeCurrentColl() {
   }
 
   // 清空缓存
-  yield put(setCachedAnnotations(Map()))
+  yield put(setCachedAnnotations(IMap()))
   // 清空当前编辑器状态
   yield put(setEditorState(new EditorState()))
   // 清空当前打开文件信息
@@ -79,7 +90,10 @@ function* saveCurrentColl() {
 
   try {
     yield server.putColl(fileInfo, {
+      name: fileInfo.collname,
       annotations: editor.annotations.valueSeq().toArray(),
+      // FIXME 有些 slot.data 无法序列化（例如 diffSlot.data)
+      slots: editor.slots.valueSeq().toArray(),
     })
     yield put(setCachedAnnotations(editor.annotations))
     yield applyEditorAction(
@@ -92,7 +106,7 @@ function* saveCurrentColl() {
   }
 }
 
-function* openDocStat({ fileInfo: opening }: Action.RequestOpenDocStat) {
+function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
   const { fileInfo: cntFileInfo, editor, cache }: State = yield select()
 
   if (cntFileInfo.getType() === 'coll' && !is(cache.annotations, editor.annotations)) {
@@ -121,7 +135,7 @@ function* openDocStat({ fileInfo: opening }: Action.RequestOpenDocStat) {
   }
 }
 
-function* openColl({ fileInfo: opening }: Action.RequestOpenColl) {
+function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
   const collector: InteractionCollector = yield getContext('collector')
   const { fileInfo: cntFileInfo, editor, cache }: State = yield select()
   if (cntFileInfo.getType() === 'coll' && !is(cache.annotations, editor.annotations)) {
@@ -131,14 +145,16 @@ function* openColl({ fileInfo: opening }: Action.RequestOpenColl) {
 
   try {
     const blocks: string[] = yield server.getDoc(opening)
-    const coll = yield server.getColl(opening)
+    const coll: RawColl = yield server.getColl(opening)
 
     const annotations = keyed<Annotation>(Seq(coll.annotations).map(Annotation.fromJS))
+    // TODO 将所有的普通对象转换为 Immutable 对象（例如 diff-slot 中的 data）
+    const slots = keyed<Slot>(Seq(coll.slots).map(Slot.fromJS))
     const editorState = new EditorState({
       blocks: List(blocks),
       annotations,
       range: null,
-      // TODO hints & slots
+      slots,
     })
 
     updateAnnotationNextId(annotations)
@@ -184,7 +200,7 @@ function findDocInItems(items: TreeItem[], fileInfo: FileInfo): TreeDoc {
   return items.find(item => item.type === 'doc' && item.name === fileInfo.docname) as TreeDoc
 }
 
-function* addColl({ fileInfo }: Action.RequestAddColl) {
+function* addColl({ fileInfo }: Action.ReqAddColl) {
   if (DEV_ASSERT) {
     console.assert(fileInfo.getType() === 'doc')
   }
@@ -202,17 +218,18 @@ function* addColl({ fileInfo }: Action.RequestAddColl) {
 
   try {
     const adding = fileInfo.set('collname', collname)
-    yield server.putColl(adding, { annotations: [] })
+    const emptyColl: RawColl = { name: collname, slots: [], annotations: [] }
+    yield server.putColl(adding, emptyColl)
     yield loadTreeState(false)
     yield put(Action.toast(`已添加 ${collname}`))
-    yield put(Action.requestOpenColl(adding))
+    yield put(Action.reqOpenColl(adding))
   } catch (e) {
     console.error(e)
     yield put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
-function* deleteColl({ fileInfo: deleting }: Action.RequestDeleteColl) {
+function* deleteColl({ fileInfo: deleting }: Action.ReqDeleteColl) {
   const { fileInfo: cntFileInfo }: State = yield select()
   if (is(deleting, cntFileInfo)) {
     yield put(Action.toast('不能删除当前打开的文件'))
@@ -234,17 +251,15 @@ function* deleteColl({ fileInfo: deleting }: Action.RequestDeleteColl) {
 }
 
 export default function* fileSaga() {
-  yield takeEvery(a('REQUEST_DIFF_COLLS'), diffColls)
-  yield takeEvery(a('REQUEST_ADD_COLL'), addColl)
-  yield takeEvery(a('REQUEST_DELETE_COLL'), deleteColl)
-  yield takeEvery(a('REQUEST_CLOSE_CURRENT_COLL'), closeCurrentColl)
-  yield takeEvery(a('REQUEST_SAVE_CURRENT_COLL'), saveCurrentColl)
-  yield takeEvery(a('REQUEST_OPEN_DOC_STAT'), openDocStat)
-  yield takeEvery(a('REQUEST_OPEN_COLL'), openColl)
+  yield takeEvery(a('REQ_DIFF_COLLS'), diffColls)
+  yield takeEvery(a('REQ_ADD_COLL'), addColl)
+  yield takeEvery(a('REQ_DELETE_COLL'), deleteColl)
+  yield takeEvery(a('REQ_CLOSE_CURRENT_COLL'), closeCurrentColl)
+  yield takeEvery(a('REQ_SAVE_CURRENT_COLL'), saveCurrentColl)
+  yield takeEvery(a('REQ_OPEN_DOC_STAT'), openDocStat)
+  yield takeEvery(a('REQ_OPEN_COLL'), openColl)
 
-  yield takeLatest(a('REQUEST_LOAD_TREE'), ({ reload }: Action.RequestLoadTree) =>
-    loadTreeState(reload),
-  )
+  yield takeLatest(a('REQ_LOAD_TREE'), ({ reload }: Action.ReqLoadTree) => loadTreeState(reload))
 
-  yield put(Action.requestLoadTree(true))
+  yield put(Action.reqLoadTree(true))
 }

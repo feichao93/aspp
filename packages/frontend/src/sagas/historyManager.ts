@@ -47,7 +47,7 @@ function* handleRedo() {
 }
 
 export default function* historyManager() {
-  yield takeEvery(a('USER_REQUEST_UNDO'), handleUndo)
-  yield takeEvery(a('USER_REQUEST_REVERT'), handleRevert)
-  yield takeEvery(a('USER_REQUEST_REDO'), handleRedo)
+  yield takeEvery(a('USER_REQ_UNDO'), handleUndo)
+  yield takeEvery(a('USER_REQ_REVERT'), handleRevert)
+  yield takeEvery(a('USER_REQ_REDO'), handleRedo)
 }

@@ -4,6 +4,7 @@ import React from 'react'
 import ASPP_CONFIG from '../../aspp-config'
 import Decoration from '../../types/Decoration'
 import { isSameSpanInfo, SpanInfo } from '../../utils/layout'
+import { DiffData } from '../../utils/makeDiffCollFromDiffs'
 
 interface SpanProps {
   info: SpanInfo
@@ -63,7 +64,19 @@ export default class Span extends React.Component<SpanProps> {
     const style =
       !selected && visible && decoration.type === 'annotation'
         ? ASPP_CONFIG.styleMap.get(decoration.tag)
-        : undefined
+        : {}
+
+    // TODO 优化样式生成代码
+    if (Decoration.isSlot(decoration) && decoration.slotType === 'diff') {
+      const diffData: DiffData = decoration.data
+      if (diffData.type === 'consistent') {
+        style.background = '#94e894'
+      } else if (diffData.type === 'partial') {
+        style.background = '#ffe31b'
+      } else {
+        style.background = '#ff0018'
+      }
+    }
 
     return (
       <span

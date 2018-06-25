@@ -27,13 +27,13 @@ export default function* shortcutSaga() {
         yield put(Action.userSelectCurrent())
       } else if (event.key === 's' && event.ctrlKey) {
         event.preventDefault()
-        yield put(Action.requestSaveCurrentColl())
+        yield put(Action.reqSaveCurrentColl())
       } else if (ASPP_CONFIG.shortcutMap.has(event.key)) {
         yield put(Action.userAnnotateCurrent(ASPP_CONFIG.shortcutMap.get(event.key)))
       } else if (event.key === 'z' && event.ctrlKey) {
-        yield put(Action.userRequestUndo())
+        yield put(Action.userReqUndo())
       } else if (event.key === 'y' && event.ctrlKey) {
-        yield put(Action.userRequestRedo())
+        yield put(Action.userReqRedo())
       }
     }
   } finally {

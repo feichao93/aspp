@@ -26,11 +26,20 @@ export class Hint extends Record({
   }
 }
 
+export interface RawSlot {
+  id: string
+  type: 'slot'
+  slotType: string
+  range: RawRange
+  data: any
+}
+
 export class Slot extends Record({
   id: '',
   type: 'slot' as 'slot',
   slotType: '',
   range: new DecorationRange(),
+  data: null as any,
 }) {
   static fromJS(object: any) {
     return new Slot(object).update('range', DecorationRange.fromJS)

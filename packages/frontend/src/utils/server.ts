@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { TreeItem } from '../reducers/treeReducer'
 import { RawAnnotation } from '../types/Annotation'
-import Decoration from '../types/Decoration'
+import Decoration, { RawSlot } from '../types/Decoration'
 import FileInfo from '../types/FileInfo'
 import { compareArray } from './common'
 
@@ -51,9 +51,11 @@ function makeCollUrl(info: FileInfo) {
 
 const asppFetch = withPrefix('/api')(guardOK(fetch))
 
-// TODO 完善 Coll
-interface Coll {
+export interface RawColl {
+  // TODO meta
+  name: string
   annotations: RawAnnotation[]
+  slots: RawSlot[]
 }
 
 export default {
@@ -80,15 +82,14 @@ export default {
     return await res.json()
   },
 
-  async getColl(info: FileInfo): Promise<Coll> {
+  async getColl(info: FileInfo): Promise<RawColl> {
     const res = await asppFetch(makeCollUrl(info))
     return await res.json()
   },
 
-  async putColl(info: FileInfo, coll: Coll): Promise<void> {
-    coll.annotations.sort((a, b) =>
-      compareArray(Decoration.getPosition(a), Decoration.getPosition(b)),
-    )
+  async putColl(info: FileInfo, coll: RawColl): Promise<void> {
+    coll.annotations.sort(compareDecoration)
+    coll.slots.sort(compareDecoration)
     await asppFetch(makeCollUrl(info), {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
@@ -99,4 +100,9 @@ export default {
   async deleteColl(info: FileInfo): Promise<void> {
     await asppFetch(makeCollUrl(info), { method: 'DELETE' })
   },
+}
+
+// TODO 其他地方应该定义过类似的函数
+function compareDecoration<T extends Decoration | RawAnnotation>(a: T, b: T) {
+  return compareArray(Decoration.getPosition(a), Decoration.getPosition(b))
 }

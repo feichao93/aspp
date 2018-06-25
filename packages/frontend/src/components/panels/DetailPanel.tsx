@@ -6,11 +6,13 @@ import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
 import { setSel } from '../../reducers/editorReducer'
+import Annotation from '../../types/Annotation'
 import Decoration from '../../types/Decoration'
 import EditorState from '../../types/EditorState'
 import Action from '../../utils/actions'
 import { shortenText, toIdSet } from '../../utils/common'
 import layout, { SpanInfo } from '../../utils/layout'
+import { DiffData } from '../../utils/makeDiffCollFromDiffs'
 import Span from '../AnnotationEditor/Span'
 import './DetailPanel.styl'
 import { Rich } from './rich'
@@ -124,7 +126,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
     const { editor } = this.props
 
     return (
-      <div>
+      <div data-part="text-part">
         <HorizontalLine />
         <div className="code">
           <p>
@@ -247,6 +249,85 @@ class DetailPanel extends React.Component<DetailPanelProps> {
             删除
           </Button>
         </ButtonGroup>
+      </div>
+    )
+  }
+
+  // TODO 优化 slot-part 的内容
+  renderDiffSlotPart(mode: SelMode) {
+    if (mode !== 'decoration') {
+      return null
+    }
+
+    const { editor, dispatch } = this.props
+    const decoration = editor.gather().get(editor.sel.first())
+    if (!Decoration.isSlot(decoration)) {
+      return null
+    }
+
+    const diffData: DiffData = decoration.data
+    let content: JSX.Element
+    if (diffData.type === 'consistent') {
+      const range = diffData.annotation.range
+      content = (
+        <div>
+          <div className="block preview">
+            <Span
+              block={editor.blocks.get(range.blockIndex)}
+              info={{ height: 0, decoration: Annotation.fromJS(diffData.annotation) }}
+              sel={Set()}
+              shortenLongText
+            />
+          </div>
+          所有标注文件中都出现了上述标注
+        </div>
+      )
+    } else if (diffData.type === 'partial') {
+      const range = diffData.annotation.range
+      content = (
+        <div>
+          <div className="block preview">
+            <Span
+              block={editor.blocks.get(range.blockIndex)}
+              info={{ height: 0, decoration: Annotation.fromJS(diffData.annotation) }}
+              sel={Set()}
+              shortenLongText
+            />
+          </div>
+          在以下标注文件中缺失了上述标注： {diffData.lack.join(', ')}
+        </div>
+      )
+    } else {
+      console.log(diffData.annotationMap)
+      content = (
+        <div>
+          不同标注文件发生了冲突:
+          {Array.from(diffData.annotationMap).map(([collname, annotations]) => {
+            const blockIndex = annotations[0].range.blockIndex
+            return (
+              <div key={collname} className="block preview">
+                <span>{collname} :</span>
+                {annotations.map(annotation => (
+                  <Span
+                    key={annotation.id}
+                    block={editor.blocks.get(blockIndex)}
+                    info={{ height: 0, decoration: Annotation.fromJS(annotation) }}
+                    sel={Set()}
+                    shortenLongText
+                  />
+                ))}
+              </div>
+            )
+          })}
+        </div>
+      )
+    }
+
+    return (
+      <div data-part="diff-slot">
+        <HorizontalLine />
+        <h2 className="part-title">diff 详情</h2>
+        {content}
       </div>
     )
   }
@@ -395,6 +476,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
         {this.renderTextPart(mode)}
         {this.renderIntersectionPart(mode)}
         {this.renderDecorationPart(mode)}
+        {this.renderDiffSlotPart(mode)}
         {this.renderHierarchyPart(mode)}
         {this.renderDecorationSetPart(mode)}
       </div>

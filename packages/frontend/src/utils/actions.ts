@@ -88,55 +88,55 @@ namespace Action {
     return { type: 'SET_TAG_GROUP_VISIBILITY', groupName, visible }
   }
 
-  export interface UserRequestRevert {
-    type: 'USER_REQUEST_REVERT'
+  export interface UserReqRevert {
+    type: 'USER_REQ_REVERT'
   }
-  export function userRequestRevert(): UserRequestRevert {
-    return { type: 'USER_REQUEST_REVERT' }
-  }
-
-  export interface UserRequestUndo {
-    type: 'USER_REQUEST_UNDO'
-  }
-  export function userRequestUndo(): UserRequestUndo {
-    return { type: 'USER_REQUEST_UNDO' }
+  export function userReqRevert(): UserReqRevert {
+    return { type: 'USER_REQ_REVERT' }
   }
 
-  export interface UserRequestRedo {
-    type: 'USER_REQUEST_REDO'
+  export interface UserReqUndo {
+    type: 'USER_REQ_UNDO'
   }
-  export function userRequestRedo(): UserRequestRedo {
-    return { type: 'USER_REQUEST_REDO' }
+  export function userReqUndo(): UserReqUndo {
+    return { type: 'USER_REQ_UNDO' }
+  }
+
+  export interface UserReqRedo {
+    type: 'USER_REQ_REDO'
+  }
+  export function userReqRedo(): UserReqRedo {
+    return { type: 'USER_REQ_REDO' }
   }
   // endregion
 
   // region FileTypes
   type FileTypes =
-    | RequestDiffColls
-    | RequestLoadTree
+    | ReqDiffColls
+    | ReqLoadTree
     | LoadTreeState
-    | RequestAddColl
-    | RequestDeleteColl
-    | RequestCloseCurrentColl
-    | RequestSaveCurrentColl
-    | RequestOpenDocStat
-    | RequestOpenColl
+    | ReqAddColl
+    | ReqDeleteColl
+    | ReqCloseCurrentColl
+    | ReqSaveCurrentColl
+    | ReqOpenDocStat
+    | ReqOpenColl
 
-  export interface RequestDiffColls {
-    type: 'REQUEST_DIFF_COLLS'
-    docname: string
+  export interface ReqDiffColls {
+    type: 'REQ_DIFF_COLLS'
+    docFileInfo: FileInfo
     collnames: string[]
   }
-  export function requestDiffColls(docname: string, collnames: string[]): RequestDiffColls {
-    return { type: 'REQUEST_DIFF_COLLS', docname, collnames }
+  export function reqDiffColls(docFileInfo: FileInfo, collnames: string[]): ReqDiffColls {
+    return { type: 'REQ_DIFF_COLLS', docFileInfo, collnames }
   }
 
-  export interface RequestLoadTree {
-    type: 'REQUEST_LOAD_TREE'
+  export interface ReqLoadTree {
+    type: 'REQ_LOAD_TREE'
     reload: boolean
   }
-  export function requestLoadTree(reload: boolean): RequestLoadTree {
-    return { type: 'REQUEST_LOAD_TREE', reload }
+  export function reqLoadTree(reload: boolean): ReqLoadTree {
+    return { type: 'REQ_LOAD_TREE', reload }
   }
 
   export interface LoadTreeState {
@@ -147,50 +147,50 @@ namespace Action {
     return { type: 'LOAD_TREE_STATE', treeState }
   }
 
-  export interface RequestAddColl {
-    type: 'REQUEST_ADD_COLL'
+  export interface ReqAddColl {
+    type: 'REQ_ADD_COLL'
     fileInfo: FileInfo
   }
-  export function requestAddColl(fileInfo: FileInfo): RequestAddColl {
-    return { type: 'REQUEST_ADD_COLL', fileInfo }
+  export function reqAddColl(fileInfo: FileInfo): ReqAddColl {
+    return { type: 'REQ_ADD_COLL', fileInfo }
   }
 
-  export interface RequestDeleteColl {
-    type: 'REQUEST_DELETE_COLL'
+  export interface ReqDeleteColl {
+    type: 'REQ_DELETE_COLL'
     fileInfo: FileInfo
   }
-  export function requestDeleteColl(fileInfo: FileInfo): RequestDeleteColl {
-    return { type: 'REQUEST_DELETE_COLL', fileInfo }
+  export function reqDeleteColl(fileInfo: FileInfo): ReqDeleteColl {
+    return { type: 'REQ_DELETE_COLL', fileInfo }
   }
 
-  export interface RequestCloseCurrentColl {
-    type: 'REQUEST_CLOSE_CURRENT_COLL'
+  export interface ReqCloseCurrentColl {
+    type: 'REQ_CLOSE_CURRENT_COLL'
   }
-  export function requestCloseCurrentColl(): RequestCloseCurrentColl {
-    return { type: 'REQUEST_CLOSE_CURRENT_COLL' }
-  }
-
-  export interface RequestSaveCurrentColl {
-    type: 'REQUEST_SAVE_CURRENT_COLL'
-  }
-  export function requestSaveCurrentColl(): RequestSaveCurrentColl {
-    return { type: 'REQUEST_SAVE_CURRENT_COLL' }
+  export function reqCloseCurrentColl(): ReqCloseCurrentColl {
+    return { type: 'REQ_CLOSE_CURRENT_COLL' }
   }
 
-  export interface RequestOpenDocStat {
-    type: 'REQUEST_OPEN_DOC_STAT'
+  export interface ReqSaveCurrentColl {
+    type: 'REQ_SAVE_CURRENT_COLL'
+  }
+  export function reqSaveCurrentColl(): ReqSaveCurrentColl {
+    return { type: 'REQ_SAVE_CURRENT_COLL' }
+  }
+
+  export interface ReqOpenDocStat {
+    type: 'REQ_OPEN_DOC_STAT'
     fileInfo: FileInfo
   }
-  export function requestOpenDocStat(fileInfo: FileInfo): RequestOpenDocStat {
-    return { type: 'REQUEST_OPEN_DOC_STAT', fileInfo }
+  export function reqOpenDocStat(fileInfo: FileInfo): ReqOpenDocStat {
+    return { type: 'REQ_OPEN_DOC_STAT', fileInfo }
   }
 
-  export interface RequestOpenColl {
-    type: 'REQUEST_OPEN_COLL'
+  export interface ReqOpenColl {
+    type: 'REQ_OPEN_COLL'
     fileInfo: FileInfo
   }
-  export function requestOpenColl(fileInfo: FileInfo): RequestOpenColl {
-    return { type: 'REQUEST_OPEN_COLL', fileInfo }
+  export function reqOpenColl(fileInfo: FileInfo): ReqOpenColl {
+    return { type: 'REQ_OPEN_COLL', fileInfo }
   }
   // endregion
 
@@ -239,9 +239,9 @@ namespace Action {
     | UserAnnotateCurrent
     | UserDeleteCurrent
     | UserAcceptCurrent
-    | UserRequestRedo
-    | UserRequestRevert
-    | UserRequestUndo
+    | UserReqRedo
+    | UserReqRevert
+    | UserReqUndo
     | SetTagGroupVisibility
     | UserSelectBlockHints
     | UserSelectBlockText
