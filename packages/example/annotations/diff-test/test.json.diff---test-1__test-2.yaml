@@ -545,7 +545,7 @@ slots:
               range:
                 blockIndex: 2
                 startOffset: 243
-                endOffset: 263
+                endOffset: 249
               tag: 期货
               entity: 他于2015
             - id: annotation-30

@@ -84,7 +84,7 @@ export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
 
     if (currentRange == null) {
       // 生成一个默认的diff
-      currentRange = item.annotation.range
+      currentRange = Object.assign({}, item.annotation.range)
       currentTag = item.annotation.tag
       currentDiff = {
         type: 'partial',
