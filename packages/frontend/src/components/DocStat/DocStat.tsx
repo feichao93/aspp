@@ -28,9 +28,13 @@ class DocStat extends React.Component<DocStatProps> {
   }
 
   reqDiff = () => {
-    const { dispatch, fileInfo } = this.props
+    const { dispatch, fileInfo, docStat } = this.props
     const { checkedCollnames } = this.state
-    dispatch(Action.reqDiffColls(fileInfo.set('collname', ''), checkedCollnames.toArray()))
+    const collnames = docStat.items
+      .map(item => item.collname)
+      .filter(name => checkedCollnames.has(name))
+      .toArray()
+    dispatch(Action.reqDiffColls(fileInfo.set('collname', ''), collnames))
   }
 
   render() {

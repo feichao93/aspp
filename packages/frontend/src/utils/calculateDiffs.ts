@@ -130,7 +130,11 @@ export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
 
   // region function-definition
   function tryFlush(item: Item) {
-    if (currentRange != null && item.annotation.range.startOffset >= currentRange.endOffset) {
+    if (
+      currentRange != null &&
+      (item.annotation.range.blockIndex !== currentRange.blockIndex ||
+        item.annotation.range.startOffset >= currentRange.endOffset)
+    ) {
       flush()
     }
   }

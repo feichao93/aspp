@@ -52,12 +52,12 @@ function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
     const diffs = calculateDiffs(collMap)
     const diffColl = makeDiffCollFromDiffs(diffs, collMap)
 
-    const diffFileInfo = docFileInfo.set('collname', `diff-of-${collnames.join('_')}`)
+    const diffFileInfo = docFileInfo.set('collname', `diff---${collnames.join('__')}`)
     yield server.putColl(diffFileInfo, diffColl)
     yield loadTreeState(false)
+    // TODO 是否需要直接打开 diff 文件？
     yield put(Action.toast(`已生成 ${diffFileInfo.collname}`))
-    // TODO 优化写法
-    // yield put(Action.reqOpenColl(diffFileInfo))
+    yield put(Action.reqOpenColl(diffFileInfo))
   } catch (e) {
     yield put(Action.toast(e.message, Intent.DANGER))
   }

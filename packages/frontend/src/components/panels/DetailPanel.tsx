@@ -265,69 +265,52 @@ class DetailPanel extends React.Component<DetailPanelProps> {
       return null
     }
 
-    const diffData: DiffData = decoration.data
-    let content: JSX.Element
-    if (diffData.type === 'consistent') {
-      const range = diffData.annotation.range
-      content = (
-        <div>
-          <div className="block preview">
-            <Span
-              block={editor.blocks.get(range.blockIndex)}
-              info={{ height: 0, decoration: Annotation.fromJS(diffData.annotation) }}
-              sel={Set()}
-              shortenLongText
-            />
-          </div>
-          所有标注文件中都出现了上述标注
-        </div>
-      )
-    } else if (diffData.type === 'partial') {
-      const range = diffData.annotation.range
-      content = (
-        <div>
-          <div className="block preview">
-            <Span
-              block={editor.blocks.get(range.blockIndex)}
-              info={{ height: 0, decoration: Annotation.fromJS(diffData.annotation) }}
-              sel={Set()}
-              shortenLongText
-            />
-          </div>
-          在以下标注文件中缺失了上述标注： {diffData.lack.join(', ')}
-        </div>
-      )
-    } else {
-      console.log(diffData.annotationMap)
-      content = (
-        <div>
-          不同标注文件发生了冲突:
-          {Array.from(diffData.annotationMap).map(([collname, annotations]) => {
-            const blockIndex = annotations[0].range.blockIndex
-            return (
-              <div key={collname} className="block preview">
-                <span>{collname} :</span>
-                {annotations.map(annotation => (
-                  <Span
-                    key={annotation.id}
-                    block={editor.blocks.get(blockIndex)}
-                    info={{ height: 0, decoration: Annotation.fromJS(annotation) }}
-                    sel={Set()}
-                    shortenLongText
-                  />
-                ))}
-              </div>
-            )
-          })}
-        </div>
-      )
+    const d: DiffData = decoration.data
+
+    let subtitle = d.type
+    if (d.type === 'partial') {
+      subtitle += ' '
+      const hitCount = d.distribution.filter(([collname, annotations]) => annotations.length > 0)
+        .length
+      const totalCount = d.distribution.length
+      subtitle += hitCount + '/' + totalCount
     }
+
+    // TODO 优化样式生成代码
+    const background =
+      d.type === 'consistent' ? '#94e894' : d.type === 'partial' ? '#ffe31b' : '#ff0018'
 
     return (
       <div data-part="diff-slot">
         <HorizontalLine />
-        <h2 className="part-title">diff 详情</h2>
-        {content}
+        <h2 className="part-title">
+          diff <span style={{ padding: '0 4px', background }}>{subtitle}</span>
+        </h2>
+        <div>
+          {d.distribution.map(([collname, annotations]) => {
+            const blockIndex = decoration.range.blockIndex
+            return (
+              <div key={collname} style={{}}>
+                <div>{collname} :</div>
+                {annotations.length > 0 ? (
+                  <div className="block preview">
+                    {annotations.map(annotation => (
+                      <Span
+                        key={annotation.id}
+                        block={editor.blocks.get(blockIndex)}
+                        info={{ height: 0, decoration: Annotation.fromJS(annotation) }}
+                        sel={Set()}
+                        shortenLongText
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <span style={{ color: '#666', marginLeft: 8 }}>{'<空>'}</span>
+                )}
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   }
