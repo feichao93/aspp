@@ -53,7 +53,7 @@ tags:
     abbr: ORG
     shortcut: '7'
     theme:
-      color: steelblue
+      background: '#9cd5ff'
 
   - group: 机构名
     name: 公司
