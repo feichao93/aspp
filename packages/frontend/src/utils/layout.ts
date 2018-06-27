@@ -1,7 +1,7 @@
 import { is, Set } from 'immutable'
 import Decoration, { Slot, Text } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
-import { compareArray } from './common'
+import { compareDecorationPosArray } from './common'
 
 export interface SpanInfo {
   // span的「高度」，-1 表示高度位置，0 表示该 span 没有子节点
@@ -39,9 +39,7 @@ export default function layout(
   blockIndex: number,
   decorations: Set<Decoration>,
 ): SpanInfo {
-  const array = decorations
-    .toArray()
-    .sort((a, b) => compareArray(Decoration.getPosition(a), Decoration.getPosition(b)))
+  const list = decorations.sort(compareDecorationPosArray)
 
   const blockRange = new DecorationRange({ blockIndex, startOffset: 0, endOffset: block.length })
   const stack: SpanInfo[] = [
@@ -52,10 +50,10 @@ export default function layout(
     },
   ]
 
-  if (array.length === 0) {
+  if (list.isEmpty()) {
     append(makeText(0, block.length))
   } else {
-    for (const decoration of array) {
+    for (const decoration of list) {
       append({ height: -1, decoration })
     }
   }

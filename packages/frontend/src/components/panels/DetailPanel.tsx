@@ -10,9 +10,9 @@ import Annotation from '../../types/Annotation'
 import Decoration from '../../types/Decoration'
 import EditorState from '../../types/EditorState'
 import Action from '../../utils/actions'
+import { Diff } from '../../utils/calculateDiffs'
 import { shortenText, toIdSet } from '../../utils/common'
 import layout, { SpanInfo } from '../../utils/layout'
-import { DiffData } from '../../utils/makeDiffCollFromDiffs'
 import Span from '../AnnotationEditor/Span'
 import './DetailPanel.styl'
 import { Rich } from './rich'
@@ -265,20 +265,20 @@ class DetailPanel extends React.Component<DetailPanelProps> {
       return null
     }
 
-    const d: DiffData = decoration.data
+    const diff: Diff = decoration.data
 
-    let subtitle = d.type
-    if (d.type === 'partial') {
+    let subtitle = diff.type
+    if (diff.type === 'partial') {
       subtitle += ' '
-      const hitCount = d.distribution.filter(([collname, annotations]) => annotations.length > 0)
+      const hitCount = diff.distribution.filter(([collname, annotations]) => annotations.length > 0)
         .length
-      const totalCount = d.distribution.length
+      const totalCount = diff.distribution.length
       subtitle += hitCount + '/' + totalCount
     }
 
     // TODO 优化样式生成代码
     const background =
-      d.type === 'consistent' ? '#94e894' : d.type === 'partial' ? '#ffe31b' : '#ff0018'
+      diff.type === 'consistent' ? '#94e894' : diff.type === 'partial' ? '#ffe31b' : '#ff0018'
 
     return (
       <div data-part="diff-slot">
@@ -287,7 +287,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
           diff <span style={{ padding: '0 4px', background }}>{subtitle}</span>
         </h2>
         <div>
-          {d.distribution.map(([collname, annotations]) => {
+          {diff.distribution.map(([collname, annotations]) => {
             const blockIndex = decoration.range.blockIndex
             return (
               <div key={collname} style={{}}>

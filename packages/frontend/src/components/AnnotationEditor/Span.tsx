@@ -3,8 +3,8 @@ import { is, Map, Set } from 'immutable'
 import React from 'react'
 import ASPP_CONFIG from '../../aspp-config'
 import Decoration from '../../types/Decoration'
+import { Diff } from '../../utils/calculateDiffs'
 import { isSameSpanInfo, SpanInfo } from '../../utils/layout'
-import { DiffData } from '../../utils/makeDiffCollFromDiffs'
 
 interface SpanProps {
   info: SpanInfo
@@ -68,10 +68,10 @@ export default class Span extends React.Component<SpanProps> {
 
     // TODO 优化样式生成代码
     if (Decoration.isSlot(decoration) && decoration.slotType === 'diff') {
-      const diffData: DiffData = decoration.data
-      if (diffData.type === 'consistent') {
+      const diff: Diff = decoration.data
+      if (diff.type === 'consistent') {
         style.background = '#94e894'
-      } else if (diffData.type === 'partial') {
+      } else if (diff.type === 'partial') {
         style.background = '#ffe31b'
       } else {
         style.background = '#ff0018'

@@ -1,9 +1,9 @@
 import fs from 'fs'
 import { TreeItem } from '../reducers/treeReducer'
 import { RawAnnotation } from '../types/Annotation'
-import Decoration, { RawSlot } from '../types/Decoration'
+import { RawSlot } from '../types/Decoration'
 import FileInfo from '../types/FileInfo'
-import { compareArray } from './common'
+import { compareDecorationPosArray } from './common'
 
 type FetchLike = (url?: string, init?: RequestInit) => Promise<Response>
 
@@ -88,8 +88,9 @@ export default {
   },
 
   async putColl(info: FileInfo, coll: RawColl): Promise<void> {
-    coll.annotations.sort(compareDecoration)
-    coll.slots.sort(compareDecoration)
+    coll.annotations.sort(compareDecorationPosArray)
+    coll.slots.sort(compareDecorationPosArray)
+    // TODO 对所有的 DecorationRange 调用 normalize 方法
     await asppFetch(makeCollUrl(info), {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
@@ -100,9 +101,4 @@ export default {
   async deleteColl(info: FileInfo): Promise<void> {
     await asppFetch(makeCollUrl(info), { method: 'DELETE' })
   },
-}
-
-// TODO 其他地方应该定义过类似的函数
-function compareDecoration<T extends Decoration | RawAnnotation>(a: T, b: T) {
-  return compareArray(Decoration.getPosition(a), Decoration.getPosition(b))
 }

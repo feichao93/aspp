@@ -1,12 +1,8 @@
 import { List as IList, Map as IMap, Seq as ISeq, Set as ISet } from 'immutable'
-import React from 'react'
 import Annotation from '../types/Annotation'
 import Decoration from '../types/Decoration'
+import { RawRange } from '../types/DecorationRange'
 import Action from './actions'
-
-export function preventDefault(event: React.MouseEvent<any>) {
-  event.preventDefault()
-}
 
 class DefaultMap<K, V> extends Map<K, V> {
   constructor(readonly defaulter: () => V) {
@@ -47,7 +43,23 @@ export function toggle<T>(set: ISet<T>, t: T) {
   return set.has(t) ? set.delete(t) : set.add(t)
 }
 
+export function getPosArray(range: RawRange): [number, number, number] {
+  // 注意 endOffset 前有一个减号
+  return [range.blockIndex, range.startOffset, -range.endOffset]
+}
+
+export function getDecorationPosArray(decorationLike: { range: RawRange }) {
+  return getPosArray(decorationLike.range)
+}
+
+export function compareDecorationPosArray(a: { range: RawRange }, b: { range: RawRange }) {
+  return compareArray(getDecorationPosArray(a), getDecorationPosArray(b))
+}
+
 export function compareArray(arr1: number[], arr2: number[]) {
+  if (DEV_ASSERT) {
+    console.assert(arr1.length === arr2.length)
+  }
   for (let i = 0; i < arr1.length; i++) {
     if (arr1[i] !== arr2[i]) {
       return arr1[i] - arr2[i]
@@ -154,4 +166,11 @@ export function zip<A, B>(as: A[], bs: B[]): Array<[A, B]> {
     result.push([as[i], bs[i]])
   }
   return result
+}
+
+export function remove<T>(array: T[], item: T) {
+  const index = array.indexOf(item)
+  if (index !== -1) {
+    array.splice(index, 1)
+  }
 }

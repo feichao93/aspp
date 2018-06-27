@@ -7,9 +7,8 @@ import SetEditorState from '../actions/SetEditorState'
 import { State } from '../reducers'
 import adjustOffsets from '../sagas/adjustOffsets'
 import { applyEditorAction } from '../sagas/historyManager'
-import Decoration from '../types/Decoration'
 import Action from '../utils/actions'
-import { compareArray, keyed } from '../utils/common'
+import { compareDecorationPosArray, keyed } from '../utils/common'
 import { Interaction } from '../utils/InteractionCollector'
 import { Task } from './index'
 import TaskConstructor from './TaskConstructor'
@@ -133,7 +132,7 @@ export default class SimpleOffsetAdjusting {
     const block = editor.blocks.first()
     const annotations = editor.annotations
       .valueSeq()
-      .sortBy(Decoration.getPosition, compareArray)
+      .sort(compareDecorationPosArray)
       .toArray()
     const { adjusted, failed } = adjustOffsets(block, annotations)
     if (

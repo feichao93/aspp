@@ -12,16 +12,13 @@ function consistent(str: string, startOffset: number): Diff {
   }
 }
 
-const partial = (str: string, startOffset: number) => ({
-  lack(...lack: string[]): Diff {
-    const { entity } = parse(str).annotations[0]
-    return {
-      type: 'partial',
-      range: { blockIndex: 0, startOffset, endOffset: startOffset + entity.length },
-      lack,
-    }
-  },
-})
+const partial = (str: string, startOffset: number) => {
+  const { entity } = parse(str).annotations[0]
+  return {
+    type: 'partial',
+    range: { blockIndex: 0, startOffset, endOffset: startOffset + entity.length },
+  }
+}
 
 function conflict(str: string, range: RawRange): Diff {
   return { type: 'conflict', range }
@@ -85,10 +82,10 @@ test('部分缺失，但标注一致的情况', () => {
       ]),
     ),
   ).toEqual([
-    partial('[DATE/2017年]', text.indexOf('2017年')).lack('b'),
-    partial('[$/146.08亿元]', text.indexOf('146.08亿元')).lack('b'),
+    partial('[DATE/2017年]', text.indexOf('2017年')),
+    partial('[$/146.08亿元]', text.indexOf('146.08亿元')),
     consistent('[P/增加20.7%]', text.indexOf('增加20.7%')),
-    partial('[$/12.86亿元]', text.indexOf('12.86亿元')).lack('a', 'c'),
+    partial('[$/12.86亿元]', text.indexOf('12.86亿元')),
   ])
 })
 

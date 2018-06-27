@@ -1,4 +1,4 @@
-name: diff
+name: diff---test-1__test-2
 annotations: []
 slots:
   - type: slot
@@ -10,6 +10,10 @@ slots:
       endOffset: 5
     data:
       type: consistent
+      range:
+        blockIndex: 0
+        startOffset: 1
+        endOffset: 5
       distribution:
         - - test-1
           - - id: annotation-1
@@ -38,6 +42,10 @@ slots:
       endOffset: 105
     data:
       type: consistent
+      range:
+        blockIndex: 0
+        startOffset: 100
+        endOffset: 105
       distribution:
         - - test-1
           - - id: annotation-5
@@ -66,6 +74,10 @@ slots:
       endOffset: 112
     data:
       type: consistent
+      range:
+        blockIndex: 0
+        startOffset: 106
+        endOffset: 112
       distribution:
         - - test-1
           - - id: annotation-4
@@ -94,6 +106,10 @@ slots:
       endOffset: 119
     data:
       type: consistent
+      range:
+        blockIndex: 0
+        startOffset: 114
+        endOffset: 119
       distribution:
         - - test-1
           - - id: annotation-2
@@ -122,6 +138,10 @@ slots:
       endOffset: 129
     data:
       type: consistent
+      range:
+        blockIndex: 0
+        startOffset: 122
+        endOffset: 129
       distribution:
         - - test-1
           - - id: annotation-3
@@ -150,6 +170,10 @@ slots:
       endOffset: 33
     data:
       type: partial
+      range:
+        blockIndex: 1
+        startOffset: 29
+        endOffset: 33
       distribution:
         - - test-1
           - - id: annotation-6
@@ -171,6 +195,10 @@ slots:
       endOffset: 44
     data:
       type: consistent
+      range:
+        blockIndex: 1
+        startOffset: 36
+        endOffset: 44
       distribution:
         - - test-1
           - - id: annotation-7
@@ -199,6 +227,10 @@ slots:
       endOffset: 134
     data:
       type: consistent
+      range:
+        blockIndex: 1
+        startOffset: 122
+        endOffset: 134
       distribution:
         - - test-1
           - - id: annotation-10
@@ -227,6 +259,10 @@ slots:
       endOffset: 147
     data:
       type: consistent
+      range:
+        blockIndex: 1
+        startOffset: 135
+        endOffset: 147
       distribution:
         - - test-1
           - - id: annotation-11
@@ -255,6 +291,10 @@ slots:
       endOffset: 154
     data:
       type: partial
+      range:
+        blockIndex: 1
+        startOffset: 147
+        endOffset: 154
       distribution:
         - - test-1
           - - id: annotation-8
@@ -276,6 +316,10 @@ slots:
       endOffset: 157
     data:
       type: consistent
+      range:
+        blockIndex: 1
+        startOffset: 155
+        endOffset: 157
       distribution:
         - - test-1
           - - id: annotation-9
@@ -304,6 +348,10 @@ slots:
       endOffset: 11
     data:
       type: partial
+      range:
+        blockIndex: 2
+        startOffset: 0
+        endOffset: 11
       distribution:
         - - test-1
           - - id: annotation-27
@@ -325,6 +373,10 @@ slots:
       endOffset: 98
     data:
       type: consistent
+      range:
+        blockIndex: 2
+        startOffset: 95
+        endOffset: 98
       distribution:
         - - test-1
           - - id: annotation-19
@@ -353,6 +405,10 @@ slots:
       endOffset: 118
     data:
       type: conflict
+      range:
+        blockIndex: 2
+        startOffset: 108
+        endOffset: 118
       distribution:
         - - test-1
           - - id: annotation-26
@@ -381,6 +437,10 @@ slots:
       endOffset: 137
     data:
       type: conflict
+      range:
+        blockIndex: 2
+        startOffset: 129
+        endOffset: 137
       distribution:
         - - test-1
           - - id: annotation-17
@@ -409,6 +469,10 @@ slots:
       endOffset: 155
     data:
       type: consistent
+      range:
+        blockIndex: 2
+        startOffset: 150
+        endOffset: 155
       distribution:
         - - test-1
           - - id: annotation-18
@@ -437,6 +501,10 @@ slots:
       endOffset: 173
     data:
       type: consistent
+      range:
+        blockIndex: 2
+        startOffset: 168
+        endOffset: 173
       distribution:
         - - test-1
           - - id: annotation-12
@@ -465,6 +533,10 @@ slots:
       endOffset: 231
     data:
       type: consistent
+      range:
+        blockIndex: 2
+        startOffset: 227
+        endOffset: 231
       distribution:
         - - test-1
           - - id: annotation-20
@@ -493,6 +565,10 @@ slots:
       endOffset: 236
     data:
       type: consistent
+      range:
+        blockIndex: 2
+        startOffset: 233
+        endOffset: 236
       distribution:
         - - test-1
           - - id: annotation-21
@@ -521,6 +597,10 @@ slots:
       endOffset: 263
     data:
       type: conflict
+      range:
+        blockIndex: 2
+        startOffset: 243
+        endOffset: 263
       distribution:
         - - test-1
           - - id: annotation-16
@@ -565,6 +645,10 @@ slots:
       endOffset: 275
     data:
       type: partial
+      range:
+        blockIndex: 2
+        startOffset: 264
+        endOffset: 275
       distribution:
         - - test-1
           - - id: annotation-13
@@ -586,6 +670,10 @@ slots:
       endOffset: 281
     data:
       type: consistent
+      range:
+        blockIndex: 2
+        startOffset: 277
+        endOffset: 281
       distribution:
         - - test-1
           - - id: annotation-14
@@ -614,6 +702,10 @@ slots:
       endOffset: 304
     data:
       type: partial
+      range:
+        blockIndex: 2
+        startOffset: 302
+        endOffset: 304
       distribution:
         - - test-1
           - []
@@ -635,6 +727,10 @@ slots:
       endOffset: 315
     data:
       type: conflict
+      range:
+        blockIndex: 2
+        startOffset: 312
+        endOffset: 315
       distribution:
         - - test-1
           - - id: annotation-22
@@ -663,6 +759,10 @@ slots:
       endOffset: 353
     data:
       type: consistent
+      range:
+        blockIndex: 2
+        startOffset: 348
+        endOffset: 353
       distribution:
         - - test-1
           - - id: annotation-24
@@ -691,6 +791,10 @@ slots:
       endOffset: 363
     data:
       type: consistent
+      range:
+        blockIndex: 2
+        startOffset: 360
+        endOffset: 363
       distribution:
         - - test-1
           - - id: annotation-25

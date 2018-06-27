@@ -1,34 +1,17 @@
 import { RawAnnotation } from '../types/Annotation'
-import Decoration from '../types/Decoration'
 import { RawRange } from '../types/DecorationRange'
-import { compareArray } from './common'
+import { compareArray, compareDecorationPosArray, remove } from './common'
 import { RawColl } from './server'
 
-export type Diff = DiffConsistent | DiffPartial | DiffConflict
-
-export interface DiffConsistent {
-  type: 'consistent'
+export interface Diff {
+  type: 'consistent' | 'partial' | 'conflict'
   range: RawRange
-}
-
-export interface DiffPartial {
-  type: 'partial'
-  range: RawRange
-  lack: string[]
-}
-
-export interface DiffConflict {
-  type: 'conflict'
-  range: RawRange
+  distribution: Array<[string, RawAnnotation[]]>
 }
 
 interface Item {
-  key: string
+  collname: string
   annotation: RawAnnotation
-}
-
-function compareItem(x: Item, y: Item) {
-  return compareArray(Decoration.getPosition(x.annotation), Decoration.getPosition(y.annotation))
 }
 
 // TODO 其他应该已经过类似的函数了
@@ -40,25 +23,7 @@ export function isSameRange(r1: RawRange, r2: RawRange) {
   )
 }
 
-function remove<T>(array: T[], item: T) {
-  const index = array.indexOf(item)
-  if (index !== -1) {
-    array.splice(index, 1)
-  }
-}
-
-function generateItems(collMap: Map<string, RawColl>) {
-  const items: Item[] = []
-  for (const [key, coll] of collMap) {
-    for (const annotation of coll.annotations) {
-      items.push({ key, annotation })
-    }
-  }
-  items.sort(compareItem)
-  return items
-}
-
-function mergeRange(target: RawRange, source: RawRange) {
+function extendRange(target: RawRange, source: RawRange) {
   if (DEV_ASSERT) {
     console.assert(
       !(source.startOffset >= target.endOffset || source.endOffset <= target.startOffset),
@@ -72,12 +37,13 @@ export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
   if (DEV_ASSERT) {
     console.assert(collMap.size >= 2)
   }
-  const items = generateItems(collMap)
-
+  const items = generateItems()
   const diffs: Diff[] = []
+
   let currentDiff: Diff = null
   let currentRange: RawRange = null
   let currentTag: string = null
+  let lack: string[] = null
 
   for (const item of items) {
     tryFlush(item)
@@ -89,9 +55,9 @@ export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
       currentDiff = {
         type: 'partial',
         range: currentRange,
-        // 将所有的 key 都放入 lack 数组中
-        lack: Array.from(collMap.keys()),
+        distribution: [],
       }
+      lack = Array.from(collMap.keys())
     }
 
     if (item.annotation.tag === currentTag && isSameRange(item.annotation.range, currentRange)) {
@@ -100,28 +66,21 @@ export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
       }
       if (currentDiff.type === 'partial') {
         if (DEV_ASSERT) {
-          console.assert(currentDiff.lack.includes(item.key))
+          console.assert(lack.includes(item.collname))
         }
-        remove(currentDiff.lack, item.key)
+        remove(lack, item.collname)
 
-        if (currentDiff.lack.length === 0) {
-          // 将 partial 转换为 consistent
-          currentDiff = {
-            type: 'consistent',
-            range: currentDiff.range,
-          }
+        if (lack.length === 0) {
+          currentDiff.type = 'consistent'
         }
       } else {
         // currentDiff.type === 'conflict'
-        mergeRange(currentDiff.range, item.annotation.range)
+        extendRange(currentDiff.range, item.annotation.range)
       }
     } else {
       // 将 partial 转换为 conflict
-      currentDiff = {
-        type: 'conflict',
-        range: currentDiff.range,
-      }
-      mergeRange(currentDiff.range, item.annotation.range)
+      currentDiff.type = 'conflict'
+      extendRange(currentDiff.range, item.annotation.range)
     }
   }
   flush()
@@ -129,6 +88,17 @@ export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
   return diffs
 
   // region function-definition
+  function generateItems() {
+    const items: Item[] = []
+    for (const [collname, coll] of collMap) {
+      for (const annotation of coll.annotations) {
+        items.push({ collname, annotation })
+      }
+    }
+    items.sort((x, y) => compareDecorationPosArray(x.annotation, y.annotation))
+    return items
+  }
+
   function tryFlush(item: Item) {
     if (
       currentRange != null &&
@@ -141,10 +111,67 @@ export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
 
   function flush() {
     if (currentDiff != null) {
+      calculateDistribution(currentDiff)
       diffs.push(currentDiff)
       currentRange = null
       currentTag = null
       currentDiff = null
+    }
+  }
+
+  function binarySearchStartIndex(range: RawRange) {
+    const diffStart = [range.blockIndex, range.startOffset]
+
+    let low = 0
+    let high = items.length - 1
+    while (low < high) {
+      const middle = Math.floor((low + high) / 2)
+      const midRange = items[middle].annotation.range
+      const midEnd = [midRange.blockIndex, midRange.endOffset]
+
+      if (compareArray(midEnd, diffStart) > 0) {
+        high = middle
+      } else {
+        low = middle + 1
+      }
+    }
+    if (DEV_ASSERT) {
+      console.assert(low === high)
+    }
+    return low
+  }
+
+  function binarySearchEndIndex(range: RawRange) {
+    const diffEnd = [range.blockIndex, range.endOffset]
+    let low = 0
+    let high = items.length - 1
+    while (low < high) {
+      const middle = Math.ceil((low + high) / 2)
+      const midRange = items[middle].annotation.range
+      const midStart = [midRange.blockIndex, midRange.startOffset]
+
+      if (compareArray(midStart, diffEnd) < 0) {
+        low = middle
+      } else {
+        high = middle - 1
+      }
+    }
+    if (DEV_ASSERT) {
+      console.assert(low === high)
+    }
+    return low
+  }
+
+  function calculateDistribution(diff: Diff) {
+    const startIndex = binarySearchStartIndex(diff.range)
+    const endIndex = binarySearchEndIndex(diff.range)
+    const slice = items.slice(startIndex, endIndex + 1)
+
+    for (const collname of collMap.keys()) {
+      const annotations = slice
+        .filter(item => item.collname === collname)
+        .map(item => item.annotation)
+      diff.distribution.push([collname, annotations])
     }
   }
   // endregion

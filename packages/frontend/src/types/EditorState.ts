@@ -1,6 +1,7 @@
 import { List, Map, merge, Record, Seq, Set } from 'immutable'
 import DecorationRange from '../types/DecorationRange'
 import { keyed } from '../utils/common'
+import { RawColl } from '../utils/server'
 import Annotation from './Annotation'
 import Decoration, { Hint, Slot } from './Decoration'
 
@@ -12,6 +13,14 @@ const EditorStateRecord = Record({
   slots: Map<string, Slot>(),
   hints: Map<string, Hint>(),
 })
+
+function normalizeAnnotationRange(annotation: Annotation) {
+  return annotation.update('range', range => range.normalize())
+}
+
+function normalizeSlotRange(slot: Slot) {
+  return slot.update('range', range => range.normalize())
+}
 
 export default class EditorState extends EditorStateRecord {
   static fromJS(object: any) {
@@ -37,6 +46,20 @@ export default class EditorState extends EditorStateRecord {
       return this.blocks
         .get(normalized.blockIndex)
         .substring(normalized.startOffset, normalized.endOffset)
+    }
+  }
+
+  toRawColl(collname: string): RawColl {
+    return {
+      name: collname,
+      annotations: this.annotations
+        .valueSeq()
+        .map(normalizeAnnotationRange)
+        .toArray(),
+      slots: this.slots
+        .valueSeq()
+        .map(normalizeSlotRange)
+        .toArray(),
     }
   }
 }

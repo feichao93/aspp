@@ -5,10 +5,9 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { setSel } from '../../reducers/editorReducer'
-import Decoration from '../../types/Decoration'
 import EditorState from '../../types/EditorState'
 import Action from '../../utils/actions'
-import { compareArray, isElementVisible } from '../../utils/common'
+import { compareDecorationPosArray, isElementVisible } from '../../utils/common'
 import './HintButtonGroup.styl'
 
 interface HintButtonGroupProps {
@@ -40,7 +39,7 @@ class HintButtonGroup extends React.Component<HintButtonGroupProps> {
     const { editor, dispatch } = this.props
 
     const hint = editor.hints.get(editor.sel.first())
-    const hintList = editor.hints.toList().sortBy(Decoration.getPosition, compareArray)
+    const hintList = editor.hints.toList().sort(compareDecorationPosArray)
     const index = hintList.indexOf(hint)
     let nextHint = hintList.get(index + 1)
     if (nextHint == null) {
@@ -70,7 +69,7 @@ class HintButtonGroup extends React.Component<HintButtonGroupProps> {
   render() {
     const { editor, dispatch } = this.props
 
-    const hintList = editor.hints.toList().sortBy(Decoration.getPosition, compareArray)
+    const hintList = editor.hints.toList().sort(compareDecorationPosArray)
     let index = -1
     if (editor.sel.count() === 1) {
       const hint = editor.hints.get(editor.sel.first())

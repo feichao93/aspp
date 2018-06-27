@@ -10,14 +10,15 @@ import { setEditorState } from '../reducers/editorReducer'
 import { setFileInfo } from '../reducers/fileInfoReducer'
 import { TreeDirectory, TreeDoc, TreeItem } from '../reducers/treeReducer'
 import Annotation from '../types/Annotation'
-import { Slot } from '../types/Decoration'
+import { default as Decoration, Slot } from '../types/Decoration'
+import DecorationRange from '../types/DecorationRange'
 import EditorState from '../types/EditorState'
 import FileInfo from '../types/FileInfo'
 import Action from '../utils/actions'
 import calculateDiffs from '../utils/calculateDiffs'
 import { a, keyed, updateAnnotationNextId, zip } from '../utils/common'
+import getDiffSlots from '../utils/getDiffSlots'
 import InteractionCollector from '../utils/InteractionCollector'
-import makeDiffCollFromDiffs from '../utils/makeDiffCollFromDiffs'
 import server, { RawColl } from '../utils/server'
 import { applyEditorAction } from './historyManager'
 
@@ -50,11 +51,14 @@ function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
     )
     const collMap = new Map(zip(collnames, colls))
     const diffs = calculateDiffs(collMap)
-    const diffColl = makeDiffCollFromDiffs(diffs, collMap)
+    const diffSlots = getDiffSlots(diffs)
+    const diffCollname = `diff---${collnames.join('__')}`
+    const diffFileInfo = docFileInfo.set('collname', diffCollname)
+    const diffColl: RawColl = { name: diffCollname, annotations: [], slots: diffSlots }
 
-    const diffFileInfo = docFileInfo.set('collname', `diff---${collnames.join('__')}`)
     yield server.putColl(diffFileInfo, diffColl)
     yield loadTreeState(false)
+
     // TODO 是否需要直接打开 diff 文件？
     yield put(Action.toast(`已生成 ${diffFileInfo.collname}`))
     yield put(Action.reqOpenColl(diffFileInfo))
@@ -89,12 +93,7 @@ function* saveCurrentColl() {
   }
 
   try {
-    yield server.putColl(fileInfo, {
-      name: fileInfo.collname,
-      annotations: editor.annotations.valueSeq().toArray(),
-      // FIXME 有些 slot.data 无法序列化（例如 diffSlot.data)
-      slots: editor.slots.valueSeq().toArray(),
-    })
+    yield server.putColl(fileInfo, editor.toRawColl(fileInfo.collname))
     yield put(setCachedAnnotations(editor.annotations))
     yield applyEditorAction(
       new EmptyEditorAction('保存文件').withCategory(ActionCategory.sideEffects),

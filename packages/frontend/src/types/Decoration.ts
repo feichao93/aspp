@@ -84,14 +84,6 @@ namespace Decoration {
   export function isPlainSlot(decoration: Decoration) {
     return decoration.type === 'slot' && decoration.slotType === 'plain'
   }
-
-  export function getPosition({
-    range: { blockIndex, startOffset, endOffset },
-  }: {
-    range: RawRange
-  }) {
-    return [blockIndex, startOffset, -endOffset]
-  }
 }
 
 export default Decoration
