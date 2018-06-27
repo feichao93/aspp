@@ -4,7 +4,7 @@ import calculateDiffs, { Diff } from '../../src/utils/calculateDiffs'
 import { parseInlineAnnotations as parse } from '../../src/utils/parseInlineAnnotations'
 import { RawColl } from '../../src/utils/server'
 
-function consistent(str: string, startOffset: number): Diff {
+function consistent(str: string, startOffset: number): Partial<Diff> {
   const { entity } = parse(str).annotations[0]
   return {
     type: 'consistent',
@@ -12,7 +12,7 @@ function consistent(str: string, startOffset: number): Diff {
   }
 }
 
-const partial = (str: string, startOffset: number) => {
+function partial(str: string, startOffset: number): Partial<Diff> {
   const { entity } = parse(str).annotations[0]
   return {
     type: 'partial',
@@ -20,7 +20,7 @@ const partial = (str: string, startOffset: number) => {
   }
 }
 
-function conflict(str: string, range: RawRange): Diff {
+function conflict(str: string, range: RawRange): Partial<Diff> {
   return { type: 'conflict', range }
 }
 
@@ -41,21 +41,23 @@ function simpleColl(annotations: RawAnnotation[]): RawColl {
   }
 }
 
+function removeDiffDistribution(diff: Diff) {
+  delete diff.distribution
+}
+
 test('所有标注均一致的情况', () => {
   const text = '2017年第四季度净收入为146.08亿元，同比增加20.7%；净利润为12.86亿元'
   const a = '[DATE/2017年]第四季度净收入为[$/146.08亿元]，同比[P/增加20.7%]；净利润为[$/12.86亿元]'
   const b = '[DATE/2017年]第四季度净收入为[$/146.08亿元]，同比[P/增加20.7%]；净利润为[$/12.86亿元]'
   const c = '[DATE/2017年]第四季度净收入为[$/146.08亿元]，同比[P/增加20.7%]；净利润为[$/12.86亿元]'
 
-  expect(
-    calculateDiffs(
-      new Map([
-        ['a', simpleColl(parse(a).annotations)],
-        ['b', simpleColl(parse(b).annotations)],
-        ['c', simpleColl(parse(c).annotations)],
-      ]),
-    ),
-  ).toEqual([
+  const diffs = calculateDiffs([
+    ['a', simpleColl(parse(a).annotations)],
+    ['b', simpleColl(parse(b).annotations)],
+    ['c', simpleColl(parse(c).annotations)],
+  ])
+  diffs.forEach(removeDiffDistribution)
+  expect(diffs).toEqual([
     consistent('[DATE/2017年]', text.indexOf('2017年')),
     consistent('[$/146.08亿元]', text.indexOf('146.08亿元')),
     consistent('[P/增加20.7%]', text.indexOf('增加20.7%')),
@@ -73,15 +75,13 @@ test('部分缺失，但标注一致的情况', () => {
   // c 中忽略 1 个标注
   const c = '[DATE/2017年]第四季度净收入为[$/146.08亿元]，同比[P/增加20.7%]；净利润为($/12.86亿元)'
 
-  expect(
-    calculateDiffs(
-      new Map([
-        ['a', simpleColl(parse(a).annotations)],
-        ['b', simpleColl(parse(b).annotations)],
-        ['c', simpleColl(parse(c).annotations)],
-      ]),
-    ),
-  ).toEqual([
+  const diffs = calculateDiffs([
+    ['a', simpleColl(parse(a).annotations)],
+    ['b', simpleColl(parse(b).annotations)],
+    ['c', simpleColl(parse(c).annotations)],
+  ])
+  diffs.forEach(removeDiffDistribution)
+  expect(diffs).toEqual([
     partial('[DATE/2017年]', text.indexOf('2017年')),
     partial('[$/146.08亿元]', text.indexOf('146.08亿元')),
     consistent('[P/增加20.7%]', text.indexOf('增加20.7%')),
@@ -95,15 +95,13 @@ test('简单的冲突的情况', () => {
   const b = '2017年[DATE/第四季度]净收入为[$/146.08亿元]，同比[P/增加20.7%]；净利润为[$/12.86亿元]'
   const c = '[DATE/2017年]第四季度净收入为[$/146.08亿元]，同比[P/增加20.7%]；净利润为[$/12.86亿元]'
 
-  expect(
-    calculateDiffs(
-      new Map([
-        ['a', simpleColl(parse(a).annotations)],
-        ['b', simpleColl(parse(b).annotations)],
-        ['c', simpleColl(parse(c).annotations)],
-      ]),
-    ),
-  ).toEqual([
+  const diffs = calculateDiffs([
+    ['a', simpleColl(parse(a).annotations)],
+    ['b', simpleColl(parse(b).annotations)],
+    ['c', simpleColl(parse(c).annotations)],
+  ])
+  diffs.forEach(removeDiffDistribution)
+  expect(diffs).toEqual([
     // { group: ['a'], annotation: '[DATE/2017年第四季度]' },
     // { group: ['b'], annotation: '2017年[DATE/第四季度]' },
     // { group: ['c'], annotation: '[DATE/2017年]第四季度' },

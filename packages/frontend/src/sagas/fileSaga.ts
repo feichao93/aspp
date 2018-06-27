@@ -10,8 +10,7 @@ import { setEditorState } from '../reducers/editorReducer'
 import { setFileInfo } from '../reducers/fileInfoReducer'
 import { TreeDirectory, TreeDoc, TreeItem } from '../reducers/treeReducer'
 import Annotation from '../types/Annotation'
-import { default as Decoration, Slot } from '../types/Decoration'
-import DecorationRange from '../types/DecorationRange'
+import { Slot } from '../types/Decoration'
 import EditorState from '../types/EditorState'
 import FileInfo from '../types/FileInfo'
 import Action from '../utils/actions'
@@ -49,8 +48,7 @@ function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
     const colls: RawColl[] = yield io.all(
       collnames.map(collname => server.getColl(docFileInfo.set('collname', collname))),
     )
-    const collMap = new Map(zip(collnames, colls))
-    const diffs = calculateDiffs(collMap)
+    const diffs = calculateDiffs(zip(collnames, colls))
     const diffSlots = getDiffSlots(diffs)
     const diffCollname = `diff---${collnames.join('__')}`
     const diffFileInfo = docFileInfo.set('collname', diffCollname)

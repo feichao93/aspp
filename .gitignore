@@ -4,3 +4,4 @@ node_modules
 dist
 coverage
 /packages/example/deleted/
+lerna-debug.log

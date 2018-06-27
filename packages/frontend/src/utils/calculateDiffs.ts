@@ -33,10 +33,11 @@ function extendRange(target: RawRange, source: RawRange) {
   target.endOffset = Math.max(target.endOffset, source.endOffset)
 }
 
-export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
+export default function calculateDiffs(collEntries: Array<[string, RawColl]>): Diff[] {
   if (DEV_ASSERT) {
-    console.assert(collMap.size >= 2)
+    console.assert(collEntries.length >= 2)
   }
+  const collnames = collEntries.map(entry => entry[0])
   const items = generateItems()
   const diffs: Diff[] = []
 
@@ -57,7 +58,7 @@ export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
         range: currentRange,
         distribution: [],
       }
-      lack = Array.from(collMap.keys())
+      lack = Array.from(collnames) // shallow-copy the array
     }
 
     if (item.annotation.tag === currentTag && isSameRange(item.annotation.range, currentRange)) {
@@ -90,7 +91,7 @@ export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
   // region function-definition
   function generateItems() {
     const items: Item[] = []
-    for (const [collname, coll] of collMap) {
+    for (const [collname, coll] of collEntries) {
       for (const annotation of coll.annotations) {
         items.push({ collname, annotation })
       }
@@ -167,7 +168,7 @@ export default function calculateDiffs(collMap: Map<string, RawColl>): Diff[] {
     const endIndex = binarySearchEndIndex(diff.range)
     const slice = items.slice(startIndex, endIndex + 1)
 
-    for (const collname of collMap.keys()) {
+    for (const collname of collnames) {
       const annotations = slice
         .filter(item => item.collname === collname)
         .map(item => item.annotation)
