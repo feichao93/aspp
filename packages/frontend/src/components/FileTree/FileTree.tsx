@@ -23,16 +23,16 @@ import FileInfo from '../../types/FileInfo'
 import Action from '../../utils/actions'
 import { DOC_STAT_NAME } from '../../utils/constants'
 import server from '../../utils/server'
-import './TaskTree.styl'
+import './FileTree.styl'
 
-export interface TaskTreeProps {
+export interface FileTreeProps {
   fileInfo: FileInfo
   config: Config
   tree: TreeItem[]
   dispatch: Dispatch
 }
 
-export interface TaskTreeState {
+export interface FileTreeState {
   contents: Array<ITreeNode<FileInfo>>
   treeState: TreeItem[]
   fileInfo: FileInfo
@@ -168,12 +168,12 @@ const customMenus = {
   },
 }
 
-class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
+class FileTree extends React.PureComponent<FileTreeProps, FileTreeState> {
   static getDerivedStateFromProps(
-    nextProps: TaskTreeProps,
-    prevState: TaskTreeState,
-  ): Partial<TaskTreeState> {
-    const partial: Partial<TaskTreeState> = {}
+    nextProps: FileTreeProps,
+    prevState: FileTreeState,
+  ): Partial<FileTreeState> {
+    const partial: Partial<FileTreeState> = {}
     // 文档列表发生了更新
     if (prevState.treeState !== nextProps.tree) {
       Object.assign(partial, {
@@ -318,9 +318,9 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
   render() {
     const { config } = this.props
     return (
-      <div className={classNames('task-tree', { hide: config.hideTaskTree })}>
+      <div className={classNames('file-tree', { hide: config.hideFileTree })}>
         <header>
-          <div>文档树</div>
+          <div>文件树</div>
           <ButtonGroup className="button-group">
             <Tooltip content="根目录：上传新的语料（开发中）" position={Position.BOTTOM_LEFT}>
               <AnchorButton icon="upload" minimal title={null} />
@@ -330,7 +330,7 @@ class TaskTree extends React.PureComponent<TaskTreeProps, TaskTreeState> {
             </Tooltip>
           </ButtonGroup>
           <ButtonGroup className="button-group" style={{ marginLeft: 'auto' }}>
-            <Tooltip content="更新文档树" position={Position.BOTTOM}>
+            <Tooltip content="更新文件树" position={Position.BOTTOM}>
               <AnchorButton icon="refresh" minimal onClick={this.onRefresh} title={null} />
             </Tooltip>
             <Tooltip content="展开所有" position={Position.BOTTOM}>
@@ -366,4 +366,4 @@ function mapStateToProps(state: State) {
   }
 }
 
-export default connect(mapStateToProps)(TaskTree)
+export default connect(mapStateToProps)(FileTree)

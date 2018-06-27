@@ -26,7 +26,7 @@ class ViewContainer extends React.Component<ViewContainerProps> {
     } else if (fileInfo.getType() === 'doc-stat') {
       content = <DocStat />
     } else if (fileInfo.getType() === 'coll') {
-      content = <AnnotationEditor />
+      content = <AnnotationEditor key={fileInfo.getFullName()} />
     } else {
       throw new Error('Invalid fileInfo type')
     }

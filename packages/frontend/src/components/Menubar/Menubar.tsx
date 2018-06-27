@@ -1,15 +1,10 @@
 import {
   Alignment,
   Button,
-  Menu,
-  MenuDivider,
-  MenuItem,
   Navbar,
   NavbarDivider,
   NavbarGroup,
   NavbarHeading,
-  Popover,
-  Position,
 } from '@blueprintjs/core'
 import classNames from 'classnames'
 import React from 'react'
@@ -38,47 +33,33 @@ class Menubar extends React.Component<MenubarProps> {
   }
 
   render() {
-    const { config, fileInfo, dispatch } = this.props
+    const { config, dispatch } = this.props
     return (
       <Navbar className={classNames('menubar')}>
         <NavbarGroup align={Alignment.LEFT}>
           <NavbarHeading>ASPP {VERSION}</NavbarHeading>
           <NavbarDivider />
-          <Popover
-            position={Position.TOP_LEFT}
-            target={<Button minimal icon="document" text="file" />}
-            content={
-              <Menu>
-                <MenuItem disabled icon="document" text="New Doc" />
-                <MenuDivider />
-                <MenuItem disabled text="Settings..." icon="cog" />
-              </Menu>
-            }
+          <Button
+            minimal
+            icon="list"
+            text="文件树"
+            onClick={() => dispatch(Action.toggleFileTreeVisibility())}
           />
           <Button
             minimal
-            icon="column-layout"
-            text="Tree"
-            onClick={() => dispatch(Action.toggleTaskTreeVisibility())}
+            icon="panel-stats"
+            text="面板"
+            onClick={() => dispatch(Action.togglePanelsVisibility())}
           />
           <Button
             minimal
             icon="help"
-            text="Help"
+            text="帮助"
             onClick={() => dispatch(Action.toggleHelpOverlay())}
           />
           <HelpOverlay />
-          <div style={{ marginLeft: 24 }}>
-            当前打开: <b>{fileInfo.getFullName()}</b>
-          </div>
         </NavbarGroup>
         <NavbarGroup align={Alignment.RIGHT}>
-          {/*<Switch*/}
-          {/*style={{ marginBottom: 0 }}*/}
-          {/*checked={darkTheme}*/}
-          {/*label="Dark Theme"*/}
-          {/*onChange={() => dispatch(toggleDarkTheme())}*/}
-          {/*/>*/}
           <Button
             minimal
             icon="user"

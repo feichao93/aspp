@@ -4,22 +4,29 @@ import store from '../store'
 import Action from '../utils/actions'
 import { not } from '../utils/common'
 
-const darkTheme = localStorage.getItem('dark-theme') != null
-const hideTaskTree = localStorage.getItem('hide-task-tree') != null
+const useDarkTheme = localStorage.getItem('use-dark-theme') != null
+const hideFileTree = localStorage.getItem('hide-file-tree') != null
+const hidePanels = localStorage.getItem('hide-panels') != null
 const username = localStorage.getItem('username')
 
 window.addEventListener('beforeunload', () => {
   const state = store.getState()
-  if (state.config.darkTheme) {
-    localStorage.setItem('dark-theme', 'F')
+  if (state.config.useDarkTheme) {
+    localStorage.setItem('use-dark-theme', '')
   } else {
-    localStorage.removeItem('dark-theme')
+    localStorage.removeItem('use-dark-theme')
   }
 
-  if (state.config.hideTaskTree) {
-    localStorage.setItem('hide-task-tree', '')
+  if (state.config.hideFileTree) {
+    localStorage.setItem('hide-file-tree', '')
   } else {
-    localStorage.removeItem('hide-task-tree')
+    localStorage.removeItem('hide-file-tree')
+  }
+
+  if (state.config.hidePanels) {
+    localStorage.setItem('hide-panels', '')
+  } else {
+    localStorage.removeItem('hide-panels')
   }
 
   if (state.config.username != null) {
@@ -31,19 +38,22 @@ window.addEventListener('beforeunload', () => {
 
 export class Config extends Record({
   helpOverlay: false,
-  darkTheme,
-  hideTaskTree,
+  useDarkTheme,
+  hideFileTree,
+  hidePanels,
   username,
   visibleMap: Map(ASPP_CONFIG.asppConfig.tags.map(tag => [tag.name, true] as [string, boolean])),
 }) {}
 
 export default function configReducer(state = new Config(), action: Action) {
   if (action.type === 'TOGGLE_DARK_THEME') {
-    return state.update('darkTheme', not)
+    return state.update('useDarkTheme', not)
   } else if (action.type === 'TOGGLE_HELP_OVERLAY') {
     return state.update('helpOverlay', not)
-  } else if (action.type === 'TOGGLE_TASK_TREE_VISIBILITY') {
-    return state.update('hideTaskTree', not)
+  } else if (action.type === 'TOGGLE_FILE_TREE_VISIBILITY') {
+    return state.update('hideFileTree', not)
+  } else if (action.type === 'TOGGLE_PANELS_VISIBILITY') {
+    return state.update('hidePanels', not)
   } else if (action.type === 'SET_USERNAME') {
     return state.set('username', action.username)
   } else if (action.type === 'TOGGLE_TAG_VISIBILITY') {

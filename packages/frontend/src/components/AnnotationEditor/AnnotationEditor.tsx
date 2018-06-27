@@ -44,7 +44,7 @@ class AnnotationEditor extends React.Component<AnnotationEditorProps> {
   }
 
   render() {
-    const { dispatch, editor, config } = this.props
+    const { dispatch, editor, config, fileInfo } = this.props
 
     const decorations = editor.gather()
     const decorationsByBlockIndex = decorations.groupBy(dec => dec.range.blockIndex)
@@ -60,6 +60,7 @@ class AnnotationEditor extends React.Component<AnnotationEditorProps> {
           <EditHistoryButtonGroup />
           <HintButtonGroup />
         </div>
+        <p style={{ marginLeft: 8 }}>{fileInfo.getFullName()}</p>
         <div className="editor">
           {editor.blocks.map((block, blockIndex) => (
             <Block

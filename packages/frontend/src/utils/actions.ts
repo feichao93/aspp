@@ -26,7 +26,8 @@ namespace Action {
     | Toast
     | ToggleHelpOverlay
     | ToggleDarkTheme
-    | ToggleTaskTreeVisibility
+    | TogglePanelsVisibility
+    | ToggleFileTreeVisibility
     | SetUsername
     | ToggleTagVisibility
 
@@ -53,11 +54,18 @@ namespace Action {
     return { type: 'TOGGLE_DARK_THEME' }
   }
 
-  export interface ToggleTaskTreeVisibility {
-    type: 'TOGGLE_TASK_TREE_VISIBILITY'
+  export interface TogglePanelsVisibility {
+    type: 'TOGGLE_PANELS_VISIBILITY'
   }
-  export function toggleTaskTreeVisibility(): ToggleTaskTreeVisibility {
-    return { type: 'TOGGLE_TASK_TREE_VISIBILITY' }
+  export function togglePanelsVisibility(): TogglePanelsVisibility {
+    return { type: 'TOGGLE_PANELS_VISIBILITY' }
+  }
+
+  export interface ToggleFileTreeVisibility {
+    type: 'TOGGLE_FILE_TREE_VISIBILITY'
+  }
+  export function toggleFileTreeVisibility(): ToggleFileTreeVisibility {
+    return { type: 'TOGGLE_FILE_TREE_VISIBILITY' }
   }
 
   export interface SetUsername {

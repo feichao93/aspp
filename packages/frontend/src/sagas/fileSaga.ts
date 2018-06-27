@@ -21,7 +21,7 @@ import makeDiffCollFromDiffs from '../utils/makeDiffCollFromDiffs'
 import server, { RawColl } from '../utils/server'
 import { applyEditorAction } from './historyManager'
 
-/** 从后台加载文档树 */
+/** 从后台加载文件树 */
 function* loadTreeState(reload: boolean) {
   try {
     const res = yield fetch(`/api/list?${reload ? 'reload' : ''}`)
@@ -29,7 +29,7 @@ function* loadTreeState(reload: boolean) {
       const treeState: TreeItem[] = yield res.json()
       yield put(Action.loadTreeData(treeState))
       if (reload) {
-        yield put(Action.toast('更新文档树信息成功'))
+        yield put(Action.toast('更新文件树信息成功'))
       }
     } else {
       yield put(Action.toast(`Failed to load tree. ${res.status} ${res.statusText}`, Intent.DANGER))
