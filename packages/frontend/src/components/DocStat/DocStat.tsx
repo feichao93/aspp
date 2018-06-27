@@ -9,6 +9,7 @@ import { DocStatState } from '../../reducers/docStatReducer'
 import FileInfo from '../../types/FileInfo'
 import Action from '../../utils/actions'
 import { toggle } from '../../utils/common'
+import './DocStat.styl'
 
 interface DocStatProps {
   fileInfo: FileInfo
@@ -42,9 +43,9 @@ class DocStat extends React.Component<DocStatProps> {
     const { checkedCollnames } = this.state
 
     return (
-      <div>
-        <h2>{fileInfo.docname}</h2>
-        <table className={Classes.HTML_TABLE}>
+      <div className="doc-stat">
+        <p className="stat-name">{fileInfo.getFullName()}</p>
+        <table className={Classes.HTML_TABLE} style={{ width: '100%' }}>
           <thead>
             <tr>
               <th />
@@ -91,7 +92,7 @@ class DocStat extends React.Component<DocStatProps> {
             ))}
           </tbody>
         </table>
-        <Button text="文件对比" large onClick={this.reqDiff} />
+        <Button className="compare-button" text="文件对比" large onClick={this.reqDiff} />
       </div>
     )
   }
