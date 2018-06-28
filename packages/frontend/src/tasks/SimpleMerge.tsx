@@ -1,6 +1,7 @@
-import { Intent } from '@blueprintjs/core'
+import { Button, Classes, Intent, Label, Slider } from '@blueprintjs/core'
 import { Set } from 'immutable'
 import { io } from 'little-saga'
+import React from 'react'
 import { ActionCategory } from '../actions/EditorAction'
 import SetSel, { SetSelMethod } from '../actions/SetSel'
 import { State } from '../reducers'
@@ -14,9 +15,92 @@ import Action from '../utils/actions'
 import { Diff } from '../utils/calculateDiffs'
 import server, { RawColl } from '../utils/server'
 import { Task } from './index'
+import TaskConstructor from './TaskConstructor'
 
 export interface SimpleMergeOptions {
-  minPartialRatio: number
+  minRatio: number
+}
+
+interface ConfirmFromProps {
+  impl: TaskConstructor
+  name: string
+  options: SimpleMergeOptions
+  onChangeName(nextName: string): void
+  onChangeOptions(nextOptions: SimpleMergeOptions): void
+  onClose(): void
+}
+
+type ConfigFromState = SimpleMergeOptions & { editingName: string }
+
+class ConfigForm extends React.Component<ConfirmFromProps, ConfigFromState> {
+  constructor(props: ConfirmFromProps) {
+    super(props)
+    this.state = {
+      ...props.options,
+      editingName: props.name,
+    }
+  }
+
+  resetTaskName = () => {
+    this.setState({
+      editingName: this.props.impl.defaultTaskName,
+    })
+  }
+
+  onConfirm = () => {
+    const { onClose, onChangeOptions, onChangeName } = this.props
+    const { editingName, ...nextOptions } = this.state
+    if (name !== editingName) {
+      onChangeName(editingName)
+    }
+    onChangeOptions(nextOptions)
+    onClose()
+  }
+
+  onEditName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ editingName: e.target.value })
+  }
+
+  render() {
+    const { name, onClose } = this.props
+    const { editingName, minRatio } = this.state
+
+    return (
+      <div>
+        <div className={Classes.DIALOG_HEADER}>配置 {name}</div>
+        <div className={Classes.DIALOG_BODY}>
+          <Label text="任务名称" inline>
+            <input
+              value={editingName}
+              className={Classes.INPUT}
+              style={{ width: '60%' }}
+              onChange={this.onEditName}
+            />
+            <Button icon="undo" style={{ marginLeft: 16 }} onClick={this.resetTaskName} />
+          </Label>
+          <Label text="合并 partial 的最小比例" inline>
+            <div style={{ width: '90%', marginLeft: '5%' }}>
+              <Slider
+                value={minRatio}
+                min={0}
+                max={1}
+                stepSize={0.01}
+                onChange={minRatio => this.setState({ minRatio })}
+              />
+            </div>
+          </Label>
+        </div>
+        <div className={Classes.DIALOG_FOOTER}>
+          <div className={Classes.DIALOG_FOOTER_ACTIONS}>
+            <Button onClick={this.onConfirm} intent={Intent.PRIMARY}>
+              确认
+            </Button>
+            <Button onClick={onClose}>取消</Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 class MergeErorr extends Error {
@@ -57,9 +141,7 @@ function doMerge(resultColl: RawColl, editor: EditorState, options: SimpleMergeO
     if (slot.slotType === 'diff') {
       const diff: Diff = slot.data
       if (diff.type === 'consistent' || diff.type === 'partial') {
-        resultColl.annotations.push(
-          resolveConsistentAnnotation(slot.id, diff, options.minPartialRatio),
-        )
+        resultColl.annotations.push(resolveConsistentAnnotation(slot.id, diff, options.minRatio))
       } else {
         throw new MergeErorr(slot.id, diff)
       }
@@ -82,9 +164,9 @@ export default class SimpleMerge {
     'simple-merge 简单的合并算法，根据当前的 diff 数据自动生成对应的标注对象。一致的 diff 将直接生成对应标注对象，部分缺失的 diff 将根据任务配置决定是否生成标注对象，冲突的 diff 无法进行合并。当任务遇到无法处理的 diff 时，任务会选中需要处理的 diff，然后中断执行。'
 
   static defaultOptions: SimpleMergeOptions = {
-    minPartialRatio: 0.5,
+    minRatio: 0.5,
   }
-  // TODO form
+  static Form = ConfigForm
 
   options: SimpleMergeOptions
 

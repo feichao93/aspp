@@ -30,6 +30,28 @@ export const taskImplList = List<TaskConstructor>([
   SimpleMerge,
 ])
 
+if (DEV_ASSERT) {
+  taskImplList.forEach(impl => {
+    console.assert(impl.defaultTaskName != null, 'Task constructor must have a defaultTaskName')
+
+    console.assert(impl.description != null, 'Task constructor must have a description')
+
+    if (impl.defaultOptions != null) {
+      console.assert(
+        impl.Form != null,
+        'Task constructor must provide a Form implementation when it has defaultOptions',
+      )
+    }
+
+    if (impl.Form != null) {
+      console.assert(
+        impl.defaultOptions != null,
+        'Task constructor must provide defaultOptions when if it has a Form implementation',
+      )
+    }
+  })
+}
+
 export const initTaskMap: TaskMap = taskImplList
   .filter(impl => {
     if (DEV_HELPER) {

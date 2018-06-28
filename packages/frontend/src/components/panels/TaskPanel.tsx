@@ -101,8 +101,8 @@ class TaskPanel extends React.Component<TaskPanelProps> {
         <AddTaskMenu dispatch={dispatch} />
 
         {taskMap
-          .map((task, instId) => (
-            <div key={instId} className="task-row">
+          .map((task, taskId) => (
+            <div key={taskId} className="task-row">
               <header>
                 <Tooltip
                   content={<div style={{ width: 350 }}>{task.impl.description}</div>}
