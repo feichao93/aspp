@@ -55,7 +55,7 @@ class AnnotationEditor extends React.Component<AnnotationEditorProps> {
 
     return (
       <div className="annotation-editor">
-        <div style={{ display: 'flex', margin: '16px 8px', flex: '0 0 auto' }}>
+        <div className="button-groups">
           <AnnotationButtonGroup />
           <EditHistoryButtonGroup />
           <HintButtonGroup />

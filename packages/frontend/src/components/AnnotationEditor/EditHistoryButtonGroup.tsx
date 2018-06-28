@@ -38,7 +38,7 @@ class EditHistoryButtonGroup extends React.PureComponent<EditHistoryGroupProps> 
         </Tooltip>
         <Tooltip content="回滚操作记录到上一次保存文件前的状态">
           <AnchorButton
-            icon="double-chevron-up"
+            icon="fast-backward"
             disabled={disableUndo}
             onClick={() => dispatch(Action.userReqRevert())}
           />

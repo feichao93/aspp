@@ -14,6 +14,8 @@ ASPP 中文标注工具，提供基于网页的标注前端，用来方便地对
 
 **注意：请使用最新版 Chrome 浏览器**
 
+完整文档  [/docs/readme.md](/docs/readme.md)
+
 ## 标注工程文件夹
 
 aspp 的工作在*标注工程文件夹*中，该文件夹需要具有下列结构。文件夹可以参考 [_example/_](/packages/example/)。

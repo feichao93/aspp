@@ -26,10 +26,10 @@ class PanelContainer extends React.Component<{ hide: boolean }> {
         selectedTabId={panelName}
         onChange={this.onChange}
       >
-        <Tab id="detail" className="tab-header" title="detail" panel={<DetailPanel />} />
-        <Tab id="task" className="tab-header" title="task" panel={<TaskPanel />} />
-        <Tab id="tags" className="tab-header" title="tags" panel={<TagsPanel />} />
-        <Tab id="history" className="tab-header" title="history" panel={<HistoryPanel />} />
+        <Tab id="detail" className="tab-header" title="详情" panel={<DetailPanel />} />
+        <Tab id="task" className="tab-header" title="任务" panel={<TaskPanel />} />
+        <Tab id="tags" className="tab-header" title="标签" panel={<TagsPanel />} />
+        <Tab id="history" className="tab-header" title="操作历史" panel={<HistoryPanel />} />
       </Tabs>
     )
   }

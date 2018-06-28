@@ -1,10 +1,14 @@
 import {
   Alignment,
   Button,
+  Menu,
+  MenuItem,
   Navbar,
   NavbarDivider,
   NavbarGroup,
   NavbarHeading,
+  Popover,
+  Position,
 } from '@blueprintjs/core'
 import classNames from 'classnames'
 import React from 'react'
@@ -51,11 +55,28 @@ class Menubar extends React.Component<MenubarProps> {
             text="面板"
             onClick={() => dispatch(Action.togglePanelsVisibility())}
           />
-          <Button
-            minimal
-            icon="help"
-            text="帮助"
-            onClick={() => dispatch(Action.toggleHelpOverlay())}
+          <Popover
+            position={Position.BOTTOM_LEFT}
+            target={<Button minimal icon="help" text="帮助" />}
+            content={
+              <Menu>
+                <MenuItem
+                  icon="star"
+                  text="Star on GitHub"
+                  onClick={() => window.open('https://github.com/shinima/aspp')}
+                />
+                <MenuItem
+                  icon="issue"
+                  text="问题反馈"
+                  onClick={() => window.open('https://github.com/shinima/aspp/issues')}
+                />
+                <MenuItem
+                  icon="key-command"
+                  text="快捷键列表"
+                  onClick={() => dispatch(Action.toggleHelpOverlay())}
+                />
+              </Menu>
+            }
           />
           <HelpOverlay />
         </NavbarGroup>
