@@ -22,7 +22,7 @@ import server, { RawColl } from '../utils/server'
 import { applyEditorAction } from './historyManager'
 
 /** 从后台加载文件树 */
-function* loadTreeState(reload: boolean) {
+export function* loadTreeState(reload: boolean) {
   try {
     const res = yield fetch(`/api/list?${reload ? 'reload' : ''}`)
     if (res.ok) {
@@ -65,7 +65,7 @@ function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
   }
 }
 
-function* closeCurrentColl() {
+function* reqCloseCurrentColl() {
   const { editor, cache }: State = yield select()
 
   if (!is(cache.annotations, editor.annotations)) {
@@ -73,6 +73,10 @@ function* closeCurrentColl() {
     return
   }
 
+  yield closeCurrentColl()
+}
+
+function* closeCurrentColl() {
   // 清空缓存
   yield put(setCachedAnnotations(IMap()))
   // 清空当前编辑器状态
@@ -228,13 +232,13 @@ function* addColl({ fileInfo }: Action.ReqAddColl) {
 
 function* deleteColl({ fileInfo: deleting }: Action.ReqDeleteColl) {
   const { fileInfo: cntFileInfo }: State = yield select()
-  if (is(deleting, cntFileInfo)) {
-    yield put(Action.toast('不能删除当前打开的文件'))
-    return
-  }
 
   if (!window.confirm(`确认要删除 ${deleting.getFullName()} 吗？`)) {
     return
+  }
+
+  if (is(deleting, cntFileInfo)) {
+    yield closeCurrentColl()
   }
 
   try {
@@ -251,7 +255,7 @@ export default function* fileSaga() {
   yield takeEvery(a('REQ_DIFF_COLLS'), diffColls)
   yield takeEvery(a('REQ_ADD_COLL'), addColl)
   yield takeEvery(a('REQ_DELETE_COLL'), deleteColl)
-  yield takeEvery(a('REQ_CLOSE_CURRENT_COLL'), closeCurrentColl)
+  yield takeEvery(a('REQ_CLOSE_CURRENT_COLL'), reqCloseCurrentColl)
   yield takeEvery(a('REQ_SAVE_CURRENT_COLL'), saveCurrentColl)
   yield takeEvery(a('REQ_OPEN_DOC_STAT'), openDocStat)
   yield takeEvery(a('REQ_OPEN_COLL'), openColl)

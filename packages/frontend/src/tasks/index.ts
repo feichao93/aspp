@@ -5,6 +5,7 @@ import SimpleMatching from '../tasks/SimpleMatching'
 import SimpleOffsetAdjusting from '../tasks/SimpleOffsetAdjusting'
 import StanfordNLP from '../tasks/StanfordNLP'
 import AutoAnnotate from './AutoAnnotate'
+import SimpleMerge from './SimpleMerge'
 import TaskConstructor from './TaskConstructor'
 
 export class Task extends Record({
@@ -26,9 +27,16 @@ export const taskImplList = List<TaskConstructor>([
   SentenceSegmentation,
   StanfordNLP,
   AutoAnnotate,
+  SimpleMerge,
 ])
 
 export const initTaskMap: TaskMap = taskImplList
+  .filter(impl => {
+    if (DEV_HELPER) {
+      return true
+    }
+    return impl.singleton
+  })
   .map(
     impl =>
       new Task({

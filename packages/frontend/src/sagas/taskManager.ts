@@ -1,3 +1,4 @@
+import { Intent } from '@blueprintjs/core'
 import { delay, io, multicastChannel, takeEvery } from 'little-saga/compat'
 import { State } from '../reducers'
 import { setTaskAsIdle, setTaskAsRunning } from '../reducers/taskReducer'
@@ -22,16 +23,24 @@ export default function* taskManager() {
   }
 
   function* handleRunTask({ id }: Action.RunTask) {
-    const { taskMap }: State = yield io.select()
-    const task = taskMap.get(id)
-    const inst = new task.impl(task)
-    const sagaTask = yield io.fork([inst, inst.saga], chan)
     try {
+      const { taskMap }: State = yield io.select()
+      const task = taskMap.get(id)
+      const inst = new task.impl(task)
+      const sagaTask = yield io.spawn([inst, inst.saga], chan)
       yield io.put(setTaskAsRunning(id, sagaTask))
       yield io.race([
         io.join(sagaTask),
         io.take((action: Action) => action.type === 'STOP_TASK' && action.id === id),
       ])
+    } catch (e) {
+      console.error(e)
+      yield io.put(
+        Action.toast(
+          `Task ${id} failed to run due to an error. See console for more info.`,
+          Intent.DANGER,
+        ),
+      )
     } finally {
       yield io.put(setTaskAsIdle(id))
     }

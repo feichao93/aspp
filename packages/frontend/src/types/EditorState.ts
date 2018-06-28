@@ -55,11 +55,11 @@ export default class EditorState extends EditorStateRecord {
       annotations: this.annotations
         .valueSeq()
         .map(normalizeAnnotationRange)
-        .toArray(),
+        .toJS(),
       slots: this.slots
         .valueSeq()
         .map(normalizeSlotRange)
-        .toArray(),
+        .toJS(),
     }
   }
 }
