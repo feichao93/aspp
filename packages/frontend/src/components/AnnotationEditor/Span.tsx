@@ -1,10 +1,10 @@
 import classNames from 'classnames'
-import { is, Map, Set } from 'immutable'
+import { Map, Set } from 'immutable'
 import React from 'react'
 import ASPP_CONFIG from '../../aspp-config'
 import Decoration from '../../types/Decoration'
 import { Diff } from '../../utils/calculateDiffs'
-import { isSameSpanInfo, SpanInfo } from '../../utils/layout'
+import { SpanInfo } from '../../utils/layout'
 
 interface SpanProps {
   info: SpanInfo
@@ -30,19 +30,21 @@ function TagAbbr({ decoration }: { decoration: Decoration }) {
   return null
 }
 
-export default class Span extends React.Component<SpanProps> {
-  shouldComponentUpdate(nextProps: SpanProps) {
-    const { info, block, shortenLongText, visibleMap, onMouseDown, sel } = this.props
-    return (
-      !isSameSpanInfo(info, nextProps.info) ||
-      block !== nextProps.block ||
-      shortenLongText !== nextProps.shortenLongText ||
-      !is(visibleMap, nextProps.visibleMap) ||
-      !is(sel, nextProps.sel) ||
-      onMouseDown !== nextProps.onMouseDown
-    )
+function getClassName(decoration: Decoration, selected: boolean) {
+  if (decoration.type === 'text') {
+    return classNames('text', { selected })
+  } else if (decoration.type === 'annotation') {
+    return classNames('annotation', decoration.tag, { selected })
+  } else {
+    if (decoration.type === 'slot') {
+      return classNames('slot', decoration.slotType, { selected })
+    } else if (decoration.type === 'hint') {
+      return classNames('hint', { selected })
+    }
   }
+}
 
+export default class Span extends React.Component<SpanProps> {
   handleMouseDown = (e: React.MouseEvent<HTMLElement>) => {
     const { onMouseDown, info } = this.props
     if (!Decoration.isText(info.decoration) && !Decoration.isPlainSlot(info.decoration)) {
@@ -104,19 +106,5 @@ export default class Span extends React.Component<SpanProps> {
           : decoration.range.substring(block, shortenLongText)}
       </span>
     )
-  }
-}
-
-function getClassName(decoration: Decoration, selected: boolean) {
-  if (decoration.type === 'text') {
-    return classNames('text', { selected })
-  } else if (decoration.type === 'annotation') {
-    return classNames('annotation', decoration.tag, { selected })
-  } else {
-    if (decoration.type === 'slot') {
-      return classNames('slot', decoration.slotType, { selected })
-    } else if (decoration.type === 'hint') {
-      return classNames('hint', { selected })
-    }
   }
 }

@@ -1,37 +1,14 @@
-import { is, Set } from 'immutable'
+import { Set } from 'immutable'
 import Decoration, { Slot, Text } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import { compareDecorationPosArray } from './common'
 
 export interface SpanInfo {
-  // span的「高度」，-1 表示高度位置，0 表示该 span 没有子节点
+  // span的「高度」，-1 表示高度未知，0 表示该 span 没有子节点
   // 大于 0 表示 span 至少存在一个高度为 height-1 的子节点
   height: number
   decoration: Decoration
-  children?: SpanInfo[]
-}
-
-function isSameSpanInfoChildren(x: SpanInfo[], y: SpanInfo[]) {
-  if (x == null || x.length === 0) {
-    return y == null || y.length === 0
-  } else if (y == null || y.length === 0) {
-    return false
-  } else {
-    for (let i = 0; i < x.length; i++) {
-      if (!isSameSpanInfo(x[i], y[i])) {
-        return false
-      }
-    }
-    return true
-  }
-}
-
-export function isSameSpanInfo(a: SpanInfo, b: SpanInfo) {
-  return (
-    a.height === b.height &&
-    is(a.decoration, b.decoration) &&
-    isSameSpanInfoChildren(a.children, b.children)
-  )
+  children: SpanInfo[]
 }
 
 export default function layout(
@@ -54,7 +31,7 @@ export default function layout(
     append(makeText(0, block.length))
   } else {
     for (const decoration of list) {
-      append({ height: -1, decoration })
+      append({ height: -1, decoration, children: [] })
     }
   }
 
@@ -74,10 +51,10 @@ export default function layout(
             ? prevSibling.decoration.range.endOffset
             : last.decoration.range.startOffset
           if (prevSiblingEnd < range.startOffset) {
-            ensureChildren(last).push(makeText(prevSiblingEnd, range.startOffset))
+            last.children.push(makeText(prevSiblingEnd, range.startOffset))
           }
         }
-        ensureChildren(last).push(spanInfo)
+        last.children.push(spanInfo)
         break
       } else if (lastEnd <= range.startOffset) {
         stack.pop()
@@ -103,7 +80,7 @@ export default function layout(
         const lastEnd = last.decoration.range.endOffset
         const parentEnd = parent.decoration.range.endOffset
         if (lastEnd < parentEnd) {
-          ensureChildren(parent).push(makeText(lastEnd, parentEnd))
+          parent.children.push(makeText(lastEnd, parentEnd))
         }
       }
       assignHeight(last)
@@ -120,6 +97,7 @@ export default function layout(
         type: 'text',
         range: new DecorationRange({ blockIndex, startOffset, endOffset }),
       }),
+      children: [],
     }
   }
 
@@ -130,13 +108,6 @@ export default function layout(
       const childHeights = spanInfo.children.map(child => child.height)
       spanInfo.height = Math.max(...childHeights) + 1
     }
-  }
-
-  function ensureChildren(spanInfo: SpanInfo) {
-    if (spanInfo.children == null) {
-      spanInfo.children = []
-    }
-    return spanInfo.children
   }
 
   function lastChild(spanInfo: SpanInfo) {

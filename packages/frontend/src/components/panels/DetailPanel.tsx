@@ -209,7 +209,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
         <div className="block preview">
           <Span
             block={editor.blocks.get(range.blockIndex)}
-            info={{ height: 0, decoration }}
+            info={{ height: 0, decoration, children: [] }}
             sel={Set()}
             shortenLongText
           />
@@ -298,7 +298,11 @@ class DetailPanel extends React.Component<DetailPanelProps> {
                       <Span
                         key={annotation.id}
                         block={editor.blocks.get(blockIndex)}
-                        info={{ height: 0, decoration: Annotation.fromJS(annotation) }}
+                        info={{
+                          height: 0,
+                          decoration: Annotation.fromJS(annotation),
+                          children: [],
+                        }}
                         sel={Set()}
                         shortenLongText
                       />
@@ -450,12 +454,10 @@ class DetailPanel extends React.Component<DetailPanelProps> {
     const { mode, subMode } = this.resolveModes()
     return (
       <div className="panel detail-panel">
-        <div>
-          <h2 className="part-title">
-            {mode}
-            {subMode ? `/${subMode}` : null}
-          </h2>
-        </div>
+        <h2 className="part-title">
+          {mode}
+          {subMode ? `/${subMode}` : null}
+        </h2>
         {this.renderTextPart(mode)}
         {this.renderIntersectionPart(mode)}
         {this.renderDecorationPart(mode)}

@@ -8,15 +8,15 @@
 
     &.selected
     &.selected:hover {
-      box-shadow #616161 1px 1px 4px 0.5px
+      box-shadow #616161 1px 1px 10px 0.5px
       background #ffe500
     }
   }
 
   &[data-height="1"] {
     &:hover {
-      outline 1px dashed #666
-      outline-offset 6px
+      outline 1px solid #666
+      outline-offset 2px
     }
 
     &.selected
@@ -25,4 +25,23 @@
       background #fff9c5
     }
   }
+
+  &[data-height="2"],
+  &[data-height="3"],
+  &[data-height="4"] {
+    &.selected {
+      outline 1px dashed #666
+    }
+  }
+
+  &[data-height="2"].selected {
+    outline-offset 4px
+  }
+  &[data-height="3"].selected {
+    outline-offset 6px
+  }
+  &[data-height="4"].selected {
+    outline-offset 8px
+  }
+
 }

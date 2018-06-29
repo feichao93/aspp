@@ -5,36 +5,37 @@ import { addAnnotations } from '../reducers/editorReducer'
 import Annotation from '../types/Annotation'
 import Action from '../utils/actions'
 import { keyed, updateAnnotationNextId } from '../utils/common'
+import { Task } from './index'
 
-// TODO 配置 UI 可以参考 src/components/panels/TyModel.tsx
-
-export interface StandfordNLPConfig {
+export interface StandfordNLPOptions {
   addr: string
   runWhenOpenDoc: boolean
   skipNonEmptyDoc: boolean
 }
 
-const defaultConfig: StandfordNLPConfig = {
-  addr: 'http://10.214.224.137:5000/stanford',
-  // TODO support runWhenOpenDoc & skipNonEmptyDoc
-  runWhenOpenDoc: false,
-  skipNonEmptyDoc: true,
-}
-
 export default class StanfordNLP {
-  static disabled = true
   static defaultTaskName = 'stanford-nlp'
   static description =
     '[仍在实现中...] stanford-nlp 由斯坦福大学的 NLP 工具包提供算法，运行该任务来预先自动标注一部分实体，减少标注人员工作量。'
+  static defaultOptions: StandfordNLPOptions = {
+    addr: 'http://10.214.224.137:5000/stanford',
+    runWhenOpenDoc: false,
+    skipNonEmptyDoc: true,
+  }
+  // TODO static Form
 
-  constructor(readonly config = defaultConfig) {}
+  options: StandfordNLPOptions
+
+  constructor(task: Task) {
+    this.options = task.options
+  }
 
   *saga() {
     const { editor }: State = yield io.select()
     if (editor.annotations.isEmpty()) {
       const block = editor.blocks.get(0)
       try {
-        const res = yield fetch(this.config.addr, {
+        const res = yield fetch(this.options.addr, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text: block }),
