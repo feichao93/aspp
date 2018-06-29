@@ -48,6 +48,9 @@ function makeDocStatUrl(info: FileInfo) {
 function makeCollUrl(info: FileInfo) {
   return `/coll${makeDocPath(info)}?collname=${encode(info.collname)}`
 }
+function makeRenameCollUrl(info: FileInfo) {
+  return `/rename/coll${makeDocPath(info)}?collname=${encode(info.collname)}`
+}
 
 const asppFetch = withPrefix('/api')(guardOK(fetch))
 
@@ -100,5 +103,12 @@ export default {
 
   async deleteColl(info: FileInfo): Promise<void> {
     await asppFetch(makeCollUrl(info), { method: 'DELETE' })
+  },
+  async renameColl(info: FileInfo, newName: string): Promise<void> {
+    await asppFetch(makeRenameCollUrl(info), {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ newName }),
+    })
   },
 }

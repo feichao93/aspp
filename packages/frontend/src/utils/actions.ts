@@ -129,6 +129,7 @@ namespace Action {
     | ReqSaveCurrentColl
     | ReqOpenDocStat
     | ReqOpenColl
+    | ReqRenameColl
 
   export interface ReqDiffColls {
     type: 'REQ_DIFF_COLLS'
@@ -191,6 +192,14 @@ namespace Action {
   }
   export function reqOpenDocStat(fileInfo: FileInfo): ReqOpenDocStat {
     return { type: 'REQ_OPEN_DOC_STAT', fileInfo }
+  }
+
+  export interface ReqRenameColl {
+    type: 'REQ_RENAME_COLL'
+    fileInfo: FileInfo
+  }
+  export function reqRenameColl(fileInfo: FileInfo): ReqRenameColl {
+    return { type: 'REQ_RENAME_COLL', fileInfo }
   }
 
   export interface ReqOpenColl {

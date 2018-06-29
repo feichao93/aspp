@@ -28,3 +28,9 @@ module.exports = new Router('/api')
     const { collname } = ctx.query
     await ctx.aspp.putColl(fullDocPath, collname, ctx.request.body)
   })
+  .post('/rename/coll/:fullDocPath+', async ctx => {
+    const { fullDocPath } = ctx.params
+    const { collname } = ctx.query
+    const { newName } = ctx.request.body
+    await ctx.aspp.renameColl(fullDocPath, collname, newName)
+  })
