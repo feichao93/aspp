@@ -145,7 +145,11 @@ const customMenus = {
           text="下载（JSON）"
           onClick={() => this.onDownloadResultJSON(fileInfo)}
         />
-        <MenuItem icon="edit" text="重命名（开发中）" />
+        <MenuItem
+          icon="edit"
+          text="重命名"
+          onClick={() => dispatch(Action.reqRenameColl(fileInfo))}
+        />
         <MenuItem
           icon="trash"
           text="删除"

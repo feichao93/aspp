@@ -127,6 +127,18 @@ module.exports = function asppService({ taskDir }) {
         fs.writeFileSync(filename, yaml.safeDump(content), 'utf-8')
         ctx.status = 200
       },
+
+      async renameColl(fullDocPath, collname, newName) {
+        const doc = findDocInTree(this.list(), fullDocPath)
+
+        remove(doc.collnames, collname)
+        doc.collnames.push(newName)
+
+        const collFilename = this.resolveCollFilename(fullDocPath, collname)
+        const newFilename = this.resolveCollFilename(fullDocPath, newName)
+        fs.renameSync(collFilename, newFilename)
+        ctx.status = 200
+      },
     }
 
     await next()

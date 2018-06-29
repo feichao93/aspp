@@ -251,6 +251,39 @@ function* deleteColl({ fileInfo: deleting }: Action.ReqDeleteColl) {
   }
 }
 
+function* renameColl({ fileInfo: renaming }: Action.ReqRenameColl) {
+  const { fileInfo: cntFileInfo, tree }: State = yield select()
+  const treeDoc = findDocInItems(tree, renaming.set('collname', ''))
+  if (is(renaming, cntFileInfo)) {
+    yield put(Action.toast('请保存并关闭当前文件'))
+    return
+  }
+  try {
+    const newName = window.prompt('请输入新的文件名')
+    if (!/^[a-zA-Z0-9\-_\u4e00-\u9fa5]+$/.test(newName)) {
+      yield put(Action.toast('文件名无效'))
+      return
+    }
+    if (newName === renaming.collname) {
+      return
+    }
+    if (newName.length === 0) {
+      yield put(Action.toast('文件名不能为空'))
+      return
+    }
+    if (newName !== renaming.collname && treeDoc.collnames.includes(newName)) {
+      yield put(Action.toast('已存在同名标注文件'))
+      return
+    }
+    yield server.renameColl(renaming, newName)
+    yield loadTreeState(false)
+    yield put(Action.toast('修改成功'))
+  } catch (e) {
+    console.error(e)
+    yield put(Action.toast(e.message, Intent.DANGER))
+  }
+}
+
 export default function* fileSaga() {
   yield takeEvery(a('REQ_DIFF_COLLS'), diffColls)
   yield takeEvery(a('REQ_ADD_COLL'), addColl)
@@ -259,7 +292,7 @@ export default function* fileSaga() {
   yield takeEvery(a('REQ_SAVE_CURRENT_COLL'), saveCurrentColl)
   yield takeEvery(a('REQ_OPEN_DOC_STAT'), openDocStat)
   yield takeEvery(a('REQ_OPEN_COLL'), openColl)
-
+  yield takeEvery(a('REQ_RENAME_COLL'), renameColl)
   yield takeLatest(a('REQ_LOAD_TREE'), ({ reload }: Action.ReqLoadTree) => loadTreeState(reload))
 
   yield put(Action.reqLoadTree(true))
