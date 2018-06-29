@@ -35,6 +35,21 @@
   }
 }
 
+.block .annotation {
+  &[data-height="0"] {
+    &:hover {
+      outline 1px solid #666
+    }
+  }
+
+  &[data-height="1"] {
+    &:hover {
+      outline 1px solid #666
+      outline-offset 2px
+    }
+  }
+}
+
 .block {
   line-height 1.8
   white-space pre-wrap
@@ -76,35 +91,4 @@
       }
     }
   }
-
-  .slot.match
-  .slot.sentence {
-    box-shadow rgba(158, 158, 158, 0.33) 1px 1px 3px 1.5px
-    outline 1px solid #ccc
-    background #fff9c5
-    &.selected {
-      background #FFEB3B
-    }
-  }
-
-  .slot.diff {
-    &.selected {
-      outline 3px solid steelblue
-    }
-  }
-
-  // TODO 优化样式
-
-  .hint {
-    border-bottom 1px dotted #192126
-    cursor pointer
-    &.selected {
-      background #fce23c
-    }
-  }
-
-  //.slot.highlight {
-  //  outline 1.5px solid #f7957e
-  //  outline-offset 0.5px
-  //}
 }

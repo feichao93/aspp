@@ -1,5 +1,5 @@
 import { Button, ButtonGroup, Intent } from '@blueprintjs/core'
-import { is, Map, Set } from 'immutable'
+import { is, Set } from 'immutable'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
@@ -11,9 +11,9 @@ import Decoration from '../../types/Decoration'
 import EditorState from '../../types/EditorState'
 import Action from '../../utils/actions'
 import { Diff } from '../../utils/calculateDiffs'
-import { shortenText, toIdSet } from '../../utils/common'
+import { always, shortenText, toIdSet } from '../../utils/common'
 import layout, { SpanInfo } from '../../utils/layout'
-import Span from '../AnnotationEditor/Span'
+import Span, { isVisibleFactory } from '../AnnotationEditor/Span'
 import './DetailPanel.styl'
 import { Rich } from './rich'
 
@@ -63,18 +63,18 @@ interface DecorationSetPreviewProps {
   block: string
   blockIndex: number
   set: Set<Decoration>
-  sel: Set<string>
-  visibleMap?: Map<string, boolean>
   dispatch: Dispatch
+  isSelected?(d: Decoration): boolean
+  isVisible?(d: Decoration): boolean
 }
 
 function DecorationSetPreview({
   block,
   blockIndex,
   set,
-  sel = Set(),
-  visibleMap,
   dispatch,
+  isSelected = always(false),
+  isVisible = always(true),
 }: DecorationSetPreviewProps) {
   if (set.isEmpty()) {
     return null
@@ -89,8 +89,8 @@ function DecorationSetPreview({
           onMouseDown={(d: Decoration, ctrlKey: boolean) =>
             dispatch(Action.userClickDecoration(d, ctrlKey))
           }
-          sel={sel}
-          visibleMap={visibleMap}
+          isSelected={isSelected}
+          isVisible={isVisible}
           block={block}
           shortenLongText
         />
@@ -163,8 +163,8 @@ class DetailPanel extends React.Component<DetailPanelProps> {
           block={block}
           blockIndex={blockIndex}
           set={intersected.toSet()}
-          sel={editor.sel}
-          visibleMap={config.visibleMap}
+          isSelected={d => editor.sel.has(d.id)}
+          isVisible={isVisibleFactory(config)}
           dispatch={dispatch}
         />
         <ButtonGroup vertical style={{ marginTop: 8 }}>
@@ -210,7 +210,6 @@ class DetailPanel extends React.Component<DetailPanelProps> {
           <Span
             block={editor.blocks.get(range.blockIndex)}
             info={{ height: 0, decoration, children: [] }}
-            sel={Set()}
             shortenLongText
           />
         </div>
@@ -303,7 +302,6 @@ class DetailPanel extends React.Component<DetailPanelProps> {
                           decoration: Annotation.fromJS(annotation),
                           children: [],
                         }}
-                        sel={Set()}
                         shortenLongText
                       />
                     ))}
@@ -359,8 +357,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
                 block={block}
                 blockIndex={blockIndex}
                 set={Set.of(parent.decoration)}
-                sel={Set()}
-                visibleMap={config.visibleMap}
+                isVisible={isVisibleFactory(config)}
                 dispatch={dispatch}
               />
             )}
@@ -373,8 +370,8 @@ class DetailPanel extends React.Component<DetailPanelProps> {
               block={block}
               blockIndex={blockIndex}
               set={Set(siblings).add(Decoration.asPlainSlot(parent.decoration))}
-              sel={Set.of(decoration.id)}
-              visibleMap={config.visibleMap}
+              isSelected={d => d.id === decoration.id}
+              isVisible={isVisibleFactory(config)}
               dispatch={dispatch}
             />
           )}
@@ -389,8 +386,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
             set={Set(children)
               .map(span => span.decoration)
               .add(Decoration.asPlainSlot(decoration))}
-            sel={Set()}
-            visibleMap={config.visibleMap}
+            isVisible={isVisibleFactory(config)}
             dispatch={dispatch}
           />
         )}
@@ -422,8 +418,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
                   block={editor.blocks.get(blockIndex)}
                   blockIndex={blockIndex}
                   set={decorations.toSet()}
-                  sel={Set()}
-                  visibleMap={config.visibleMap}
+                  isVisible={isVisibleFactory(config)}
                   dispatch={dispatch}
                 />
               </div>

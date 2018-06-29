@@ -1,11 +1,13 @@
 import { Button, ButtonGroup } from '@blueprintjs/core'
-import { is, Map, Set } from 'immutable'
+import { is, Set } from 'immutable'
 import React from 'react'
 import { Dispatch } from 'redux'
+import { Config } from '../../reducers/configReducer'
 import Decoration from '../../types/Decoration'
 import Action from '../../utils/actions'
+import calculateShouldComponentUpdate from '../../utils/calculateShouldComponentUpdate'
 import layout from '../../utils/layout'
-import Span from './Span'
+import Span, { isVisibleFactory } from './Span'
 
 interface BlockProps {
   block: string
@@ -13,18 +15,17 @@ interface BlockProps {
   hintCount: number
   decorations: Set<Decoration>
   sel: Set<string>
-  visibleMap: Map<string, boolean>
+  config: Config
   dispatch: Dispatch
 }
 
 export default class Block extends React.Component<BlockProps> {
   shouldComponentUpdate(nextProps: BlockProps) {
-    for (const key of Object.keys(this.props)) {
-      if (!is((this.props as any)[key], (nextProps as any)[key])) {
-        return true
-      }
-    }
-    return false
+    return calculateShouldComponentUpdate(this.props, nextProps, {
+      decorations: is,
+      sel: is,
+      config: is,
+    })
   }
 
   onMouseDown = (decoration: Decoration, ctrlKey: boolean) => {
@@ -32,7 +33,7 @@ export default class Block extends React.Component<BlockProps> {
   }
 
   render() {
-    const { block, blockIndex, hintCount, decorations, sel, dispatch, visibleMap } = this.props
+    const { block, blockIndex, hintCount, decorations, sel, config, dispatch } = this.props
 
     return (
       <div key={blockIndex} className="block" data-block data-blockindex={blockIndex}>
@@ -52,8 +53,8 @@ export default class Block extends React.Component<BlockProps> {
             key={index}
             info={spanInfo}
             onMouseDown={this.onMouseDown}
-            sel={sel}
-            visibleMap={visibleMap}
+            isSelected={d => sel.has(d.id)}
+            isVisible={isVisibleFactory(config)}
             block={block}
           />
         ))}

@@ -10,7 +10,6 @@ import FileInfo from '../../types/FileInfo'
 import SelectionUtils from '../../utils/SelectionUtils'
 import AnnotationButtonGroup from './AnnotationButtonGroup'
 import './AnnotationEditor.styl'
-import './annotations.styl'
 import Block from './Block'
 import EditHistoryButtonGroup from './EditHistoryButtonGroup'
 import HintButtonGroup from './HintButtonGroup'
@@ -73,7 +72,7 @@ class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                 .get(blockIndex, Set())
                 .toSet()
                 .map(dec => dec.id)}
-              visibleMap={config.visibleMap}
+              config={config}
               dispatch={dispatch}
             />
           ))}
