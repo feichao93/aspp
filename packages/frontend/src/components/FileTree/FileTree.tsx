@@ -111,6 +111,7 @@ function genTreeNodes(
 interface CustomMenuProps {
   fileInfo: FileInfo
   dispatch: Dispatch
+  onDownload(fileInfo: FileInfo): void
 }
 
 const customMenus = {
@@ -132,7 +133,7 @@ const customMenus = {
     )
   },
 
-  Coll({ fileInfo, dispatch }: CustomMenuProps) {
+  Coll({ fileInfo, dispatch, onDownload }: CustomMenuProps) {
     return (
       <Menu>
         <MenuItem
@@ -140,11 +141,7 @@ const customMenus = {
           icon="document-open"
           onClick={() => dispatch(Action.reqOpenColl(fileInfo))}
         />
-        <MenuItem
-          icon="download"
-          text="下载（JSON）"
-          onClick={() => this.onDownloadResultJSON(fileInfo)}
-        />
+        <MenuItem icon="download" text="下载" onClick={() => onDownload(fileInfo)} />
         <MenuItem
           icon="edit"
           text="重命名"
@@ -211,7 +208,7 @@ class FileTree extends React.PureComponent<FileTreeProps, FileTreeState> {
     fileInfo: null as FileInfo,
   }
 
-  onDownloadResultJSON = async (info: FileInfo) => {
+  onDownload = async (info: FileInfo) => {
     try {
       const coll = await server.getColl(info)
       saveAs(new Blob([JSON.stringify(coll)]), `${info.docname}.${info.collname}.json`)
@@ -314,7 +311,11 @@ class FileTree extends React.PureComponent<FileTreeProps, FileTreeState> {
       customMenuComponent = customMenus.Directory
     }
     if (customMenuComponent) {
-      const element = React.createElement(customMenuComponent, { fileInfo, dispatch })
+      const element = React.createElement(customMenuComponent, {
+        fileInfo,
+        dispatch,
+        onDownload: this.onDownload,
+      })
       ContextMenu.show(element, offset)
     }
   }

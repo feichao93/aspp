@@ -12,7 +12,7 @@ interface StyleApplyContext {
 
 type StyleApplyFn = (ctx: StyleApplyContext, style: React.CSSProperties) => void
 
-const DIFF_SLOT_COLOR_MAP = {
+export const DIFF_SLOT_COLOR_MAP = {
   consistent: '#94e894',
   partial: '#ffe31b',
   conflict: '#ff0018',

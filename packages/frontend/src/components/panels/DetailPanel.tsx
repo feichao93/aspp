@@ -6,11 +6,9 @@ import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
 import { setSel } from '../../reducers/editorReducer'
-import Annotation from '../../types/Annotation'
 import Decoration from '../../types/Decoration'
 import EditorState from '../../types/EditorState'
 import Action from '../../utils/actions'
-import { Diff } from '../../utils/calculateDiffs'
 import { always, shortenText, toIdSet } from '../../utils/common'
 import layout, { SpanInfo } from '../../utils/layout'
 import Span, { isVisibleFactory } from '../AnnotationEditor/Span'
@@ -252,71 +250,6 @@ class DetailPanel extends React.Component<DetailPanelProps> {
     )
   }
 
-  // TODO 优化 slot-part 的内容
-  renderDiffSlotPart(mode: SelMode) {
-    if (mode !== 'decoration') {
-      return null
-    }
-
-    const { editor, dispatch } = this.props
-    const decoration = editor.gather().get(editor.sel.first())
-    if (!Decoration.isSlot(decoration)) {
-      return null
-    }
-
-    const diff: Diff = decoration.data
-
-    let subtitle = diff.type
-    if (diff.type === 'partial') {
-      subtitle += ' '
-      const hitCount = diff.distribution.filter(([collname, annotations]) => annotations.length > 0)
-        .length
-      const totalCount = diff.distribution.length
-      subtitle += hitCount + '/' + totalCount
-    }
-
-    // TODO 优化样式生成代码
-    const background =
-      diff.type === 'consistent' ? '#94e894' : diff.type === 'partial' ? '#ffe31b' : '#ff0018'
-
-    return (
-      <div data-part="diff-slot">
-        <HorizontalLine />
-        <h2 className="part-title">
-          diff <span style={{ padding: '0 4px', background }}>{subtitle}</span>
-        </h2>
-        <div>
-          {diff.distribution.map(([collname, annotations]) => {
-            const blockIndex = decoration.range.blockIndex
-            return (
-              <div key={collname} style={{}}>
-                <div>{collname} :</div>
-                {annotations.length > 0 ? (
-                  <div className="block preview">
-                    {annotations.map(annotation => (
-                      <Span
-                        key={annotation.id}
-                        block={editor.blocks.get(blockIndex)}
-                        info={{
-                          height: 0,
-                          decoration: Annotation.fromJS(annotation),
-                          children: [],
-                        }}
-                        shortenLongText
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <span style={{ color: '#666', marginLeft: 8 }}>{'<空>'}</span>
-                )}
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    )
-  }
-
   renderHierarchyPart(mode: SelMode) {
     if (mode !== 'decoration') {
       return null
@@ -456,7 +389,6 @@ class DetailPanel extends React.Component<DetailPanelProps> {
         {this.renderTextPart(mode)}
         {this.renderIntersectionPart(mode)}
         {this.renderDecorationPart(mode)}
-        {this.renderDiffSlotPart(mode)}
         {this.renderHierarchyPart(mode)}
         {this.renderDecorationSetPart(mode)}
       </div>
