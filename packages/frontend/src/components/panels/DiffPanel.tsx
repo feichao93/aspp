@@ -6,31 +6,33 @@ import { State } from '../../reducers'
 import Annotation from '../../types/Annotation'
 import Decoration from '../../types/Decoration'
 import EditorState from '../../types/EditorState'
+import Action from '../../utils/actions'
 import { Diff } from '../../utils/calculateDiffs'
 import { shortenText14 } from '../../utils/common'
 import { DIFF_SLOT_COLOR_MAP } from '../AnnotationEditor/calculateStyle'
 import Span from '../AnnotationEditor/Span'
 import './DiffPanel.styl'
 
-export interface DiffPanelProps {
+interface DiffDistributionProps {
+  diff: Diff
+  slotId: string
   editor: EditorState
   dispatch: Dispatch
 }
 
-interface DiffDistributionProps {
-  diff: Diff
-  editor: EditorState
-}
-
-const DiffDistribution = ({ diff, editor }: DiffDistributionProps) => (
+const DiffDistribution = ({ diff, editor, slotId, dispatch }: DiffDistributionProps) => (
   <div className="diff-distribution">
-    {diff.distribution.map(([collname, annotations]) => {
+    {diff.distribution.map(([choice, annotations]) => {
       return (
-        <div key={collname} className="row">
+        <div key={choice} className="row">
           <header>
-            {/* TODO last edit here */}
-            <Button small icon="tick-circle" minimal />
-            <span>{collname} :</span>
+            <Button
+              small
+              icon="tick-circle"
+              minimal
+              onClick={() => dispatch(Action.userSettleDiff(slotId, choice))}
+            />
+            <span>{choice} :</span>
           </header>
           {annotations.length > 0 ? (
             <main className="block preview">
@@ -88,9 +90,14 @@ const DiffNonIdealState = () => (
   />
 )
 
+export interface DiffPanelProps {
+  editor: EditorState
+  dispatch: Dispatch
+}
+
 class DiffPanel extends React.Component<DiffPanelProps> {
   renderContent() {
-    const { editor } = this.props
+    const { editor, dispatch } = this.props
     if (editor.sel.size !== 1) {
       return <DiffNonIdealState />
     }
@@ -112,7 +119,7 @@ class DiffPanel extends React.Component<DiffPanelProps> {
             processText={shortenText14}
           />
         </div>
-        <DiffDistribution diff={diff} editor={editor} />
+        <DiffDistribution dispatch={dispatch} slotId={decoration.id} diff={diff} editor={editor} />
       </React.Fragment>
     )
   }

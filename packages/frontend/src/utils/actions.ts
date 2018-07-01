@@ -256,6 +256,7 @@ namespace Action {
     | UserAnnotateCurrent
     | UserDeleteCurrent
     | UserAcceptCurrent
+    | UserSettleDiff
     | UserReqRedo
     | UserReqRevert
     | UserReqUndo
@@ -335,6 +336,15 @@ namespace Action {
   }
   export function userAcceptCurrent(): UserAcceptCurrent {
     return { type: 'USER_ACCEPT_CURRENT' }
+  }
+
+  export interface UserSettleDiff {
+    type: 'USER_SETTLE_DIFF'
+    slotId: string
+    choice: string
+  }
+  export function userSettleDiff(slotId: string, choice: string): UserSettleDiff {
+    return { type: 'USER_SETTLE_DIFF', slotId, choice }
   }
   // endregion
 

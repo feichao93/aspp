@@ -1,16 +1,18 @@
 import { Intent } from '@blueprintjs/core'
-import { Map, Set } from 'immutable'
-import { getContext, put, select, takeEvery } from 'little-saga/compat'
+import { List, Map, Set } from 'immutable'
+import { getContext, io, put, select, takeEvery } from 'little-saga/compat'
 import AcceptHints from '../actions/AcceptHints'
 import Annotate from '../actions/Annotate'
 import DeleteDecorations from '../actions/DeleteDecorations'
 import SetSel, { SetSelMethod } from '../actions/SetSel'
+import SettleDiff from '../actions/SettleDiff'
 import { State } from '../reducers'
 import Annotation from '../types/Annotation'
 import Decoration, { Hint } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import Action from '../utils/actions'
-import { a, keyed, toggle, toIdSet } from '../utils/common'
+import { Diff } from '../utils/calculateDiffs'
+import { a, getNextId, keyed, toggle, toIdSet } from '../utils/common'
 import InteractionCollector from '../utils/InteractionCollector'
 import SelectionUtils from '../utils/SelectionUtils'
 import { applyEditorAction } from './historyManager'
@@ -111,6 +113,20 @@ function* handleUserAcceptCurrent() {
   yield applyEditorAction(new AcceptHints(accepting))
 }
 
+function* handleUserSettleDiff({ slotId, choice }: Action.UserSettleDiff) {
+  const { editor }: State = yield io.select()
+  const slot = editor.slots.get(slotId)
+  const diff: Diff = slot.data
+  const [_, rawAnnotations] = diff.distribution.find(([collname]) => collname === choice)
+  rawAnnotations.forEach(annotation => {
+    annotation.id = getNextId('annotation')
+  })
+  const annotating = keyed(List(rawAnnotations).map(Annotation.fromJS))
+  console.log(String(annotating))
+
+  yield applyEditorAction(new SettleDiff(slotId, choice, annotating))
+}
+
 function* handleUserClickDecoration({ decoration, ctrlKey }: Action.UserClickDecoration) {
   const { editor }: State = yield select()
   const nextSel = ctrlKey ? toggle(editor.sel, decoration.id) : Set.of(decoration.id)
@@ -144,6 +160,7 @@ export default function* handleUserInteractions() {
   yield takeEvery(a('USER_ANNOTATE_CURRENT'), handleUserAnnotateCurrent)
   yield takeEvery(a('USER_DELETE_CURRENT'), handleUserDeleteCurrent)
   yield takeEvery(a('USER_ACCEPT_CURRENT'), handleUserAcceptCurrent)
+  yield takeEvery(a('USER_SETTLE_DIFF'), handleUserSettleDiff)
   yield takeEvery(a('USER_CLICK_DECORATION'), handleUserClickDecoration)
   yield takeEvery(a('USER_SELECT_BLOCK_HINTS'), handleUserSelectBlockHints)
   yield takeEvery(a('USER_SELECT_BLOCK_TEXT'), handleUserSelectBlockText)
