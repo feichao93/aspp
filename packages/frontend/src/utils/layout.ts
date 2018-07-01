@@ -1,7 +1,7 @@
-import { Set } from 'immutable'
+import { is, Set } from 'immutable'
 import Decoration, { Slot, Text } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
-import { compareDecorationPosArray } from './common'
+import { compareDecorationPosArray, range } from './common'
 
 export interface SpanInfo {
   // span的「高度」，-1 表示高度未知，0 表示该 span 没有子节点
@@ -9,6 +9,15 @@ export interface SpanInfo {
   height: number
   decoration: Decoration
   children: SpanInfo[]
+}
+
+export function isSameSpanInfo(a: SpanInfo, b: SpanInfo): boolean {
+  return (
+    a.height === b.height &&
+    is(a.decoration, b.decoration) &&
+    a.children.length === b.children.length &&
+    range(0, a.children.length).every(i => isSameSpanInfo(a.children[i], b.children[i]))
+  )
 }
 
 export default function layout(

@@ -1,5 +1,4 @@
 import { Map, Record } from 'immutable'
-import { shortenText } from '../utils/common'
 import Decoration from './Decoration'
 
 export interface RawRange {
@@ -71,13 +70,8 @@ export default class DecorationRange extends DecorationRangeRecord {
     }
   }
 
-  // TODO 将 shortenText 的功能移动到其他地方
-  substring(block: string, shortenLongText = false, maxLen = 14) {
+  substring(block: string) {
     const normalized = this.normalize()
-    const text = block.substring(normalized.startOffset, normalized.endOffset)
-    if (shortenLongText) {
-      return shortenText(maxLen, text)
-    }
-    return text
+    return block.substring(normalized.startOffset, normalized.endOffset)
   }
 }

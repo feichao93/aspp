@@ -9,7 +9,7 @@ import { setSel } from '../../reducers/editorReducer'
 import Decoration from '../../types/Decoration'
 import EditorState from '../../types/EditorState'
 import Action from '../../utils/actions'
-import { always, shortenText, toIdSet } from '../../utils/common'
+import { always, shortenText, shortenText14, toIdSet } from '../../utils/common'
 import layout, { SpanInfo } from '../../utils/layout'
 import Span, { isVisibleFactory } from '../AnnotationEditor/Span'
 import './DetailPanel.styl'
@@ -84,13 +84,13 @@ function DecorationSetPreview({
         <Span
           key={index}
           info={spanInfo}
-          onMouseDown={(d: Decoration, ctrlKey: boolean) =>
+          handleClickDecoration={(d: Decoration, ctrlKey: boolean) =>
             dispatch(Action.userClickDecoration(d, ctrlKey))
           }
           isSelected={isSelected}
           isVisible={isVisible}
           block={block}
-          shortenLongText
+          processText={shortenText14}
         />
       ))}
     </div>
@@ -208,7 +208,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
           <Span
             block={editor.blocks.get(range.blockIndex)}
             info={{ height: 0, decoration, children: [] }}
-            shortenLongText
+            processText={shortenText14}
           />
         </div>
         <div className="code">

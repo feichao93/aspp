@@ -7,6 +7,7 @@ import Annotation from '../../types/Annotation'
 import Decoration from '../../types/Decoration'
 import EditorState from '../../types/EditorState'
 import { Diff } from '../../utils/calculateDiffs'
+import { shortenText14 } from '../../utils/common'
 import { DIFF_SLOT_COLOR_MAP } from '../AnnotationEditor/calculateStyle'
 import Span from '../AnnotationEditor/Span'
 import './DiffPanel.styl'
@@ -42,7 +43,7 @@ const DiffDistribution = ({ diff, editor }: DiffDistributionProps) => (
                     decoration: Annotation.fromJS(annotation),
                     children: [],
                   }}
-                  shortenLongText
+                  processText={shortenText14}
                 />
               ))}
             </main>
@@ -108,7 +109,7 @@ class DiffPanel extends React.Component<DiffPanelProps> {
           <Span
             block={editor.blocks.get(decoration.range.blockIndex)}
             info={{ height: 0, decoration, children: [] }}
-            shortenLongText
+            processText={shortenText14}
           />
         </div>
         <DiffDistribution diff={diff} editor={editor} />

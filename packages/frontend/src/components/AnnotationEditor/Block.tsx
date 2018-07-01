@@ -28,7 +28,7 @@ export default class Block extends React.Component<BlockProps> {
     })
   }
 
-  onMouseDown = (decoration: Decoration, ctrlKey: boolean) => {
+  handleClickDecoration = (decoration: Decoration, ctrlKey: boolean) => {
     this.props.dispatch(Action.userClickDecoration(decoration, ctrlKey))
   }
 
@@ -52,7 +52,7 @@ export default class Block extends React.Component<BlockProps> {
           <Span
             key={index}
             info={spanInfo}
-            onMouseDown={this.onMouseDown}
+            handleClickDecoration={this.handleClickDecoration}
             isSelected={d => sel.has(d.id)}
             isVisible={isVisibleFactory(config)}
             block={block}

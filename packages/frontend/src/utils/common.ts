@@ -78,6 +78,8 @@ export function shortenText(maxLen: number, text: string) {
   }
 }
 
+export const shortenText14 = (s: string) => shortenText(14, s)
+
 export function getDecorationName(decoration: Decoration) {
   if (decoration.type === 'annotation') {
     return decoration.tag
@@ -173,4 +175,12 @@ export function remove<T>(array: T[], item: T) {
   if (index !== -1) {
     array.splice(index, 1)
   }
+}
+
+export function range(start: number, end: number) {
+  const result: number[] = []
+  for (let i = start; i < end; i++) {
+    result.push(i)
+  }
+  return result
 }
