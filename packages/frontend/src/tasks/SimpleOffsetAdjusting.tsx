@@ -1,11 +1,14 @@
 import { Button, Checkbox, Classes, Intent, Label } from '@blueprintjs/core'
 import { is, Seq } from 'immutable'
-import { MulticastChannel, put, select, take } from 'little-saga/compat'
+import { io } from 'little-saga'
+import { MulticastChannel } from 'little-saga/channelEffects'
 import React from 'react'
 import { ActionCategory } from '../actions/EditorAction'
 import SetEditorState from '../actions/SetEditorState'
+import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
 import adjustOffsets from '../sagas/adjustOffsets'
+import { confirmDialogSaga } from '../sagas/dialogSaga'
 import { applyEditorAction } from '../sagas/historyManager'
 import Action from '../utils/actions'
 import { compareDecorationPosArray, keyed } from '../utils/common'
@@ -118,7 +121,7 @@ export default class SimpleOffsetAdjusting {
   *saga(chan: MulticastChannel<Interaction>) {
     if (this.options.runWhenOpenDoc) {
       while (true) {
-        yield take(chan, 'COLL_OPENED')
+        yield io.take(chan, 'COLL_OPENED')
         yield* this.run()
       }
     } else {
@@ -128,23 +131,28 @@ export default class SimpleOffsetAdjusting {
 
   *run() {
     const name = this.task.name
-    const { editor }: State = yield select()
+    const { editor }: State = yield io.select()
     const block = editor.blocks.first()
     const annotations = editor.annotations
       .valueSeq()
       .sort(compareDecorationPosArray)
       .toArray()
     const { adjusted, failed } = adjustOffsets(block, annotations)
-    if (
-      failed.length > 0 &&
-      !window.confirm(`${name} 部分标注的偏移量无法进行修复，修复偏移量时将删除这些标注。确认吗？`)
-    ) {
-      return
+
+    if (failed.length > 0) {
+      const confirmed = yield confirmDialogSaga(
+        <span>
+          {Rich.number(name)} 部分标注的偏移量无法进行修复，修复偏移量时将删除这些标注。确认吗？
+        </span>,
+      )
+      if (!confirmed) {
+        return
+      }
     }
 
     const nextAnnotations = keyed(Seq(adjusted))
     if (is(editor.annotations, nextAnnotations)) {
-      yield put(Action.toast(`${name} 没有发现需要进行修复的标注`, Intent.PRIMARY))
+      yield io.put(Action.toast(`${name} 没有发现需要进行修复的标注`, Intent.PRIMARY))
       return
     }
     const edit = new SetEditorState(
@@ -152,6 +160,6 @@ export default class SimpleOffsetAdjusting {
       `${name} 更新标注数据`,
     ).withCategory(ActionCategory.task)
     yield applyEditorAction(edit)
-    yield put(Action.toast(`${name} 修复完成`, Intent.PRIMARY))
+    yield io.put(Action.toast(`${name} 修复完成`, Intent.PRIMARY))
   }
 }

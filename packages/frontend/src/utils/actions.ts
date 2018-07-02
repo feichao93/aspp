@@ -29,7 +29,13 @@ namespace Action {
     | TogglePanelsVisibility
     | ToggleFileTreeVisibility
     | SetUsername
+    | ReqSetUsername
     | ToggleTagVisibility
+    | ShowConfirmDialog
+    | SettleConfirmDialog
+    | ShowPromptDialog
+    | SettlePromptDialog
+    | HideDialog
 
   export interface Toast {
     type: 'TOAST'
@@ -76,12 +82,58 @@ namespace Action {
     return { type: 'SET_USERNAME', username }
   }
 
+  export interface ReqSetUsername {
+    type: 'REQ_SET_USERNAME'
+  }
+  export function reqSetUsername(): ReqSetUsername {
+    return { type: 'REQ_SET_USERNAME' }
+  }
+
   export interface ToggleTagVisibility {
     type: 'TOGGLE_TAG_VISIBILITY'
     tagName: string
   }
   export function toggleTagVisibility(tagName: string): ToggleTagVisibility {
     return { type: 'TOGGLE_TAG_VISIBILITY', tagName }
+  }
+
+  export interface HideDialog {
+    type: 'HIDE_DIALOG'
+  }
+  export function hideDialog(): HideDialog {
+    return { type: 'HIDE_DIALOG' }
+  }
+
+  export interface ShowConfirmDialog {
+    type: 'SHOW_CONFIRM_DIALOG'
+    message: string | JSX.Element
+  }
+  export function showConfirmDialog(message: string | JSX.Element): ShowConfirmDialog {
+    return { type: 'SHOW_CONFIRM_DIALOG', message }
+  }
+
+  export interface SettleConfirmDialog {
+    type: 'SETTLE_CONFIRM_DIALOG'
+    result: boolean
+  }
+  export function settleConfirmDialog(result: boolean): SettleConfirmDialog {
+    return { type: 'SETTLE_CONFIRM_DIALOG', result }
+  }
+
+  export interface ShowPromptDialog {
+    type: 'SHOW_PROMPT_DIALOG'
+    message: string | JSX.Element
+  }
+  export function showPromptDialog(message: string | JSX.Element): ShowPromptDialog {
+    return { type: 'SHOW_PROMPT_DIALOG', message }
+  }
+
+  export interface SettlePromptDialog {
+    type: 'SETTLE_PROMPT_DIALOG'
+    value: string | null
+  }
+  export function settlePromptDialog(value: string | null): SettlePromptDialog {
+    return { type: 'SETTLE_PROMPT_DIALOG', value }
   }
 
   export interface SetTagGroupVisibility {

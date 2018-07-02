@@ -5,7 +5,9 @@ import { hot } from 'react-hot-loader'
 import { connect } from 'react-redux'
 import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
+import DialogContainer from '../dialogs/DialogContainer'
 import TaskTree from '../FileTree/FileTree'
+import HelpOverlay from '../HelpOverlay/HelpOverlay'
 import Menubar from '../Menubar/Menubar'
 import PanelContainer from '../panels/PanelContainer'
 import ViewContainer from '../ViewContainer/ViewContainer'
@@ -25,6 +27,8 @@ export default class App extends React.Component<{ config?: Config }> {
           <ViewContainer />
           <PanelContainer />
         </div>
+        <HelpOverlay />
+        <DialogContainer />
       </div>
     )
   }

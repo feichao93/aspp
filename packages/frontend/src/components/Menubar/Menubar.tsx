@@ -18,7 +18,6 @@ import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
 import FileInfo from '../../types/FileInfo'
 import Action from '../../utils/actions'
-import HelpOverlay from '../HelpOverlay/HelpOverlay'
 import './Menubar.styl'
 
 export interface MenubarProps {
@@ -28,14 +27,6 @@ export interface MenubarProps {
 }
 
 class Menubar extends React.Component<MenubarProps> {
-  onRequestChangeUsername = () => {
-    const { dispatch } = this.props
-    const username = window.prompt('Input your username')
-    if (username) {
-      dispatch(Action.setUsername(username))
-    }
-  }
-
   render() {
     const { config, dispatch } = this.props
     return (
@@ -78,14 +69,13 @@ class Menubar extends React.Component<MenubarProps> {
               </Menu>
             }
           />
-          <HelpOverlay />
         </NavbarGroup>
         <NavbarGroup align={Alignment.RIGHT}>
           <Button
             minimal
             icon="user"
             text={config.username}
-            onClick={this.onRequestChangeUsername}
+            onClick={() => dispatch(Action.reqSetUsername())}
           />
         </NavbarGroup>
       </Navbar>

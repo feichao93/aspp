@@ -184,3 +184,9 @@ export function range(start: number, end: number) {
   }
   return result
 }
+
+export const autoFocus = (node: HTMLElement) => {
+  if (node) {
+    node.focus()
+  }
+}

@@ -1,8 +1,10 @@
 import { Intent } from '@blueprintjs/core'
 import { is, List, Map as IMap, Seq } from 'immutable'
-import { getContext, io, put, select, takeEvery, takeLatest } from 'little-saga/compat'
+import { getContext, io, takeEvery, takeLatest } from 'little-saga/compat'
+import React from 'react'
 import { ActionCategory } from '../actions/EditorAction'
 import EmptyEditorAction from '../actions/EmptyEditorAction'
+import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
 import { setCachedAnnotations } from '../reducers/cacheReducer'
 import { DocStatState, setDocStat } from '../reducers/docStatReducer'
@@ -19,6 +21,7 @@ import { a, keyed, updateAnnotationNextId, zip } from '../utils/common'
 import getDiffSlots from '../utils/getDiffSlots'
 import InteractionCollector from '../utils/InteractionCollector'
 import server, { RawColl } from '../utils/server'
+import { confirmDialogSaga, promptDialogSaga } from './dialogSaga'
 import { applyEditorAction } from './historyManager'
 
 /** 从后台加载文件树 */
@@ -27,21 +30,23 @@ export function* loadTreeState(reload: boolean) {
     const res = yield fetch(`/api/list?${reload ? 'reload' : ''}`)
     if (res.ok) {
       const treeState: TreeItem[] = yield res.json()
-      yield put(Action.loadTreeData(treeState))
+      yield io.put(Action.loadTreeData(treeState))
       if (reload) {
-        yield put(Action.toast('更新文件树信息成功'))
+        yield io.put(Action.toast('更新文件树信息成功'))
       }
     } else {
-      yield put(Action.toast(`Failed to load tree. ${res.status} ${res.statusText}`, Intent.DANGER))
+      yield io.put(
+        Action.toast(`Failed to load tree. ${res.status} ${res.statusText}`, Intent.DANGER),
+      )
     }
   } catch (e) {
-    yield put(Action.toast(`Failed to load tree. ${e.message}`, Intent.DANGER))
+    yield io.put(Action.toast(`Failed to load tree. ${e.message}`, Intent.DANGER))
   }
 }
 
 function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
   if (collnames.length < 2) {
-    yield put(Action.toast('请选择两个以上的标注文件', Intent.WARNING))
+    yield io.put(Action.toast('请选择两个以上的标注文件', Intent.WARNING))
     return
   }
   try {
@@ -57,18 +62,18 @@ function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
     yield server.putColl(diffFileInfo, diffColl)
     yield loadTreeState(false)
 
-    yield put(Action.toast(`已生成 ${diffFileInfo.collname}`))
-    yield put(Action.reqOpenColl(diffFileInfo))
+    yield io.put(Action.toast(`已生成 ${diffFileInfo.collname}`))
+    yield io.put(Action.reqOpenColl(diffFileInfo))
   } catch (e) {
-    yield put(Action.toast(e.message, Intent.DANGER))
+    yield io.put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
 function* reqCloseCurrentColl() {
-  const { editor, cache }: State = yield select()
+  const { editor, cache }: State = yield io.select()
 
   if (!is(cache.annotations, editor.annotations)) {
-    yield put(Action.toast('关闭文件之前请先保存或丢弃当前更改', Intent.WARNING))
+    yield io.put(Action.toast('关闭文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
 
@@ -77,40 +82,40 @@ function* reqCloseCurrentColl() {
 
 function* closeCurrentColl() {
   // 清空缓存
-  yield put(setCachedAnnotations(IMap()))
+  yield io.put(setCachedAnnotations(IMap()))
   // 清空当前编辑器状态
-  yield put(setEditorState(new EditorState()))
+  yield io.put(setEditorState(new EditorState()))
   // 清空当前打开文件信息
-  yield put(setFileInfo(new FileInfo()))
+  yield io.put(setFileInfo(new FileInfo()))
   // 清空历史记录
-  yield put(Action.historyClear())
+  yield io.put(Action.historyClear())
 }
 
 /** 保存当前的标注工作进度 */
 function* saveCurrentColl() {
-  const { fileInfo, editor, cache }: State = yield select()
+  const { fileInfo, editor, cache }: State = yield io.select()
   if (is(cache.annotations, editor.annotations)) {
     return
   }
 
   try {
     yield server.putColl(fileInfo, editor.toRawColl(fileInfo.collname))
-    yield put(setCachedAnnotations(editor.annotations))
+    yield io.put(setCachedAnnotations(editor.annotations))
     yield applyEditorAction(
       new EmptyEditorAction('保存文件').withCategory(ActionCategory.sideEffects),
     )
-    yield put(Action.toast('保存成功'))
+    yield io.put(Action.toast('保存成功'))
   } catch (e) {
     console.error(e)
-    yield put(Action.toast(e.message, Intent.DANGER))
+    yield io.put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
 function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
-  const { fileInfo: cntFileInfo, editor, cache }: State = yield select()
+  const { fileInfo: cntFileInfo, editor, cache }: State = yield io.select()
 
   if (cntFileInfo.getType() === 'coll' && !is(cache.annotations, editor.annotations)) {
-    yield put(Action.toast('打开统计信息之前请先保存或丢弃当前更改', Intent.WARNING))
+    yield io.put(Action.toast('打开统计信息之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
 
@@ -132,15 +137,15 @@ function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
     )
   } catch (e) {
     console.error(e)
-    yield put(Action.toast(e.message, Intent.DANGER))
+    yield io.put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
 function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
   const collector: InteractionCollector = yield getContext('collector')
-  const { fileInfo: cntFileInfo, editor, cache }: State = yield select()
+  const { fileInfo: cntFileInfo, editor, cache }: State = yield io.select()
   if (cntFileInfo.getType() === 'coll' && !is(cache.annotations, editor.annotations)) {
-    yield put(Action.toast('打开文件之前请先保存或丢弃当前更改', Intent.WARNING))
+    yield io.put(Action.toast('打开文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
 
@@ -159,10 +164,10 @@ function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
 
     updateAnnotationNextId(annotations)
     collector.collOpened(opening)
-    yield put(setEditorState(editorState))
-    yield put(setCachedAnnotations(editorState.annotations))
-    yield put(setFileInfo(opening))
-    yield put(Action.historyClear())
+    yield io.put(setEditorState(editorState))
+    yield io.put(setCachedAnnotations(editorState.annotations))
+    yield io.put(setFileInfo(opening))
+    yield io.put(Action.historyClear())
     yield applyEditorAction(
       new EmptyEditorAction(`打开文件 ${opening.docname} - ${opening.collname}`).withCategory(
         ActionCategory.sideEffects,
@@ -170,7 +175,7 @@ function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
     )
   } catch (e) {
     console.error(e)
-    yield put(Action.toast(e.message, Intent.DANGER))
+    yield io.put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
@@ -204,9 +209,9 @@ function* addColl({ fileInfo }: Action.ReqAddColl) {
   if (DEV_ASSERT) {
     console.assert(fileInfo.getType() === 'doc')
   }
-  const { config, tree, editor, cache }: State = yield select()
+  const { config, tree, editor, cache }: State = yield io.select()
   if (!is(editor.annotations, cache.annotations)) {
-    yield put(Action.toast('创建新文件之前请先保存或丢弃当前更改', Intent.WARNING))
+    yield io.put(Action.toast('创建新文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
 
@@ -221,18 +226,21 @@ function* addColl({ fileInfo }: Action.ReqAddColl) {
     const emptyColl: RawColl = { name: collname, slots: [], annotations: [] }
     yield server.putColl(adding, emptyColl)
     yield loadTreeState(false)
-    yield put(Action.toast(`已添加 ${collname}`))
-    yield put(Action.reqOpenColl(adding))
+    yield io.put(Action.toast(`已添加 ${collname}`))
+    yield io.put(Action.reqOpenColl(adding))
   } catch (e) {
     console.error(e)
-    yield put(Action.toast(e.message, Intent.DANGER))
+    yield io.put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
 function* deleteColl({ fileInfo: deleting }: Action.ReqDeleteColl) {
-  const { fileInfo: cntFileInfo }: State = yield select()
+  const { fileInfo: cntFileInfo }: State = yield io.select()
 
-  if (!window.confirm(`确认要删除 ${deleting.getFullName()} 吗？`)) {
+  const confirmed = yield confirmDialogSaga(
+    <span>确认要删除 {Rich.number(deleting.getFullName())} 吗？</span>,
+  )
+  if (!confirmed) {
     return
   }
 
@@ -243,43 +251,43 @@ function* deleteColl({ fileInfo: deleting }: Action.ReqDeleteColl) {
   try {
     yield server.deleteColl(deleting)
     yield loadTreeState(false)
-    yield put(Action.toast(`已删除 ${deleting.getFullName()}`))
+    yield io.put(Action.toast(`已删除 ${deleting.getFullName()}`))
   } catch (e) {
     console.error(e)
-    yield put(Action.toast(e.message, Intent.DANGER))
+    yield io.put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
 function* renameColl({ fileInfo: renaming }: Action.ReqRenameColl) {
-  const { fileInfo: cntFileInfo, tree }: State = yield select()
+  const { fileInfo: cntFileInfo, tree }: State = yield io.select()
   const treeDoc = findDocInItems(tree, renaming.set('collname', ''))
   if (is(renaming, cntFileInfo)) {
-    yield put(Action.toast('请保存并关闭当前文件'))
+    yield io.put(Action.toast('暂时不支持重命名当前打开的文件', Intent.WARNING))
     return
   }
   try {
-    const newName = window.prompt('请输入新的文件名')
-    if (!/^[a-zA-Z0-9\-_\u4e00-\u9fa5]+$/.test(newName)) {
-      yield put(Action.toast('文件名无效'))
+    const newName = yield promptDialogSaga('请输入新的文件名')
+    if (newName == null || newName === renaming.collname) {
       return
     }
-    if (newName === renaming.collname) {
+    if (!/^[a-zA-Z0-9\-_\u4e00-\u9fa5]+$/.test(newName)) {
+      yield io.put(Action.toast('文件名无效'))
       return
     }
     if (newName.length === 0) {
-      yield put(Action.toast('文件名不能为空'))
+      yield io.put(Action.toast('文件名不能为空'))
       return
     }
     if (newName !== renaming.collname && treeDoc.collnames.includes(newName)) {
-      yield put(Action.toast('已存在同名标注文件'))
+      yield io.put(Action.toast('已存在同名标注文件'))
       return
     }
     yield server.renameColl(renaming, newName)
     yield loadTreeState(false)
-    yield put(Action.toast('修改成功'))
+    yield io.put(Action.toast('修改成功'))
   } catch (e) {
     console.error(e)
-    yield put(Action.toast(e.message, Intent.DANGER))
+    yield io.put(Action.toast(e.message, Intent.DANGER))
   }
 }
 
@@ -294,5 +302,5 @@ export default function* fileSaga() {
   yield takeEvery(a('REQ_RENAME_COLL'), renameColl)
   yield takeLatest(a('REQ_LOAD_TREE'), ({ reload }: Action.ReqLoadTree) => loadTreeState(reload))
 
-  yield put(Action.reqLoadTree(true))
+  yield io.put(Action.reqLoadTree(true))
 }

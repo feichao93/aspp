@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import React from 'react'
+import './rich.styl'
 
 export const Rich = {
   string(str: string, danger = false) {

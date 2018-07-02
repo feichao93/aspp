@@ -5,6 +5,7 @@ import Action from '../utils/actions'
 import { a } from '../utils/common'
 import InteractionCollector from '../utils/InteractionCollector'
 import devHelper from './devHelper'
+import { promptDialogSaga } from './dialogSaga'
 import fileSaga from './fileSaga'
 import handleUserInteractions from './handleUserInteractions'
 import historyManager from './historyManager'
@@ -16,8 +17,7 @@ import taskManager from './taskManager'
 function* ensureUsername() {
   const { config }: State = yield select()
   if (config.username == null) {
-    const username = prompt('Input your username')
-    yield put(Action.setUsername(username))
+    yield put(Action.reqSetUsername())
   }
 }
 
@@ -26,12 +26,18 @@ function handleToast({ message, intent = Intent.PRIMARY }: Action.Toast) {
   toaster.show({ intent, message })
 }
 
+function* handleReqSetUsername() {
+  const username = yield promptDialogSaga('请输入你的用户名')
+  if (username != null) {
+    yield put(Action.setUsername(username))
+  }
+}
+
 export default function* rootSaga() {
   console.log('root-saga started')
 
   yield setContext({ collector: new InteractionCollector() })
 
-  yield ensureUsername()
   yield fork(nativeSelectionManager)
   yield fork(shortcutSaga)
   yield fork(taskManager)
@@ -40,6 +46,8 @@ export default function* rootSaga() {
   yield fork(handleUserInteractions)
 
   yield takeEvery(a('TOAST'), handleToast)
+  yield takeEvery(a('REQ_SET_USERNAME'), handleReqSetUsername)
 
+  yield fork(ensureUsername)
   yield fork(devHelper)
 }
