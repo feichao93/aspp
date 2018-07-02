@@ -8,14 +8,6 @@ annotations:
       endOffset: 5
     tag: 机构名
     entity: 天人果汁
-  - id: annotation-5
-    type: annotation
-    range:
-      blockIndex: 0
-      startOffset: 100
-      endOffset: 105
-    tag: 日期
-    entity: 2013年
   - id: annotation-4
     type: annotation
     range:
@@ -24,22 +16,6 @@ annotations:
       endOffset: 112
     tag: 非货币数量词
     entity: '4,852份'
-  - id: annotation-2
-    type: annotation
-    range:
-      blockIndex: 0
-      startOffset: 114
-      endOffset: 119
-    tag: 日期
-    entity: 2017年
-  - id: annotation-3
-    type: annotation
-    range:
-      blockIndex: 0
-      startOffset: 122
-      endOffset: 129
-    tag: 非货币数量词
-    entity: '35,320份'
   - id: annotation-6
     type: annotation
     range:

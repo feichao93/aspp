@@ -179,17 +179,17 @@ function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
   }
 }
 
-function getNextCollname(doc: TreeDoc, username: string) {
-  const prefix = username ? `${username}-` : 'anonymous-'
+function getNextCollname(doc: TreeDoc, prefix: string) {
+  const finalPrefix = prefix ? `${prefix}-` : 'anonymous-'
   let i = 1
   while (true) {
-    const name = prefix + i
+    const name = finalPrefix + i
     if (!doc.collnames.includes(name)) {
       break
     }
     i++
   }
-  return prefix + i
+  return finalPrefix + i
 }
 
 function findDocInItems(items: TreeItem[], fileInfo: FileInfo): TreeDoc {
@@ -234,6 +234,31 @@ function* addColl({ fileInfo }: Action.ReqAddColl) {
   }
 }
 
+function* duplicateColl({ fileInfo }: Action.ReqDuplicateColl) {
+  if (DEV_ASSERT) {
+    console.assert(fileInfo.getType() === 'coll')
+  }
+  const { editor, cache, fileInfo: cntFileInfo, tree, config }: State = yield io.select()
+  if (is(cntFileInfo, fileInfo) && !is(editor.annotations, cache.annotations)) {
+    const result = yield confirmDialogSaga('当前文件的未保存标注内容不会被复制，是否继续?')
+    if (!result) { return }
+  }
+  const doc = findDocInItems(tree, fileInfo)
+  if (DEV_ASSERT) {
+    console.assert(doc != null)
+  }
+  const duplicateCollname = getNextCollname(doc, fileInfo.collname + '-duplicate')
+  try {
+    const currentColl = yield server.getColl(fileInfo)
+    const duplicating = fileInfo.set('collname', duplicateCollname)
+    yield server.putColl(duplicating, currentColl)
+    yield loadTreeState(false)
+    yield io.put(Action.toast(`已复制 ${duplicating.collname}`))
+  } catch (e) {
+    console.error(e)
+    yield io.put(Action.toast(e.message, Intent.DANGER))
+  }
+}
 function* deleteColl({ fileInfo: deleting }: Action.ReqDeleteColl) {
   const { fileInfo: cntFileInfo }: State = yield io.select()
 
@@ -300,6 +325,7 @@ export default function* fileSaga() {
   yield takeEvery(a('REQ_OPEN_DOC_STAT'), openDocStat)
   yield takeEvery(a('REQ_OPEN_COLL'), openColl)
   yield takeEvery(a('REQ_RENAME_COLL'), renameColl)
+  yield takeEvery(a('REQ_DUPLICATE_COLL'), duplicateColl)
   yield takeLatest(a('REQ_LOAD_TREE'), ({ reload }: Action.ReqLoadTree) => loadTreeState(reload))
 
   yield io.put(Action.reqLoadTree(true))

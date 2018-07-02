@@ -143,6 +143,11 @@ const customMenus = {
         />
         <MenuItem icon="download" text="下载" onClick={() => onDownload(fileInfo)} />
         <MenuItem
+          icon="duplicate"
+          text="复制"
+          onClick={() => dispatch(Action.reqDuplicateColl(fileInfo))}
+        />
+        <MenuItem
           icon="edit"
           text="重命名"
           onClick={() => dispatch(Action.reqRenameColl(fileInfo))}

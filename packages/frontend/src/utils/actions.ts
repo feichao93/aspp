@@ -182,6 +182,7 @@ namespace Action {
     | ReqOpenDocStat
     | ReqOpenColl
     | ReqRenameColl
+    | ReqDuplicateColl
 
   export interface ReqDiffColls {
     type: 'REQ_DIFF_COLLS'
@@ -222,6 +223,14 @@ namespace Action {
   }
   export function reqDeleteColl(fileInfo: FileInfo): ReqDeleteColl {
     return { type: 'REQ_DELETE_COLL', fileInfo }
+  }
+
+  export interface ReqDuplicateColl {
+    type: 'REQ_DUPLICATE_COLL'
+    fileInfo: FileInfo
+  }
+  export function reqDuplicateColl(fileInfo: FileInfo): ReqDuplicateColl {
+    return { type: 'REQ_DUPLICATE_COLL', fileInfo }
   }
 
   export interface ReqCloseCurrentColl {
