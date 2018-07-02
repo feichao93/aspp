@@ -14,7 +14,6 @@ interface Item {
   annotation: RawAnnotation
 }
 
-// TODO 其他应该已经过类似的函数了
 export function isSameRange(r1: RawRange, r2: RawRange) {
   return (
     r1.blockIndex === r2.blockIndex &&

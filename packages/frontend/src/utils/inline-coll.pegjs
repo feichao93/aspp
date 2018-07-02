@@ -13,7 +13,7 @@ PlaceHolder
 String
   = chars:StringChar+ { return chars.join('') }
 
-// NOTICE TAG 中不能包含斜杠
+// 注意 Tag 中不能包含斜杠
 Tag = [^/]+ { return text() }
 
 Entity = chars:EntityChar+ { return chars.join('') }

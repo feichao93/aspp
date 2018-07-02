@@ -15,7 +15,6 @@ export namespace Interaction {
     | CollOpened
     | UserChangeRange
   // TODO ?? UserCloseAnnotationSet
-  // TODO ?? userRequestHint
 
   export interface UserAnnotateText {
     type: 'USER_ANNOTATE_TEXT'

@@ -89,7 +89,7 @@ namespace Action {
     groupName: string
     visible: boolean
   }
-  export function userSetTagGroupVisibility( // TODO
+  export function setTagGroupVisibility(
     groupName: string,
     visible: boolean,
   ): SetTagGroupVisibility {

@@ -1,7 +1,8 @@
-import fs from 'fs'
+import { DocStatItem } from '../reducers/docStatReducer'
 import { TreeItem } from '../reducers/treeReducer'
 import { RawAnnotation } from '../types/Annotation'
 import { RawSlot } from '../types/Decoration'
+import DecorationRange from '../types/DecorationRange'
 import FileInfo from '../types/FileInfo'
 import { compareDecorationPosArray } from './common'
 
@@ -68,14 +69,7 @@ export default {
     return await res.json()
   },
 
-  async getDocStat(
-    info: FileInfo,
-  ): Promise<{
-    // TODO 和已有的类型定义进行合并
-    collname: string
-    annotationCount: number
-    fileStat: fs.Stats
-  }> {
+  async getDocStat(info: FileInfo): Promise<DocStatItem> {
     const res = await asppFetch(makeDocStatUrl(info))
     return await res.json()
   },
@@ -93,7 +87,12 @@ export default {
   async putColl(info: FileInfo, coll: RawColl): Promise<void> {
     coll.annotations.sort(compareDecorationPosArray)
     coll.slots.sort(compareDecorationPosArray)
-    // TODO 对所有的 DecorationRange 调用 normalize 方法
+    coll.annotations.forEach(annotation => {
+      annotation.range = DecorationRange.normalize(annotation.range)
+    })
+    coll.slots.forEach(slot => {
+      slot.range = DecorationRange.normalize(slot.range)
+    })
     await asppFetch(makeCollUrl(info), {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },

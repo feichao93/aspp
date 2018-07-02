@@ -11,7 +11,7 @@ module.exports = function list(taskDir) {
   return getItems(docDir, collDir)
 
   // region function-definitions
-  /** TODO 添加注释 */
+  /** 递归地读取 `docDir` 和 `collDir`，返回用于生成「前端文件树」的数据结构 */
   function getItems(docDir, collDir) {
     const docItems = []
     const directoryItems = []

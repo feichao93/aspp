@@ -4,7 +4,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
-import { setSel } from '../../reducers/editorReducer'
 import EditorState from '../../types/EditorState'
 import Action from '../../utils/actions'
 import { compareDecorationPosArray, isElementVisible } from '../../utils/common'
@@ -49,8 +48,7 @@ class HintButtonGroup extends React.Component<HintButtonGroupProps> {
       }
     }
     if (nextHint) {
-      // TODO 不能直接修改 sel
-      dispatch(setSel(Set.of(nextHint.id)))
+      dispatch(Action.userSetSel(Set.of(nextHint.id)))
     }
   }
 

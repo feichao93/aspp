@@ -57,7 +57,6 @@ function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
     yield server.putColl(diffFileInfo, diffColl)
     yield loadTreeState(false)
 
-    // TODO 是否需要直接打开 diff 文件？
     yield put(Action.toast(`已生成 ${diffFileInfo.collname}`))
     yield put(Action.reqOpenColl(diffFileInfo))
   } catch (e) {
@@ -150,7 +149,6 @@ function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
     const coll: RawColl = yield server.getColl(opening)
 
     const annotations = keyed<Annotation>(Seq(coll.annotations).map(Annotation.fromJS))
-    // TODO 将所有的普通对象转换为 Immutable 对象（例如 diff-slot 中的 data）
     const slots = keyed<Slot>(Seq(coll.slots).map(Slot.fromJS))
     const editorState = new EditorState({
       blocks: List(blocks),

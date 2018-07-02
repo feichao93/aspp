@@ -2,13 +2,15 @@ import fs from 'fs'
 import { List, Record } from 'immutable'
 import Action from '../utils/actions'
 
+export interface DocStatItem {
+  collname: string
+  annotationCount: number
+  fileStat: fs.Stats
+}
+
 const DocStatRecord = Record({
   docname: '',
-  items: List<{
-    collname: string
-    annotationCount: number
-    fileStat: fs.Stats
-  }>(),
+  items: List<DocStatItem>(),
 })
 
 export class DocStatState extends DocStatRecord {}

@@ -124,7 +124,7 @@ class TagsPanel extends React.Component<TagsPanelProps, TagsPanelState> {
 
   onSetTagGroupVisibility = (groupName: string, visible: boolean) => {
     const { dispatch } = this.props
-    dispatch(Action.userSetTagGroupVisibility(groupName, visible))
+    dispatch(Action.setTagGroupVisibility(groupName, visible))
   }
 
   render() {

@@ -19,6 +19,18 @@ export default class DecorationRange extends DecorationRangeRecord {
     return new DecorationRange(object)
   }
 
+  static normalize(range: RawRange): RawRange {
+    if (range.startOffset > range.endOffset) {
+      return {
+        blockIndex: range.blockIndex,
+        startOffset: range.endOffset,
+        endOffset: range.startOffset,
+      }
+    } else {
+      return range
+    }
+  }
+
   static isIntersected(r1: DecorationRange, r2: DecorationRange) {
     r1 = r1.normalize()
     r2 = r2.normalize()
