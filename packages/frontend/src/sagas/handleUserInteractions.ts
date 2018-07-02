@@ -122,7 +122,6 @@ function* handleUserSettleDiff({ slotId, choice }: Action.UserSettleDiff) {
     annotation.id = getNextId('annotation')
   })
   const annotating = keyed(List(rawAnnotations).map(Annotation.fromJS))
-  console.log(String(annotating))
 
   yield applyEditorAction(new SettleDiff(slotId, choice, annotating))
 }

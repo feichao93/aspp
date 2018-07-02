@@ -122,9 +122,10 @@ function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
       docname: opening.docname,
       items: List(statItems),
     })
-    yield put(setDocStat(docStat))
-    yield put(setFileInfo(opening))
-    yield put(Action.historyClear())
+    yield io.put(setDocStat(docStat))
+    yield io.put(setFileInfo(opening))
+    yield io.put(Action.historyClear())
+    yield io.put(setEditorState(new EditorState()))
     yield applyEditorAction(
       new EmptyEditorAction(`打开文档 ${opening.docname} 的统计信息`).withCategory(
         ActionCategory.sideEffects,
