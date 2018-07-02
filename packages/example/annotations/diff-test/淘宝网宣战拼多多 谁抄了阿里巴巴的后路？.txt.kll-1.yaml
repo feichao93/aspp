@@ -1,0 +1,4081 @@
+annotations:
+  - id: annotation-1543
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 0
+      endOffset: 3
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-315
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5
+      endOffset: 8
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-317
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 12
+      endOffset: 16
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-318
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 25
+      endOffset: 32
+    tag: 日期
+    entity: 2015年9月
+  - id: annotation-319
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 39
+      endOffset: 42
+    tag: 机构名
+    entity: 拼好货
+  - id: annotation-320
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 43
+      endOffset: 46
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-321
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 64
+      endOffset: 67
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-322
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 74
+      endOffset: 77
+    tag: 人名
+    entity: 孙彤宇
+  - id: annotation-323
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 91
+      endOffset: 94
+    tag: 人名
+    entity: 段永平
+  - id: annotation-324
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 95
+      endOffset: 101
+    tag: 机构名
+    entity: 顺丰速运集团
+  - id: annotation-325
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 103
+      endOffset: 105
+    tag: 人名
+    entity: 王卫
+  - id: annotation-326
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 113
+      endOffset: 115
+    tag: 人名
+    entity: 丁磊
+  - id: annotation-327
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 118
+      endOffset: 125
+    tag: 日期
+    entity: 2016年9月
+  - id: annotation-328
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 126
+      endOffset: 129
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-330
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 132
+      endOffset: 136
+    tag: 机构名
+    entity: 高榕资本
+  - id: annotation-331
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 137
+      endOffset: 140
+    tag: 机构名
+    entity: IDG
+  - id: annotation-332
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 141
+      endOffset: 145
+    tag: 机构名
+    entity: 腾讯投资
+  - id: annotation-333
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 150
+      endOffset: 156
+    tag: 货币
+    entity: 1.1亿美元
+  - id: annotation-334
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 159
+      endOffset: 162
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1273
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 174
+      endOffset: 181
+    tag: 日期
+    entity: 2017年6月
+  - id: annotation-1707
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 182
+      endOffset: 184
+    tag: 机构名
+    entity: 易观
+  - id: annotation-1609
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 195
+      endOffset: 198
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1690
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 205
+      endOffset: 207
+    tag: 机构名
+    entity: 卷皮
+  - id: annotation-1694
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 208
+      endOffset: 211
+    tag: 机构名
+    entity: 蘑菇街
+  - id: annotation-1698
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 212
+      endOffset: 214
+    tag: 机构名
+    entity: 糯米
+  - id: annotation-1699
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 215
+      endOffset: 219
+    tag: 机构名
+    entity: 折800
+  - id: annotation-1703
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 220
+      endOffset: 223
+    tag: 机构名
+    entity: 楚楚街
+  - id: annotation-438
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 233
+      endOffset: 236
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-558
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 247
+      endOffset: 257
+    tag: 日期
+    entity: 2017年12月9日
+  - id: annotation-1708
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 260
+      endOffset: 262
+    tag: 机构名
+    entity: 猎豹
+  - id: annotation-1610
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 276
+      endOffset: 279
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1627
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 281
+      endOffset: 283
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1689
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 284
+      endOffset: 288
+    tag: 机构名
+    entity: 苏宁易购
+  - id: annotation-2054
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 302
+      endOffset: 306
+    tag: 机构名
+    entity: 手机淘宝
+  - id: annotation-559
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 323
+      endOffset: 334
+    tag: 日期
+    entity: 2017年12月18日
+  - id: annotation-560
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 336
+      endOffset: 338
+    tag: 机构名
+    entity: 腾讯
+  - id: annotation-570
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 342
+      endOffset: 346
+    tag: 机构名
+    entity: 京东集团
+  - id: annotation-571
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 347
+      endOffset: 350
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-1709
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 364
+      endOffset: 368
+    tag: 机构名
+    entity: 朱思码记
+  - id: annotation-2062
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 376
+      endOffset: 380
+    tag: 日期
+    entity: 5个月后
+  - id: annotation-2063
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 385
+      endOffset: 389
+    tag: 日期
+    entity: 17天后
+  - id: annotation-607
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 390
+      endOffset: 392
+    tag: 机构名
+    entity: 京东
+  - id: annotation-651
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 397
+      endOffset: 399
+    tag: 机构名
+    entity: 美丽
+  - id: annotation-1723
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 412
+      endOffset: 414
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-657
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 428
+      endOffset: 439
+    tag: 日期
+    entity: 2017年12月27日
+  - id: annotation-658
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 440
+      endOffset: 442
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-834
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 443
+      endOffset: 445
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-339
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 450
+      endOffset: 452
+    tag: 人名
+    entity: 蒋凡
+  - id: annotation-918
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 453
+      endOffset: 455
+    tag: 人名
+    entity: 靖捷
+  - id: annotation-919
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 460
+      endOffset: 470
+    tag: 日期
+    entity: 2018年1月10日
+  - id: annotation-1545
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 499
+      endOffset: 502
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1973
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 509
+      endOffset: 511
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1611
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 513
+      endOffset: 516
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-2064
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 530
+      endOffset: 536
+    tag: 日期
+    entity: 27个月之前
+  - id: annotation-1612
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 538
+      endOffset: 541
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1769
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 557
+      endOffset: 559
+    tag: 地名
+    entity: 中国
+  - id: annotation-920
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 570
+      endOffset: 572
+    tag: 日期
+    entity: 今天
+  - id: annotation-952
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 607
+      endOffset: 612
+    tag: 日期
+    entity: 2018年
+  - id: annotation-966
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 619
+      endOffset: 623
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-1975
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 634
+      endOffset: 636
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1546
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 695
+      endOffset: 698
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1607
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 699
+      endOffset: 702
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-998
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 731
+      endOffset: 736
+    tag: 日期
+    entity: 1985年
+  - id: annotation-1107
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 741
+      endOffset: 744
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-337
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 748
+      endOffset: 750
+    tag: 人名
+    entity: 蒋凡
+  - id: annotation-999
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 752
+      endOffset: 757
+    tag: 日期
+    entity: 1980年
+  - id: annotation-1613
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 760
+      endOffset: 763
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-345
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 766
+      endOffset: 768
+    tag: 人名
+    entity: 黄峥
+  - id: annotation-2065
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 770
+      endOffset: 774
+    tag: 机构名
+    entity: 谷歌中国
+  - id: annotation-1002
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 785
+      endOffset: 791
+    tag: 日期
+    entity: 今年3-4月
+  - id: annotation-955
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 794
+      endOffset: 799
+    tag: 日期
+    entity: 2018年
+  - id: annotation-1547
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 799
+      endOffset: 802
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1711
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 811
+      endOffset: 815
+    tag: 机构名
+    entity: 朱思码记
+  - id: annotation-1003
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 820
+      endOffset: 823
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1117
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 877
+      endOffset: 880
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1108
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 890
+      endOffset: 893
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-956
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 894
+      endOffset: 899
+    tag: 日期
+    entity: 2018年
+  - id: annotation-1783
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 952
+      endOffset: 957
+    tag: 机构名
+    entity: 阿里聚划算
+  - id: annotation-1784
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 958
+      endOffset: 961
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-1788
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 962
+      endOffset: 966
+    tag: 机构名
+    entity: 京东闪购
+  - id: annotation-1109
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1003
+      endOffset: 1006
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-2066
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1056
+      endOffset: 1058
+    tag: 地名
+    entity: 中国
+  - id: annotation-1227
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1082
+      endOffset: 1084
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1228
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1086
+      endOffset: 1090
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-1548
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1097
+      endOffset: 1100
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1231
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1097
+      endOffset: 1099
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1229
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1105
+      endOffset: 1108
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-340
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1110
+      endOffset: 1112
+    tag: 人名
+    entity: 蒋凡
+  - id: annotation-1230
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1117
+      endOffset: 1120
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-347
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1123
+      endOffset: 1125
+    tag: 人名
+    entity: 黄峥
+  - id: annotation-1232
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1183
+      endOffset: 1186
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1233
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1203
+      endOffset: 1208
+    tag: 日期
+    entity: 2017年
+  - id: annotation-1869
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1210
+      endOffset: 1214
+    tag: 机构名
+    entity: 天猫商城
+  - id: annotation-1712
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1227
+      endOffset: 1231
+    tag: 机构名
+    entity: 朱思码记
+  - id: annotation-1849
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1232
+      endOffset: 1236
+    tag: 机构名
+    entity: 天猫商城
+  - id: annotation-1240
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1252
+      endOffset: 1257
+    tag: 日期
+    entity: 2017年
+  - id: annotation-1870
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1257
+      endOffset: 1261
+    tag: 机构名
+    entity: 天猫商城
+  - id: annotation-1261
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1272
+      endOffset: 1278
+    tag: 百分比
+    entity: 40~50%
+  - id: annotation-1262
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1291
+      endOffset: 1296
+    tag: 日期
+    entity: 2013年
+  - id: annotation-1263
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1311
+      endOffset: 1316
+    tag: 日期
+    entity: 2016年
+  - id: annotation-1269
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1324
+      endOffset: 1326
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1270
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1331
+      endOffset: 1334
+    tag: 百分比
+    entity: 34%
+  - id: annotation-2078
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1359
+      endOffset: 1363
+    tag: 机构名
+    entity: 京东商城
+  - id: annotation-1271
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1377
+      endOffset: 1379
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-2079
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1379
+      endOffset: 1381
+    tag: 日期
+    entity: 今年
+  - id: annotation-1272
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1425
+      endOffset: 1430
+    tag: 机构名
+    entity: 2017年
+  - id: annotation-1871
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1435
+      endOffset: 1439
+    tag: 机构名
+    entity: 天猫商城
+  - id: annotation-1873
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1481
+      endOffset: 1483
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1872
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1500
+      endOffset: 1502
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-2082
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1513
+      endOffset: 1515
+    tag: 日期
+    entity: 今年
+  - id: annotation-1519
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1535
+      endOffset: 1545
+    tag: 日期
+    entity: 2016年12月2日
+  - id: annotation-2085
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1545
+      endOffset: 1551
+    tag: 机构名
+    entity: 聚划算事业部
+  - id: annotation-1521
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1555
+      endOffset: 1557
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1520
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1558
+      endOffset: 1565
+    tag: 日期
+    entity: 2017年8月
+  - id: annotation-2086
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1565
+      endOffset: 1569
+    tag: 机构名
+    entity: 天猫超市
+  - id: annotation-2087
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1585
+      endOffset: 1591
+    tag: 机构名
+    entity: B2B事业部
+  - id: annotation-2088
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1592
+      endOffset: 1597
+    tag: 机构名
+    entity: 零售通小店
+  - id: annotation-2089
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1599
+      endOffset: 1603
+    tag: 机构名
+    entity: 天猫小店
+  - id: annotation-1522
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1613
+      endOffset: 1619
+    tag: 机构名
+    entity: 阿里巴巴集团
+  - id: annotation-1523
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1622
+      endOffset: 1624
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1525
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1656
+      endOffset: 1658
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1524
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1669
+      endOffset: 1671
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1526
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1707
+      endOffset: 1710
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2090
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1711
+      endOffset: 1715
+    tag: 地名
+    entity: 亚太地区
+  - id: annotation-2091
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1755
+      endOffset: 1757
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1528
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1768
+      endOffset: 1771
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1529
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1779
+      endOffset: 1783
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-1530
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1797
+      endOffset: 1799
+    tag: 机构名
+    entity: 今天
+  - id: annotation-1531
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1800
+      endOffset: 1802
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-2227
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1810
+      endOffset: 1814
+    tag: 机构名
+    entity: 淘宝商城
+  - id: annotation-1549
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1819
+      endOffset: 1822
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1533
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1845
+      endOffset: 1848
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1532
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1849
+      endOffset: 1853
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-1534
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1881
+      endOffset: 1885
+    tag: 机构名
+    entity: ebay
+  - id: annotation-1535
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1893
+      endOffset: 1896
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1536
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1914
+      endOffset: 1917
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1550
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1925
+      endOffset: 1928
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1537
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1925
+      endOffset: 1927
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1538
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1937
+      endOffset: 1942
+    tag: 机构名
+    entity: 2017年
+  - id: annotation-1551
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1946
+      endOffset: 1949
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1539
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1946
+      endOffset: 1948
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1540
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 1984
+      endOffset: 1986
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1541
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2014
+      endOffset: 2017
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2112
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2025
+      endOffset: 2027
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1542
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2033
+      endOffset: 2035
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1552
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2047
+      endOffset: 2050
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1023
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2092
+      endOffset: 2095
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1244
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2130
+      endOffset: 2135
+    tag: 日期
+    entity: 2017年
+  - id: annotation-1514
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2140
+      endOffset: 2144
+    tag: 地名
+    entity: 广州沙河
+  - id: annotation-1515
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2145
+      endOffset: 2147
+    tag: 地名
+    entity: 中山
+  - id: annotation-1516
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2148
+      endOffset: 2150
+    tag: 地名
+    entity: 株洲
+  - id: annotation-1517
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2180
+      endOffset: 2182
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-2231
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2194
+      endOffset: 2196
+    tag: 机构名
+    entity: 手淘
+  - id: annotation-1553
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2197
+      endOffset: 2200
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2236
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2206
+      endOffset: 2208
+    tag: 日期
+    entity: 今天
+  - id: annotation-2235
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2214
+      endOffset: 2218
+    tag: 机构名
+    entity: 手机淘宝
+  - id: annotation-2246
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2233
+      endOffset: 2235
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-2254
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2285
+      endOffset: 2287
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1518
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2298
+      endOffset: 2300
+    tag: 机构名
+    entity: 京东
+  - id: annotation-2255
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2362
+      endOffset: 2364
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1458
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2421
+      endOffset: 2425
+    tag: 机构名
+    entity: ebay
+  - id: annotation-2256
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2436
+      endOffset: 2438
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1554
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2457
+      endOffset: 2460
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-972
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2494
+      endOffset: 2498
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-1555
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2542
+      endOffset: 2545
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2294
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2622
+      endOffset: 2624
+    tag: 日期
+    entity: 今日
+  - id: annotation-1027
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2627
+      endOffset: 2630
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1952
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2638
+      endOffset: 2642
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-1028
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2665
+      endOffset: 2668
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1958
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2682
+      endOffset: 2685
+    tag: 货币
+    entity: 10元
+  - id: annotation-924
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2713
+      endOffset: 2715
+    tag: 日期
+    entity: 今天
+  - id: annotation-1854
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2725
+      endOffset: 2729
+    tag: 机构名
+    entity: 天猫商城
+  - id: annotation-1879
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2779
+      endOffset: 2783
+    tag: 机构名
+    entity: 京东商城
+  - id: annotation-1556
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2800
+      endOffset: 2803
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1557
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2824
+      endOffset: 2827
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-696
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2824
+      endOffset: 2826
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1459
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2835
+      endOffset: 2839
+    tag: 机构名
+    entity: ebay
+  - id: annotation-1942
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2864
+      endOffset: 2868
+    tag: 机构名
+    entity: 阿里妈妈
+  - id: annotation-2238
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2936
+      endOffset: 2938
+    tag: 日期
+    entity: 今天
+  - id: annotation-1558
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2938
+      endOffset: 2941
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-974
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2943
+      endOffset: 2947
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-699
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 2971
+      endOffset: 2973
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1559
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3027
+      endOffset: 3030
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2295
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3034
+      endOffset: 3039
+    tag: 日期
+    entity: 2014年
+  - id: annotation-2299
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3039
+      endOffset: 3043
+    tag: 机构名
+    entity: 工商总局
+  - id: annotation-1855
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3047
+      endOffset: 3051
+    tag: 机构名
+    entity: 天猫商城
+  - id: annotation-1560
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3055
+      endOffset: 3058
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-975
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3061
+      endOffset: 3065
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-1561
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3072
+      endOffset: 3075
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1278
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3088
+      endOffset: 3090
+    tag: 人名
+    entity: 马云
+  - id: annotation-1856
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3107
+      endOffset: 3111
+    tag: 机构名
+    entity: 天猫商城
+  - id: annotation-2300
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3116
+      endOffset: 3120
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-1344
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3186
+      endOffset: 3188
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1345
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3243
+      endOffset: 3245
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1346
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3310
+      endOffset: 3312
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-614
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3318
+      endOffset: 3320
+    tag: 机构名
+    entity: 京东
+  - id: annotation-574
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3322
+      endOffset: 3325
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-1507
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3326
+      endOffset: 3332
+    tag: 机构名
+    entity: 美丽联合集团
+  - id: annotation-1903
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3335
+      endOffset: 3339
+    tag: 机构名
+    entity: 网易考拉
+  - id: annotation-1923
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3340
+      endOffset: 3342
+    tag: 机构名
+    entity: 严选
+  - id: annotation-1509
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3345
+      endOffset: 3347
+    tag: 机构名
+    entity: 小米
+  - id: annotation-1959
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3360
+      endOffset: 3362
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1562
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3389
+      endOffset: 3392
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1563
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3413
+      endOffset: 3416
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-341
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3462
+      endOffset: 3464
+    tag: 人名
+    entity: 蒋凡
+  - id: annotation-2129
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3496
+      endOffset: 3498
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-2239
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3521
+      endOffset: 3523
+    tag: 日期
+    entity: 今天
+  - id: annotation-2304
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3524
+      endOffset: 3528
+    tag: 机构名
+    entity: 手机淘宝
+  - id: annotation-2131
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3590
+      endOffset: 3592
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1564
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3619
+      endOffset: 3622
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2260
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3623
+      endOffset: 3625
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1880
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3642
+      endOffset: 3646
+    tag: 机构名
+    entity: 京东商城
+  - id: annotation-1347
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3658
+      endOffset: 3660
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1038
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3713
+      endOffset: 3716
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1976
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3766
+      endOffset: 3768
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1039
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3772
+      endOffset: 3775
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1944
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3803
+      endOffset: 3807
+    tag: 机构名
+    entity: 阿里妈妈
+  - id: annotation-1349
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3833
+      endOffset: 3835
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-2135
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3873
+      endOffset: 3875
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-2305
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3881
+      endOffset: 3885
+    tag: 机构名
+    entity: 朱思码记
+  - id: annotation-957
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3887
+      endOffset: 3892
+    tag: 日期
+    entity: 2018年
+  - id: annotation-2306
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3892
+      endOffset: 3896
+    tag: 机构名
+    entity: 阿里妈妈
+  - id: annotation-1040
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3937
+      endOffset: 3940
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2261
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3942
+      endOffset: 3944
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1351
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3947
+      endOffset: 3949
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1565
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 3997
+      endOffset: 4000
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2262
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4034
+      endOffset: 4036
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1119
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4051
+      endOffset: 4054
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1245
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4056
+      endOffset: 4061
+    tag: 日期
+    entity: 2017年
+  - id: annotation-2310
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4065
+      endOffset: 4067
+    tag: 地名
+    entity: 乌镇
+  - id: annotation-1352
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4079
+      endOffset: 4081
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-2314
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4095
+      endOffset: 4099
+    tag: 人名
+    entity: PONY
+  - id: annotation-2315
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4099
+      endOffset: 4102
+    tag: 人名
+    entity: 马化腾
+  - id: annotation-616
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4150
+      endOffset: 4152
+    tag: 机构名
+    entity: 京东
+  - id: annotation-575
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4153
+      endOffset: 4156
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-1505
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4157
+      endOffset: 4163
+    tag: 机构名
+    entity: 美丽联合集团
+  - id: annotation-1353
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4215
+      endOffset: 4217
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1503
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4250
+      endOffset: 4254
+    tag: 人名
+    entity: 巴里艾伦
+  - id: annotation-1120
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4345
+      endOffset: 4348
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1121
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4369
+      endOffset: 4372
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1354
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4377
+      endOffset: 4379
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1355
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4409
+      endOffset: 4411
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1122
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4413
+      endOffset: 4416
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1474
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4475
+      endOffset: 4478
+    tag: 机构名
+    entity: 聚划算
+  - id: annotation-1123
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4490
+      endOffset: 4493
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1504
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4501
+      endOffset: 4506
+    tag: 日期
+    entity: 2010年
+  - id: annotation-1475
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4507
+      endOffset: 4510
+    tag: 机构名
+    entity: 聚划算
+  - id: annotation-2069
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4516
+      endOffset: 4518
+    tag: 地名
+    entity: 中国
+  - id: annotation-348
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4530
+      endOffset: 4532
+    tag: 人名
+    entity: 黄峥
+  - id: annotation-1977
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4549
+      endOffset: 4551
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1124
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4560
+      endOffset: 4563
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1978
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4565
+      endOffset: 4567
+    tag: 机构名
+    entity: 微信
+  - id: annotation-617
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4601
+      endOffset: 4603
+    tag: 机构名
+    entity: 京东
+  - id: annotation-576
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4604
+      endOffset: 4607
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-1125
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4622
+      endOffset: 4625
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1502
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4652
+      endOffset: 4655
+    tag: 货币
+    entity: 9块9
+  - id: annotation-1126
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4658
+      endOffset: 4661
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-2316
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4745
+      endOffset: 4747
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1127
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4758
+      endOffset: 4761
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1453
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4774
+      endOffset: 4777
+    tag: 百分比
+    entity: 40%
+  - id: annotation-1128
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4791
+      endOffset: 4794
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1129
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4843
+      endOffset: 4846
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1042
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4871
+      endOffset: 4874
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2070
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4880
+      endOffset: 4882
+    tag: 地名
+    entity: 中国
+  - id: annotation-1476
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4903
+      endOffset: 4906
+    tag: 机构名
+    entity: 聚划算
+  - id: annotation-863
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4928
+      endOffset: 4930
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-2229
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4931
+      endOffset: 4935
+    tag: 机构名
+    entity: 淘宝商城
+  - id: annotation-927
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 4943
+      endOffset: 4945
+    tag: 日期
+    entity: 今天
+  - id: annotation-1357
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5100
+      endOffset: 5102
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-618
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5103
+      endOffset: 5105
+    tag: 机构名
+    entity: 京东
+  - id: annotation-1130
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5149
+      endOffset: 5152
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-2364
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5154
+      endOffset: 5156
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1714
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5186
+      endOffset: 5190
+    tag: 机构名
+    entity: 朱思码记
+  - id: annotation-2366
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5206
+      endOffset: 5208
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1131
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5217
+      endOffset: 5220
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-2384
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5231
+      endOffset: 5234
+    tag: 日期
+    entity: 2年前
+  - id: annotation-1132
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5235
+      endOffset: 5238
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-717
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5319
+      endOffset: 5321
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-864
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5322
+      endOffset: 5324
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-619
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5325
+      endOffset: 5327
+    tag: 机构名
+    entity: 京东
+  - id: annotation-577
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5424
+      endOffset: 5427
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-578
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5486
+      endOffset: 5489
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-1500
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5496
+      endOffset: 5500
+    tag: 货币
+    entity: 288元
+  - id: annotation-579
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5557
+      endOffset: 5560
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-580
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5573
+      endOffset: 5576
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-1133
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5610
+      endOffset: 5613
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1477
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5662
+      endOffset: 5665
+    tag: 机构名
+    entity: 聚划算
+  - id: annotation-1499
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5665
+      endOffset: 5675
+    tag: 日期
+    entity: 2010-2011年
+  - id: annotation-1358
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5797
+      endOffset: 5799
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1134
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5806
+      endOffset: 5809
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-928
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5812
+      endOffset: 5814
+    tag: 日期
+    entity: 今天
+  - id: annotation-1043
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5815
+      endOffset: 5818
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1135
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5827
+      endOffset: 5830
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-977
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5842
+      endOffset: 5846
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-1968
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5897
+      endOffset: 5900
+    tag: 机构名
+    entity: 返利网
+  - id: annotation-1969
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5901
+      endOffset: 5904
+    tag: 机构名
+    entity: 楚楚街
+  - id: annotation-1970
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5905
+      endOffset: 5909
+    tag: 机构名
+    entity: 折800
+  - id: annotation-1971
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5910
+      endOffset: 5912
+    tag: 机构名
+    entity: 米折
+  - id: annotation-1972
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5913
+      endOffset: 5915
+    tag: 机构名
+    entity: 卷皮
+  - id: annotation-2385
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5916
+      endOffset: 5919
+    tag: 机构名
+    entity: 蘑菇街
+  - id: annotation-1566
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5921
+      endOffset: 5924
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2143
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5940
+      endOffset: 5942
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-2145
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5957
+      endOffset: 5959
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1360
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5974
+      endOffset: 5976
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1361
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 5991
+      endOffset: 5993
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1362
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6011
+      endOffset: 6013
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1946
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6040
+      endOffset: 6044
+    tag: 机构名
+    entity: 阿里妈妈
+  - id: annotation-1136
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6062
+      endOffset: 6065
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1981
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6068
+      endOffset: 6070
+    tag: 机构名
+    entity: 微信
+  - id: annotation-723
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6124
+      endOffset: 6126
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1137
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6127
+      endOffset: 6130
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1364
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6137
+      endOffset: 6139
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1982
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6147
+      endOffset: 6149
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1983
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6162
+      endOffset: 6164
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1501
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6167
+      endOffset: 6174
+    tag: 日期
+    entity: 2017年7月
+  - id: annotation-1365
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6193
+      endOffset: 6195
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1984
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6196
+      endOffset: 6198
+    tag: 机构名
+    entity: 微信
+  - id: annotation-620
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6222
+      endOffset: 6224
+    tag: 机构名
+    entity: 京东
+  - id: annotation-581
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6225
+      endOffset: 6228
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-2263
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6246
+      endOffset: 6248
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-2386
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6257
+      endOffset: 6261
+    tag: 机构名
+    entity: 手机淘宝
+  - id: annotation-1567
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6262
+      endOffset: 6265
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-929
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6275
+      endOffset: 6277
+    tag: 日期
+    entity: 今天
+  - id: annotation-1985
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6277
+      endOffset: 6279
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1986
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6298
+      endOffset: 6300
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1495
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6409
+      endOffset: 6414
+    tag: 日期
+    entity: 2015年
+  - id: annotation-1614
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6417
+      endOffset: 6420
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-582
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6519
+      endOffset: 6522
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-1139
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6527
+      endOffset: 6530
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-583
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6531
+      endOffset: 6534
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-2387
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6612
+      endOffset: 6616
+    tag: 人名
+    entity: 麦克卢汉
+  - id: annotation-978
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6652
+      endOffset: 6656
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-1140
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6663
+      endOffset: 6666
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1478
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6680
+      endOffset: 6683
+    tag: 机构名
+    entity: 聚划算
+  - id: annotation-1141
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6722
+      endOffset: 6725
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1469
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6743
+      endOffset: 6746
+    tag: 机构名
+    entity: 聚划算
+  - id: annotation-1142
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6751
+      endOffset: 6754
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1479
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6845
+      endOffset: 6848
+    tag: 机构名
+    entity: 聚划算
+  - id: annotation-1465
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 6962
+      endOffset: 6967
+    tag: 日期
+    entity: 2011年
+  - id: annotation-1464
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7012
+      endOffset: 7019
+    tag: 百分比
+    entity: 60%~70%
+  - id: annotation-1568
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7040
+      endOffset: 7043
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1569
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7097
+      endOffset: 7100
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2240
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7154
+      endOffset: 7156
+    tag: 日期
+    entity: 今天
+  - id: annotation-1143
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7172
+      endOffset: 7175
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1048
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7234
+      endOffset: 7237
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-729
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7256
+      endOffset: 7258
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-979
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7268
+      endOffset: 7272
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-730
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7285
+      endOffset: 7287
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1144
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7299
+      endOffset: 7302
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-731
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7308
+      endOffset: 7310
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1960
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7517
+      endOffset: 7521
+    tag: 机构名
+    entity: 网易微课
+  - id: annotation-1145
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7527
+      endOffset: 7530
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-2392
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7543
+      endOffset: 7546
+    tag: 机构名
+    entity: 大伙邦
+  - id: annotation-1146
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7593
+      endOffset: 7596
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1435
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7629
+      endOffset: 7633
+    tag: 货币
+    entity: 100元
+  - id: annotation-1615
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7637
+      endOffset: 7640
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1148
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7647
+      endOffset: 7650
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1964
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7696
+      endOffset: 7699
+    tag: 货币
+    entity: 83元
+  - id: annotation-2394
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7704
+      endOffset: 7707
+    tag: 机构名
+    entity: 大伙邦
+  - id: annotation-1934
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7728
+      endOffset: 7731
+    tag: 百分比
+    entity: 20%
+  - id: annotation-1938
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7732
+      endOffset: 7735
+    tag: 货币
+    entity: 20元
+  - id: annotation-1965
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7746
+      endOffset: 7749
+    tag: 货币
+    entity: 80元
+  - id: annotation-1933
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7771
+      endOffset: 7773
+    tag: 百分比
+    entity: 9%
+  - id: annotation-1932
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7777
+      endOffset: 7780
+    tag: 货币
+    entity: 71元
+  - id: annotation-1939
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7852
+      endOffset: 7855
+    tag: 货币
+    entity: 69元
+  - id: annotation-1941
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7865
+      endOffset: 7868
+    tag: 百分比
+    entity: 20%
+  - id: annotation-1962
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 7988
+      endOffset: 7992
+    tag: 机构名
+    entity: 网易微课
+  - id: annotation-1940
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8001
+      endOffset: 8004
+    tag: 百分比
+    entity: 30%
+  - id: annotation-1149
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8044
+      endOffset: 8047
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-931
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8047
+      endOffset: 8049
+    tag: 日期
+    entity: 今天
+  - id: annotation-1570
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8063
+      endOffset: 8066
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1455
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8073
+      endOffset: 8077
+    tag: 机构名
+    entity: ebay
+  - id: annotation-1150
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8089
+      endOffset: 8092
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-2308
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8170
+      endOffset: 8174
+    tag: 机构名
+    entity: 阿里妈妈
+  - id: annotation-1571
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8194
+      endOffset: 8197
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1151
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8198
+      endOffset: 8201
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-735
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8202
+      endOffset: 8204
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1279
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8216
+      endOffset: 8218
+    tag: 人名
+    entity: 马云
+  - id: annotation-349
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8247
+      endOffset: 8249
+    tag: 人名
+    entity: 黄峥
+  - id: annotation-2396
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8276
+      endOffset: 8283
+    tag: 机构名
+    entity: 拼多多上海总部
+  - id: annotation-1431
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8295
+      endOffset: 8298
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1051
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8340
+      endOffset: 8343
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1451
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8348
+      endOffset: 8351
+    tag: 百分比
+    entity: 40%
+  - id: annotation-2397
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8397
+      endOffset: 8400
+    tag: 机构名
+    entity: 聚划算
+  - id: annotation-1369
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8416
+      endOffset: 8418
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1432
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8426
+      endOffset: 8436
+    tag: 日期
+    entity: 2018年1月15日
+  - id: annotation-1433
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8437
+      endOffset: 8440
+    tag: 人名
+    entity: 张小龙
+  - id: annotation-2367
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8443
+      endOffset: 8445
+    tag: 机构名
+    entity: 微信
+  - id: annotation-2047
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8472
+      endOffset: 8476
+    tag: 机构名
+    entity: 微信支付
+  - id: annotation-1989
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8496
+      endOffset: 8498
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1990
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8522
+      endOffset: 8524
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1616
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8530
+      endOffset: 8533
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1434
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8536
+      endOffset: 8538
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-2048
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8548
+      endOffset: 8552
+    tag: 机构名
+    entity: 微信支付
+  - id: annotation-2035
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8554
+      endOffset: 8557
+    tag: 机构名
+    entity: 支付宝
+  - id: annotation-2233
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8572
+      endOffset: 8574
+    tag: 机构名
+    entity: 手淘
+  - id: annotation-2036
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8580
+      endOffset: 8583
+    tag: 机构名
+    entity: 支付宝
+  - id: annotation-2154
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8631
+      endOffset: 8633
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-2037
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8640
+      endOffset: 8643
+    tag: 机构名
+    entity: 支付宝
+  - id: annotation-2049
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8646
+      endOffset: 8650
+    tag: 机构名
+    entity: 微信支付
+  - id: annotation-2371
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8663
+      endOffset: 8665
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1280
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8672
+      endOffset: 8674
+    tag: 人名
+    entity: 马云
+  - id: annotation-738
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8731
+      endOffset: 8733
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1155
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8740
+      endOffset: 8743
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-2372
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8745
+      endOffset: 8747
+    tag: 机构名
+    entity: 微信
+  - id: annotation-2409
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8778
+      endOffset: 8781
+    tag: 机构名
+    entity: 支付宝
+  - id: annotation-584
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8835
+      endOffset: 8838
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-1371
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8849
+      endOffset: 8851
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-563
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8852
+      endOffset: 8854
+    tag: 机构名
+    entity: 腾讯
+  - id: annotation-2033
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8887
+      endOffset: 8890
+    tag: 机构名
+    entity: 支付宝
+  - id: annotation-1995
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8893
+      endOffset: 8895
+    tag: 机构名
+    entity: 微信
+  - id: annotation-2039
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8919
+      endOffset: 8922
+    tag: 机构名
+    entity: 支付宝
+  - id: annotation-2045
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8936
+      endOffset: 8940
+    tag: 机构名
+    entity: 微信支付
+  - id: annotation-2071
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8961
+      endOffset: 8963
+    tag: 地名
+    entity: 中国
+  - id: annotation-585
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 8999
+      endOffset: 9002
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-932
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9012
+      endOffset: 9014
+    tag: 日期
+    entity: 今天
+  - id: annotation-1156
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9014
+      endOffset: 9017
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1997
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9041
+      endOffset: 9043
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1157
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9064
+      endOffset: 9067
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1998
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9080
+      endOffset: 9082
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1999
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9093
+      endOffset: 9095
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1617
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9110
+      endOffset: 9113
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-2410
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9143
+      endOffset: 9145
+    tag: 地名
+    entity: 广州
+  - id: annotation-1967
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9148
+      endOffset: 9150
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1929
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9160
+      endOffset: 9164
+    tag: 机构名
+    entity: 朱思码记
+  - id: annotation-1572
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9190
+      endOffset: 9193
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-2241
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9202
+      endOffset: 9204
+    tag: 日期
+    entity: 今天
+  - id: annotation-1966
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9205
+      endOffset: 9207
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-2000
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9209
+      endOffset: 9211
+    tag: 机构名
+    entity: 微信
+  - id: annotation-934
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9211
+      endOffset: 9213
+    tag: 日期
+    entity: 今天
+  - id: annotation-1928
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9225
+      endOffset: 9227
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-2312
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9259
+      endOffset: 9261
+    tag: 地名
+    entity: 乌镇
+  - id: annotation-1429
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9275
+      endOffset: 9277
+    tag: 机构名
+    entity: 腾讯
+  - id: annotation-1427
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9293
+      endOffset: 9297
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-2156
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9299
+      endOffset: 9301
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1428
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9302
+      endOffset: 9304
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1450
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9309
+      endOffset: 9311
+    tag: 机构名
+    entity: 天猫
+  - id: annotation-1436
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9312
+      endOffset: 9315
+    tag: 机构名
+    entity: 支付宝
+  - id: annotation-2001
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9333
+      endOffset: 9335
+    tag: 机构名
+    entity: 微信
+  - id: annotation-586
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9339
+      endOffset: 9342
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-621
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9343
+      endOffset: 9345
+    tag: 机构名
+    entity: 京东
+  - id: annotation-2002
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9390
+      endOffset: 9392
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1430
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9440
+      endOffset: 9443
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1327
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9489
+      endOffset: 9491
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-2072
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9520
+      endOffset: 9522
+    tag: 地名
+    entity: 中国
+  - id: annotation-1374
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9539
+      endOffset: 9541
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1927
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9558
+      endOffset: 9562
+    tag: 机构名
+    entity: 京东商城
+  - id: annotation-1920
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9597
+      endOffset: 9601
+    tag: 机构名
+    entity: 网易考拉
+  - id: annotation-1921
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9602
+      endOffset: 9604
+    tag: 机构名
+    entity: 严选
+  - id: annotation-2414
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9614
+      endOffset: 9616
+    tag: 机构名
+    entity: 网易
+  - id: annotation-1573
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9624
+      endOffset: 9627
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1893
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9637
+      endOffset: 9641
+    tag: 机构名
+    entity: 天猫国际
+  - id: annotation-1892
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9642
+      endOffset: 9646
+    tag: 机构名
+    entity: 天猫商城
+  - id: annotation-1919
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9652
+      endOffset: 9656
+    tag: 机构名
+    entity: 网易考拉
+  - id: annotation-1918
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9670
+      endOffset: 9672
+    tag: 机构名
+    entity: 阿里
+  - id: annotation-1917
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9726
+      endOffset: 9730
+    tag: 机构名
+    entity: 天猫国际
+  - id: annotation-1901
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9741
+      endOffset: 9745
+    tag: 机构名
+    entity: 网易考拉
+  - id: annotation-1914
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9765
+      endOffset: 9769
+    tag: 机构名
+    entity: 天猫国际
+  - id: annotation-1915
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9770
+      endOffset: 9775
+    tag: 机构名
+    entity: 京东全球购
+  - id: annotation-1916
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9776
+      endOffset: 9779
+    tag: 机构名
+    entity: 小红书
+  - id: annotation-1913
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9794
+      endOffset: 9798
+    tag: 机构名
+    entity: 网易考拉
+  - id: annotation-2434
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9821
+      endOffset: 9825
+    tag: 机构名
+    entity: 网易考拉
+  - id: annotation-2053
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9827
+      endOffset: 9831
+    tag: 机构名
+    entity: 天猫国际
+  - id: annotation-1924
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9848
+      endOffset: 9850
+    tag: 机构名
+    entity: 严选
+  - id: annotation-1326
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9892
+      endOffset: 9894
+    tag: 机构名
+    entity: 网易
+  - id: annotation-1876
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9947
+      endOffset: 9951
+    tag: 机构名
+    entity: 京东商城
+  - id: annotation-1875
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9952
+      endOffset: 9955
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-625
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9968
+      endOffset: 9970
+    tag: 机构名
+    entity: 京东
+  - id: annotation-1889
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9978
+      endOffset: 9982
+    tag: 机构名
+    entity: 天猫商城
+  - id: annotation-1574
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 9983
+      endOffset: 9986
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1888
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10000
+      endOffset: 10004
+    tag: 机构名
+    entity: 天猫商城
+  - id: annotation-1890
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10021
+      endOffset: 10025
+    tag: 机构名
+    entity: 京东商城
+  - id: annotation-1324
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10030
+      endOffset: 10033
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-1325
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10037
+      endOffset: 10039
+    tag: 机构名
+    entity: 京东
+  - id: annotation-2435
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10077
+      endOffset: 10082
+    tag: 日期
+    entity: 2017年
+  - id: annotation-959
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10110
+      endOffset: 10115
+    tag: 日期
+    entity: 2018年
+  - id: annotation-1160
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10124
+      endOffset: 10127
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-2374
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10135
+      endOffset: 10137
+    tag: 机构名
+    entity: 微信
+  - id: annotation-1575
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10159
+      endOffset: 10162
+    tag: 机构名
+    entity: 淘宝网
+  - id: annotation-1161
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10177
+      endOffset: 10180
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1322
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10208
+      endOffset: 10210
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1320
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10252
+      endOffset: 10254
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1162
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10271
+      endOffset: 10274
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1321
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10291
+      endOffset: 10293
+    tag: 机构名
+    entity: 淘宝
+  - id: annotation-1296
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10332
+      endOffset: 10334
+    tag: 机构名
+    entity: 网易
+  - id: annotation-1318
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10346
+      endOffset: 10350
+    tag: 机构名
+    entity: 腾讯公司
+  - id: annotation-1319
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10351
+      endOffset: 10355
+    tag: 机构名
+    entity: 网易资本
+  - id: annotation-1891
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10369
+      endOffset: 10373
+    tag: 机构名
+    entity: 朱思码记
+  - id: annotation-1298
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10387
+      endOffset: 10389
+    tag: 机构名
+    entity: 网易
+  - id: annotation-1163
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10391
+      endOffset: 10394
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1299
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10419
+      endOffset: 10421
+    tag: 机构名
+    entity: 网易
+  - id: annotation-1164
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10433
+      endOffset: 10436
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1300
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10446
+      endOffset: 10448
+    tag: 机构名
+    entity: 网易
+  - id: annotation-1165
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10479
+      endOffset: 10482
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1166
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10493
+      endOffset: 10496
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1301
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10512
+      endOffset: 10514
+    tag: 机构名
+    entity: 网易
+  - id: annotation-1167
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10528
+      endOffset: 10531
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-1284
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10557
+      endOffset: 10559
+    tag: 机构名
+    entity: 网易
+  - id: annotation-1275
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10599
+      endOffset: 10610
+    tag: 日期
+    entity: 2014年11月20日
+  - id: annotation-1276
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10620
+      endOffset: 10622
+    tag: 人名
+    entity: 马云
+  - id: annotation-981
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10627
+      endOffset: 10631
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-628
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10640
+      endOffset: 10642
+    tag: 机构名
+    entity: 京东
+  - id: annotation-935
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10657
+      endOffset: 10659
+    tag: 日期
+    entity: 今天
+  - id: annotation-629
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10665
+      endOffset: 10667
+    tag: 机构名
+    entity: 京东
+  - id: annotation-589
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10668
+      endOffset: 10671
+    tag: 机构名
+    entity: 唯品会
+  - id: annotation-936
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10674
+      endOffset: 10676
+    tag: 日期
+    entity: 今天
+  - id: annotation-1168
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10677
+      endOffset: 10680
+    tag: 机构名
+    entity: 拼多多
+  - id: annotation-982
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10694
+      endOffset: 10698
+    tag: 机构名
+    entity: 阿里巴巴
+  - id: annotation-2451
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10707
+      endOffset: 10710
+    tag: 日期
+    entity: 3年后
+  - id: annotation-1274
+    type: annotation
+    range:
+      blockIndex: 0
+      startOffset: 10766
+      endOffset: 10771
+    tag: 人名
+    entity: 米兰桑德拉
