@@ -3,9 +3,9 @@ import { Task as SagaTask } from 'little-saga'
 import SentenceSegmentation from '../tasks/SentenceSegmentation'
 import SimpleMatching from '../tasks/SimpleMatching'
 import SimpleOffsetAdjusting from '../tasks/SimpleOffsetAdjusting'
-import StanfordNLP from '../tasks/StanfordNLP'
 import AutoAnnotate from './AutoAnnotate'
 import SimpleMerge from './SimpleMerge'
+import StanfordNLP from './StanfordNLP'
 import TaskConstructor from './TaskConstructor'
 
 export class Task extends Record({

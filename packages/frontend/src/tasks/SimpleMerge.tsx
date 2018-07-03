@@ -21,7 +21,7 @@ export interface SimpleMergeOptions {
   minRatio: number
 }
 
-interface ConfirmFromProps {
+interface ConfigFormProps {
   impl: TaskConstructor
   name: string
   options: SimpleMergeOptions
@@ -30,10 +30,10 @@ interface ConfirmFromProps {
   onClose(): void
 }
 
-type ConfigFromState = SimpleMergeOptions & { editingName: string }
+type ConfigFormState = SimpleMergeOptions & { editingName: string }
 
-class ConfigForm extends React.Component<ConfirmFromProps, ConfigFromState> {
-  constructor(props: ConfirmFromProps) {
+class ConfigForm extends React.Component<ConfigFormProps, ConfigFormState> {
+  constructor(props: ConfigFormProps) {
     super(props)
     this.state = {
       ...props.options,
