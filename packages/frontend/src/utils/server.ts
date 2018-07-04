@@ -85,14 +85,18 @@ export default {
   },
 
   async putColl(info: FileInfo, coll: RawColl): Promise<void> {
+    coll.annotations = coll.annotations || []
     coll.annotations.sort(compareDecorationPosArray)
-    coll.slots.sort(compareDecorationPosArray)
     coll.annotations.forEach(annotation => {
       annotation.range = DecorationRange.normalize(annotation.range)
     })
+
+    coll.slots = coll.slots || []
+    coll.slots.sort(compareDecorationPosArray)
     coll.slots.forEach(slot => {
       slot.range = DecorationRange.normalize(slot.range)
     })
+
     await asppFetch(makeCollUrl(info), {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
