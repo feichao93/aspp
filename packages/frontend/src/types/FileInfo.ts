@@ -27,7 +27,7 @@ export default class FileInfo extends Record({
    * 注意：自己**不是**自己的祖先 */
   isAncestorOf(other: FileInfo) {
     const type = this.getType()
-    if (type === 'directory') {
+    if (type === 'directory' || type === 'empty') {
       return (
         this.docPath.size <= other.docPath.size &&
         is(this.docPath, other.docPath.take(this.docPath.size)) &&

@@ -18,7 +18,7 @@ class ViewContainer extends React.Component<ViewContainerProps> {
     if (fileInfo.getType() === 'empty') {
       content = (
         <NonIdealState
-          visual="folder-shared-open"
+          visual="document-open"
           title="尚未打开文件"
           description="请在左侧打开或新建标注文件"
         />

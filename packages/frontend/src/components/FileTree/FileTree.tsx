@@ -112,6 +112,7 @@ interface CustomMenuProps {
   fileInfo: FileInfo
   dispatch: Dispatch
   onDownload(fileInfo: FileInfo): void
+  onExpand(fileInfo: FileInfo): void
 }
 
 const customMenus = {
@@ -162,9 +163,10 @@ const customMenus = {
     )
   },
 
-  Directory({ fileInfo, dispatch }: CustomMenuProps) {
+  Directory({ fileInfo, onExpand }: CustomMenuProps) {
     return (
       <Menu>
+        <MenuItem text="展开" icon="expand-all" onClick={() => onExpand(fileInfo)} />
         <MenuItem text="上传新的语料（开发中）" icon="upload" />
         <MenuItem text="添加子文件夹（开发中）" icon="folder-new" />
         <MenuItem text="重命名（开发中）" icon="edit" />
@@ -227,11 +229,17 @@ class FileTree extends React.PureComponent<FileTreeProps, FileTreeState> {
     dispatch(Action.reqLoadTree(true))
   }
 
-  onExpandAll = () => {
+  onExpand = (info: FileInfo) => {
     forEachNode(this.state.contents, node => {
-      node.isExpanded = true
+      if (is(info, node.nodeData) || info.isAncestorOf(node.nodeData)) {
+        node.isExpanded = true
+      }
     })
     this.forceUpdate()
+  }
+
+  onExpandAll = () => {
+    this.onExpand(new FileInfo())
   }
 
   onCollapseAll = () => {
@@ -320,6 +328,7 @@ class FileTree extends React.PureComponent<FileTreeProps, FileTreeState> {
         fileInfo,
         dispatch,
         onDownload: this.onDownload,
+        onExpand: this.onExpand,
       })
       ContextMenu.show(element, offset)
     }

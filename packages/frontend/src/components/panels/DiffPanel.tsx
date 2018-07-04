@@ -85,8 +85,8 @@ const DiffPartTitle = ({ diff }: { diff: Diff }) => {
 const DiffNonIdealState = () => (
   <NonIdealState
     className="diff-non-ideal-state"
-    visual="folder-open"
-    title="请恰好选择一个 diff 对象"
+    visual="comparison"
+    title="请选择一个 diff 对象"
   />
 )
 
