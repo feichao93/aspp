@@ -1,15 +1,16 @@
 import { Button, Classes, Intent, Label } from '@blueprintjs/core'
 import React from 'react'
-import { autoFocus } from '../../utils/common'
+import { autoFocusAndSelect } from '../../utils/common'
 
 export interface PromptDialogContentProps {
   message: JSX.Element | string
+  defaultValue: string
   onConfirm(result: string): void
 }
 
 export default class PromptDialogContent extends React.Component<PromptDialogContentProps> {
   state = {
-    value: '',
+    value: this.props.defaultValue,
   }
 
   render() {
@@ -26,7 +27,7 @@ export default class PromptDialogContent extends React.Component<PromptDialogCon
                 className={Classes.INPUT}
                 value={value}
                 style={{ width: '60%' }}
-                ref={autoFocus}
+                ref={autoFocusAndSelect}
                 onChange={e => this.setState({ value: e.target.value })}
               />
             </Label>

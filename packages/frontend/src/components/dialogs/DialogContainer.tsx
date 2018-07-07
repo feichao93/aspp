@@ -34,6 +34,7 @@ class DialogContainer extends React.Component<{ dialog: DialogState; dispatch: D
       return (
         <PromptDialogContent
           message={dialog.message}
+          defaultValue={dialog.defaultValue}
           onConfirm={value => this.props.dispatch(Action.settlePromptDialog(value))}
         />
       )

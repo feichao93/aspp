@@ -8,6 +8,7 @@ export interface ConfirmDialogState {
 export interface PromptDialogState {
   type: 'prompt'
   message: JSX.Element | string
+  defaultValue: string
 }
 
 export type DialogState = ConfirmDialogState | PromptDialogState
@@ -16,7 +17,7 @@ export default function dialogReducer(state: DialogState = null, action: Action)
   if (action.type === 'SHOW_CONFIRM_DIALOG') {
     return { type: 'confirm', message: action.message }
   } else if (action.type === 'SHOW_PROMPT_DIALOG') {
-    return { type: 'prompt', message: action.message }
+    return { type: 'prompt', message: action.message, defaultValue: action.defaultValue }
   } else if (action.type === 'HIDE_DIALOG') {
     return null
   } else {

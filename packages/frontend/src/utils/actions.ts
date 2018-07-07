@@ -123,9 +123,13 @@ namespace Action {
   export interface ShowPromptDialog {
     type: 'SHOW_PROMPT_DIALOG'
     message: string | JSX.Element
+    defaultValue: string
   }
-  export function showPromptDialog(message: string | JSX.Element): ShowPromptDialog {
-    return { type: 'SHOW_PROMPT_DIALOG', message }
+  export function showPromptDialog(
+    message: string | JSX.Element,
+    defaultValue: string,
+  ): ShowPromptDialog {
+    return { type: 'SHOW_PROMPT_DIALOG', message, defaultValue }
   }
 
   export interface SettlePromptDialog {

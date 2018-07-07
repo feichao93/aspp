@@ -5,6 +5,7 @@ import React from 'react'
 import { ActionCategory } from '../actions/EditorAction'
 import SetSel, { SetSelMethod } from '../actions/SetSel'
 import { State } from '../reducers'
+import { promptDialogSaga } from '../sagas/dialogSaga'
 import { loadTreeState } from '../sagas/fileSaga'
 import { applyEditorAction } from '../sagas/historyManager'
 import { RawAnnotation } from '../types/Annotation'
@@ -178,9 +179,18 @@ export default class SimpleMerge {
     const { editor, fileInfo }: State = yield io.select()
 
     try {
-      const mergeCollname = getMergeCollname(fileInfo)
+      const defaultMergeCollname = getMergeCollname(fileInfo)
+      const mergeCollname = yield promptDialogSaga('请输入合并文件的名称：', defaultMergeCollname)
+      if (mergeCollname == null) {
+        return
+      }
+      if (mergeCollname.length === 0) {
+        yield io.put(Action.toast('文件名不能为空', Intent.WARNING))
+        return
+      }
+
       const mergeFileInfo = fileInfo.set('collname', mergeCollname)
-      const mergeColl = editor.toRawColl(mergeCollname)
+      const mergeColl = editor.toRawColl(mergeFileInfo.collname)
       doMerge(mergeColl, editor, this.options)
 
       yield server.putColl(mergeFileInfo, mergeColl)

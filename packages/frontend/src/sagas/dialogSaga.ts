@@ -12,9 +12,9 @@ export function* confirmDialogSaga(message: string | JSX.Element) {
   }
 }
 
-export function* promptDialogSaga(message: string | JSX.Element) {
+export function* promptDialogSaga(message: string | JSX.Element, defaultValue = '') {
   try {
-    yield io.put(Action.showPromptDialog(message))
+    yield io.put(Action.showPromptDialog(message, defaultValue))
     const action: Action.SettlePromptDialog = yield io.take(a('SETTLE_PROMPT_DIALOG'))
     return action.value
   } finally {

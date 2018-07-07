@@ -185,8 +185,9 @@ export function range(start: number, end: number) {
   return result
 }
 
-export const autoFocus = (node: HTMLElement) => {
+export const autoFocusAndSelect = (node: HTMLInputElement) => {
   if (node) {
+    node.select()
     node.focus()
   }
 }
