@@ -440,6 +440,9 @@ namespace Action {
     type: 'UPDATE_CACHE'
     updater(c: CacheState): CacheState
   }
+  export function updateCache(updater: (c: CacheState) => CacheState): UpdateCache {
+    return { type: 'UPDATE_CACHE', updater }
+  }
 
   export interface UpdateDocStat {
     type: 'UPDATE_DOC_STAT'

@@ -1,12 +1,12 @@
 import { Intent } from '@blueprintjs/core'
-import { is, List, Map as IMap, Seq } from 'immutable'
+import { is, List, Seq } from 'immutable'
 import { getContext, io, takeEvery, takeLatest } from 'little-saga/compat'
 import React from 'react'
 import { ActionCategory } from '../actions/EditorAction'
 import EmptyEditorAction from '../actions/EmptyEditorAction'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
-import { setCachedAnnotations } from '../reducers/cacheReducer'
+import { CacheState } from '../reducers/cacheReducer'
 import { DocStatState, setDocStat } from '../reducers/docStatReducer'
 import { setEditorState } from '../reducers/editorReducer'
 import { setFileInfo } from '../reducers/fileInfoReducer'
@@ -21,6 +21,7 @@ import { a, keyed, updateAnnotationNextId, zip } from '../utils/common'
 import getDiffSlots from '../utils/getDiffSlots'
 import InteractionCollector from '../utils/InteractionCollector'
 import server, { RawColl } from '../utils/server'
+import { invalidateCacheSaga, updateCacheSaga } from './cacheManager'
 import { confirmDialogSaga, promptDialogSaga } from './dialogSaga'
 import { applyEditorAction } from './historyManager'
 
@@ -72,7 +73,7 @@ function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
 function* reqCloseCurrentColl() {
   const { editor, cache }: State = yield io.select()
 
-  if (!is(cache.annotations, editor.annotations)) {
+  if (!is(new CacheState(editor), cache)) {
     yield io.put(Action.toast('关闭文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
@@ -82,7 +83,7 @@ function* reqCloseCurrentColl() {
 
 function* closeCurrentColl() {
   // 清空缓存
-  yield io.put(setCachedAnnotations(IMap()))
+  yield invalidateCacheSaga()
   // 清空当前编辑器状态
   yield io.put(setEditorState(new EditorState()))
   // 清空当前打开文件信息
@@ -94,13 +95,13 @@ function* closeCurrentColl() {
 /** 保存当前的标注工作进度 */
 function* saveCurrentColl() {
   const { fileInfo, editor, cache }: State = yield io.select()
-  if (is(cache.annotations, editor.annotations)) {
+  if (is(new CacheState(editor), cache)) {
     return
   }
 
   try {
     yield server.putColl(fileInfo, editor.toRawColl(fileInfo.collname))
-    yield io.put(setCachedAnnotations(editor.annotations))
+    yield updateCacheSaga()
     yield applyEditorAction(
       new EmptyEditorAction('保存文件').withCategory(ActionCategory.sideEffects),
     )
@@ -112,9 +113,9 @@ function* saveCurrentColl() {
 }
 
 function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
-  const { fileInfo: cntFileInfo, editor, cache }: State = yield io.select()
+  const { editor, cache }: State = yield io.select()
 
-  if (cntFileInfo.getType() === 'coll' && !is(cache.annotations, editor.annotations)) {
+  if (!is(new CacheState(editor), cache)) {
     yield io.put(Action.toast('打开统计信息之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
@@ -143,8 +144,8 @@ function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
 
 function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
   const collector: InteractionCollector = yield getContext('collector')
-  const { fileInfo: cntFileInfo, editor, cache }: State = yield io.select()
-  if (cntFileInfo.getType() === 'coll' && !is(cache.annotations, editor.annotations)) {
+  const { editor, cache }: State = yield io.select()
+  if (!is(new CacheState(editor), cache)) {
     yield io.put(Action.toast('打开文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
@@ -165,7 +166,7 @@ function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
     updateAnnotationNextId(annotations)
     collector.collOpened(opening)
     yield io.put(setEditorState(editorState))
-    yield io.put(setCachedAnnotations(editorState.annotations))
+    yield updateCacheSaga()
     yield io.put(setFileInfo(opening))
     yield io.put(Action.historyClear())
     yield applyEditorAction(
@@ -210,7 +211,7 @@ function* addColl({ fileInfo }: Action.ReqAddColl) {
     console.assert(fileInfo.getType() === 'doc')
   }
   const { config, tree, editor, cache }: State = yield io.select()
-  if (!is(editor.annotations, cache.annotations)) {
+  if (!is(new CacheState(editor), cache)) {
     yield io.put(Action.toast('创建新文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
@@ -238,10 +239,12 @@ function* duplicateColl({ fileInfo }: Action.ReqDuplicateColl) {
   if (DEV_ASSERT) {
     console.assert(fileInfo.getType() === 'coll')
   }
-  const { editor, cache, fileInfo: cntFileInfo, tree, config }: State = yield io.select()
-  if (is(cntFileInfo, fileInfo) && !is(editor.annotations, cache.annotations)) {
+  const { editor, cache, fileInfo: cntFileInfo, tree }: State = yield io.select()
+  if (is(cntFileInfo, fileInfo) && !is(new CacheState(editor), cache)) {
     const result = yield confirmDialogSaga('当前文件的未保存标注内容不会被复制，是否继续?')
-    if (!result) { return }
+    if (!result) {
+      return
+    }
   }
   const doc = findDocInItems(tree, fileInfo)
   if (DEV_ASSERT) {

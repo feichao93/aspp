@@ -1,10 +1,11 @@
 import { Map, Record } from 'immutable'
 import Annotation from '../types/Annotation'
+import { Slot } from '../types/Decoration'
 import Action from '../utils/actions'
 
-// TODO 重构 cache 模块
 const CacheStateRecord = Record({
   annotations: Map<string, Annotation>(),
+  slots: Map<string, Slot>(),
 })
 
 export class CacheState extends CacheStateRecord {}
@@ -15,12 +16,4 @@ export default function cacheReducer(state = new CacheState(), action: Action) {
   } else {
     return state
   }
-}
-
-function updateCache(updater: (cache: CacheState) => CacheState): Action.UpdateCache {
-  return { type: 'UPDATE_CACHE', updater }
-}
-
-export function setCachedAnnotations(annotations: Map<string, Annotation>) {
-  return updateCache(cache => cache.set('annotations', annotations))
 }

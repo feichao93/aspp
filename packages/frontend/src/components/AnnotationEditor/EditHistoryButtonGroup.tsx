@@ -4,12 +4,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { State } from '../../reducers'
+import { CacheState } from '../../reducers/cacheReducer'
 import FileInfo from '../../types/FileInfo'
 import Action from '../../utils/actions'
 
 export interface EditHistoryGroupProps {
   fileInfo: FileInfo
-  annotationsNoChange: boolean
+  collUnmodified: boolean
   disableUndo: boolean
   disableRedo: boolean
   dispatch: Dispatch
@@ -17,7 +18,7 @@ export interface EditHistoryGroupProps {
 
 class EditHistoryButtonGroup extends React.PureComponent<EditHistoryGroupProps> {
   render() {
-    const { fileInfo, annotationsNoChange, disableRedo, disableUndo, dispatch } = this.props
+    const { fileInfo, collUnmodified, disableRedo, disableUndo, dispatch } = this.props
 
     return (
       <ButtonGroup>
@@ -25,7 +26,7 @@ class EditHistoryButtonGroup extends React.PureComponent<EditHistoryGroupProps> 
           <AnchorButton
             style={{ marginLeft: 16 }}
             icon="cloud-upload"
-            disabled={annotationsNoChange}
+            disabled={collUnmodified}
             onClick={() => dispatch(Action.reqSaveCurrentColl())}
           />
         </Tooltip>
@@ -65,7 +66,7 @@ class EditHistoryButtonGroup extends React.PureComponent<EditHistoryGroupProps> 
 function mapStateToProps({ fileInfo, editor, cache, history }: State) {
   return {
     fileInfo,
-    annotationsNoChange: is(cache.annotations, editor.annotations),
+    collUnmodified: is(cache, new CacheState(editor)),
     disableUndo: history.count === 0,
     disableRedo: history.count === history.list.size,
   }
