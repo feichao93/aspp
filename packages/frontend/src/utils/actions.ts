@@ -1,6 +1,7 @@
 import { Intent } from '@blueprintjs/core'
 import { Set } from 'immutable'
 import EditorAction from '../actions/EditorAction'
+import { DialogOption } from '../components/dialogs/SelectDialog'
 import { CacheState } from '../reducers/cacheReducer'
 import { DocStatState } from '../reducers/docStatReducer'
 import { TreeItem } from '../reducers/treeReducer'
@@ -36,7 +37,8 @@ namespace Action {
     | ShowPromptDialog
     | SettlePromptDialog
     | HideDialog
-
+    | ShowSelectDialog
+    | SettleSelectDialog
   export interface Toast {
     type: 'TOAST'
     message: string
@@ -103,7 +105,24 @@ namespace Action {
   export function hideDialog(): HideDialog {
     return { type: 'HIDE_DIALOG' }
   }
-
+  export interface ShowSelectDialog {
+    type: 'SHOW_SELECT_DIALOG'
+    message: string | JSX.Element
+    options: DialogOption[]
+  }
+  export function showSelectDialog(
+    message: string | JSX.Element,
+    options: DialogOption[],
+  ): ShowSelectDialog {
+    return { type: 'SHOW_SELECT_DIALOG', message, options }
+  }
+  export interface SettleSelectDialog {
+    type: 'SETTLE_SELECT_DIALOG'
+    selected: string
+  }
+  export function settleSelectDialog(option: string): SettleSelectDialog {
+    return { type: 'SETTLE_SELECT_DIALOG', selected: option }
+  }
   export interface ShowConfirmDialog {
     type: 'SHOW_CONFIRM_DIALOG'
     message: string | JSX.Element

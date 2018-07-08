@@ -22,7 +22,7 @@ import getDiffSlots from '../utils/getDiffSlots'
 import InteractionCollector from '../utils/InteractionCollector'
 import server, { RawColl } from '../utils/server'
 import { invalidateCacheSaga, updateCacheSaga } from './cacheManager'
-import { confirmDialogSaga, promptDialogSaga } from './dialogSaga'
+import { confirmDialogSaga, promptDialogSaga, selectDialogSaga } from './dialogSaga'
 import { applyEditorAction } from './historyManager'
 
 /** 从后台加载文件树 */
@@ -74,10 +74,17 @@ function* reqCloseCurrentColl() {
   const { editor, cache }: State = yield io.select()
 
   if (!is(new CacheState(editor), cache)) {
-    yield io.put(Action.toast('关闭文件之前请先保存或丢弃当前更改', Intent.WARNING))
-    return
+    const selected = yield selectDialogSaga('关闭文件前是否保存当前更改', [
+      { option: '保存', intent: Intent.PRIMARY },
+      { option: '不保存', intent: Intent.DANGER },
+      '取消',
+    ])
+    if (selected === '保存') {
+      yield saveCurrentColl()
+    } else if (selected === '取消') {
+      return
+    }
   }
-
   yield closeCurrentColl()
 }
 

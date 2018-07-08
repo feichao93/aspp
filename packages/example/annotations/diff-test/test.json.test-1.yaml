@@ -16,54 +16,6 @@ annotations:
       endOffset: 112
     tag: 非货币数量词
     entity: '4,852份'
-  - id: annotation-6
-    type: annotation
-    range:
-      blockIndex: 1
-      startOffset: 29
-      endOffset: 33
-    tag: 政府机构部门
-    entity: 监管部门
-  - id: annotation-7
-    type: annotation
-    range:
-      blockIndex: 1
-      startOffset: 36
-      endOffset: 44
-    tag: 交易所
-    entity: 各地股权交易市场
-  - id: annotation-10
-    type: annotation
-    range:
-      blockIndex: 1
-      startOffset: 122
-      endOffset: 134
-    tag: 公司
-    entity: 天人果汁集团股份有限公司
-  - id: annotation-11
-    type: annotation
-    range:
-      blockIndex: 1
-      startOffset: 135
-      endOffset: 147
-    tag: 公司
-    entity: 天人国际控股集团有限公司
-  - id: annotation-8
-    type: annotation
-    range:
-      blockIndex: 1
-      startOffset: 147
-      endOffset: 154
-    tag: 日期
-    entity: 2015年前后
-  - id: annotation-9
-    type: annotation
-    range:
-      blockIndex: 1
-      startOffset: 155
-      endOffset: 157
-    tag: 地名
-    entity: 上海
   - id: annotation-27
     type: annotation
     range:

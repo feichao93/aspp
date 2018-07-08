@@ -7,10 +7,12 @@ import { DialogState } from '../../reducers/dialogReducer'
 import Action from '../../utils/actions'
 import ConfirmDialogContent from './ConfirmDialogContent'
 import PromptDialogContent from './PromptDialogContent'
+import SelectDialog from './SelectDialog'
 
 const DIALOG_TITLE_MAP = {
   prompt: '输入',
   confirm: '确认',
+  select: '选择',
 }
 
 class DialogContainer extends React.Component<{ dialog: DialogState; dispatch: Dispatch }> {
@@ -42,6 +44,14 @@ class DialogContainer extends React.Component<{ dialog: DialogState; dispatch: D
       return null
     }
   }
+  renderSelectDialog() {
+    const { dialog, dispatch } = this.props
+    if (dialog && dialog.type === 'select') {
+      return <SelectDialog message={dialog.message} options={dialog.options} dispatch={dispatch} />
+    } else {
+      return null
+    }
+  }
 
   render() {
     const { dialog } = this.props
@@ -55,6 +65,7 @@ class DialogContainer extends React.Component<{ dialog: DialogState; dispatch: D
       >
         {this.renderConfirmDialog()}
         {this.renderPromptDialog()}
+        {this.renderSelectDialog()}
       </Dialog>
     )
   }
