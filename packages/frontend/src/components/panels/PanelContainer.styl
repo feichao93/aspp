@@ -1,13 +1,20 @@
+$sash-width = 4px
+
 .panel-container {
   grid-area panel
   display flex
   flex-flow column
   width 350px
-  overflow auto
-  border-left #d2d6d9 1px solid
+  overflow-y auto
+  overflow-x hidden
+  position relative
+  padding-left $sash-width
 
-  &.hide {
-    display none
+  &.minimum {
+    writing-mode vertical-rl
+    text-align center
+    cursor w-resize
+    border-left 1px solid #d4d6d9
   }
 
   .pt-tab-list {
@@ -35,5 +42,18 @@
       margin 0
       font-weight normal
     }
+  }
+}
+
+.panel-container .sash {
+  position absolute
+  left 0
+  top 0
+  bottom 0
+  width $sash-width
+  cursor w-resize
+  border-right $sash-width solid #d4d6d9
+  &:hover, &:active {
+    border-right-style dashed
   }
 }

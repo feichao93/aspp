@@ -25,10 +25,11 @@ import { DOC_STAT_NAME } from '../../utils/constants'
 import server from '../../utils/server'
 import './FileTree.styl'
 
+const SASH_WIDTH = 4
 const MINIMUM_WIDTH = 30
 const MIN_WIDTH = 250
 const INIT_WIDTH = 500
-const MAX_WIDTH = 1000
+const MAX_WIDTH = 800
 const HIDE_THRESHOLD = 100
 const SHOW_THRESHOLD = 150
 
@@ -358,7 +359,6 @@ class FileTree extends React.PureComponent<FileTreeProps, FileTreeState> {
   }
 
   documentMouseMoveHandler = (e: MouseEvent) => {
-    e.preventDefault()
     if (this.isResizing) {
       const movingX = e.clientX
       const width = this.startWidth + movingX - this.startX
@@ -395,7 +395,7 @@ class FileTree extends React.PureComponent<FileTreeProps, FileTreeState> {
       return (
         <div
           className="file-tree minimum"
-          style={{ width: MINIMUM_WIDTH, lineHeight: `${MINIMUM_WIDTH - 4}px` }}
+          style={{ width: MINIMUM_WIDTH, lineHeight: `${MINIMUM_WIDTH - SASH_WIDTH}px` }}
           onMouseDown={this.onResizeStart}
         >
           <span>文件树</span>
