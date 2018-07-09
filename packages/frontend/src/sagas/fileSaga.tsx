@@ -88,7 +88,7 @@ function* reqCloseCurrentColl() {
   yield closeCurrentColl()
 }
 
-function* closeCurrentColl() {
+export function* closeCurrentColl() {
   // 清空缓存
   yield invalidateCacheSaga()
   // 清空当前编辑器状态

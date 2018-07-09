@@ -6,8 +6,9 @@ import { ActionCategory } from '../actions/EditorAction'
 import SetSel, { SetSelMethod } from '../actions/SetSel'
 import { State } from '../reducers'
 import { promptDialogSaga } from '../sagas/dialogSaga'
-import { loadTreeState } from '../sagas/fileSaga'
+import { closeCurrentColl, loadTreeState } from '../sagas/fileSaga'
 import { applyEditorAction } from '../sagas/historyManager'
+import toaster from '../sagas/toaster'
 import { RawAnnotation } from '../types/Annotation'
 import { RawSlot } from '../types/Decoration'
 import EditorState from '../types/EditorState'
@@ -159,6 +160,25 @@ function doMerge(resultColl: RawColl, editor: EditorState, options: SimpleMergeO
   resultColl.slots = otherSlots
 }
 
+function* showMergeCollCreatedToast(mergeFileInfo: FileInfo) {
+  const shouldOpenMergeColl = yield io.cps((cb: any) =>
+    toaster.show({
+      intent: Intent.SUCCESS,
+      message: `已生成 ${mergeFileInfo.collname}`,
+      onDismiss: () => cb(null, false),
+      action: {
+        icon: 'document-open',
+        text: '打开',
+        onClick: () => cb(null, true),
+      },
+    }),
+  )
+  if (shouldOpenMergeColl) {
+    yield closeCurrentColl()
+    yield io.put(Action.reqOpenColl(mergeFileInfo))
+  }
+}
+
 export default class SimpleMerge {
   static defaultTaskName = 'simple-merge'
   static description =
@@ -197,8 +217,7 @@ export default class SimpleMerge {
       const mergeFileInfo = fileInfo.set('collname', mergeCollname)
       yield server.putColl(mergeFileInfo, resultColl)
       yield loadTreeState(false)
-      yield io.put(Action.toast(`已生成 ${mergeFileInfo.collname}`))
-      // TODO 新增按钮  删除 diff文件 并打开合并结果文件
+      yield io.spawn(showMergeCollCreatedToast, mergeFileInfo)
     } catch (e) {
       if (e instanceof MergeErorr) {
         const editorAction = new SetSel(Set.of(e.slotId), SetSelMethod.select)

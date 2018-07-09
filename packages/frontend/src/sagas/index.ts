@@ -1,4 +1,3 @@
-import { Intent, Toaster } from '@blueprintjs/core'
 import { fork, put, select, setContext, takeEvery } from 'little-saga/compat'
 import { State } from '../reducers'
 import Action from '../utils/actions'
@@ -12,6 +11,7 @@ import historyManager from './historyManager'
 import nativeSelectionManager from './nativeSelectionManager'
 import shortcutSaga from './shortcutSaga'
 import taskManager from './taskManager'
+import { handleToast } from './toaster'
 
 /** 如果当前没有设置用户名的话，提示用户输入用户名 */
 function* ensureUsername() {
@@ -19,11 +19,6 @@ function* ensureUsername() {
   if (config.username == null) {
     yield put(Action.reqSetUsername())
   }
-}
-
-const toaster = Toaster.create()
-function handleToast({ message, intent = Intent.PRIMARY }: Action.Toast) {
-  toaster.show({ intent, message })
 }
 
 function* handleReqSetUsername() {
