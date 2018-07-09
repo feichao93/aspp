@@ -23,9 +23,7 @@ export default class SelectDialog extends React.PureComponent<SelectDialogProps>
     return (
       <React.Fragment>
         <div className={Classes.DIALOG_BODY}>
-          <div style={{ fontSize: '16px' }}>
-            <p>{message}</p>
-          </div>
+          <div style={{ fontSize: '16px', lineHeight: 1.5 }}>{message}</div>
         </div>
         <div className={Classes.DIALOG_FOOTER}>
           <div className={Classes.DIALOG_FOOTER_ACTIONS}>

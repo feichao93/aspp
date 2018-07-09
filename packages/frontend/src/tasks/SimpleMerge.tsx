@@ -6,7 +6,7 @@ import { ActionCategory } from '../actions/EditorAction'
 import SetSel, { SetSelMethod } from '../actions/SetSel'
 import { State } from '../reducers'
 import { promptDialogSaga } from '../sagas/dialogSaga'
-import { closeCurrentColl, loadTreeState } from '../sagas/fileSaga'
+import { loadTreeState, reqCloseCurrentColl } from '../sagas/fileSaga'
 import { applyEditorAction } from '../sagas/historyManager'
 import toaster from '../sagas/toaster'
 import { RawAnnotation } from '../types/Annotation'
@@ -174,7 +174,7 @@ function* showMergeCollCreatedToast(mergeFileInfo: FileInfo) {
     }),
   )
   if (shouldOpenMergeColl) {
-    yield closeCurrentColl()
+    yield reqCloseCurrentColl()
     yield io.put(Action.reqOpenColl(mergeFileInfo))
   }
 }

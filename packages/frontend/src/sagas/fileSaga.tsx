@@ -24,6 +24,7 @@ import server, { RawColl } from '../utils/server'
 import { invalidateCacheSaga, updateCacheSaga } from './cacheManager'
 import { confirmDialogSaga, promptDialogSaga, selectDialogSaga } from './dialogSaga'
 import { applyEditorAction } from './historyManager'
+import toaster from './toaster'
 
 /** 从后台加载文件树 */
 export function* loadTreeState(reload: boolean) {
@@ -70,19 +71,23 @@ function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
   }
 }
 
-function* reqCloseCurrentColl() {
-  const { editor, cache }: State = yield io.select()
+export function* reqCloseCurrentColl() {
+  const { fileInfo, editor, cache }: State = yield io.select()
 
   if (!is(new CacheState(editor), cache)) {
-    const selected = yield selectDialogSaga('关闭文件前是否保存当前更改', [
-      { option: '保存', intent: Intent.PRIMARY },
-      { option: '不保存', intent: Intent.DANGER },
-      '取消',
-    ])
+    const selected = yield selectDialogSaga(
+      <span>关闭 {Rich.number(fileInfo.getFullName())} 之前是否要保存当前的修改？</span>,
+      [
+        { option: '保存', intent: Intent.PRIMARY },
+        { option: '不保存', intent: Intent.DANGER },
+        '取消',
+      ],
+    )
+    if (selected === '取消') {
+      return
+    }
     if (selected === '保存') {
       yield saveCurrentColl()
-    } else if (selected === '取消') {
-      return
     }
   }
   yield closeCurrentColl()
@@ -149,12 +154,21 @@ function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
   }
 }
 
-function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
+export function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
   const collector: InteractionCollector = yield getContext('collector')
   const { fileInfo: cntFileInfo, editor, cache }: State = yield io.select()
   if (cntFileInfo.getType() === 'coll' && !is(new CacheState(editor), cache)) {
-    yield io.put(Action.toast('打开文件之前请先保存或丢弃当前更改', Intent.WARNING))
-    return
+    const selected = yield selectDialogSaga(<span>是否要保存对当前文件的修改？</span>, [
+      { option: '保存', intent: Intent.PRIMARY },
+      { option: '不保存', intent: Intent.DANGER },
+      '取消',
+    ])
+    if (selected === '取消') {
+      return
+    }
+    if (selected === '保存') {
+      yield saveCurrentColl()
+    }
   }
 
   try {
@@ -181,6 +195,7 @@ function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
         ActionCategory.sideEffects,
       ),
     )
+    toaster.show({ message: `已打开 ${opening.collname}` })
   } catch (e) {
     console.error(e)
     yield io.put(Action.toast(e.message, Intent.DANGER))
