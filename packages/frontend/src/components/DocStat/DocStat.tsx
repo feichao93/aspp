@@ -17,7 +17,7 @@ interface DocStatProps {
   dispatch: Dispatch
 }
 
-class DocStat extends React.Component<DocStatProps> {
+class DocStat extends React.Component<DocStatProps, { checkedCollnames: Set<string> }> {
   state = {
     checkedCollnames: Set<string>(),
   }
@@ -26,6 +26,12 @@ class DocStat extends React.Component<DocStatProps> {
     this.setState({
       checkedCollnames: toggle(this.state.checkedCollnames, collname),
     })
+  }
+
+  selectAll = () => {
+    const { docStat } = this.props
+    const collnames = docStat.items.map(item => item.collname)
+    this.setState({ checkedCollnames: collnames.toSet() })
   }
 
   reqDiff = () => {
@@ -92,6 +98,7 @@ class DocStat extends React.Component<DocStatProps> {
             ))}
           </tbody>
         </table>
+        <Button className="compare-button" text="全选" large onClick={this.selectAll} />
         <Button className="compare-button" text="文件对比" large onClick={this.reqDiff} />
       </div>
     )
