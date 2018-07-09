@@ -57,7 +57,6 @@ const asppFetch = withPrefix('/api')(guardOK(fetch))
 
 export interface RawColl {
   // TODO meta
-  name: string
   annotations: RawAnnotation[]
   slots: RawSlot[]
 }

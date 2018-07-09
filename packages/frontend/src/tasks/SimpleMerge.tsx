@@ -126,7 +126,7 @@ function resolveConsistentAnnotation(slotId: string, diff: Diff, minRatio: numbe
   }
 }
 
-function getMergeCollname(fileInfo: FileInfo) {
+function getDefaultMergeCollname(fileInfo: FileInfo) {
   const replaced = fileInfo.collname.replace('diff', 'merge')
   if (replaced.startsWith('merge')) {
     return replaced
@@ -179,8 +179,13 @@ export default class SimpleMerge {
     const { editor, fileInfo }: State = yield io.select()
 
     try {
-      const defaultMergeCollname = getMergeCollname(fileInfo)
-      const mergeCollname = yield promptDialogSaga('请输入合并文件的名称：', defaultMergeCollname)
+      const resultColl = editor.toRawColl()
+      doMerge(resultColl, editor, this.options)
+
+      const mergeCollname = yield promptDialogSaga(
+        '请输入合并文件的名称：',
+        getDefaultMergeCollname(fileInfo),
+      )
       if (mergeCollname == null) {
         return
       }
@@ -190,12 +195,10 @@ export default class SimpleMerge {
       }
 
       const mergeFileInfo = fileInfo.set('collname', mergeCollname)
-      const mergeColl = editor.toRawColl(mergeFileInfo.collname)
-      doMerge(mergeColl, editor, this.options)
-
-      yield server.putColl(mergeFileInfo, mergeColl)
+      yield server.putColl(mergeFileInfo, resultColl)
       yield loadTreeState(false)
       yield io.put(Action.toast(`已生成 ${mergeFileInfo.collname}`))
+      // TODO 新增按钮  删除 diff文件 并打开合并结果文件
     } catch (e) {
       if (e instanceof MergeErorr) {
         const editorAction = new SetSel(Set.of(e.slotId), SetSelMethod.select)

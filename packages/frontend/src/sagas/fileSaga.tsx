@@ -58,7 +58,7 @@ function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
     const diffSlots = getDiffSlots(diffs)
     const diffCollname = `diff---${collnames.join('__')}`
     const diffFileInfo = docFileInfo.set('collname', diffCollname)
-    const diffColl: RawColl = { name: diffCollname, annotations: [], slots: diffSlots }
+    const diffColl: RawColl = { annotations: [], slots: diffSlots }
 
     yield server.putColl(diffFileInfo, diffColl)
     yield loadTreeState(false)
@@ -107,7 +107,7 @@ function* saveCurrentColl() {
   }
 
   try {
-    yield server.putColl(fileInfo, editor.toRawColl(fileInfo.collname))
+    yield server.putColl(fileInfo, editor.toRawColl())
     yield updateCacheSaga()
     yield applyEditorAction(
       new EmptyEditorAction('保存文件').withCategory(ActionCategory.sideEffects),
@@ -120,9 +120,9 @@ function* saveCurrentColl() {
 }
 
 function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
-  const { editor, cache }: State = yield io.select()
+  const { fileInfo: cntFileInfo, editor, cache }: State = yield io.select()
 
-  if (!is(new CacheState(editor), cache)) {
+  if (cntFileInfo.getType() === 'coll' && !is(new CacheState(editor), cache)) {
     yield io.put(Action.toast('打开统计信息之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
@@ -151,8 +151,8 @@ function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
 
 function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
   const collector: InteractionCollector = yield getContext('collector')
-  const { editor, cache }: State = yield io.select()
-  if (!is(new CacheState(editor), cache)) {
+  const { fileInfo: cntFileInfo, editor, cache }: State = yield io.select()
+  if (cntFileInfo.getType() === 'coll' && !is(new CacheState(editor), cache)) {
     yield io.put(Action.toast('打开文件之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
@@ -231,7 +231,7 @@ function* addColl({ fileInfo }: Action.ReqAddColl) {
 
   try {
     const adding = fileInfo.set('collname', collname)
-    const emptyColl: RawColl = { name: collname, slots: [], annotations: [] }
+    const emptyColl: RawColl = { slots: [], annotations: [] }
     yield server.putColl(adding, emptyColl)
     yield loadTreeState(false)
     yield io.put(Action.toast(`已添加 ${collname}`))

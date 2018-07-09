@@ -49,9 +49,8 @@ export default class EditorState extends EditorStateRecord {
     }
   }
 
-  toRawColl(collname: string): RawColl {
+  toRawColl(): RawColl {
     return {
-      name: collname,
       annotations: this.annotations
         .valueSeq()
         .map(normalizeAnnotationRange)

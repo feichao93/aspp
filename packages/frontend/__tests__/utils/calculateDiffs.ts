@@ -34,11 +34,7 @@ function getRange(text: string, entity: string) {
 }
 
 function simpleColl(annotations: RawAnnotation[]): RawColl {
-  return {
-    name: '',
-    annotations,
-    slots: [],
-  }
+  return { annotations, slots: [] }
 }
 
 function removeDiffDistribution(diff: Diff) {
