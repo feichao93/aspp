@@ -1,13 +1,19 @@
+$sash-width = 4px
+
 .file-tree {
-  grid-area task-tree
+  grid-area file-tree
+  position relative
   display flex
   flex-direction column
-  width 500px
-  overflow auto
-  border-right 1px solid #d3d6d9
+  padding-right $sash-width
+  overflow-y auto
+  overflow-x hidden
 
-  &.hide {
-    display none
+  &.minimum {
+    writing-mode vertical-lr
+    text-align center
+    cursor e-resize
+    border-right 1px solid #d4d6d9
   }
 
   > header {
@@ -20,5 +26,18 @@
 
   .tree {
     overflow auto
+  }
+
+  .sash {
+    position absolute
+    right 0
+    top 0
+    bottom 0
+    width $sash-width
+    cursor e-resize
+    border-right $sash-width solid #d4d6d9
+    &:hover, &:active {
+      border-right-style dashed
+    }
   }
 }

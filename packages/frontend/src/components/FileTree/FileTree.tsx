@@ -10,7 +10,6 @@ import {
   Tooltip,
   Tree,
 } from '@blueprintjs/core'
-import classNames from 'classnames'
 import { saveAs } from 'file-saver'
 import { is } from 'immutable'
 import React from 'react'
@@ -21,9 +20,17 @@ import { Config } from '../../reducers/configReducer'
 import { TreeItem } from '../../reducers/treeReducer'
 import FileInfo from '../../types/FileInfo'
 import Action from '../../utils/actions'
+import { clamp } from '../../utils/common'
 import { DOC_STAT_NAME } from '../../utils/constants'
 import server from '../../utils/server'
 import './FileTree.styl'
+
+const MINIMUM_WIDTH = 30
+const MIN_WIDTH = 250
+const INIT_WIDTH = 500
+const MAX_WIDTH = 1000
+const HIDE_THRESHOLD = 100
+const SHOW_THRESHOLD = 150
 
 export interface FileTreeProps {
   fileInfo: FileInfo
@@ -36,6 +43,7 @@ export interface FileTreeState {
   contents: Array<ITreeNode<FileInfo>>
   treeState: TreeItem[]
   fileInfo: FileInfo
+  width: number
 }
 
 function forEachNode<T>(nodes: Array<ITreeNode<T>>, callback: (node: ITreeNode<T>) => void) {
@@ -209,10 +217,15 @@ class FileTree extends React.PureComponent<FileTreeProps, FileTreeState> {
     return partial
   }
 
+  isResizing = false
+  startX: number
+  startWidth: number
+
   state = {
     contents: [] as Array<ITreeNode<FileInfo>>,
     treeState: null as TreeItem[],
     fileInfo: null as FileInfo,
+    width: INIT_WIDTH,
   }
 
   onDownload = async (info: FileInfo) => {
@@ -334,10 +347,65 @@ class FileTree extends React.PureComponent<FileTreeProps, FileTreeState> {
     }
   }
 
+  componentDidMount() {
+    document.addEventListener('mousemove', this.documentMouseMoveHandler)
+    document.addEventListener('mouseup', this.documentMouseUpHandler)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousemove', this.documentMouseMoveHandler)
+    document.removeEventListener('mouseup', this.documentMouseUpHandler)
+  }
+
+  documentMouseMoveHandler = (e: MouseEvent) => {
+    e.preventDefault()
+    if (this.isResizing) {
+      const movingX = e.clientX
+      const width = this.startWidth + movingX - this.startX
+      this.setState({ width: clamp(MIN_WIDTH, width, MAX_WIDTH) })
+      const { config, dispatch } = this.props
+      if (
+        (width < HIDE_THRESHOLD && !config.hideFileTree) ||
+        (width > SHOW_THRESHOLD && config.hideFileTree)
+      ) {
+        dispatch(Action.toggleFileTreeVisibility())
+      }
+    }
+  }
+
+  documentMouseUpHandler = () => {
+    this.isResizing = false
+  }
+
+  onResizeStart = (e: React.MouseEvent) => {
+    const { config } = this.props
+    if (config.hideFileTree) {
+      this.startWidth = MINIMUM_WIDTH
+    } else {
+      this.startWidth = this.state.width
+    }
+    e.preventDefault()
+    this.isResizing = true
+    this.startX = e.clientX
+  }
+
   render() {
     const { config } = this.props
+    if (config.hideFileTree) {
+      return (
+        <div
+          className="file-tree minimum"
+          style={{ width: MINIMUM_WIDTH, lineHeight: `${MINIMUM_WIDTH - 4}px` }}
+          onMouseDown={this.onResizeStart}
+        >
+          <span>文件树</span>
+        </div>
+      )
+    }
+
     return (
-      <div className={classNames('file-tree', { hide: config.hideFileTree })}>
+      <div className="file-tree" style={{ width: this.state.width }}>
+        <div className="sash" onMouseDown={this.onResizeStart} />
         <header>
           <div>文件树</div>
           <ButtonGroup className="button-group">

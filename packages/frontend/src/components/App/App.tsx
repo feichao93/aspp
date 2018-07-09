@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { State } from '../../reducers'
 import { Config } from '../../reducers/configReducer'
 import DialogContainer from '../dialogs/DialogContainer'
-import TaskTree from '../FileTree/FileTree'
+import FileTree from '../FileTree/FileTree'
 import HelpOverlay from '../HelpOverlay/HelpOverlay'
 import Menubar from '../Menubar/Menubar'
 import PanelContainer from '../panels/PanelContainer'
@@ -23,7 +23,7 @@ export default class App extends React.Component<{ config?: Config }> {
         <div className="overlay" />
         <div className="app-content">
           <Menubar />
-          <TaskTree />
+          <FileTree />
           <ViewContainer />
           <PanelContainer />
         </div>
