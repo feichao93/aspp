@@ -21,7 +21,7 @@ import { a, keyed, updateAnnotationNextId, zip } from '../utils/common'
 import getDiffSlots from '../utils/getDiffSlots'
 import InteractionCollector from '../utils/InteractionCollector'
 import server, { RawColl } from '../utils/server'
-import { invalidateCacheSaga, updateCacheSaga } from './cacheManager'
+import * as cacheManager from './cacheManager'
 import { confirmDialogSaga, promptDialogSaga, selectDialogSaga } from './dialogSaga'
 import { applyEditorAction } from './historyManager'
 import toaster from './toaster'
@@ -95,7 +95,7 @@ export function* reqCloseCurrentColl() {
 
 export function* closeCurrentColl() {
   // 清空缓存
-  yield invalidateCacheSaga()
+  yield cacheManager.invalidateCacheSaga()
   // 清空当前编辑器状态
   yield io.put(setEditorState(new EditorState()))
   // 清空当前打开文件信息
@@ -113,7 +113,7 @@ function* saveCurrentColl() {
 
   try {
     yield server.putColl(fileInfo, editor.toRawColl())
-    yield updateCacheSaga()
+    yield cacheManager.updateCacheSaga()
     yield applyEditorAction(
       new EmptyEditorAction('保存文件').withCategory(ActionCategory.sideEffects),
     )
@@ -143,6 +143,7 @@ function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
     yield io.put(setFileInfo(opening))
     yield io.put(Action.historyClear())
     yield io.put(setEditorState(new EditorState()))
+    yield cacheManager.updateCacheSaga()
     yield applyEditorAction(
       new EmptyEditorAction(`打开文档 ${opening.docname} 的统计信息`).withCategory(
         ActionCategory.sideEffects,
@@ -187,7 +188,7 @@ export function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
     updateAnnotationNextId(annotations)
     collector.collOpened(opening)
     yield io.put(setEditorState(editorState))
-    yield updateCacheSaga()
+    yield cacheManager.updateCacheSaga()
     yield io.put(setFileInfo(opening))
     yield io.put(Action.historyClear())
     yield applyEditorAction(
