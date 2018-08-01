@@ -2,7 +2,7 @@ import { Map } from 'immutable'
 import { io } from 'little-saga'
 import React from 'react'
 import { addHints, deleteDecorations } from '../reducers/editorReducer'
-import { Hint } from '../types/Decoration'
+import { Hint } from '../types/Hint'
 import { toIdSet } from '../utils/common'
 import EditorAction from './EditorAction'
 

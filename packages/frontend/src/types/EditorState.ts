@@ -3,7 +3,8 @@ import DecorationRange from '../types/DecorationRange'
 import { keyed } from '../utils/common'
 import { RawColl } from '../utils/server'
 import Annotation from './Annotation'
-import Decoration, { Hint, Slot } from './Decoration'
+import Decoration, { Slot } from './Decoration'
+import { Hint } from './Hint'
 
 const EditorStateRecord = Record({
   blocks: List<string>(),

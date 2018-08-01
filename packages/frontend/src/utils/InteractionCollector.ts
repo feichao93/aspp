@@ -1,8 +1,9 @@
 import { Set } from 'immutable'
 import { channel as makeChannel } from 'little-saga'
-import Decoration, { Hint } from '../types/Decoration'
+import Decoration from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import FileInfo from '../types/FileInfo'
+import { Hint } from '../types/Hint'
 
 export type Interaction = Interaction.ALL
 

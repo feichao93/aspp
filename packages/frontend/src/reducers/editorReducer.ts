@@ -1,8 +1,9 @@
 import { Map, Set } from 'immutable'
 import Annotation from '../types/Annotation'
-import { Hint, Slot } from '../types/Decoration'
+import { Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import EditorState from '../types/EditorState'
+import { Hint } from '../types/Hint'
 import Action from '../utils/actions'
 
 export default function editorReducer(state = new EditorState(), action: Action): EditorState {

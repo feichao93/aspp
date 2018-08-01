@@ -1,16 +1,22 @@
-import { Map } from 'immutable'
+import { Map, Set } from 'immutable'
 import { io } from 'little-saga'
 import React from 'react'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
-import { deleteDecorations, setEditorState } from '../reducers/editorReducer'
-import { Hint } from '../types/Decoration'
+import {
+  addAnnotations,
+  deleteDecorations,
+  setEditorState,
+  setSel,
+} from '../reducers/editorReducer'
+import Annotation from '../types/Annotation'
 import EditorState from '../types/EditorState'
+import { Hint, HintAction } from '../types/Hint'
 import { toIdSet } from '../utils/common'
 import EditorAction from './EditorAction'
 
 export default class AcceptHints extends EditorAction {
-  oldState: EditorState
+  prevState: EditorState
 
   constructor(readonly accepting: Map<string, Hint>) {
     super()
@@ -22,7 +28,7 @@ export default class AcceptHints extends EditorAction {
         接受
         {this.accepting
           .valueSeq()
-          .map((hint, index) => <span key={index}>{Rich.string(hint.hint)}</span>)
+          .map((hint, index) => <span key={index}>{Rich.string(hint.message)}</span>)
           .toArray()}
       </span>
     )
@@ -30,18 +36,32 @@ export default class AcceptHints extends EditorAction {
 
   *prepare() {
     const { editor }: State = yield io.select()
-    this.oldState = editor
+    this.prevState = editor
   }
 
   *prev() {
-    yield io.put(setEditorState(this.oldState))
+    yield io.put(setEditorState(this.prevState))
   }
 
   *next() {
-    const actions = this.accepting.map(hint => hint.action).filter(Boolean)
     yield io.put(deleteDecorations(toIdSet(this.accepting)))
-    // TODO performance degradation
-    // 用户可能会一下子选中很多 hint，然后一次性进行接受，这里一个一个处理 action 比较低效
-    yield* actions.map(action => io.put(action)).valueSeq()
+    yield handleHintActions(
+      this.accepting
+        .map(hint => hint.hintAction)
+        .filter(Boolean)
+        .valueSeq()
+        .toArray(),
+    )
   }
+}
+
+function* handleHintActions(hintActions: HintAction[]) {
+  const adding: Annotation[] = []
+  for (const hintAction of hintActions) {
+    if (hintAction.type === 'hint-add-annotations') {
+      adding.push(hintAction.annotation)
+    }
+  }
+  yield io.put(addAnnotations(Map(adding.map(anno => [anno.id, anno] as [string, Annotation]))))
+  yield io.put(setSel(Set(adding.map(anno => anno.id))))
 }

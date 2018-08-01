@@ -225,7 +225,7 @@ class DetailPanel extends React.Component<DetailPanelProps> {
               </p>
             </React.Fragment>
           ) : null}
-          {decoration.type === 'hint' ? <p>hint: {Rich.reserved(decoration.hint)}</p> : null}
+          {decoration.type === 'hint' ? <p>hint: {Rich.reserved(decoration.message)}</p> : null}
           <p>blockIndex: {Rich.number(range.blockIndex)}</p>
           <p>startOffset: {Rich.number(range.startOffset)}</p>
           <p>endOffset: {Rich.number(range.endOffset)}</p>

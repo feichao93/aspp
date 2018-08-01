@@ -28,11 +28,13 @@ function* handleReqSetUsername() {
   }
 }
 
-window.addEventListener('beforeunload', e => {
-  const msg = '确定要退出么？'
-  e.returnValue = msg
-  return msg
-})
+if (process.env.NODE_ENV === 'production') {
+  window.addEventListener('beforeunload', e => {
+    const msg = '确定要退出么？'
+    e.returnValue = msg
+    return msg
+  })
+}
 
 export default function* rootSaga() {
   console.log('root-saga started')

@@ -1,25 +1,13 @@
 import { Record } from 'immutable'
-import Action from '../utils/actions'
 import { getNextId } from '../utils/common'
 import Annotation from './Annotation'
 import DecorationRange, { RawRange } from './DecorationRange'
+import { Hint } from './Hint'
 
 export class Text extends Record({
   id: '',
   type: 'text' as 'text',
   range: new DecorationRange(),
-}) {
-  static fromJS(object: any) {
-    return new Hint(object).update('range', DecorationRange.fromJS)
-  }
-}
-
-export class Hint extends Record({
-  id: '',
-  type: 'hint' as 'hint',
-  range: new DecorationRange(),
-  hint: '',
-  action: null as Action,
 }) {
   static fromJS(object: any) {
     return new Hint(object).update('range', DecorationRange.fromJS)
