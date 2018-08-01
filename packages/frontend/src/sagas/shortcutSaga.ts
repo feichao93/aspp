@@ -1,4 +1,4 @@
-import { eventChannel, put, take } from 'little-saga/compat'
+import { eventChannel, io } from 'little-saga'
 import ASPP_CONFIG from '../aspp-config'
 import Action from '../utils/actions'
 import schedulers from '../utils/schedulers'
@@ -13,27 +13,27 @@ export default function* shortcutSaga() {
 
   try {
     while (true) {
-      const event: KeyboardEvent = yield take(chan)
+      const event: KeyboardEvent = yield io.take(chan)
       if ((event.target as Element).tagName === 'INPUT') {
         continue
       }
       if (event.key === 'Escape') {
-        yield put(Action.userClearSel('manual'))
+        yield io.put(Action.userClearSel('manual'))
       } else if (event.key === 'Backspace' || event.key === 'd') {
-        yield put(Action.userDeleteCurrent())
+        yield io.put(Action.userDeleteCurrent())
       } else if (event.key === 'Enter' || event.key === 'a') {
-        yield put(Action.userAcceptCurrent())
+        yield io.put(Action.userAcceptCurrent())
       } else if (event.key === 's' && !event.ctrlKey) {
-        yield put(Action.userSelectCurrent())
+        yield io.put(Action.userSelectCurrent())
       } else if (event.key === 's' && event.ctrlKey) {
         event.preventDefault()
-        yield put(Action.reqSaveCurrentColl())
+        yield io.put(Action.reqSaveCurrentColl())
       } else if (ASPP_CONFIG.shortcutMap.has(event.key)) {
-        yield put(Action.userAnnotateCurrent(ASPP_CONFIG.shortcutMap.get(event.key)))
+        yield io.put(Action.userAnnotateCurrent(ASPP_CONFIG.shortcutMap.get(event.key)))
       } else if (event.key === 'z' && event.ctrlKey) {
-        yield put(Action.userReqUndo())
+        yield io.put(Action.userReqUndo())
       } else if (event.key === 'y' && event.ctrlKey) {
-        yield put(Action.userReqRedo())
+        yield io.put(Action.userReqRedo())
       }
     }
   } finally {

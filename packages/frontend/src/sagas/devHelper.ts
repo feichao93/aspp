@@ -1,5 +1,5 @@
 import { List } from 'immutable'
-import { put, take } from 'little-saga/compat'
+import { io } from 'little-saga'
 import DecorationRange from '../types/DecorationRange'
 import FileInfo from '../types/FileInfo'
 import Action from '../utils/actions'
@@ -8,8 +8,8 @@ import SelectionUtils from '../utils/SelectionUtils'
 
 export default function* devHelper() {
   if (DEV_HELPER) {
-    yield take(a('LOAD_TREE_STATE'))
-    yield put(
+    yield io.take(a('LOAD_TREE_STATE'))
+    yield io.put(
       Action.reqOpenDocStat(
         new FileInfo({
           docPath: List.of('diff-test'),

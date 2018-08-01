@@ -1,5 +1,5 @@
 import { is, List, Seq } from 'immutable'
-import { MulticastChannel, select, take } from 'little-saga/compat'
+import { io, MulticastChannel } from 'little-saga'
 import React from 'react'
 import AddHints from '../actions/AddHints'
 import { ActionCategory } from '../actions/EditorAction'
@@ -15,7 +15,7 @@ import { Interaction } from '../utils/InteractionCollector'
 
 function* handleUserAnnotateText({ range, tag }: Interaction.UserAnnotateText) {
   console.assert(range != null)
-  const { editor }: State = yield select()
+  const { editor }: State = yield io.select()
   const text = range.substring(editor.blocks.get(range.blockIndex))
   const gathered = editor.gather()
   const existingRangeSet = gathered.map(decoration => decoration.range.normalize()).toSet()
@@ -58,7 +58,7 @@ export default class SimpleMatching {
 
   *saga(chan: MulticastChannel<Interaction>) {
     while (true) {
-      const interaction: Interaction.UserAnnotateText = yield take(chan, 'USER_ANNOTATE_TEXT')
+      const interaction: Interaction.UserAnnotateText = yield io.take(chan, 'USER_ANNOTATE_TEXT')
       yield handleUserAnnotateText(interaction)
     }
   }

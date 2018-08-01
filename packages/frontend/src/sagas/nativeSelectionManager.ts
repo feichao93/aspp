@@ -1,5 +1,5 @@
 import { is } from 'immutable'
-import { eventChannel, io } from 'little-saga/compat'
+import { eventChannel, io } from 'little-saga'
 import { State } from '../reducers'
 import { setRange } from '../reducers/editorReducer'
 import Action from '../utils/actions'

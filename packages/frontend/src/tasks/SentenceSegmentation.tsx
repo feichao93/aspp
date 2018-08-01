@@ -1,6 +1,6 @@
 import { Button, Classes, Intent, Label } from '@blueprintjs/core'
 import { Seq } from 'immutable'
-import { put, select } from 'little-saga/compat'
+import { io } from 'little-saga'
 import React from 'react'
 import AddSlots from '../actions/AddSlots'
 import { ActionCategory } from '../actions/EditorAction'
@@ -97,7 +97,7 @@ export default class SentenceSegmentation {
   *run() {
     const reg = new RegExp(`[${this.options.cutList}]`, 'g')
     const rawRanges: DecorationRange[] = []
-    const { editor }: State = yield select()
+    const { editor }: State = yield io.select()
     editor.blocks.forEach((block, blockIndex) => {
       let startOffset = 0
       reg.lastIndex = 0
@@ -143,6 +143,6 @@ export default class SentenceSegmentation {
       ),
     ).withCategory(ActionCategory.task)
     yield applyEditorAction(editorAction)
-    yield put(Action.toast('分句完成', Intent.PRIMARY))
+    yield io.put(Action.toast('分句完成', Intent.PRIMARY))
   }
 }

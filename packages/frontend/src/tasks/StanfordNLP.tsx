@@ -1,6 +1,6 @@
 import { Button, Checkbox, Classes, Intent, Label } from '@blueprintjs/core'
 import { Map, Seq } from 'immutable'
-import { io } from 'little-saga/compat'
+import { io } from 'little-saga'
 import * as React from 'react'
 import { ActionCategory } from '../actions/EditorAction'
 import SetEditorState from '../actions/SetEditorState'

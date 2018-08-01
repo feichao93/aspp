@@ -1,6 +1,6 @@
 import { Intent } from '@blueprintjs/core'
 import { is, List, Seq } from 'immutable'
-import { getContext, io, takeEvery, takeLatest } from 'little-saga/compat'
+import { io, takeEvery, takeLatest } from 'little-saga'
 import React from 'react'
 import { ActionCategory } from '../actions/EditorAction'
 import EmptyEditorAction from '../actions/EmptyEditorAction'
@@ -156,7 +156,7 @@ function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
 }
 
 export function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
-  const collector: InteractionCollector = yield getContext('collector')
+  const collector: InteractionCollector = yield io.getContext('collector')
   const { fileInfo: cntFileInfo, editor, cache }: State = yield io.select()
   if (cntFileInfo.getType() === 'coll' && !is(new CacheState(editor), cache)) {
     const selected = yield selectDialogSaga(<span>是否要保存对当前文件的修改？</span>, [

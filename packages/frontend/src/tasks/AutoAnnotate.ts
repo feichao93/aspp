@@ -1,6 +1,6 @@
 import { Intent } from '@blueprintjs/core'
 import { Set } from 'immutable'
-import { delay, io, MulticastChannel } from 'little-saga/compat'
+import { delay, io, MulticastChannel } from 'little-saga'
 import Annotate from '../actions/Annotate'
 import { ActionCategory } from '../actions/EditorAction'
 import ASPP_CONFIG from '../aspp-config'

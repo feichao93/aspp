@@ -1,4 +1,4 @@
-import createSagaMiddleware from 'little-saga/compat'
+import { createSagaMiddleware } from 'little-saga'
 import { applyMiddleware, createStore } from 'redux'
 import reducer from './reducers/index'
 import rootSaga from './sagas'

@@ -1,6 +1,6 @@
 import { Intent } from '@blueprintjs/core'
 import { List, Map, Set } from 'immutable'
-import { getContext, io, put, select, takeEvery } from 'little-saga/compat'
+import { io, takeEvery } from 'little-saga'
 import AcceptHints from '../actions/AcceptHints'
 import Annotate from '../actions/Annotate'
 import DeleteDecorations from '../actions/DeleteDecorations'
@@ -18,7 +18,7 @@ import SelectionUtils from '../utils/SelectionUtils'
 import { applyEditorAction } from './historyManager'
 
 function* handleUserSelectCurrent() {
-  const { editor }: State = yield select()
+  const { editor }: State = yield io.select()
   if (editor.range) {
     const intersected = editor.range.intersected(editor.gather())
     yield applyEditorAction(new SetSel(toIdSet(intersected), SetSelMethod.intersection))
@@ -30,7 +30,7 @@ function* handleUserSetSel({ sel }: Action.UserSetSel) {
 }
 
 function* handleUserClearSel({ method }: Action.UserClearSel) {
-  const { editor }: State = yield select()
+  const { editor }: State = yield io.select()
   if (!editor.sel.isEmpty()) {
     const setSelMethod = method === 'auto' ? SetSelMethod.autoClear : SetSelMethod.manualClear
     yield applyEditorAction(new SetSel(Set(), setSelMethod))
@@ -38,9 +38,9 @@ function* handleUserClearSel({ method }: Action.UserClearSel) {
 }
 
 function* handleUserAnnotateCurrent({ tag }: Action.UserAnnotateCurrent) {
-  const { editor }: State = yield select()
+  const { editor }: State = yield io.select()
   if (editor.sel.isEmpty() && editor.range == null) {
-    yield put(Action.toast('Invalid selection'))
+    yield io.put(Action.toast('Invalid selection'))
     return
   }
   const gathered = editor.gather()
@@ -55,10 +55,10 @@ function* handleUserAnnotateCurrent({ tag }: Action.UserAnnotateCurrent) {
   )
 
   if (overlapped) {
-    yield put(Action.toast('Overlap', Intent.WARNING))
+    yield io.put(Action.toast('Overlap', Intent.WARNING))
     return
   }
-  const collector: InteractionCollector = yield getContext('collector')
+  const collector: InteractionCollector = yield io.getContext('collector')
   if (editor.range) {
     collector.userAnnotateText(editor.range, tag)
   } else {
@@ -68,13 +68,13 @@ function* handleUserAnnotateCurrent({ tag }: Action.UserAnnotateCurrent) {
 }
 
 function* handleUserDeleteCurrent() {
-  const collector: InteractionCollector = yield getContext('collector')
-  const { editor }: State = yield select()
+  const collector: InteractionCollector = yield io.getContext('collector')
+  const { editor }: State = yield io.select()
   const gathered = editor.gather()
   let removing: Map<string, Decoration>
   if (editor.sel.isEmpty()) {
     if (editor.range == null) {
-      yield put(Action.toast('invalid range'))
+      yield io.put(Action.toast('invalid range'))
       return
     }
     removing = editor.range.intersected(gathered)
@@ -90,8 +90,8 @@ function* handleUserDeleteCurrent() {
 }
 
 function* handleUserAcceptCurrent() {
-  const collector: InteractionCollector = yield getContext('collector')
-  const { editor }: State = yield select()
+  const collector: InteractionCollector = yield io.getContext('collector')
+  const { editor }: State = yield io.select()
   const gathered = editor.gather()
   let accepting: Map<string, Hint>
   if (editor.sel.isEmpty()) {
@@ -105,7 +105,7 @@ function* handleUserAcceptCurrent() {
   }
 
   if (accepting.isEmpty()) {
-    yield put(Action.toast('No hints to accept'))
+    yield io.put(Action.toast('No hints to accept'))
     return
   }
 
@@ -127,13 +127,13 @@ function* handleUserSettleDiff({ slotId, choice }: Action.UserSettleDiff) {
 }
 
 function* handleUserClickDecoration({ decoration, ctrlKey }: Action.UserClickDecoration) {
-  const { editor }: State = yield select()
+  const { editor }: State = yield io.select()
   const nextSel = ctrlKey ? toggle(editor.sel, decoration.id) : Set.of(decoration.id)
   yield applyEditorAction(new SetSel(nextSel, ctrlKey ? SetSelMethod.toggle : SetSelMethod.select))
 }
 
 function* handleUserSelectBlockHints({ blockIndex }: Action.UserSelectBlockHints) {
-  const { editor }: State = yield select()
+  const { editor }: State = yield io.select()
   const selecting = editor.hints.filter(hint => hint.range.blockIndex === blockIndex)
   if (!selecting.isEmpty()) {
     yield applyEditorAction(new SetSel(toIdSet(selecting), SetSelMethod.select))
@@ -141,7 +141,7 @@ function* handleUserSelectBlockHints({ blockIndex }: Action.UserSelectBlockHints
 }
 
 function* handleUserSelectBlockText({ blockIndex }: Action.UserSelectBlockHints) {
-  const { editor }: State = yield select()
+  const { editor }: State = yield io.select()
   const block = editor.blocks.get(blockIndex)
   SelectionUtils.setCurrentRange(
     new DecorationRange({

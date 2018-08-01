@@ -1,5 +1,5 @@
 import { Map } from 'immutable'
-import { put, select } from 'little-saga/compat'
+import { io } from 'little-saga'
 import React from 'react'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
@@ -42,20 +42,20 @@ export default class Annotate extends EditorAction {
   }
 
   *prepare() {
-    const { editor }: State = yield select()
+    const { editor }: State = yield io.select()
     this.oldState = editor
   }
 
   *prev() {
-    yield put(setEditorState(this.oldState))
+    yield io.put(setEditorState(this.oldState))
   }
 
   *next() {
-    const { editor }: State = yield select()
+    const { editor }: State = yield io.select()
     const gathered = editor.gather()
     const selection = editor.sel.map(id => gathered.get(id))
-    yield put(deleteDecorations(toIdSet(selection.filterNot(Decoration.isAnnotation))))
-    yield put(addAnnotations(this.annotating))
-    yield put(setSel(toIdSet(this.annotating)))
+    yield io.put(deleteDecorations(toIdSet(selection.filterNot(Decoration.isAnnotation))))
+    yield io.put(addAnnotations(this.annotating))
+    yield io.put(setSel(toIdSet(this.annotating)))
   }
 }

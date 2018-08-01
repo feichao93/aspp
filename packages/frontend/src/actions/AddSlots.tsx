@@ -1,5 +1,5 @@
 import { Map } from 'immutable'
-import { put } from 'little-saga/compat'
+import { io } from 'little-saga'
 import React from 'react'
 import { addSlots, deleteDecorations } from '../reducers/editorReducer'
 import { Slot } from '../types/Decoration'
@@ -16,10 +16,10 @@ export default class AddSlots extends EditorAction {
   }
 
   *next() {
-    yield put(addSlots(this.slots))
+    yield io.put(addSlots(this.slots))
   }
 
   *prev() {
-    yield put(deleteDecorations(toIdSet(this.slots)))
+    yield io.put(deleteDecorations(toIdSet(this.slots)))
   }
 }

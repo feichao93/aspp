@@ -1,5 +1,5 @@
 import { Map } from 'immutable'
-import { put } from 'little-saga/compat'
+import { io } from 'little-saga'
 import React from 'react'
 import { addHints, deleteDecorations } from '../reducers/editorReducer'
 import { Hint } from '../types/Decoration'
@@ -16,10 +16,10 @@ export default class AddHints extends EditorAction {
   }
 
   *next() {
-    yield put(addHints(this.hints))
+    yield io.put(addHints(this.hints))
   }
 
   *prev() {
-    yield put(deleteDecorations(toIdSet(this.hints)))
+    yield io.put(deleteDecorations(toIdSet(this.hints)))
   }
 }

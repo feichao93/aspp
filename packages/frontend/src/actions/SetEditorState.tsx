@@ -1,4 +1,4 @@
-import { put, select } from 'little-saga/compat'
+import { io } from 'little-saga'
 import { State } from '../reducers'
 import { setEditorState } from '../reducers/editorReducer'
 import EditorState from '../types/EditorState'
@@ -16,15 +16,15 @@ export default class SetEditorState extends EditorAction {
   }
 
   *prepare() {
-    const { editor }: State = yield select()
+    const { editor }: State = yield io.select()
     this.prevState = editor
   }
 
   *prev() {
-    yield put(setEditorState(this.prevState))
+    yield io.put(setEditorState(this.prevState))
   }
 
   *next() {
-    yield put(setEditorState(this.nextState))
+    yield io.put(setEditorState(this.nextState))
   }
 }

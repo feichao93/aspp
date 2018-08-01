@@ -1,5 +1,5 @@
 import { Map } from 'immutable'
-import { put, select } from 'little-saga/compat'
+import { io } from 'little-saga'
 import React from 'react'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
@@ -20,7 +20,7 @@ export default class DeleteDecorations extends EditorAction {
   }
 
   *prepare() {
-    const { editor }: State = yield select()
+    const { editor }: State = yield io.select()
     this.message = (
       <span>
         删除{' '}
@@ -35,12 +35,12 @@ export default class DeleteDecorations extends EditorAction {
   }
 
   *prev() {
-    yield put(addHints(this.removing.filter(Decoration.isHint)))
-    yield put(addSlots(this.removing.filter(Decoration.isSlot)))
-    yield put(addAnnotations(this.removing.filter(Decoration.isAnnotation)))
+    yield io.put(addHints(this.removing.filter(Decoration.isHint)))
+    yield io.put(addSlots(this.removing.filter(Decoration.isSlot)))
+    yield io.put(addAnnotations(this.removing.filter(Decoration.isAnnotation)))
   }
 
   *next() {
-    yield put(deleteDecorations(toIdSet(this.removing)))
+    yield io.put(deleteDecorations(toIdSet(this.removing)))
   }
 }

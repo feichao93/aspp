@@ -1,4 +1,4 @@
-import { put, select, takeEvery } from 'little-saga/compat'
+import { io, takeEvery } from 'little-saga'
 import EditorAction, { ActionCategory } from '../actions/EditorAction'
 import { State } from '../reducers'
 import { emptyAction } from '../types/EditorHistory'
@@ -8,18 +8,18 @@ import { a } from '../utils/common'
 export function* applyEditorAction(editorAction: EditorAction) {
   yield* editorAction.prepare()
   yield* editorAction.next()
-  yield put(Action.historyPush(editorAction))
+  yield io.put(Action.historyPush(editorAction))
 }
 
 function* handleRevert() {
   while (true) {
-    const state: State = yield select()
+    const state: State = yield io.select()
     const action = state.history.getLastAction()
     if (action === emptyAction) {
       break
     }
     yield* action.prev()
-    yield put(Action.historyBack())
+    yield io.put(Action.historyBack())
     if (action.category === ActionCategory.sideEffects) {
       break
     }
@@ -27,23 +27,23 @@ function* handleRevert() {
 }
 
 function* handleUndo() {
-  const state: State = yield select()
+  const state: State = yield io.select()
   const action = state.history.getLastAction()
   if (action === emptyAction) {
     return
   }
   yield* action.prev()
-  yield put(Action.historyBack())
+  yield io.put(Action.historyBack())
 }
 
 function* handleRedo() {
-  const state: State = yield select()
+  const state: State = yield io.select()
   const action = state.history.getNextAction()
   if (action === emptyAction) {
     return
   }
   yield* action.next()
-  yield put(Action.historyForward())
+  yield io.put(Action.historyForward())
 }
 
 export default function* historyManager() {

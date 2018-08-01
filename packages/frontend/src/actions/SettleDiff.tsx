@@ -1,6 +1,5 @@
 import { Map, Set } from 'immutable'
 import { io } from 'little-saga'
-import { put, select } from 'little-saga/compat'
 import React from 'react'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
@@ -43,12 +42,12 @@ export default class SettleDiff extends EditorAction {
   }
 
   *prepare() {
-    const { editor }: State = yield select()
+    const { editor }: State = yield io.select()
     this.oldState = editor
   }
 
   *prev() {
-    yield put(setEditorState(this.oldState))
+    yield io.put(setEditorState(this.oldState))
   }
 
   *next() {

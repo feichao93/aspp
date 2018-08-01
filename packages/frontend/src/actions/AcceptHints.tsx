@@ -1,5 +1,5 @@
 import { Map } from 'immutable'
-import { put, select } from 'little-saga/compat'
+import { io } from 'little-saga'
 import React from 'react'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
@@ -29,19 +29,19 @@ export default class AcceptHints extends EditorAction {
   }
 
   *prepare() {
-    const { editor }: State = yield select()
+    const { editor }: State = yield io.select()
     this.oldState = editor
   }
 
   *prev() {
-    yield put(setEditorState(this.oldState))
+    yield io.put(setEditorState(this.oldState))
   }
 
   *next() {
     const actions = this.accepting.map(hint => hint.action).filter(Boolean)
-    yield put(deleteDecorations(toIdSet(this.accepting)))
+    yield io.put(deleteDecorations(toIdSet(this.accepting)))
     // TODO performance degradation
     // 用户可能会一下子选中很多 hint，然后一次性进行接受，这里一个一个处理 action 比较低效
-    yield* actions.map(action => put(action)).valueSeq()
+    yield* actions.map(action => io.put(action)).valueSeq()
   }
 }

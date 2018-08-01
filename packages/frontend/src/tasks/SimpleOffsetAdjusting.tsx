@@ -1,7 +1,6 @@
 import { Button, Checkbox, Classes, Intent, Label } from '@blueprintjs/core'
 import { is, Seq } from 'immutable'
-import { io } from 'little-saga'
-import { MulticastChannel } from 'little-saga/channelEffects'
+import { io, MulticastChannel } from 'little-saga'
 import React from 'react'
 import { ActionCategory } from '../actions/EditorAction'
 import SetEditorState from '../actions/SetEditorState'

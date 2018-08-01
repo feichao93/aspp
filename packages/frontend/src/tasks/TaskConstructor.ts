@@ -1,4 +1,4 @@
-import { MulticastChannel } from 'little-saga/compat'
+import { MulticastChannel } from 'little-saga'
 import React from 'react'
 import { Interaction } from '../utils/InteractionCollector'
 

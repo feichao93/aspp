@@ -1,5 +1,5 @@
 import { Set } from 'immutable'
-import { put, select } from 'little-saga/compat'
+import { io } from 'little-saga'
 import { State } from '../reducers'
 import { setSel } from '../reducers/editorReducer'
 import Action from '../utils/actions'
@@ -29,7 +29,7 @@ export default class SetSel extends EditorAction {
   }
 
   *prepare() {
-    const { editor, history }: State = yield select()
+    const { editor, history }: State = yield io.select()
     const last = history.getLastAction()
     if (last instanceof SetSel) {
       const { intersection, autoClear, select, toggle } = SetSelMethod
@@ -37,7 +37,7 @@ export default class SetSel extends EditorAction {
         (this.method === last.method || last.method === autoClear) &&
         (this.method === toggle || this.method === select || this.method === intersection)
       ) {
-        yield put(Action.historyPop())
+        yield io.put(Action.historyPop())
         this.prevSel = last.prevSel
         return
       }
@@ -47,10 +47,10 @@ export default class SetSel extends EditorAction {
   }
 
   *prev() {
-    yield put(setSel(this.prevSel))
+    yield io.put(setSel(this.prevSel))
   }
 
   *next() {
-    yield put(setSel(this.nextSel))
+    yield io.put(setSel(this.nextSel))
   }
 }

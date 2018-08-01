@@ -1,5 +1,5 @@
 import { Intent } from '@blueprintjs/core'
-import { delay, io, multicastChannel, takeEvery } from 'little-saga/compat'
+import { delay, io, multicastChannel, takeEvery } from 'little-saga'
 import { State } from '../reducers'
 import { setTaskAsIdle, setTaskAsRunning } from '../reducers/taskReducer'
 import Action from '../utils/actions'

@@ -1,5 +1,5 @@
 import { Set } from 'immutable'
-import { channel as makeChannel } from 'little-saga/compat'
+import { channel as makeChannel } from 'little-saga'
 import Decoration, { Hint } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import FileInfo from '../types/FileInfo'
