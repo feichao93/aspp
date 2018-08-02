@@ -63,7 +63,7 @@ function* handleUserAnnotateCurrent({ tag }: Action.UserAnnotateCurrent) {
   if (editor.range) {
     collector.userAnnotateText(editor.range, tag)
   } else {
-    collector.userAnnotateSel(editor.sel, tag)
+    collector.userAnnotateSel(selection, tag)
   }
   yield applyEditorAction(new Annotate(keyed(annotating), tag))
 }

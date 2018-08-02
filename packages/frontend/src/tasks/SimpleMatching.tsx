@@ -43,7 +43,7 @@ function getConvertedHints(editor: EditorState, targetText: string, targetTag: s
   editor.hints.filter(hint => {
     const t = hint.range.substring(editor.blocks.get(hint.range.blockIndex))
     if (t === targetText && hint.hintAction.type === 'hint-add-annotations') {
-      const newHint = hint.set('hintAction', {
+      const newHint = hint.set('message', `Apply ${targetTag}`).set('hintAction', {
         type: 'hint-add-annotations',
         annotation: hint.hintAction.annotation.set('tag', targetTag),
       })
@@ -58,12 +58,12 @@ function getCreatedHints(
   editor: EditorState,
   targetText: string,
   targetTag: string,
-  currentRange?: DecorationRange,
+  currentRange: DecorationRange,
 ) {
   const ranges = Seq(editor.blocks)
     .flatMap((block, blockIndex) => findRanges(block, blockIndex, targetText))
     // 避开当前位置
-    .filterNot(r => currentRange && is(r, currentRange.normalize()))
+    .filterNot(r => is(r, currentRange.normalize()))
     // 避开已经存在标注的位置
     .filterNot(r =>
       editor.annotations.some(annotation => DecorationRange.isIntersected(r, annotation.range)),
@@ -86,28 +86,31 @@ function getCreatedHints(
     .toList()
 }
 
-function* handleUserAnnotateText({ range, tag }: Interaction.UserAnnotateText) {
-  console.assert(range != null)
-  const { editor }: State = yield io.select()
-  const text = range.substring(editor.blocks.get(range.blockIndex))
-
-  const hints = merge(
-    getConvertedHints(editor, text, tag),
-    getCreatedHints(editor, text, tag, range),
-  )
-
-  if (!hints.isEmpty()) {
-    yield applyEditorAction(
-      new AddHints(
-        keyed(hints),
-        <span>simple-matching 添加 {Rich.number(hints.count())} 个提示</span>,
-      ).withCategory(ActionCategory.task),
-    )
-  }
+function handleUserAnnotateSel(editor: EditorState, interaction: Interaction.UserAnnotateSel) {
+  return interaction.selection
+    .map(decoration => decoration.range.substring(editor.blocks.get(decoration.range.blockIndex)))
+    .toSet()
+    .flatMap(text => getConvertedHints(editor, text, interaction.tag))
+    .toList()
 }
 
-// TODO
-function* handleUserAnnotateSel(interaction: Interaction.UserAnnotateSel) {}
+function handleUserAnnotateText(editor: EditorState, { range, tag }: Interaction.UserAnnotateText) {
+  console.assert(range != null)
+  const text = range.substring(editor.blocks.get(range.blockIndex))
+
+  return merge(getConvertedHints(editor, text, tag), getCreatedHints(editor, text, tag, range))
+}
+
+function getHints(
+  editor: EditorState,
+  interaction: Interaction.UserAnnotateText | Interaction.UserAnnotateSel,
+) {
+  if (interaction.type === 'USER_ANNOTATE_SEL') {
+    return handleUserAnnotateSel(editor, interaction)
+  } else {
+    return handleUserAnnotateText(editor, interaction)
+  }
+}
 
 export default class SimpleMatching {
   static singleton = true
@@ -118,15 +121,18 @@ export default class SimpleMatching {
   constructor(readonly config: any) {}
 
   *saga(chan: MulticastChannel<Interaction>) {
-    yield io.fork(function*() {
-      while (true) {
-        yield handleUserAnnotateText(yield io.take(chan, 'USER_ANNOTATE_TEXT'))
+    while (true) {
+      const interaction = yield io.take(chan, ['USER_ANNOTATE_TEXT', 'USER_ANNOTATE_SEL'])
+      const { editor }: State = yield io.select()
+      const hints = getHints(editor, interaction)
+      if (!hints.isEmpty()) {
+        yield applyEditorAction(
+          new AddHints(
+            keyed(hints),
+            <span>simple-matching 添加/修改 {Rich.number(hints.count())} 个提示</span>,
+          ).withCategory(ActionCategory.task),
+        )
       }
-    })
-    yield io.fork(function*() {
-      while (true) {
-        yield handleUserAnnotateSel(yield io.take(chan, 'USER_ANNOTATE_SEL'))
-      }
-    })
+    }
   }
 }

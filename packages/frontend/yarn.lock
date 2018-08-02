@@ -4690,9 +4690,9 @@ listr@^0.14.1:
     rxjs "^6.1.0"
     strip-ansi "^3.0.1"
 
-little-saga@^0.4.2:
-  version "0.4.2"
-  resolved "http://registry.npm.taobao.org/little-saga/download/little-saga-0.4.2.tgz#2e278e34362044f0bf92500cc3df99eed5f91e1a"
+little-saga@^0.4.3:
+  version "0.4.3"
+  resolved "http://registry.npm.taobao.org/little-saga/download/little-saga-0.4.3.tgz#c766c94fc202d1d064d184fd7f69948456cc390d"
   dependencies:
     "@types/node" "^10.5.2"
 
