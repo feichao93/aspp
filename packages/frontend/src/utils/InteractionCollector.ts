@@ -25,7 +25,7 @@ export namespace Interaction {
 
   export interface UserAnnotateSel {
     type: 'USER_ANNOTATE_SEL'
-    sel: Set<string>
+    selection: Set<Decoration>
     tag: string
   }
 
@@ -61,8 +61,8 @@ export default class InteractionCollector {
     this.channel.put({ type: 'USER_DELETE_DECORATIONS', set })
   }
 
-  userAnnotateSel(sel: Set<string>, tag: string) {
-    this.channel.put({ type: 'USER_ANNOTATE_SEL', sel, tag })
+  userAnnotateSel(selection: Set<Decoration>, tag: string) {
+    this.channel.put({ type: 'USER_ANNOTATE_SEL', selection, tag })
   }
 
   userAcceptHints(set: Set<Hint>) {
