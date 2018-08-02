@@ -29,10 +29,7 @@ export default function* taskManager() {
       const inst = new task.impl(task)
       const sagaTask = yield io.spawn([inst, inst.saga], chan)
       yield io.put(setTaskAsRunning(id, sagaTask))
-      yield io.race([
-        io.join(sagaTask),
-        io.take((action: Action) => action.type === 'STOP_TASK' && action.id === id),
-      ])
+      yield io.join(sagaTask)
     } catch (e) {
       console.error(e)
       yield io.put(
@@ -49,6 +46,6 @@ export default function* taskManager() {
   function* handleStopTask({ id }: Action.StopTask) {
     const { taskMap }: State = yield io.select()
     const sagaTask = taskMap.get(id).sagaTask
-    sagaTask.cancel()
+    yield io.cancel(sagaTask)
   }
 }
