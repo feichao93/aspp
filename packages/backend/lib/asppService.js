@@ -98,7 +98,8 @@ module.exports = function asppService({ taskDir }) {
         if (!fs.existsSync(filename)) {
           ctx.throw(404, `File ${filename} not found`)
         }
-        ctx.body = JSON.parse(fs.readFileSync(filename, 'utf-8'))
+        ctx.body = fs.readFileSync(filename)
+        ctx.set('content-type', 'application/json')
       },
 
       async deleteColl(fullDocPath, collname) {
