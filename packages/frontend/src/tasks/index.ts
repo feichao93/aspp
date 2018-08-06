@@ -30,6 +30,14 @@ export const taskImplList = List<TaskConstructor>([
   SimpleMerge,
 ])
 
+export function findImplByName(implName: string): TaskConstructor {
+  const result = taskImplList.find(impl => impl.name === implName)
+  if (DEV_ASSERT) {
+    console.assert(result != null)
+  }
+  return result
+}
+
 if (DEV_ASSERT) {
   taskImplList.forEach(impl => {
     console.assert(impl.defaultTaskName != null, 'Task constructor must have a defaultTaskName')
