@@ -62,7 +62,7 @@ interface TaskLocalStorageItem {
 const taskStateLocalStorageManager = {
   get(): TaskLocalStorageItem[] {
     try {
-      return JSON.parse(localStorage.getItem(LS_TASK_OPTIONS))
+      return JSON.parse(localStorage.getItem(LS_TASK_OPTIONS)) || []
     } catch (e) {
       return []
     }
