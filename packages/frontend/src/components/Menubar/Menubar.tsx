@@ -52,11 +52,6 @@ class Menubar extends React.Component<MenubarProps> {
             content={
               <Menu>
                 <MenuItem
-                  icon="star"
-                  text="Star on GitHub"
-                  onClick={() => window.open('https://github.com/shinima/aspp')}
-                />
-                <MenuItem
                   icon="issue"
                   text="问题反馈"
                   onClick={() => window.open('https://github.com/shinima/aspp/issues')}

@@ -62,7 +62,7 @@ module.exports = function asppService({ taskDir }) {
       },
 
       resolveCollFilename(fullDocPath, collname) {
-        return path.join(taskDir, 'annotations', `${fullDocPath}.${collname}.yaml`)
+        return path.join(taskDir, 'annotations', `${fullDocPath}.${collname}.json`)
       },
 
       async getDoc(fullDocPath) {
@@ -88,7 +88,7 @@ module.exports = function asppService({ taskDir }) {
         ctx.body = doc.collnames.map(collname => {
           const filename = this.resolveCollFilename(fullDocPath, collname)
           const fileStat = fs.statSync(filename)
-          const coll = yaml.safeLoad(fs.readFileSync(filename, 'utf-8'))
+          const coll = JSON.parse(fs.readFileSync(filename, 'utf-8'))
           return { collname, fileStat, annotationCount: coll.annotations.length }
         })
       },
@@ -98,7 +98,8 @@ module.exports = function asppService({ taskDir }) {
         if (!fs.existsSync(filename)) {
           ctx.throw(404, `File ${filename} not found`)
         }
-        ctx.body = yaml.safeLoad(fs.readFileSync(filename, 'utf-8'))
+        ctx.body = fs.readFileSync(filename)
+        ctx.set('content-type', 'application/json')
       },
 
       async deleteColl(fullDocPath, collname) {
@@ -110,7 +111,7 @@ module.exports = function asppService({ taskDir }) {
         const trash = path.join(
           taskDir,
           'deleted',
-          `${formatDate(new Date())}-${docname}.${collname}.yaml`,
+          `${formatDate(new Date())}-${docname}.${collname}.json`,
         )
         mkdirp.sync(path.join(trash, '..'))
         fs.renameSync(collFilename, trash)
@@ -124,7 +125,7 @@ module.exports = function asppService({ taskDir }) {
         }
         const filename = this.resolveCollFilename(fullDocPath, collname)
         mkdirp.sync(path.resolve(filename, '..'))
-        fs.writeFileSync(filename, yaml.safeDump(content), 'utf-8')
+        fs.writeFileSync(filename, JSON.stringify(content), 'utf-8')
         ctx.status = 200
       },
 

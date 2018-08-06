@@ -35,6 +35,10 @@ function updateTaskInst(taskId: string, updater: (s: Task) => Task) {
   return updateTaskMap(map => map.update(taskId, updater))
 }
 
+export function setTaskInst(taskId: string, task: Task) {
+  return updateTaskInst(taskId, () => task)
+}
+
 export function setTaskName(id: string, nextName: string) {
   return updateTaskInst(id, d => d.set('name', nextName))
 }

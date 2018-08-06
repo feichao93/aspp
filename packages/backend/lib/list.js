@@ -60,12 +60,12 @@ module.exports = function list(taskDir) {
  *
  * 示例：
  * docname 为  `'特色小镇忌纯房地产开发.txt'`
- * filename 为  `'特色小镇忌纯房地产开发.txt.test.yaml'`
+ * filename 为  `'特色小镇忌纯房地产开发.txt.test.json'`
  * 则返回结果为 `'test'`
  *  */
 function resolveCollname(filename, docname) {
   if (filename.startsWith(docname)) {
-    const match = filename.replace(docname, '').match(/\.([\w-]+)\.yaml/)
+    const match = filename.replace(docname, '').match(/\.([\w-]+)\.json/)
     return match && match[1]
   } else {
     return null

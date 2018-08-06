@@ -26,9 +26,17 @@ export const taskImplList = List<TaskConstructor>([
   SimpleOffsetAdjusting,
   SentenceSegmentation,
   StanfordNLP,
-  AutoAnnotate,
+  // AutoAnnotate, // NOTE 这个 task 和简称标注功能有关
   SimpleMerge,
 ])
+
+export function findImplByName(implName: string): TaskConstructor {
+  const result = taskImplList.find(impl => impl.name === implName)
+  if (DEV_ASSERT) {
+    console.assert(result != null)
+  }
+  return result
+}
 
 if (DEV_ASSERT) {
   taskImplList.forEach(impl => {
