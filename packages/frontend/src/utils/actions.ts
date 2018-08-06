@@ -39,11 +39,13 @@ namespace Action {
     | HideDialog
     | ShowSelectDialog
     | SettleSelectDialog
+  /** @deprecated 请直接调用 toaster.show */
   export interface Toast {
     type: 'TOAST'
     message: string
     intent: Intent
   }
+  /** @deprecated 请直接调用 toaster.show */
   export function toast(text: string, intent = Intent.NONE): Toast {
     return { type: 'TOAST', message: text, intent }
   }

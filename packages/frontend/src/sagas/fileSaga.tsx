@@ -20,6 +20,7 @@ import calculateDiffs from '../utils/calculateDiffs'
 import { a, keyed, updateAnnotationNextId, zip } from '../utils/common'
 import getDiffSlots from '../utils/getDiffSlots'
 import InteractionCollector from '../utils/InteractionCollector'
+import * as selectors from '../utils/selectors'
 import server, { RawColl } from '../utils/server'
 import * as cacheManager from './cacheManager'
 import { confirmDialogSaga, promptDialogSaga, selectDialogSaga } from './dialogSaga'
@@ -72,9 +73,9 @@ function* diffColls({ docFileInfo, collnames }: Action.ReqDiffColls) {
 }
 
 export function* reqCloseCurrentColl() {
-  const { fileInfo, editor, cache }: State = yield io.select()
+  const { fileInfo }: State = yield io.select()
 
-  if (!is(new CacheState(editor), cache)) {
+  if (yield io.select(selectors.hasUnsavedChanges)) {
     const selected = yield selectDialogSaga(
       <span>关闭 {Rich.number(fileInfo.getFullName())} 之前是否要保存当前的修改？</span>,
       [
@@ -117,7 +118,7 @@ function* saveCurrentColl() {
     yield applyEditorAction(
       new EmptyEditorAction('保存文件').withCategory(ActionCategory.sideEffects),
     )
-    yield io.put(Action.toast('保存成功'))
+    toaster.show({ message: '保存成功', intent: Intent.SUCCESS })
   } catch (e) {
     console.error(e)
     yield io.put(Action.toast(e.message, Intent.DANGER))
@@ -125,9 +126,7 @@ function* saveCurrentColl() {
 }
 
 function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
-  const { fileInfo: cntFileInfo, editor, cache }: State = yield io.select()
-
-  if (cntFileInfo.getType() === 'coll' && !is(new CacheState(editor), cache)) {
+  if (yield io.select(selectors.hasUnsavedChanges)) {
     yield io.put(Action.toast('打开统计信息之前请先保存或丢弃当前更改', Intent.WARNING))
     return
   }
@@ -157,8 +156,7 @@ function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
 
 export function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
   const collector: InteractionCollector = yield io.getContext('collector')
-  const { fileInfo: cntFileInfo, editor, cache }: State = yield io.select()
-  if (cntFileInfo.getType() === 'coll' && !is(new CacheState(editor), cache)) {
+  if (yield io.select(selectors.hasUnsavedChanges)) {
     const selected = yield selectDialogSaga(<span>是否要保存对当前文件的修改？</span>, [
       { option: '保存', intent: Intent.PRIMARY },
       { option: '不保存', intent: Intent.DANGER },
@@ -196,7 +194,7 @@ export function* openColl({ fileInfo: opening }: Action.ReqOpenColl) {
         ActionCategory.sideEffects,
       ),
     )
-    toaster.show({ message: `已打开 ${opening.collname}` })
+    toaster.show({ message: `已打开 ${opening.collname}`, intent: Intent.PRIMARY })
   } catch (e) {
     console.error(e)
     yield io.put(Action.toast(e.message, Intent.DANGER))
@@ -233,11 +231,26 @@ function* addColl({ fileInfo }: Action.ReqAddColl) {
   if (DEV_ASSERT) {
     console.assert(fileInfo.getType() === 'doc')
   }
-  const { config, tree, editor, cache }: State = yield io.select()
-  if (!is(new CacheState(editor), cache)) {
-    yield io.put(Action.toast('创建新文件之前请先保存或丢弃当前更改', Intent.WARNING))
-    return
+
+  // TODO 下面这段 if 中的代码有点重复
+  if (yield io.select(selectors.hasUnsavedChanges)) {
+    const selected = yield selectDialogSaga(<span>是否要保存对当前文件的修改？</span>, [
+      { option: '保存', intent: Intent.PRIMARY },
+      { option: '不保存', intent: Intent.DANGER },
+      '取消',
+    ])
+    if (selected === '取消') {
+      return
+    }
+    if (selected === '保存') {
+      yield saveCurrentColl()
+    }
   }
+  // 无论上述选择如何，都需要重新设置缓存
+  // yield cacheManager.updateCacheSaga()
+  yield closeCurrentColl()
+
+  const { config, tree }: State = yield io.select()
 
   const doc = findDocInItems(tree, fileInfo)
   if (DEV_ASSERT) {
@@ -250,7 +263,7 @@ function* addColl({ fileInfo }: Action.ReqAddColl) {
     const emptyColl: RawColl = { slots: [], annotations: [] }
     yield server.putColl(adding, emptyColl)
     yield loadTreeState(false)
-    yield io.put(Action.toast(`已添加 ${collname}`))
+    yield io.put(Action.toast(`已添加 ${collname}`, Intent.SUCCESS))
     yield io.put(Action.reqOpenColl(adding))
   } catch (e) {
     console.error(e)
@@ -262,13 +275,13 @@ function* duplicateColl({ fileInfo }: Action.ReqDuplicateColl) {
   if (DEV_ASSERT) {
     console.assert(fileInfo.getType() === 'coll')
   }
-  const { editor, cache, fileInfo: cntFileInfo, tree }: State = yield io.select()
-  if (is(cntFileInfo, fileInfo) && !is(new CacheState(editor), cache)) {
+  if (yield io.select(selectors.hasUnsavedChanges)) {
     const result = yield confirmDialogSaga('当前文件的未保存标注内容不会被复制，是否继续?')
     if (!result) {
       return
     }
   }
+  const { tree }: State = yield io.select()
   const doc = findDocInItems(tree, fileInfo)
   if (DEV_ASSERT) {
     console.assert(doc != null)
