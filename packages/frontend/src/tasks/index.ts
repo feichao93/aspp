@@ -26,7 +26,7 @@ export const taskImplList = List<TaskConstructor>([
   SimpleOffsetAdjusting,
   SentenceSegmentation,
   StanfordNLP,
-  AutoAnnotate,
+  // AutoAnnotate, // NOTE 这个 task 和简称标注功能有关
   SimpleMerge,
 ])
 
