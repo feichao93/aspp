@@ -33,7 +33,7 @@
       "tslint --fix",
       "git add"
     ],
-    "!(bundle)*.{js,json}": [
+    "!(bundle)*.js": [
       "prettier --write",
       "git add"
     ]
