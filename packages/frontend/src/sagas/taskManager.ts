@@ -77,17 +77,13 @@ function* taskLSStateManager() {
   const { taskMap: oldTaskMap }: State = yield io.select()
   for (const item of initTaskState) {
     if (!oldTaskMap.has(item.id)) {
-      yield io.put(
-        setTaskInst(
-          item.id,
-          new Task({
-            id: item.id,
-            name: item.name,
-            impl: findImplByName(item.implName),
-            options: item.options,
-          }),
-        ),
-      )
+      const task = new Task({
+        id: item.id,
+        name: item.name,
+        impl: findImplByName(item.implName),
+        options: item.options,
+      })
+      yield io.put(setTaskInst(item.id, task))
     }
   }
 

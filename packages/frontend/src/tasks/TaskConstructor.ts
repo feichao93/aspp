@@ -12,6 +12,7 @@ interface TaskConfigFormProps<Options = any> {
 }
 
 export default interface TaskConstructor {
+  implName: string
   disabled?: boolean
   singleton?: boolean
   defaultTaskName: string

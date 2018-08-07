@@ -180,6 +180,7 @@ function* showMergeCollCreatedToast(mergeFileInfo: FileInfo) {
 }
 
 export default class SimpleMerge {
+  static implName = 'SimpleMerge'
   static defaultTaskName = 'simple-merge'
   static description =
     'simple-merge 简单的合并算法，根据当前的 diff 数据自动生成对应的标注对象。一致的 diff 将直接生成对应标注对象，部分缺失的 diff 将根据任务配置决定是否生成标注对象，冲突的 diff 无法进行合并。当任务遇到无法处理的 diff 时，任务会选中需要处理的 diff，然后中断执行。'

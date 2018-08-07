@@ -102,6 +102,7 @@ class ConfigForm extends React.Component<ConfigFormProps, ConfigFormState> {
 }
 
 export default class SimpleOffsetAdjusting {
+  static implName = 'SimpleOffsetAdjusting'
   static Form = ConfigForm
   static singleton = true
   static defaultTaskName = 'simple-offset-adjusting'

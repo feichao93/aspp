@@ -113,6 +113,7 @@ function getHints(
 }
 
 export default class SimpleMatching {
+  static implName = 'SimpleMatching'
   static singleton = true
   static defaultTaskName = 'simple-matching'
   static description =

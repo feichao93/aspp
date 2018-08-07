@@ -31,7 +31,7 @@ export const taskImplList = List<TaskConstructor>([
 ])
 
 export function findImplByName(implName: string): TaskConstructor {
-  const result = taskImplList.find(impl => impl.name === implName)
+  const result = taskImplList.find(impl => impl.implName === implName)
   if (DEV_ASSERT) {
     console.assert(result != null)
   }

@@ -17,6 +17,7 @@ const HAS_ONLY_ONE_TAG = ASPP_CONFIG.defaultGroup.count() === 1 && ASPP_CONFIG.o
 const DEFAULT_TAG = ASPP_CONFIG.defaultGroup.first().name
 
 export default class AutoAnnotate {
+  static implName = 'AutoAnnotate'
   static defaultTaskName = 'auto-annotate'
   static disabled = !HAS_ONLY_ONE_TAG
   static description =

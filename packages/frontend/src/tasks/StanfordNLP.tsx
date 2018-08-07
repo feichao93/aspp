@@ -106,6 +106,7 @@ export interface StandfordNLPOptions {
 }
 
 export default class StanfordNLP {
+  static implName = 'StanfordNLP'
   static defaultTaskName = 'stanford-nlp'
   static description =
     '[仍在实现中...] stanford-nlp 由斯坦福大学的 NLP 工具包提供算法，运行该任务来预先自动标注一部分实体，减少标注人员工作量。'

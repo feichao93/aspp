@@ -75,6 +75,7 @@ class ConfigForm extends React.Component<ConfigFormProps, ConfigFormState> {
 }
 
 export default class SentenceSegmentation {
+  static implName = 'SentenceSegmentation'
   static Form = ConfigForm
   static singleton = false
   static defaultTaskName = 'sentence-segmentation'
