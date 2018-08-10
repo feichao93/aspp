@@ -153,7 +153,7 @@ export function updateAnnotationNextId(annotations: IMap<string, Annotation>) {
     .keySeq()
     .map(id => Number((id.match(/\d+/) || [0])[0]))
     .max()
-  setNextId('annotation', maxAnnotationId || 1)
+  setNextId('annotation', (maxAnnotationId || 0) + 1)
 }
 
 export const prepend = (prefix: string) => (s: string) => prefix + s

@@ -24,7 +24,7 @@ export type TaskMap = OrderedMap<string, Task>
 export const taskImplList = List<TaskConstructor>([
   SimpleMatching,
   SimpleOffsetAdjusting,
-  SentenceSegmentation,
+  // SentenceSegmentation,
   StanfordNLP,
   // AutoAnnotate, // NOTE 这个 task 和简称标注功能有关
   SimpleMerge,
