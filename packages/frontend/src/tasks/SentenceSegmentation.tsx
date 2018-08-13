@@ -7,9 +7,9 @@ import { ActionCategory } from '../actions/EditorAction'
 import { Rich } from '../components/panels/rich'
 import { State } from '../reducers'
 import { applyEditorAction } from '../sagas/historyManager'
+import toaster from '../sagas/toaster'
 import { Slot } from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
-import Action from '../utils/actions'
 import { dec, getNextId, inc, keyed } from '../utils/common'
 import { Task } from './index'
 import TaskConstructor from './TaskConstructor'
@@ -91,11 +91,15 @@ export default class SentenceSegmentation {
   }
 
   *saga() {
-    // TODO 需要考虑分句结果已经存在的情况
-    yield* this.run()
+    const { editor }: State = yield io.select()
+    if (editor.slots.some(slot => slot.slotType === 'sentence')) {
+      toaster.show({ message: '已存在分句结果', intent: Intent.WARNING })
+      return
+    }
+    yield* this.doSegmentation()
   }
 
-  *run() {
+  *doSegmentation() {
     const reg = new RegExp(`[${this.options.cutList}]`, 'g')
     const rawRanges: DecorationRange[] = []
     const { editor }: State = yield io.select()
@@ -139,11 +143,14 @@ export default class SentenceSegmentation {
       keyed(slots),
       (
         <span>
-          {this.task.name} 按照 {Rich.string(this.options.cutList, true)} 进行分句操作
+          {this.task.name}
+          按照
+          {Rich.string(this.options.cutList, true)}
+          进行分句操作
         </span>
       ),
     ).withCategory(ActionCategory.task)
     yield applyEditorAction(editorAction)
-    yield io.put(Action.toast('分句完成', Intent.PRIMARY))
+    toaster.show({ message: '分句完成', intent: Intent.SUCCESS })
   }
 }
