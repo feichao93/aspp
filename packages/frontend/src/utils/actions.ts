@@ -21,6 +21,7 @@ namespace Action {
     | TaskTypes
     | StateUpdateTypes
     | HistoryTypes
+    | UpdateClientsInfo
 
   // region MiscTypes
   type MiscTypes =
@@ -508,6 +509,16 @@ namespace Action {
   }
   export function historyForward(): HistoryForward {
     return { type: 'HISTORY_FORWARD' }
+  }
+  // endregion
+
+  // region ClientsInfo
+  export interface UpdateClientsInfo {
+    type: 'UPDATE_CLIENTS_INFO'
+    clients: any
+  }
+  export function updateClientsInfo(clients: any): UpdateClientsInfo {
+    return { type: 'UPDATE_CLIENTS_INFO', clients }
   }
   // endregion
 }

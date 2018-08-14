@@ -12,6 +12,7 @@ import nativeSelectionManager from './nativeSelectionManager'
 import shortcutSaga from './shortcutSaga'
 import taskManager from './taskManager'
 import { handleToast } from './toaster'
+import wsSaga from './wsSaga'
 
 /** 如果当前没有设置用户名的话，提示用户输入用户名 */
 function* ensureUsername() {
@@ -53,4 +54,5 @@ export default function* rootSaga() {
 
   yield io.fork(ensureUsername)
   yield io.fork(devHelper)
+  yield io.fork(wsSaga)
 }

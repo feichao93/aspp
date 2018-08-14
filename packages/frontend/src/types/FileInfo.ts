@@ -58,7 +58,7 @@ export default class FileInfo extends Record({
     } else if (type === 'doc') {
       return `语料文件 ${this.getDirStr()}/${this.docname}`
     } else if (type === 'coll') {
-      return `标注文件 ${this.getDirStr()}/${this.docname}.${this.collname}.yaml`
+      return `标注文件 ${this.getDirStr()}/${this.docname}.${this.collname}.json`
     } else {
       return `统计 ${this.getDirStr()}/${this.docname}`
     }

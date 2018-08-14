@@ -4,6 +4,7 @@ import EditorState from '../types/EditorState'
 import FileInfo from '../types/FileInfo'
 import Action from '../utils/actions'
 import cacheReducer, { CacheState } from './cacheReducer'
+import clientsReducer, { ClientsState } from './clientsReducer'
 import configReducer, { Config } from './configReducer'
 import dialogReducer, { DialogState } from './dialogReducer'
 import docStatReducer, { DocStatState } from './docStatReducer'
@@ -23,6 +24,7 @@ export interface State {
   cache: CacheState
   docStat: DocStatState
   dialog: DialogState
+  clients: ClientsState
 }
 
 export default function reducer(state: Partial<State> = {}, action: Action): State {
@@ -36,5 +38,6 @@ export default function reducer(state: Partial<State> = {}, action: Action): Sta
     cache: cacheReducer(state.cache, action),
     docStat: docStatReducer(state.docStat, action),
     dialog: dialogReducer(state.dialog, action),
+    clients: clientsReducer(state.clients, action),
   }
 }

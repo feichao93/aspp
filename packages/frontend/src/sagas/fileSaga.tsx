@@ -103,6 +103,9 @@ export function* closeCurrentColl() {
   yield io.put(setFileInfo(new FileInfo()))
   // 清空历史记录
   yield io.put(Action.historyClear())
+  // 收集交互信息
+  const collector: InteractionCollector = yield io.getContext('collector')
+  collector.collClosed()
 }
 
 /** 保存当前的标注工作进度 */
@@ -127,9 +130,19 @@ function* saveCurrentColl() {
 
 function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
   if (yield io.select(selectors.hasUnsavedChanges)) {
-    yield io.put(Action.toast('打开统计信息之前请先保存或丢弃当前更改', Intent.WARNING))
-    return
+    const selected = yield selectDialogSaga(<span>是否要保存对当前文件的修改？</span>, [
+      { option: '保存', intent: Intent.PRIMARY },
+      { option: '不保存', intent: Intent.DANGER },
+      '取消',
+    ])
+    if (selected === '取消') {
+      return
+    }
+    if (selected === '保存') {
+      yield saveCurrentColl()
+    }
   }
+  yield closeCurrentColl()
 
   try {
     const statItems = yield server.getDocStat(opening)
@@ -140,9 +153,6 @@ function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
     })
     yield io.put(setDocStat(docStat))
     yield io.put(setFileInfo(opening))
-    yield io.put(Action.historyClear())
-    yield io.put(setEditorState(new EditorState()))
-    yield cacheManager.updateCacheSaga()
     yield applyEditorAction(
       new EmptyEditorAction(`打开文档 ${opening.docname} 的统计信息`).withCategory(
         ActionCategory.sideEffects,
@@ -150,7 +160,7 @@ function* openDocStat({ fileInfo: opening }: Action.ReqOpenDocStat) {
     )
   } catch (e) {
     console.error(e)
-    yield io.put(Action.toast(e.message, Intent.DANGER))
+    toaster.show({ message: e.message, intent: Intent.DANGER })
   }
 }
 

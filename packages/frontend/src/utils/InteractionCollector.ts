@@ -1,5 +1,5 @@
 import { Set } from 'immutable'
-import { channel as makeChannel } from 'little-saga'
+import { multicastChannel as makeChannel } from 'little-saga'
 import Decoration from '../types/Decoration'
 import DecorationRange from '../types/DecorationRange'
 import FileInfo from '../types/FileInfo'
@@ -14,8 +14,8 @@ export namespace Interaction {
     | UserDeleteDecorations
     | UserAcceptHints
     | CollOpened
+    | CollClosed
     | UserChangeRange
-  // TODO ?? UserCloseAnnotationSet
 
   export interface UserAnnotateText {
     type: 'USER_ANNOTATE_TEXT'
@@ -42,6 +42,10 @@ export namespace Interaction {
   export interface CollOpened {
     type: 'COLL_OPENED'
     fileInfo: FileInfo
+  }
+
+  export interface CollClosed {
+    type: 'COLL_CLOSED'
   }
 
   export interface UserChangeRange {
@@ -71,6 +75,10 @@ export default class InteractionCollector {
 
   collOpened(fileInfo: FileInfo) {
     this.channel.put({ type: 'COLL_OPENED', fileInfo })
+  }
+
+  collClosed() {
+    this.channel.put({ type: 'COLL_CLOSED' })
   }
 
   userChangeRange(range: DecorationRange) {

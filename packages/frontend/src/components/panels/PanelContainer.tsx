@@ -6,6 +6,7 @@ import { Dispatch } from 'redux'
 import { State } from '../../reducers'
 import Action from '../../utils/actions'
 import { clamp } from '../../utils/common'
+import ConnectionPanel from './ConnectionPanel'
 import DetailPanel from './DetailPanel'
 import DiffPanel from './DiffPanel'
 import HistoryPanel from './HistoryPanel'
@@ -15,7 +16,7 @@ import TaskPanel from './TaskPanel'
 
 const SASH_WIDTH = 4
 const MINIMUM_WIDTH = 30
-const MIN_WIDTH = 300
+const MIN_WIDTH = 320
 const INIT_WIDTH = 500
 const MAX_WIDTH = 800
 const HIDE_THRESHOLD = 100
@@ -27,7 +28,7 @@ class PanelContainer extends React.Component<{ hide: boolean; dispatch: Dispatch
   startWidth: number
 
   state = {
-    panelName: 'detail',
+    panelName: 'connection',
     width: INIT_WIDTH,
   }
 
@@ -101,6 +102,7 @@ class PanelContainer extends React.Component<{ hide: boolean; dispatch: Dispatch
           <Tab id="task" title="任务" panel={<TaskPanel />} />
           <Tab id="tags" title="标签" panel={<TagsPanel />} />
           <Tab id="history" title="操作历史" panel={<HistoryPanel />} />
+          <Tab id="connection" title="连接" panel={<ConnectionPanel />} />
         </Tabs>
       </div>
     )
