@@ -54,7 +54,7 @@ module.exports = function server({ port, taskDir }) {
 
   wss.on('connection', function connection(ws) {
     ws.clientId = nextClientId++
-    console.log(`client ${ws.clientId} connection`)
+    // console.log(`client ${ws.clientId} connection`)
     clients[ws.clientId] = {
       clientId: ws.clientId,
       username: null,
@@ -77,7 +77,7 @@ module.exports = function server({ port, taskDir }) {
       }
     })
     ws.on('close', () => {
-      console.log(`client ${ws.clientId} close`)
+      // console.log(`client ${ws.clientId} close`)
       // clients[ws.clientId].online = false
       delete clients[ws.clientId]
       broadcastClientsInfo()
