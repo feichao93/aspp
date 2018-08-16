@@ -131,30 +131,36 @@ class TaskPanel extends React.Component<TaskPanelProps> {
                 <ButtonGroup style={{ width: 120 }}>
                   {task.status === 'idle' ? (
                     <AnchorButton
-                      icon="play"
+                      icon={<Icon title="运行" icon="play" />}
                       disabled={task.impl.disabled}
                       onClick={() => dispatch(Action.runTask(task.id))}
                     />
                   ) : (
-                    <AnchorButton icon="redo" onClick={() => this.restartTask(task.id)} />
+                    <AnchorButton
+                      icon={<Icon title="重新运行" icon="redo" />}
+                      onClick={() => this.restartTask(task.id)}
+                    />
                   )}
                   <AnchorButton
-                    icon="symbol-square"
+                    icon={<Icon title="停止" icon="symbol-square" />}
                     disabled={task.status === 'idle'}
                     onClick={() => dispatch(Action.stopTask(task.id))}
                   />
                   <AnchorButton
-                    icon="cog"
+                    icon={<Icon title="配置" icon="cog" />}
                     disabled={task.options == null}
                     onClick={() => this.openConfigDialog(task)}
                   />
                 </ButtonGroup>
                 {!task.impl.singleton && (
                   <ButtonGroup>
-                    <AnchorButton icon="duplicate" onClick={() => this.duplicateTask(task.id)} />
+                    <AnchorButton
+                      icon={<Icon title="复制运行配置" icon="duplicate" />}
+                      onClick={() => this.duplicateTask(task.id)}
+                    />
                     <AnchorButton
                       intent={Intent.DANGER}
-                      icon="delete"
+                      icon={<Icon title="删除运行配置" icon="delete" />}
                       onClick={() => this.deleteTask(task.id)}
                     />
                   </ButtonGroup>

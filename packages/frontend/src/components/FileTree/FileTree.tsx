@@ -1,6 +1,7 @@
 import {
   AnchorButton,
   ButtonGroup,
+  Classes,
   ContextMenu,
   Intent,
   ITreeNode,
@@ -273,7 +274,12 @@ class FileTree extends React.PureComponent<FileTreeProps, FileTreeState> {
       }
       node.isSelected = is(node.nodeData, target)
     })
-    this.forceUpdate()
+    this.forceUpdate(() => {
+      const selectedNode = document.querySelector(`.${Classes.TREE_NODE_SELECTED}`)
+      if (selectedNode) {
+        selectedNode.scrollIntoView({ behavior: 'smooth' })
+      }
+    })
   }
 
   handleNodeClick = (node: ITreeNode<FileInfo>) => {

@@ -325,10 +325,10 @@ function* deleteColl({ fileInfo: deleting }: Action.ReqDeleteColl) {
   try {
     yield server.deleteColl(deleting)
     yield loadTreeState(false)
-    yield io.put(Action.toast(`已删除 ${deleting.getFullName()}`))
+    toaster.show({ message: `已删除 ${deleting.getFullName()}`, intent: Intent.PRIMARY })
   } catch (e) {
     console.error(e)
-    yield io.put(Action.toast(e.message, Intent.DANGER))
+    toaster.show({ message: e.message, intent: Intent.DANGER })
   }
 }
 
