@@ -28,7 +28,7 @@ class PanelContainer extends React.Component<{ hide: boolean; dispatch: Dispatch
   startWidth: number
 
   state = {
-    panelName: 'connection',
+    panelName: 'detail',
     width: INIT_WIDTH,
   }
 

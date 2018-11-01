@@ -69,13 +69,12 @@ module.exports = function asppService({ taskDir }) {
         const filename = this.resolveDocFilename(fullDocPath)
         if (!fs.existsSync(filename)) {
           ctx.throw(404, `File ${fullDocPath} not found`)
+        }
+        const content = fs.readFileSync(filename, 'utf-8')
+        if (fullDocPath.endsWith('.json')) {
+          ctx.body = JSON.parse(content)
         } else {
-          const content = fs.readFileSync(filename, 'utf-8')
-          if (fullDocPath.endsWith('.json')) {
-            ctx.body = JSON.parse(content)
-          } else {
-            ctx.body = [content]
-          }
+          ctx.body = [content]
         }
       },
 

@@ -113,7 +113,6 @@ function genTreeNodes(
       icon: 'annotation',
       label: collname,
       nodeData: parentInfo.set('collname', collname),
-      // TODO secondaryLabel: '<someone> is editing...',
     }
   }
 }

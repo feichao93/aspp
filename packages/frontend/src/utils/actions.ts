@@ -27,7 +27,6 @@ namespace Action {
   type MiscTypes =
     | Toast
     | ToggleHelpOverlay
-    | ToggleDarkTheme
     | TogglePanelsVisibility
     | ToggleFileTreeVisibility
     | SetUsername
@@ -56,13 +55,6 @@ namespace Action {
   }
   export function toggleHelpOverlay(): ToggleHelpOverlay {
     return { type: 'TOGGLE_HELP_OVERLAY' }
-  }
-
-  export interface ToggleDarkTheme {
-    type: 'TOGGLE_DARK_THEME'
-  }
-  export function toggleDarkTheme(): ToggleDarkTheme {
-    return { type: 'TOGGLE_DARK_THEME' }
   }
 
   export interface TogglePanelsVisibility {

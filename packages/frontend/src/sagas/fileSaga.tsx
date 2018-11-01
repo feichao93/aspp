@@ -242,7 +242,6 @@ function* addColl({ fileInfo }: Action.ReqAddColl) {
     console.assert(fileInfo.getType() === 'doc')
   }
 
-  // TODO 下面这段 if 中的代码有点重复
   if (yield io.select(selectors.hasUnsavedChanges)) {
     const selected = yield selectDialogSaga(<span>是否要保存对当前文件的修改？</span>, [
       { option: '保存', intent: Intent.PRIMARY },

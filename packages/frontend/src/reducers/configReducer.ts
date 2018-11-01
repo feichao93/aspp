@@ -4,18 +4,12 @@ import store from '../store'
 import Action from '../utils/actions'
 import { not } from '../utils/common'
 
-const useDarkTheme = localStorage.getItem('use-dark-theme') != null
 const hideFileTree = localStorage.getItem('hide-file-tree') != null
 const hidePanels = localStorage.getItem('hide-panels') != null
 const username = localStorage.getItem('username')
 
 window.addEventListener('beforeunload', () => {
   const state = store.getState()
-  if (state.config.useDarkTheme) {
-    localStorage.setItem('use-dark-theme', '')
-  } else {
-    localStorage.removeItem('use-dark-theme')
-  }
 
   if (state.config.hideFileTree) {
     localStorage.setItem('hide-file-tree', '')
@@ -38,7 +32,6 @@ window.addEventListener('beforeunload', () => {
 
 export class Config extends Record({
   helpOverlay: false,
-  useDarkTheme,
   hideFileTree,
   hidePanels,
   username,
@@ -46,9 +39,7 @@ export class Config extends Record({
 }) {}
 
 export default function configReducer(state = new Config(), action: Action) {
-  if (action.type === 'TOGGLE_DARK_THEME') {
-    return state.update('useDarkTheme', not)
-  } else if (action.type === 'TOGGLE_HELP_OVERLAY') {
+  if (action.type === 'TOGGLE_HELP_OVERLAY') {
     return state.update('helpOverlay', not)
   } else if (action.type === 'TOGGLE_FILE_TREE_VISIBILITY') {
     return state.update('hideFileTree', not)

@@ -19,7 +19,7 @@ export default class App extends React.Component<{ config?: Config }> {
   render() {
     const { config } = this.props
     return (
-      <div className={classNames('app', { [Classes.DARK]: config.useDarkTheme })}>
+      <div className="app">
         <div className="overlay" />
         <div className="app-content">
           <Menubar />

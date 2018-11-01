@@ -32,15 +32,6 @@ export class Slot extends Record({
   static fromJS(object: any) {
     return new Slot(object).update('range', DecorationRange.fromJS)
   }
-
-  // TODO 不能每次都创建新的match，需要复用已有的match
-  static match(range: DecorationRange) {
-    return new Slot({
-      id: getNextId('slot'),
-      range,
-      slotType: 'match',
-    })
-  }
 }
 
 type Decoration = Text | Annotation | Hint | Slot

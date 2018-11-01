@@ -26,7 +26,6 @@ namespace AsppConfig {
     readonly abbr: string
 
     readonly theme: Theme
-    // TODO readonly darkTheme: Theme
   }
 
   export interface AsppConfig {

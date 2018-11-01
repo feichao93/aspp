@@ -56,7 +56,6 @@ function makeRenameCollUrl(info: FileInfo) {
 const asppFetch = withPrefix('/api')(guardOK(fetch))
 
 export interface RawColl {
-  // TODO meta
   annotations: RawAnnotation[]
   slots: RawSlot[]
 }
