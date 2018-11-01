@@ -24,21 +24,21 @@
     "readme.md"
   ],
   "dependencies": {
-    "glob": "^7.1.2",
+    "glob": "^7.1.3",
     "js-yaml": "^3.11.0",
-    "koa": "^2.5.1",
+    "koa": "^2.6.1",
     "koa-bodyparser": "^4.2.0",
-    "koa-mount": "^3.0.0",
+    "koa-mount": "^4.0.0",
     "koa-router": "^7.4.0",
-    "koa-static": "^4.0.2",
+    "koa-static": "^5.0.0",
     "mkdirp": "^0.5.1",
     "nunjucks": "^3.1.2",
-    "signale": "^1.2.1",
-    "ws": "^6.0.0",
-    "yargs": "^11.0.0"
+    "signale": "^1.3.0",
+    "ws": "^6.1.0",
+    "yargs": "^12.0.2"
   },
   "devDependencies": {
-    "prettier": "^1.12.1",
+    "prettier": "^1.14.3",
     "supervisor": "^0.12.0"
   }
 }
