@@ -12,7 +12,7 @@ ASPP 中文标注工具，提供基于网页的标注前端，用来方便地对
 
 ## 安装与使用
 
-1.  运行 `yarn global install aspp` 安装工具
+1.  运行 `yarn global add aspp` 安装工具
 2.  在*标注工程文件夹*内执行 `aspp serve` 运行工具后端
 3.  打开 `http://localhost:1477` 在浏览器（**请使用最新版 Chrome**）中进行标注，所有标注结果都会存放在*标注工程文件夹*中
 
