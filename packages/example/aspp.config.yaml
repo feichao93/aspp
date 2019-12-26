@@ -1,107 +1,71 @@
 name: test-task
 
+groups:
+  - name: 常用
+    shortcutPrefix: q
+
+  - name: 其他
+    shortcutPrefix: w
+
 tags:
-  - name: 人名
-    label: 人名
-    shortcut: '1'
-    abbr: PER
-    theme:
-      background: '#FF99CC'
-
-  - name: 地名
-    label: 地名
-    shortcut: '2'
-    abbr: LOC
-    theme:
-      background: '#66CCFF'
-
-  - name: 货币
-    label: 货币
-    shortcut: '3'
-    abbr: ￥
-    theme:
-      background: '#9a9deb'
-
-  - name: 日期
-    label: 日期
-    abbr: DATE
-    shortcut: '4'
-    theme:
-      background: '#FF6666'
-
-  - name: 时间
-    label: 时间
-    abbr: TIME
-    shortcut: 'q'
-    theme:
-      background: '#FFCC00'
-
   - name: 百分比
     label: 百分比
     abbr: PERC
-    shortcut: 'w'
+    shortcut: '1'
     theme:
       background: '#97eb49'
 
   - name: 机构名
     label: 机构名
     abbr: ORG
-    shortcut: 'e'
+    shortcut: '2'
     theme:
       background: '#66CC99'
 
-  # - group: 机构名
-  #   name: 公司
-  #   label: 公司
-  #   abbr: '[公司]'
-  #   theme:
-  #     background: '#a1be8a'
+  - name: 人名
+    group: 常用
+    label: 人名
+    shortcut: q
+    abbr: PER
+    theme:
+      background: '#FF99CC'
 
-  # - group: 机构名
-  #   name: 事务所
-  #   label: 事务所
-  #   abbr: '[事务所]'
-  #   theme:
-  #     background: '#a1be8a'
+  - name: 地名
+    group: 常用
+    label: 地名
+    shortcut: w
+    abbr: LOC
+    theme:
+      background: '#66CCFF'
 
-  # - group: 机构名
-  #   name: 交易所
-  #   label: 交易所
-  #   abbr: '[交易所]'
-  #   theme:
-  #     background: '#a1be8a'
+  - name: 货币
+    group: 常用
+    label: 货币
+    shortcut: e
+    abbr: ￥
+    theme:
+      background: '#9a9deb'
 
-  # - group: 机构名
-  #   name: 银行
-  #   label: 银行
-  #   abbr: '[银行]'
-  #   theme:
-  #     background: '#a1be8a'
+  - name: 日期
+    label: 日期
+    group: 常用
+    shortcut: r
+    abbr: DATE
+    theme:
+      background: '#FF6666'
 
-  # - group: 机构名
-  #   name: 学校
-  #   label: 学校
-  #   abbr: '[学校]'
-  #   theme:
-  #     background: '#a1be8a'
-
-  # - group: 机构名
-  #   name: 金融投资机构
-  #   label: 金融投资机构
-  #   abbr: '[金融投资机构]'
-  #   theme:
-  #     background: '#a1be8a'
-
-  # - group: 机构名
-  #   name: 政府机构部门
-  #   label: 政府机构部门
-  #   abbr: '[政府机构部门]'
-  #   theme:
-  #     background: '#a1be8a'
+  - name: 时间
+    label: 时间
+    group: 常用
+    shortcut: t
+    abbr: TIME
+    theme:
+      background: '#FFCC00'
 
   - group: 其他
     name: 非货币数量词
     label: 非货币数量词
+    shortcut: 'q'
     abbr: '[非货币数量词]'
     theme:
       background: '#bdbdbd'
@@ -109,37 +73,7 @@ tags:
   - group: 其他
     name: 行业
     label: 行业
+    shortcut: 'w'
     abbr: '[行业]'
-    theme:
-      background: '#bdbdbd'
-
-  - group: 其他
-    name: 产品
-    label: 产品
-    abbr: '[产品]'
-    theme:
-      background: '#bdbdbd'
-  - group: 其他
-    name: 专利
-    label: 专利
-    abbr: '[专利]'
-    theme:
-      background: '#bdbdbd'
-  - group: 其他
-    name: 股票
-    label: 股票
-    abbr: '[股票]'
-    theme:
-      background: '#bdbdbd'
-  - group: 其他
-    name: 债券
-    label: 债券
-    abbr: '[债券]'
-    theme:
-      background: '#bdbdbd'
-  - group: 其他
-    name: 期货
-    label: 期货
-    abbr: '[期货]'
     theme:
       background: '#bdbdbd'

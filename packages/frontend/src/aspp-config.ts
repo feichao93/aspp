@@ -6,8 +6,14 @@ import { DEFAULT_GROUP_NAME } from './utils/constants'
 namespace ASPP_CONFIG {
   export const asppConfig: AsppConfig = (window as any).ASPP_CONFIG
 
-  export const shortcutMap = Map(
-    asppConfig.tags.filter(t => t.shortcut).map(t => [t.shortcut, t.name] as [string, string]),
+  export const groupShortcutMap = Map(
+    asppConfig.groups.map(g => [g.shortcutPrefix, g.name] as [string, string]),
+  )
+
+  export const tagShortcutMap = Map(
+    asppConfig.tags
+      .filter(t => !t.group && t.shortcut)
+      .map(t => [t.shortcut, t.name] as [string, string]),
   )
 
   export function isDefaultGroup(tagConfig: AsppConfig.TagConfig) {

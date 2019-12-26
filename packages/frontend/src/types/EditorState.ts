@@ -13,6 +13,7 @@ const EditorStateRecord = Record({
   annotations: Map<string, Annotation>(),
   slots: Map<string, Slot>(),
   hints: Map<string, Hint>(),
+  activeGroup: '',
 })
 
 function normalizeAnnotationRange(annotation: Annotation) {

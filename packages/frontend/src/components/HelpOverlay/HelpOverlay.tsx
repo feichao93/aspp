@@ -39,7 +39,8 @@ class HelpOverlay extends React.PureComponent<HelpOverlayProps> {
             <Tooltip
               content={
                 <div style={{ width: 350 }}>
-                  如果当前选中了部分修饰对象，那么「当前的修饰对象」指的是这些选中的对象；<br />
+                  如果当前选中了部分修饰对象，那么「当前的修饰对象」指的是这些选中的对象；
+                  <br />
                   如果当前没有没有选中对象，则「当前的修饰对象」指的是与当前选中文本有重叠的那些标注对象。
                 </div>
               }
@@ -57,7 +58,7 @@ class HelpOverlay extends React.PureComponent<HelpOverlayProps> {
             <Shortcut code="Escape" desc="清空选择" />
             <h4>自定义快捷键</h4>
             <p>
-              {ASPP_CONFIG.shortcutMap
+              {ASPP_CONFIG.tagShortcutMap
                 .map((name, key) => (
                   <React.Fragment key={key}>
                     <code>{key}</code>

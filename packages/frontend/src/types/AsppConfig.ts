@@ -7,6 +7,11 @@ namespace AsppConfig {
     readonly border: string
   }
 
+  export interface GroupConfig {
+    name: string
+    shortcutPrefix: string
+  }
+
   export interface TagConfig {
     // 标签的名字
     readonly name: string
@@ -30,6 +35,7 @@ namespace AsppConfig {
 
   export interface AsppConfig {
     readonly name: string
+    readonly groups: ReadonlyArray<GroupConfig>
     readonly tags: ReadonlyArray<TagConfig>
   }
 }

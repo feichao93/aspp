@@ -4,6 +4,7 @@ import EditorAction from '../actions/EditorAction'
 import { DialogOption } from '../components/dialogs/SelectDialog'
 import { CacheState } from '../reducers/cacheReducer'
 import { DocStatState } from '../reducers/docStatReducer'
+import { updateEditorState } from '../reducers/editorReducer'
 import { TreeItem } from '../reducers/treeReducer'
 import { TaskMap } from '../tasks'
 import TaskConstructor from '../tasks/TaskConstructor'
@@ -48,6 +49,10 @@ namespace Action {
   /** @deprecated 请直接调用 toaster.show */
   export function toast(text: string, intent = Intent.NONE): Toast {
     return { type: 'TOAST', message: text, intent }
+  }
+
+  export function setActiveGroup(activeGroup: string): UpdateEditorState {
+    return updateEditorState(editor => editor.set('activeGroup', activeGroup))
   }
 
   export interface ToggleHelpOverlay {
